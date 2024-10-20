@@ -90,6 +90,10 @@ using SomePackage;
 For experimenting with Julia it might be interesting to use [Juno](https://junolab.org/) or [Julia for Visual Studio Code](https://www.julia-vscode.org/) as a standalone development environment. It supports a nice variable viewer and has a nice integration of the Julia documentation, which helps a lot during Julia learning and development. It also comes with a comfortable debugger for Julia scripts.
 If you want to run your scripts from your main application, you can do this easily with `invesdwin-scripting-julia-runtime-jajub` (add this module as a `test` scope dependency) during development (you also need to add a dependecy to the type `test-jar` of `invesdwin-scripting-julia-runtime-contract` for the log level to get activated, or alternatively change the log level of `de.invesdwin.scripting.julia.runtime.contract.IScriptTaskRunnerJulia` to `DEBUG` on your own). The actual deployment distribution can choose a different runtime then as a hard dependency.
 
+## More Documentation and Programming Languages
+
+Further documentation and similar integration modules like this one also can be found here: https://github.com/invesdwin/invesdwin-scripting
+
 ## More Programming Languages
 
 Similar integration modules like this one also exist for the following other programming languages: https://github.com/invesdwin/invesdwin-scripting
