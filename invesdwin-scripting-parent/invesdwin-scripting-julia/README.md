@@ -1,6 +1,22 @@
 # invesdwin-scripting-julia
 Integrate Julia functionality with these modules for [invesdwin-scripting](https://github.com/invesdwin/invesdwin-scripting). All integration modules provide unified bidirectional communication between Java and Julia. That way you can switch the Julia provider without having to change your script implementation. See test cases for examples on how to implement your script integrations.
 
+## Maven
+
+Releases and snapshots are deployed to this maven repository:
+```
+https://invesdwin.de/repo/invesdwin-oss-remote/
+```
+
+Dependency declaration:
+```xml
+<dependency>
+	<groupId>de.invesdwin</groupId>
+	<artifactId>invesdwin-scripting-julia-runtime-jajub</artifactId>
+	<version>1.0.4-SNAPSHOT</version><!---project.version.invesdwin-scripting-parent-->
+</dependency>
+```
+
 ## Runtime Integration Modules
 
 We have a few options available for integrating Julia:
