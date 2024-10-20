@@ -1,5 +1,5 @@
 # invesdwin-scripting-python
-Integrate python functionality with these modules for the [invesdwin-context](https://github.com/invesdwin/invesdwin-context) module system. All integration modules provide unified bidirectional communication between Java and python. That way you can switch the python provider without having to change your script implementation. See test cases for examples on how to implement your script integrations.
+Integrate python functionality with these modules for [invesdwin-scripting](https://github.com/invesdwin/invesdwin-scripting). All integration modules provide unified bidirectional communication between Java and python. That way you can switch the python provider without having to change your script implementation. See test cases for examples on how to implement your script integrations.
 
 ## Runtime Integration Modules
 
@@ -7,30 +7,30 @@ We have a few options available for integrating python:
 - **invesdwin-scripting-python-runtime-japyb**: This uses a forked version of [Jajub](https://github.com/org-arl/jajub/issues/2) to make it significantly faster, make error handling better, improve robustness and make it compatible with python. It talks to the python process via pipes. Errors are detected by checking for specific protocol messages and by parsing stderr for messages. Python instances are pooled which works well for parallelization. This module provides the following configuration options as system properties:
 ```properties
 # you can switch to a different python installation by defining an absolute path here
-de.invesdwin.context.python.runtime.japyb.JapyProperties.PYTHON_COMMAND=python3
+de.invesdwin.scripting.python.runtime.japyb.JapyProperties.PYTHON_COMMAND=python3
 ```
 - **invesdwin-scripting-python-runtime-jep**: This runtime loads python by dynamically linking its libraries into the java process via [Jep](https://github.com/ninia/jep). It should provide the best performance for single threaded use and is suitable for scenarios where forking processes should be prevented. You can still use CPython Extension libraries like [Numpy](http://www.numpy.org/), [Pandas](http://pandas.pydata.org/) and [scikit-learn](http://scikit-learn.org/stable/). Just make sure to register them as shared modules by calling `JepProperties.addSharedModule("modulename")` before launching any tasks so you don't get segmentation faults when Jep instances get closed. Also you might have to apply synchronization if needed as described by the documented [Workarounds for CPython Extensions](https://github.com/mrj0/jep/wiki/Workarounds-for-CPython-Extensions). The interpreter instances are reused in a pooled fashion with fixed threads for each instance for compatibility and performance reasons. To install Jep on your operating system, export the java home system variable via `export JAVA_HOME="/usr/lib/jvm/default-java/"` and execute `pip install jep` or `pip3 install jep`. Please make sure to use the correct Jep libraries you compiled against your desired version of python, or else you will get errors (e.g. syntax errors even with correct syntax) when trying to run your scripts. The following system properties can be used for configuring this module:
 ```properties
-de.invesdwin.context.python.runtime.jep.JepProperties.THREAD_POOL_COUNT=${de.invesdwin.context.ContextProperties.CPU_THREAD_POOL_COUNT}
+de.invesdwin.scripting.python.runtime.jep.JepProperties.THREAD_POOL_COUNT=${de.invesdwin.context.ContextProperties.CPU_THREAD_POOL_COUNT}
 # specify where the libjep.so resides on your computer (which you might normally add to java.library.path manually)
-de.invesdwin.context.python.runtime.jep.JepProperties.JEP_LIBRARY_PATH=/usr/local/lib/python3.6/dist-packages/jep/
+de.invesdwin.scripting.python.runtime.jep.JepProperties.JEP_LIBRARY_PATH=/usr/local/lib/python3.6/dist-packages/jep/
 ```
 - **invesdwin-scripting-python-runtime-libpythonclj**: This library integrates [libpython-clj](https://github.com/clj-python/libpython-clj/issues/191). It is similar to jep though without requiring any additional installations in python. It only supports CPython 3.x and does not provide sandboxed interpreters. The following system properties can be used for configuring this module:
 ```properties
 # you can switch to a different python installation by defining an absolute path here
-de.invesdwin.context.python.runtime.libpythonclj.LibpythoncljProperties.PYTHON_COMMAND=python3
+de.invesdwin.scripting.python.runtime.libpythonclj.LibpythoncljProperties.PYTHON_COMMAND=python3
 ```
 - **invesdwin-scripting-python-runtime-python4j**: This library integrates [python4j](https://github.com/eclipse/deeplearning4j/issues/9595). It uses an embedded CPython distribution via [JavaCPP](https://github.com/bytedeco/javacpp-presets/tree/master/cpython). It only supports CPython 3.x and does not provide sandboxed interpreters. The benefit of this integration is that no python installation is required on the host system since it brings its own. You can sideload python modules from a zipped python virtual environment following this [guide](https://deeplearning4j.konduit.ai/python4j/reference/python-path). No additional configuration needed.
 - **invesdwin-scripting-python-runtime-py4j**: This runtime launches python via the command line and communicates with the process via [Py4J](https://www.py4j.org/) over a socket. It is considered the most robust solution since it does not pollute the JVM process by creating separate processes for python. Also multithreaded performance does not suffer from the [Global Interpreter Lock](https://wiki.python.org/moin/GlobalInterpreterLock) as [it is the case for Jep](https://github.com/mrj0/jep/wiki/Jep-and-the-GIL), since each task is executed in a different process. The python processes are reused in a pooled fashion for performance reasons. Each python process will have its own java side Py4J gateway server and they will communicate over automatically discovered ports on your system. For security reasons the communication is currently restricted to localhost, but it could be easily extended to be [secured via TLS](https://www.py4j.org/advanced_topics.html#tls) and allowing communication over multiple computers (just make a feature request or provide your own implementation as a pull request). To install Py4J on your operating system, just execute `pip install py4j` or `pip3 install py4j`. Currently the module provides the following system properties:
 ```properties
 # you can switch to "python3" here for example or provide a different command entirely (e.g. "pypy")
-de.invesdwin.context.python.runtime.py4j.Py4jProperties.PYTHON_COMMAND=python
+de.invesdwin.scripting.python.runtime.py4j.Py4jProperties.PYTHON_COMMAND=python
 ```
 - **invesdwin-scripting-python-runtime-jython**: This runtime uses [Jython](http://www.jython.org/) as a pure JVM implementation of python. If you don't have to use modules that require CPython extensions, this solution has the benefit of being fully embedded without requiring any setup on the operating system. This implementation can be slower than the CPython implementation and you cannot benefit from python compilers like [Numba](http://numba.pydata.org/) or [Anaconda Accelerate](https://docs.continuum.io/accelerate/) that can speed up your python code a lot when it runs in CPython by compiling it directly against the CPU and/or GPU. But on the other hand it provides the most flexible integration when you want to call java code from your python scripts.
 - **invesdwin-scripting-python-runtime-graalpy**: This runtime uses [GraalPy]([http://www.jython.org/](https://www.graalvm.org/python/)) as a pure JVM implementation of python. It is faster than Jython and more up-to-date. You can sideload python modules from a zipped GraalPy virtual environment following this [guide](https://github.com/graalvm/graal-languages-demos/blob/main/graalpy/graalpy-custom-venv-guide/README.md#42-custom-virtual-environment). Then specify the virtual environment via our system property to take care of the Java side. A static initializer could unzip a bundled virtual environment from the jar and override this system property at application launch before the platform is loaded to fully embed a virtual environment similar to the python4j [guide](https://deeplearning4j.konduit.ai/python4j/reference/python-path) for sideloading modules. Currently the module provides the following system properties:
 ```properties
 # you can uncomment the following line and point it to a GraalPy virtual environment to add custom packages to the runtime
-#de.invesdwin.context.python.runtime.graalpy.GraalpyProperties.PYTHON_COMMAND=<GRAALPY_VENV_DIR>/bin/python
+#de.invesdwin.scripting.python.runtime.graalpy.GraalpyProperties.PYTHON_COMMAND=<GRAALPY_VENV_DIR>/bin/python
 ```
 You are free to choose which integration method you prefer by selecting the appropriate runtime module as a dependency for your application. The `invesdwin-scripting-python-runtime-contract` module defines interfaces for integrating your python scripts in a way that works with all of the above runtime modules. So you have the benefit of being able to write your python scripts once and easily test against different runtimes in order to: 
 - verify that different python versions and runtimes produce the same results
@@ -73,7 +73,7 @@ For more elaborate examples of the python script integration, have a look at the
 [PyPy](https://pypy.org/) is a compliant and [often faster](http://speed.pypy.org/) implementation of python than CPython is. Just use the `invesdwin-scripting-python-runtime-py4j` module and set the system property:
 
 ```properties
-de.invesdwin.context.python.runtime.py4j.Py4jProperties.PYTHON_COMMAND=pypy
+de.invesdwin.scripting.python.runtime.py4j.Py4jProperties.PYTHON_COMMAND=pypy
 ```
 
 Installation on ubuntu can be done as follows:
@@ -87,14 +87,14 @@ sudo pypy -m pip install py4j
 
 Or use the `invesdwin-scripting-python-runtime-japyb` module (no additional python modules required) and set the system property:
 ```properties
-de.invesdwin.context.python.runtime.japyb.JapybProperties.PYTHON_COMMAND=pypy
+de.invesdwin.scripting.python.runtime.japyb.JapybProperties.PYTHON_COMMAND=pypy
 ```
 
 Though as always you should measure the performance for your use cases and scripts before deciding on a specific solution. Also be aware that [CPython extensions might not be fully compatible with PyPy](http://pypy.org/compat.html).
 
 ## Recommended Editor
 
-For working with python we recommend using [PyDev](http://www.pydev.org/) if you are mainly using Eclipse. Editing and running scripts is very comfortable with this plugin. If you want to run your scripts from your main application, you can do this easily with `invesdwin-scripting-python-runtime-japyb` (add this module as a `test` scope dependency) during development (you also need to add a dependecy to the type `test-jar` of `invesdwin-scripting-python-runtime-contract` for the log level to get activated, or alternatively change the log level of `de.invesdwin.context.python.runtime.contract.IScriptTaskRunnerPython` to `DEBUG` on your own). The actual deployment distribution can choose a different runtime then as a hard dependency. You can also remote debug your scripts comfortably with PyDev inside Eclipse by following [this manual](http://www.pydev.org/manual_adv_remote_debugger.html). 
+For working with python we recommend using [PyDev](http://www.pydev.org/) if you are mainly using Eclipse. Editing and running scripts is very comfortable with this plugin. If you want to run your scripts from your main application, you can do this easily with `invesdwin-scripting-python-runtime-japyb` (add this module as a `test` scope dependency) during development (you also need to add a dependecy to the type `test-jar` of `invesdwin-scripting-python-runtime-contract` for the log level to get activated, or alternatively change the log level of `de.invesdwin.scripting.python.runtime.contract.IScriptTaskRunnerPython` to `DEBUG` on your own). The actual deployment distribution can choose a different runtime then as a hard dependency. You can also remote debug your scripts comfortably with PyDev inside Eclipse by following [this manual](http://www.pydev.org/manual_adv_remote_debugger.html). 
 
 ## Benchmark
 
