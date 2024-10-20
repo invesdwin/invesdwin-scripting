@@ -35,6 +35,18 @@ This repository contains the following scripting modules for JVM languages:
 All scripting modules provide unified bidirectional communication between Java and the respective scripting language. See test cases for examples on how to implement your script integrations.
 Examples are available in the respective testcases of the modules or the separate project repos.
 
+## Avoiding Bootstrap
+
+If you want to use this project without the overhead of having to initialize a [invesdwin-context](https://github.com/invesdwin/invesdwin-context) bootstrap with its spring-context and module configuration, you can disable the bootstrap with the following code before using any scripts:
+
+```java
+de.invesdwin.context.PlatformInitializerProperties.setAllowed(false);
+```
+
+The above configuration options for the invidiual runtimes can still be provided by setting system properties before calling any script. An example for all of this can be found at: [ScriptingWithoutBootstrapMain.java](https://github.com/invesdwin/invesdwin-context/blob/master/tests/otherproject-noparent-bom-test/src/main/java/com/otherproject/scripting/ScriptingWithoutBootstrapMain.java)
+
+## More Programming Languages
+
 There are also more elaborate integrations available for other languages:
 
 - **R Modules**: Scripting with R
