@@ -58,6 +58,10 @@ For more elaborate examples of the Matlab/Octave script integration, have a look
 
 For working with Matlab we recommend using the default user interface of Matlab. If you want to run your scripts from your main application, you can do this easily with `invesdwin-scripting--python-runtime-matconsolectl` (add this module as a `test` scope dependency) during development (you also need to add a dependecy to the type `test-jar` of `invesdwin-scripting--matlab-runtime-contract` for the log level to get activated, or alternatively change the log level of `de.invesdwin.scripting.matlab.runtime.contract.IScriptTaskRunnerMatlab` to `DEBUG` on your own). The actual deployment distribution can choose a different runtime then as a hard dependency.
 
+## More Documentation and Programming Languages
+
+Further documentation and similar integration modules like this one also can be found here: https://github.com/invesdwin/invesdwin-scripting
+
 ## More Programming Languages
 
 Similar integration modules like this one also exist for the following other programming languages: https://github.com/invesdwin/invesdwin-scripting
