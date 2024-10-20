@@ -1,0 +1,6 @@
+<configuration>
+
+	<logger name="de.invesdwin.context.matlab.runtime.contract.IScriptTaskRunnerMatlab" additivity="true" level="DEBUG">
+	</logger>
+
+</configuration>

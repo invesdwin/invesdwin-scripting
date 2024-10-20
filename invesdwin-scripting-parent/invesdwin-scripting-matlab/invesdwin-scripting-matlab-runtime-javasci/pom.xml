@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.invesdwin</groupId>
+		<artifactId>invesdwin-scripting-matlab</artifactId>
+		<version>1.0.4-SNAPSHOT</version>
+	</parent>
+	<artifactId>invesdwin-scripting-matlab-runtime-javasci</artifactId>
+	<packaging>jar</packaging>
+
+	<licenses>
+		<license>
+			<name>GNU General Public License (GPL), Version 3.0</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+		</license>
+	</licenses>
+
+	<!-- sudo apt-get install scilab scilab-doc scilab-plotlib -->
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<!-- currently broken in ubuntu 18.04: http://bugzilla.scilab.org/show_bug.cgi?id=14546 -->
+						<!-- scilab needs to be installed manually maybe -->
+						<exclude>**/*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>de.invesdwin</groupId>
+			<artifactId>invesdwin-scripting-matlab-runtime-contract</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.invesdwin</groupId>
+			<artifactId>invesdwin-scripting-matlab-runtime-contract</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.scilab.modules</groupId>
+			<artifactId>javasci</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.scilab.modules</groupId>
+			<artifactId>types</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

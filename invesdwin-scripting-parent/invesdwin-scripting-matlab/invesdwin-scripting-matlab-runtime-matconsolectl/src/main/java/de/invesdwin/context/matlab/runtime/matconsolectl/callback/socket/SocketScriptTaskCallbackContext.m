@@ -1,0 +1,8 @@
+global globalSocketScriptTaskCallbackContextUuid;
+globalSocketScriptTaskCallbackContextUuid = socketScriptTaskCallbackContextUuid;
+global globalSocketScriptTaskCallbackServerHost;
+globalSocketScriptTaskCallbackServerHost = socketScriptTaskCallbackServerHost;
+global globalSocketScriptTaskCallbackServerPort;
+globalSocketScriptTaskCallbackServerPort = socketScriptTaskCallbackServerPort;
+global globalSocketScriptTaskCallbackConnected;
+globalSocketScriptTaskCallbackConnected = false;

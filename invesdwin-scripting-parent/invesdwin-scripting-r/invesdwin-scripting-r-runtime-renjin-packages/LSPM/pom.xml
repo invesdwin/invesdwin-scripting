@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.invesdwin.scripting.r.runtime.renjin.packages</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0.2-SNAPSHOT</version>
+	</parent>
+	<artifactId>LSPM</artifactId>
+	<packaging>jar</packaging>
+
+	<!-- WARNING: this module needs to be run on Ubuntu 14.04 with the following 
+		packages installed: -->
+	<!-- sudo apt-get install maven3 gcc-4.7 gcc-4.7-plugin-dev gfortran-4.7 
+		gcc-4.7.multilib r-base-dev -->
+	<!-- PPA: https://launchpad.net/~andrei-pozolotin/+archive/ubuntu/maven3 -->
+
+	<licenses>
+		<license>
+			<name>GNU General Public License (GPL), Version 3.0</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+		</license>
+	</licenses>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.renjin.cran</groupId>
+			<artifactId>DEoptim</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.renjin</groupId>
+			<artifactId>renjin-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.renjin</groupId>
+			<artifactId>tools</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.renjin</groupId>
+				<artifactId>renjin-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>gnur-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.renjin</groupId>
+				<artifactId>gcc-bridge-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>soot</goal>
+						</goals>
+						<phase>process-classes</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

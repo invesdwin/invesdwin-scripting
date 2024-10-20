@@ -1,0 +1,1 @@
+world = strcat({'Hello '}, hello, '!')

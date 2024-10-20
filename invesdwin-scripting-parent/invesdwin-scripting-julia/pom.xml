@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.invesdwin</groupId>
+		<artifactId>invesdwin-scripting-parent</artifactId>
+		<version>1.0.4-SNAPSHOT</version>
+		<relativePath />
+	</parent>
+	<artifactId>invesdwin-scripting-julia</artifactId>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>invesdwin-scripting-julia-runtime-contract</module>
+		<module>invesdwin-scripting-julia-runtime-jajub</module>
+		<module>invesdwin-scripting-julia-runtime-juliacaller</module>
+		<module>invesdwin-scripting-julia-runtime-julia4j</module>
+		<module>invesdwin-scripting-julia-runtime-libjuliaclj</module>
+		<module>invesdwin-scripting-julia-sfrontiers</module>
+	</modules>
+
+</project>
+

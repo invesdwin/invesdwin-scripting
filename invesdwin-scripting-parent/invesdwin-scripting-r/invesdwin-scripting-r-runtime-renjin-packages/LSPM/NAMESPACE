@@ -1,0 +1,16 @@
+useDynLib(LSPM)
+
+export(GHPR)
+export(HPR)
+
+export(lsp)
+export(jointProbTable)
+
+export(optimalf)
+export(maxProbProfit)
+
+export(probDrawdown)
+export(probRuin)
+export(probProfit)
+
+S3method(print,lsp)

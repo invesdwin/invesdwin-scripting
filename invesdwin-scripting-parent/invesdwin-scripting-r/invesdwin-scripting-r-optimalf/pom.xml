@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.invesdwin</groupId>
+		<artifactId>invesdwin-scripting-r</artifactId>
+		<version>1.0.4-SNAPSHOT</version>
+	</parent>
+	<artifactId>invesdwin-scripting-r-optimalf</artifactId>
+	<packaging>jar</packaging>
+
+	<licenses>
+		<license>
+			<name>GNU General Public License (GPL), Version 3.0</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+		</license>
+	</licenses>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<!-- disabled, no automated testing atm -->
+						<exclude>**/*</exclude>
+					</excludes>
+					<!-- <includes> <include>de/invesdwin/context/r/optimalf/OptimalfTestSuite.java</include> 
+						</includes> -->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>de.invesdwin</groupId>
+			<artifactId>invesdwin-scripting-r-runtime-contract</artifactId>
+		</dependency>
+		<!-- enable debug logging by including the test-jar -->
+		<dependency>
+			<groupId>de.invesdwin</groupId>
+			<artifactId>invesdwin-scripting-r-runtime-contract</artifactId>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+
+		<!-- allow testing in in all engines -->
+		<dependency>
+			<groupId>de.invesdwin</groupId>
+			<artifactId>invesdwin-scripting-r-runtime-rcaller</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.invesdwin</groupId>
+			<artifactId>invesdwin-scripting-r-runtime-jri</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.invesdwin</groupId>
+			<artifactId>invesdwin-scripting-r-runtime-rserve</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.invesdwin</groupId>
+			<artifactId>invesdwin-scripting-r-runtime-renjin</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- renjin-maven-plugin does not work properly: https://github.com/bedatadriven/renjin/issues/452 -->
+		<!-- <dependency> <groupId>de.invesdwin.context.r.runtime.renjin.packages</groupId> 
+			<artifactId>LSPM</artifactId> <scope>test</scope> </dependency> -->
+
+	</dependencies>
+
+</project>
