@@ -1,5 +1,23 @@
 # invesdwin-scripting
 
+Integrate functionality of scripting languages with these modules for the [invesdwin-context](https://github.com/subes/invesdwin-context) module system. There are multiple runtime modules provided for each scripting language with a unified bidirectional communication capability. That way you can switch the runtime provider without having to change your script implementation. See test cases for examples on how to implement your script integrations.
+
+## Maven
+
+Releases and snapshots are deployed to this maven repository:
+```
+https://invesdwin.de/repo/invesdwin-oss-remote/
+```
+
+Dependency declaration:
+```xml
+<dependency>
+	<groupId>de.invesdwin</groupId>
+	<artifactId>invesdwin-scripting-python-runtime-japyb</artifactId>
+	<version>1.0.3</version><!---project.version.invesdwin-scripting-parent-->
+</dependency>
+```
+
 ## Scripting Modules for JVM Languages
 
 This repository contains the following scripting modules for JVM languages:
@@ -15,6 +33,7 @@ This repository contains the following scripting modules for JVM languages:
 - **invesdwin-scripting-runtime-mvel**: this is an integration for [MVEL](https://github.com/mvel/mvel) via JSR-223.
 
 All scripting modules provide unified bidirectional communication between Java and the respective scripting language. See test cases for examples on how to implement your script integrations.
+Examples are available in the respective testcases of the modules or the separate project repos.
 
 There are also more elaborate integrations available for other languages:
 
@@ -29,4 +48,6 @@ There are also more elaborate integrations available for other languages:
 - **Haskell Modules**: Scripting with Haskell
 	- https://github.com/invesdwin/invesdwin-scripting/tree/main/invesdwin-scripting-parent/invesdwin-scripting-haskell
 
-Examples are available in the respective testcases of the modules or the separate project repos.
+## Support
+
+If you need further assistance or have some ideas for improvements and don't want to create an issue here on github, feel free to start a discussion in our [invesdwin-platform](https://groups.google.com/forum/#!forum/invesdwin-platform) mailing list.
