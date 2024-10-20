@@ -209,6 +209,6 @@ public class PythonStrategyTest extends ATest {
 ### Solution
 For faster backtests it might be better to reduce the calls to python to as little as possible. Export data from platform, precalculate data in python using some machine learning frameworks, then use an exported file from python with the results during the strategy backtest. This utilizes the full speed of both python and java. The steps can all be automated from the java side using this python integration. During live trading or visual backtests the communication overhead for a tigther integration should be acceptable as long as no high frequency trading is performed. Also the overhead could become acceptable on backtests on higher granular (e.g. daily) bars since there are a lot less data points to be processed or the decision interval for communicating with python is less frequent.
 
-## More Programming Languages
+## More Documentation and Programming Languages
 
-Similar integration modules like this one also exist for the following other programming languages: https://github.com/invesdwin/invesdwin-scripting
+Further documentation and similar integration modules like this one also can be found here: https://github.com/invesdwin/invesdwin-scripting
