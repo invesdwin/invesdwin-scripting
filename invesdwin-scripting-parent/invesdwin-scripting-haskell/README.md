@@ -1,5 +1,5 @@
 # invesdwin-scripting-haskell
-Integrate Haskell functionality with these modules for the [invesdwin-context](https://github.com/subes/invesdwin-context) module system. All integration modules provide unified bidirectional communication between Java and Haskell. That way you can switch the Haskell provider without having to change your script implementation. See test cases for examples on how to implement your script integrations.
+Integrate Haskell functionality with these modules for [invesdwin-scripting](https://github.com/invesdwin/invesdwin-scripting). All integration modules provide unified bidirectional communication between Java and Haskell. That way you can switch the Haskell provider without having to change your script implementation. See test cases for examples on how to implement your script integrations.
 
 ## Runtime Integration Modules
 
