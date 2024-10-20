@@ -13,7 +13,7 @@ Dependency declaration:
 ```xml
 <dependency>
 	<groupId>de.invesdwin</groupId>
-	<artifactId>invesdwin-scripting-python-runtime-japyb</artifactId>
+	<artifactId>invesdwin-scripting-runtime-javascript</artifactId>
 	<version>1.0.3</version><!---project.version.invesdwin-scripting-parent-->
 </dependency>
 ```
