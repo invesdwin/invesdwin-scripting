@@ -1,6 +1,22 @@
 # invesdwin-scripting-matlab
 Integrate Matlab, Octave and Scilab functionality with these modules for [invesdwin-scripting](https://github.com/invesdwin/invesdwin-scripting). All scripting modules provide unified bidirectional communication between Java and the respective scripting language. See test cases for examples on how to implement your script integrations.
 
+## Maven
+
+Releases and snapshots are deployed to this maven repository:
+```
+https://invesdwin.de/repo/invesdwin-oss-remote/
+```
+
+Dependency declaration:
+```xml
+<dependency>
+	<groupId>de.invesdwin</groupId>
+	<artifactId>invesdwin-scripting-matlab-runtime-javaoctave</artifactId>
+	<version>1.0.4-SNAPSHOT</version><!---project.version.invesdwin-scripting-parent-->
+</dependency>
+```
+
 ## Runtime Integration Modules
 
 We have a few options available for integrating Matlab/Octave:
