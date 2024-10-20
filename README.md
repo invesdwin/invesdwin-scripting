@@ -19,12 +19,14 @@ All scripting modules provide unified bidirectional communication between Java a
 There are also more elaborate integrations available for other languages:
 
 - **R Modules**: Scripting with R
-	- https://github.com/invesdwin/invesdwin-scripting/invesdwin-scripting-r 
+	- https://github.com/invesdwin/invesdwin-scripting/invesdwin-scripting-parent/invesdwin-scripting-r 
 - **Python Modules**: Scripting with Python
-	- https://github.com/invesdwin/invesdwin-scripting/invesdwin-scripting-python
+	- https://github.com/invesdwin/invesdwin-scripting/invesdwin-scripting-parent/invesdwin-scripting-python
 - **Matlab/Octave/Scilab Modules**: Scripting with Matlab, Octave and Scilab
-	- https://github.com/invesdwin/invesdwin-scripting/invesdwin-scripting-matlab
+	- https://github.com/invesdwin/invesdwin-scripting/invesdwin-scripting-parent/invesdwin-scripting-matlab
 - **Julia Modules**: Scripting with Julia
-	- https://github.com/invesdwin/invesdwin-scripting/invesdwin-scripting-julia
+	- https://github.com/invesdwin/invesdwin-scripting/invesdwin-scripting-parent/invesdwin-scripting-julia
+- **Haskell Modules**: Scripting with Haskell
+	- https://github.com/invesdwin/invesdwin-scripting/invesdwin-scripting-parent/invesdwin-scripting-haskell
 
 Examples are available in the respective testcases of the modules or the separate project repos.
