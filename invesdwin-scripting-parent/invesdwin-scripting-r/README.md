@@ -1,6 +1,22 @@
 # invesdwin-scripting-r
 Integrate R functionality with these modules for [invesdwin-scripting](https://github.com/invesdwin/invesdwin-scripting). All integration modules provide unified bidirectional communication between Java and R. That way you can switch the R provider without having to change your script implementation. See test cases for examples on how to implement your script integrations.
 
+## Maven
+
+Releases and snapshots are deployed to this maven repository:
+```
+https://invesdwin.de/repo/invesdwin-oss-remote/
+```
+
+Dependency declaration:
+```xml
+<dependency>
+	<groupId>de.invesdwin</groupId>
+	<artifactId>invesdwin-scripting-r-runtime-rcaller</artifactId>
+	<version>1.0.4-SNAPSHOT</version><!---project.version.invesdwin-scripting-parent-->
+</dependency>
+```
+
 ## License Discussion
 
 Please note that [Renjin](http://www.renjin.org/) (as a fast R-Engine for the JVM) and some [R](https://www.r-project.org/) packages that are used here are licensed under the GPL. 
