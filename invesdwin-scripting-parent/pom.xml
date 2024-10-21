@@ -20,6 +20,7 @@
 
 
 	<modules>
+		<module>invesdwin-scripting</module>
 		<module>invesdwin-scripting-graalvm</module>
 		<module>invesdwin-scripting-haskell</module>
 		<module>invesdwin-scripting-julia</module>
@@ -95,6 +96,11 @@
 			</dependency>
 			
 			<!-- misc -->
+			<dependency>
+				<groupId>de.invesdwin</groupId>
+				<artifactId>invesdwin-scripting</artifactId>
+				<version>${project.version.invesdwin-scripting}</version>
+			</dependency>
 			<dependency>
 				<groupId>de.invesdwin</groupId>
 				<artifactId>invesdwin-scripting-graalvm</artifactId>

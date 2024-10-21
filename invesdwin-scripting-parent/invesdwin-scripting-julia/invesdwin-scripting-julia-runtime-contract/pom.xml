@@ -13,6 +13,10 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.invesdwin</groupId>
+			<artifactId>invesdwin-scripting</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.invesdwin</groupId>
 			<artifactId>invesdwin-context-integration-channel</artifactId>
 		</dependency>
 		<dependency>

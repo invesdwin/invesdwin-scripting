@@ -1,7 +1,0 @@
-<configuration>
-
-	<logger name="de.invesdwin.context.julia.runtime.contract.IScriptTaskRunnerJulia" additivity="true" level="DEBUG">
-	</logger>
-
-
-</configuration>

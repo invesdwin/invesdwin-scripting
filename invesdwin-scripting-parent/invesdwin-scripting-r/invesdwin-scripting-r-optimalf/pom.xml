@@ -25,7 +25,7 @@
 						<!-- disabled, no automated testing atm -->
 						<exclude>**/*</exclude>
 					</excludes>
-					<!-- <includes> <include>de/invesdwin/context/r/optimalf/OptimalfTestSuite.java</include> 
+					<!-- <includes> <include>de/invesdwin/scripting/r/optimalf/OptimalfTestSuite.java</include> 
 						</includes> -->
 				</configuration>
 			</plugin>

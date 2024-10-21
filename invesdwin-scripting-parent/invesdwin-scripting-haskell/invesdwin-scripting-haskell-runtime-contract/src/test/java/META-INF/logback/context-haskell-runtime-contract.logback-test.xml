@@ -1,7 +1,0 @@
-<configuration>
-
-	<logger name="de.invesdwin.context.haskell.runtime.contract.IScriptTaskRunnerHaskell" additivity="true" level="DEBUG">
-	</logger>
-
-
-</configuration>

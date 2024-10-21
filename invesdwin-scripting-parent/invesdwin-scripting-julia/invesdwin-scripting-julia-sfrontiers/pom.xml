@@ -18,7 +18,7 @@
 						<!-- disabled, no automated testing atm -->
 						<exclude>**/*</exclude>
 					</excludes>
-					<!-- <includes> <include>de/invesdwin/context/julia/sfrontiers/SfrontiersTestSuite.java</include> 
+					<!-- <includes> <include>de/invesdwin/scripting/julia/sfrontiers/SfrontiersTestSuite.java</include> 
 						</includes> -->
 				</configuration>
 			</plugin>
