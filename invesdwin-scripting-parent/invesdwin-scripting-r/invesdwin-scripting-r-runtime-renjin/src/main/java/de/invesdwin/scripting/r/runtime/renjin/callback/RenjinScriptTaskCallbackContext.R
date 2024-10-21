@@ -1,5 +1,5 @@
 import(de.invesdwin.scripting.r.runtime.renjin.callback.RenjinScriptTaskCallbackContext)
-import(de.invesdwin.scripting.integration.script.callback.ObjectScriptTaskReturnValue)
+import(de.invesdwin.scripting.callback.ObjectScriptTaskReturnValue)
 callback <- function(methodName, parameters = list()) {
     if(!exists("renjinScriptTaskCallbackContext")) {
         if(exists("renjinScriptTaskCallbackContextUuid")) {
