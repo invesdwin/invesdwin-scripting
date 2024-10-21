@@ -1,7 +1,7 @@
 System.out.println("putUuid");
 System.out.println(putUuid);
 
-import de.invesdwin.scripting.beanshell.tests.callback.SimpleCallbackTest;
+import de.invesdwin.scripting.runtime.beanshell.tests.callback.SimpleCallbackTest;
 getSecretStaticImport = SimpleCallbackTest.getSecretStatic(putUuid);
 System.out.println("getSecretStaticImport");
 System.out.println(getSecretStaticImport);
