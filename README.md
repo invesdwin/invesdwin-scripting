@@ -28,7 +28,7 @@ This repository contains the following scripting modules for JVM languages:
 - **invesdwin-scripting-runtime-jshell**: this is an integration for [JShell](https://github.com/dmac100/JShellScriptEngine) via JSR-223. It provides the purest java syntax, but is rather slow. For pure Java the [Janino](http://janino-compiler.github.io/janino/) compiler might be preferable.
 - **invesdwin-scripting-runtime-kotlin**: this is an integration for [Kotlin](https://github.com/Kotlin/kotlin-script-examples). It will use [kotlin-main-kts](https://github.com/Kotlin/kotlin-script-examples/blob/master/jvm/main-kts/MainKts.md) if that is present on the classpath. Otherwise it will use the default JSR-223 engine.
 - **invesdwin-scripting-runtime-scala**: this is an integration for [Scala](https://www.scala-lang.org/) via JSR-223.
-- **invesdwin-scripting-runtime-(jruby|truffleruby)**: this is an integration for [JRuby](https://www.jruby.org/) and [Truffleruby]([https://www.graalvm.org/latest/reference-manual/ruby/](https://www.graalvm.org/ruby/)) via JSR-223.
+- **invesdwin-scripting-runtime-(jruby|truffleruby)**: this is an integration for [JRuby](https://www.jruby.org/) and [TruffleRuby](https://www.graalvm.org/ruby/) via JSR-223.
 - **invesdwin-scripting-runtime-javascript**: this is an integration for Javascript via JSR-223. It uses [GraalJS](https://github.com/oracle/graaljs) if present on the classpath with a fallback to Nashorn (only available until Java 14).
 - **invesdwin-scripting-runtime-mvel**: this is an integration for [MVEL](https://github.com/mvel/mvel) via JSR-223.
 
