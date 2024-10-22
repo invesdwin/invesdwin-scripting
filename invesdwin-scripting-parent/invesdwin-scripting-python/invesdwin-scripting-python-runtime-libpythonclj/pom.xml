@@ -10,21 +10,6 @@
 	<artifactId>invesdwin-scripting-python-runtime-libpythonclj</artifactId>
 	<packaging>jar</packaging>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<!-- disabled, no automated testing atm -->
-						<exclude>**/*</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>de.invesdwin</groupId>
