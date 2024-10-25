@@ -83,7 +83,8 @@ public final class UnsafeJuliaEngineWrapper implements IJuliaEngineWrapper {
     @Override
     public void exec(final String eval) {
         final String command = "j4j_exec(\"begin "
-                + Strings.normalizeNewlines(eval.trim()).replace("\n", "\\n").replace("\"", "\\\"") + "\\nend\")";
+                + Strings.normalizeNewlines(eval.trim()).replace("\n", "\\n").replace("\"", "\\\"").replace("$", "\\$")
+                + "\\nend\")";
         IScriptTaskRunnerJulia.LOG.debug("> exec %s", eval);
         final SWIGTYPE_p_jl_value_t value = Julia4J.jl_eval_string(command);
         try {
