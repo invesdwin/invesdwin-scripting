@@ -1,9 +1,9 @@
-global globalSocketScriptTaskCallbackContextRequestPartFile;
-globalSocketScriptTaskCallbackContextRequestPartFile = socketScriptTaskCallbackContextRequestPartFile;
-global globalSocketScriptTaskCallbackContextRequestFile;
-globalSocketScriptTaskCallbackContextRequestFile = socketScriptTaskCallbackContextRequestFile;
-global globalSocketScriptTaskCallbackContextResponseFile;
-globalSocketScriptTaskCallbackContextResponseFile = socketScriptTaskCallbackContextResponseFile;
+global globalScriptTaskCallbackContextRequestPartFile;
+globalScriptTaskCallbackContextRequestPartFile = scriptTaskCallbackContextRequestPartFile;
+global globalScriptTaskCallbackContextRequestFile;
+globalScriptTaskCallbackContextRequestFile = scriptTaskCallbackContextRequestFile;
+global globalScriptTaskCallbackContextResponseFile;
+globalScriptTaskCallbackContextResponseFile = scriptTaskCallbackContextResponseFile;
 
 function result = callback_dims(parameters)
     for i = 1 : length(parameters)
@@ -20,29 +20,29 @@ function result = callback_dims(parameters)
 endfunction
 
 function result = callback(varargin)
-	global globalSocketScriptTaskCallbackContextRequestPartFile;
-	global globalSocketScriptTaskCallbackContextRequestFile;
-	global globalSocketScriptTaskCallbackContextResponseFile;
-    if length(globalSocketScriptTaskCallbackContextRequestPartFile) == 0 || length(globalSocketScriptTaskCallbackContextRequestFile) == 0 || length(globalSocketScriptTaskCallbackContextResponseFile) == 0
+	global globalScriptTaskCallbackContextRequestPartFile;
+	global globalScriptTaskCallbackContextRequestFile;
+	global globalScriptTaskCallbackContextResponseFile;
+    if length(globalScriptTaskCallbackContextRequestPartFile) == 0 || length(globalScriptTaskCallbackContextRequestFile) == 0 || length(globalScriptTaskCallbackContextResponseFile) == 0
         error('IScriptTaskCallback not available');
     end
     dims = callback_dims(varargin);
 	message = strcat([toJSON(dims), ';', toJSON(varargin)]);
-	requestFd = mopen(globalSocketScriptTaskCallbackContextRequestPartFile, "wt");
+	requestFd = mopen(globalScriptTaskCallbackContextRequestPartFile, "wt");
     mputstr(message, requestFd);
     mclose(requestFd);
-    movefile(globalSocketScriptTaskCallbackContextRequestPartFile, globalSocketScriptTaskCallbackContextRequestFile);
-    while ~isfile(globalSocketScriptTaskCallbackContextResponseFile)
+    movefile(globalScriptTaskCallbackContextRequestPartFile, globalScriptTaskCallbackContextRequestFile);
+    while ~isfile(globalScriptTaskCallbackContextResponseFile)
     	sleep(1);
     end
-    responseLength = fileinfo(globalSocketScriptTaskCallbackContextResponseFile)(1);
+    responseLength = fileinfo(globalScriptTaskCallbackContextResponseFile)(1);
     retry = %T;
     while retry
     	try
-	    	responseFd = mopen(globalSocketScriptTaskCallbackContextResponseFile, "rt");
+	    	responseFd = mopen(globalScriptTaskCallbackContextResponseFile, "rt");
 		    returnExpression = mgetstr(responseLength, responseFd);
 		    mclose(responseFd);
-		    mdelete(globalSocketScriptTaskCallbackContextResponseFile);
+		    mdelete(globalScriptTaskCallbackContextResponseFile);
 		    returnExpressionLines = strsplit(returnExpression, ascii(10));
 		    returnExpressionLinesLength = size(returnExpressionLines, 'r');
 		    if returnExpressionLinesLength > 1

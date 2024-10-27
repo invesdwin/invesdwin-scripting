@@ -10,16 +10,16 @@ import de.invesdwin.util.lang.string.Strings;
 import de.invesdwin.util.math.Characters;
 
 @NotThreadSafe
-public class GhciScriptTaskResultsJulia extends AScriptTaskResultsHaskellFromJson {
+public class GhciScriptTaskResultsHaskell extends AScriptTaskResultsHaskellFromJson {
 
-    private final GhciScriptTaskEngineJulia engine;
+    private final GhciScriptTaskEngineHaskell engine;
 
-    public GhciScriptTaskResultsJulia(final GhciScriptTaskEngineJulia engine) {
+    public GhciScriptTaskResultsHaskell(final GhciScriptTaskEngineHaskell engine) {
         this.engine = engine;
     }
 
     @Override
-    public GhciScriptTaskEngineJulia getEngine() {
+    public GhciScriptTaskEngineHaskell getEngine() {
         return engine;
     }
 

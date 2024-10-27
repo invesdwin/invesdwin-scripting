@@ -5,16 +5,16 @@ import javax.annotation.concurrent.NotThreadSafe;
 import de.invesdwin.scripting.haskell.runtime.contract.AScriptTaskInputsHaskellToExpression;
 
 @NotThreadSafe
-public class GhciScriptTaskInputsJulia extends AScriptTaskInputsHaskellToExpression {
+public class GhciScriptTaskInputsHaskell extends AScriptTaskInputsHaskellToExpression {
 
-    private final GhciScriptTaskEngineJulia engine;
+    private final GhciScriptTaskEngineHaskell engine;
 
-    public GhciScriptTaskInputsJulia(final GhciScriptTaskEngineJulia engine) {
+    public GhciScriptTaskInputsHaskell(final GhciScriptTaskEngineHaskell engine) {
         this.engine = engine;
     }
 
     @Override
-    public GhciScriptTaskEngineJulia getEngine() {
+    public GhciScriptTaskEngineHaskell getEngine() {
         return engine;
     }
 

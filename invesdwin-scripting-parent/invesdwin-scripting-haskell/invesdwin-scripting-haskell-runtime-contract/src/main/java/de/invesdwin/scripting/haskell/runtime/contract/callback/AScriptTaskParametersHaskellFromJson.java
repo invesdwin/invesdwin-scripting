@@ -13,8 +13,6 @@ public abstract class AScriptTaskParametersHaskellFromJson extends AScriptTaskPa
 
     protected abstract JsonNode getAsJsonNode(int index);
 
-    protected abstract JsonNode getAsJsonNodeDims(int index);
-
     @Override
     public boolean isNull(final int index) {
         final JsonNode node = getAsJsonNode(index);
@@ -63,16 +61,6 @@ public abstract class AScriptTaskParametersHaskellFromJson extends AScriptTaskPa
         final JsonNode strsMatrix = getAsJsonNode(index);
         if (strsMatrix == null) {
             return null;
-        }
-        if (strsMatrix.size() == 0) {
-            //https://stackoverflow.com/questions/23079625/extract-array-dimensions-in-julia
-            final JsonNode dims = getAsJsonNodeDims(index);
-            final int rows = dims.get(0).asInt();
-            final String[][] emptyMatrix = new String[rows][];
-            for (int i = 0; i < rows; i++) {
-                emptyMatrix[i] = Strings.EMPTY_ARRAY;
-            }
-            return emptyMatrix;
         }
         //[11 12 13;21 22 23;31 32 33;41 42 43]
         //[[11,21,31,41],[12,22,32,42],[13,23,33,43]]

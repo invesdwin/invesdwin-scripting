@@ -8,7 +8,7 @@ import de.invesdwin.scripting.callback.IScriptTaskCallback;
 import de.invesdwin.scripting.callback.LoggingDelegateScriptTaskCallback;
 import de.invesdwin.scripting.haskell.runtime.contract.AScriptTaskHaskell;
 import de.invesdwin.scripting.haskell.runtime.contract.IScriptTaskRunnerHaskell;
-import de.invesdwin.scripting.haskell.runtime.contract.callback.socket.SocketScriptTaskCallbackContext;
+import de.invesdwin.scripting.haskell.runtime.frege.callback.file.FileScriptTaskCallbackContext;
 import de.invesdwin.scripting.haskell.runtime.frege.pool.ExtendedFregeBridge;
 import de.invesdwin.scripting.haskell.runtime.frege.pool.FregeObjectPool;
 import de.invesdwin.util.error.Throwables;
@@ -31,9 +31,9 @@ public final class FregeScriptTaskRunnerHaskell
         //get session
         final ExtendedFregeBridge bridge = FregeObjectPool.INSTANCE.borrowObject();
         final IScriptTaskCallback callback = scriptTask.getCallback();
-        final SocketScriptTaskCallbackContext context;
+        final FileScriptTaskCallbackContext context;
         if (callback != null) {
-            context = new SocketScriptTaskCallbackContext(LoggingDelegateScriptTaskCallback.maybeWrap(LOG, callback));
+            context = new FileScriptTaskCallbackContext(LoggingDelegateScriptTaskCallback.maybeWrap(LOG, callback));
         } else {
             context = null;
         }
@@ -50,9 +50,6 @@ public final class FregeScriptTaskRunnerHaskell
 
             //results
             final T result = scriptTask.extractResults(engine.getResults());
-            if (context != null) {
-                context.deinit(engine);
-            }
             engine.close();
 
             //return

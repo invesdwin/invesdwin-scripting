@@ -1,11 +1,14 @@
-package de.invesdwin.scripting.matlab.runtime.javasci.callback.file;
+package de.invesdwin.scripting.haskell.runtime.frege.callback.file;
 
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 
 import javax.annotation.concurrent.ThreadSafe;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -18,8 +21,10 @@ import de.invesdwin.context.log.error.Err;
 import de.invesdwin.context.log.error.LoggedRuntimeException;
 import de.invesdwin.scripting.IScriptTaskEngine;
 import de.invesdwin.scripting.callback.IScriptTaskCallback;
-import de.invesdwin.scripting.matlab.runtime.contract.callback.ScriptTaskParametersMatlabFromJson;
-import de.invesdwin.scripting.matlab.runtime.contract.callback.ScriptTaskParametersMatlabFromJsonPool;
+import de.invesdwin.scripting.haskell.runtime.contract.callback.ScriptTaskParametersHaskellFromJson;
+import de.invesdwin.scripting.haskell.runtime.contract.callback.ScriptTaskParametersHaskellFromJsonPool;
+import de.invesdwin.scripting.haskell.runtime.contract.callback.ScriptTaskReturnsHaskellToExpression;
+import de.invesdwin.scripting.haskell.runtime.contract.callback.ScriptTaskReturnsHaskellToExpressionPool;
 import de.invesdwin.util.concurrent.Executors;
 import de.invesdwin.util.concurrent.WrappedExecutorService;
 import de.invesdwin.util.error.Throwables;
@@ -66,12 +71,20 @@ public class FileScriptTaskCallbackContext implements Closeable {
     }
 
     public void init(final IScriptTaskEngine engine) {
-        engine.getInputs()
-                .putString("scriptTaskCallbackContextRequestPartFile", getRequestPartFile().getAbsolutePath());
-        engine.getInputs().putString("scriptTaskCallbackContextRequestFile", getRequestFile().getAbsolutePath());
-        engine.getInputs().putString("scriptTaskCallbackContextResponseFile", getResponseFile().getAbsolutePath());
-        engine.eval(new ClassPathResource(FileScriptTaskCallbackContext.class.getSimpleName() + ".sce",
-                FileScriptTaskCallbackContext.class));
+        final ClassPathResource resource = new ClassPathResource(
+                FileScriptTaskCallbackContext.class.getSimpleName() + ".fr", FileScriptTaskCallbackContext.class);
+        try (InputStream in = resource.getInputStream()) {
+            String script = IOUtils.toString(in, Charset.defaultCharset());
+            script = script.replace("{SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_PART_FILE}",
+                    "\"" + getRequestPartFile().getAbsolutePath() + "\"");
+            script = script.replace("{SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_FILE}",
+                    "\"" + getRequestFile().getAbsolutePath() + "\"");
+            script = script.replace("{SCRIPT_TASK_CALLBACK_CONTEXT_RESPONSE_FILE}",
+                    "\"" + getResponseFile().getAbsolutePath() + "\"");
+            engine.eval(script);
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getUuid() {
@@ -94,15 +107,14 @@ public class FileScriptTaskCallbackContext implements Closeable {
         return responsePartFile;
     }
 
-    public String invoke(final String dims, final String args) {
-        final ScriptTaskParametersMatlabFromJson parameters = ScriptTaskParametersMatlabFromJsonPool.INSTANCE
+    public String invoke(final String args) {
+        final ScriptTaskParametersHaskellFromJson parameters = ScriptTaskParametersHaskellFromJsonPool.INSTANCE
                 .borrowObject();
-        final JavasciScriptTaskReturnsMatlabToExpression returns = JavasciScriptTaskReturnsMatlabToExpressionPool.INSTANCE
+        final ScriptTaskReturnsHaskellToExpression returns = ScriptTaskReturnsHaskellToExpressionPool.INSTANCE
                 .borrowObject();
         try {
-            final JsonNode jsonDims = toJsonNode(dims);
             final JsonNode jsonArgs = toJsonNode(args);
-            parameters.setParameters(jsonDims, jsonArgs, 1);
+            parameters.setParameters(jsonArgs);
             final String methodName = parameters.getString(-1);
             callback.invoke(methodName, parameters, returns);
             return returns.getReturnExpression();
@@ -114,8 +126,8 @@ public class FileScriptTaskCallbackContext implements Closeable {
             returns.returnExpression("error('CallbackException: " + errorMessage + "')");
             return returns.getReturnExpression();
         } finally {
-            JavasciScriptTaskReturnsMatlabToExpressionPool.INSTANCE.returnObject(returns);
-            ScriptTaskParametersMatlabFromJsonPool.INSTANCE.returnObject(parameters);
+            ScriptTaskReturnsHaskellToExpressionPool.INSTANCE.returnObject(returns);
+            ScriptTaskParametersHaskellFromJsonPool.INSTANCE.returnObject(parameters);
         }
     }
 

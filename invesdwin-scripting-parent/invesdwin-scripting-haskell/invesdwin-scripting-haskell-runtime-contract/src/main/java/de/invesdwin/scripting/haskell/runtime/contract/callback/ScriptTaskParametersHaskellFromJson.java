@@ -11,11 +11,9 @@ import de.invesdwin.util.lang.string.Strings;
 @NotThreadSafe
 public class ScriptTaskParametersHaskellFromJson extends AScriptTaskParametersHaskellFromJson implements Closeable {
 
-    private JsonNode dims;
     private JsonNode parameters;
 
-    public void setParameters(final JsonNode dims, final JsonNode parameters) {
-        this.dims = dims;
+    public void setParameters(final JsonNode parameters) {
         this.parameters = parameters;
     }
 
@@ -30,19 +28,13 @@ public class ScriptTaskParametersHaskellFromJson extends AScriptTaskParametersHa
     }
 
     @Override
-    protected JsonNode getAsJsonNodeDims(final int index) {
-        return dims.get(index);
-    }
-
-    @Override
     public void close() {
-        dims = null;
         parameters = null;
     }
 
     @Override
     public String toString() {
-        return Strings.asString(dims) + "," + Strings.asString(parameters);
+        return Strings.asString(parameters);
     }
 
 }

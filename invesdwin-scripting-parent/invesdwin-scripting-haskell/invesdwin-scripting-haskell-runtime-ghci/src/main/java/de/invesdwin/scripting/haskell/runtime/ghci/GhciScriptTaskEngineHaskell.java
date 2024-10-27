@@ -10,16 +10,16 @@ import de.invesdwin.util.concurrent.lock.ILock;
 import de.invesdwin.util.concurrent.lock.disabled.DisabledLock;
 
 @NotThreadSafe
-public class GhciScriptTaskEngineJulia implements IScriptTaskEngine {
+public class GhciScriptTaskEngineHaskell implements IScriptTaskEngine {
 
     private ExtendedGhciBridge bridge;
-    private final GhciScriptTaskInputsJulia inputs;
-    private final GhciScriptTaskResultsJulia results;
+    private final GhciScriptTaskInputsHaskell inputs;
+    private final GhciScriptTaskResultsHaskell results;
 
-    public GhciScriptTaskEngineJulia(final ExtendedGhciBridge bridge) {
+    public GhciScriptTaskEngineHaskell(final ExtendedGhciBridge bridge) {
         this.bridge = bridge;
-        this.inputs = new GhciScriptTaskInputsJulia(this);
-        this.results = new GhciScriptTaskResultsJulia(this);
+        this.inputs = new GhciScriptTaskInputsHaskell(this);
+        this.results = new GhciScriptTaskResultsHaskell(this);
     }
 
     @Override
@@ -28,12 +28,12 @@ public class GhciScriptTaskEngineJulia implements IScriptTaskEngine {
     }
 
     @Override
-    public GhciScriptTaskInputsJulia getInputs() {
+    public GhciScriptTaskInputsHaskell getInputs() {
         return inputs;
     }
 
     @Override
-    public GhciScriptTaskResultsJulia getResults() {
+    public GhciScriptTaskResultsHaskell getResults() {
         return results;
     }
 
@@ -63,8 +63,8 @@ public class GhciScriptTaskEngineJulia implements IScriptTaskEngine {
         return null;
     }
 
-    public static GhciScriptTaskEngineJulia newInstance() {
-        return new GhciScriptTaskEngineJulia(GhciObjectPool.INSTANCE.borrowObject()) {
+    public static GhciScriptTaskEngineHaskell newInstance() {
+        return new GhciScriptTaskEngineHaskell(GhciObjectPool.INSTANCE.borrowObject()) {
             @Override
             public void close() {
                 final ExtendedGhciBridge unwrap = unwrap();

@@ -12,7 +12,7 @@ import jakarta.inject.Inject;
 public class GhciScriptTaskRunnerHaskellTest extends ATest {
 
     @Inject
-    private GhciScriptTaskRunnerJulia runner;
+    private GhciScriptTaskRunnerHaskell runner;
 
     @Test
     public void test() {

@@ -1,0 +1,17 @@
+import Data.JSON
+:{
+callback :: (Show args) => [args] -> result
+callback args = do
+	let message = show ( toJSON ( args ) )
+	writeFile scriptTaskCallbackContextRequestPartFile message
+	-- renameFile scriptTaskCallbackContextRequestPartFile scriptTaskCallbackContextRequestFile
+	let requestPartFile = File.new scriptTaskCallbackContextRequestPartFile
+	let requestFile = File.new scriptTaskCallbackContextRequestFile
+	requestPartFile.renameTo requestFile
+	let returnExpression = readFile scriptTaskCallbackContextResponseFile
+	-- TODO read json responnse because frege has no eval
+	returnExpression
+where 	scriptTaskCallbackContextRequestPartFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_PART_FILE}
+		scriptTaskCallbackContextRequestFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_FILE}
+		scriptTaskCallbackContextResponseFile = {SCRIPT_TASK_CALLBACK_CONTEXT_RESPONSE_FILE}
+:}
