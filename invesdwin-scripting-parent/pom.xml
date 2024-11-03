@@ -29,6 +29,7 @@
 		<module>invesdwin-scripting-matlab</module>
 		<module>invesdwin-scripting-python</module>
 		<module>invesdwin-scripting-r</module>
+		<module>invesdwin-scripting-rust</module>
 		<module>invesdwin-scripting-ruby</module>
 		<module>invesdwin-scripting-runtime-beanshell</module>
 		<module>invesdwin-scripting-runtime-clojure</module>
@@ -635,6 +636,34 @@
 			<dependency>
 				<groupId>de.invesdwin</groupId>
 				<artifactId>invesdwin-scripting-ruby-runtime-truffleruby</artifactId>
+				<version>${project.version.invesdwin-scripting}</version>
+			</dependency>
+			
+			<!-- rust -->
+			<dependency>
+				<groupId>de.invesdwin</groupId>
+				<artifactId>invesdwin-scripting-rust</artifactId>
+				<version>${project.version.invesdwin-scripting}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.invesdwin</groupId>
+				<artifactId>invesdwin-scripting-rust-runtime-contract</artifactId>
+				<version>${project.version.invesdwin-scripting}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.invesdwin</groupId>
+				<artifactId>invesdwin-scripting-rust-runtime-contract</artifactId>
+				<version>${project.version.invesdwin-scripting}</version>
+				<type>test-jar</type>
+			</dependency>
+			<dependency>
+				<groupId>de.invesdwin</groupId>
+				<artifactId>invesdwin-scripting-rust-runtime-evcxr</artifactId>
+				<version>${project.version.invesdwin-scripting}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.invesdwin</groupId>
+				<artifactId>invesdwin-scripting-rust-runtime-rhai</artifactId>
 				<version>${project.version.invesdwin-scripting}</version>
 			</dependency>
 		</dependencies>
