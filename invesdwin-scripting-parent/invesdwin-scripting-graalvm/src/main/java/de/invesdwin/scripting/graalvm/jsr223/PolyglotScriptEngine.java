@@ -36,25 +36,23 @@ public class PolyglotScriptEngine implements ScriptEngine, Compilable, Invocable
     public CompiledScript compile(final String script) throws ScriptException {
         final Source src = factory.customizeSourceBuilder(Source.newBuilder(factory.getLanguageId(), script, "Unnamed"))
                 .buildLiteral();
-        try {
-            defaultContext.getContext().parse(src); // only for the side-effect of validating the source
-        } catch (final PolyglotException e) {
-            throw new ScriptException(e);
-        }
-        return new PolyglotCompiledScript(src, this);
+        return newCompiledScript(src);
     }
 
     @Override
     public CompiledScript compile(final Reader script) throws ScriptException {
-        final Source src;
         try {
-            src = factory.customizeSourceBuilder(Source.newBuilder(factory.getLanguageId(), script, "sourcefromreader"))
+            final Source src = factory
+                    .customizeSourceBuilder(Source.newBuilder(factory.getLanguageId(), script, "sourcefromreader"))
                     .build();
-            defaultContext.getContext().parse(src); // only for the side-effect of validating the source
-        } catch (PolyglotException | IOException e) {
+            return newCompiledScript(src);
+        } catch (final IOException e) {
             throw new ScriptException(e);
         }
-        return new PolyglotCompiledScript(src, this);
+    }
+
+    protected CompiledScript newCompiledScript(final Source src) throws ScriptException {
+        return factory.newCompiledScript(src, this);
     }
 
     @Override

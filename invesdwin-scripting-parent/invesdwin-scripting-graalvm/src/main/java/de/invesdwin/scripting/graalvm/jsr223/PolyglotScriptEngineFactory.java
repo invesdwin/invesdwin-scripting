@@ -3,14 +3,18 @@ package de.invesdwin.scripting.graalvm.jsr223;
 import java.util.List;
 
 import javax.annotation.concurrent.Immutable;
+import javax.script.CompiledScript;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
+import javax.script.ScriptException;
 
 import org.graalvm.home.Version;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.Language;
 import org.graalvm.polyglot.Source;
+
+import de.invesdwin.scripting.graalvm.jsr223.compiled.ParseAndExecutePolyglotCompiledScript;
 
 /**
  * Source: https://www.graalvm.org/latest/reference-manual/embed-languages/#compatibility-with-jsr-223-scriptengine
@@ -113,7 +117,14 @@ public class PolyglotScriptEngineFactory implements ScriptEngineFactory {
     }
 
     public Source.Builder customizeSourceBuilder(final Source.Builder builder) {
+        //builder.cached(true) is not needed because this is the default
         return builder;
+    }
+
+    public CompiledScript newCompiledScript(final Source src, final PolyglotScriptEngine engine)
+            throws ScriptException {
+        //return new EvalPolyglotCompiledScript(src, engine);
+        return new ParseAndExecutePolyglotCompiledScript(src, engine);
     }
 
 }
