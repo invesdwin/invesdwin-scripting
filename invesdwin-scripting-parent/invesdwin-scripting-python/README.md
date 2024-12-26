@@ -207,6 +207,16 @@ public class PythonStrategyTest extends ATest {
 ### Results
 (Intel i9-9900K)
 - **Java Only**: 3716.28/ms ticks processed
+- **Jython**: 1051.84/ms python calls with 258.14/ms ticks processed
+  - without compiled script cache
+    - 2050.49/s python calls with 511.63/s ticks processed (starts with up to ~5900/s python calls but slows down the longer it runs)
+- **GraalPY**: TODO
+  - without `-XX:+EnableJVMCI`
+    - 565.73/ms python calls with 137.92/ms ticks processed
+  - without compiled script cache
+    - TODO
+  - without `-XX:+EnableJVMCI` and without compiled script cache
+    - TODO
 - **libpython-clj**: 404.95/ms python calls with 94.73/ms ticks processed
   - [Here](https://github.com/clj-python/libpython-clj/issues/191#issuecomment-1003828913) how to keep the GIL locked during the backtest to speed up python calls
     -  614.23/ms python calls with 139.61/ms ticks processed
@@ -219,8 +229,6 @@ public class PythonStrategyTest extends ATest {
 - **Py4J-python3**: 29.63/ms python calls with 7463.35/s ticks processed
 - **Py4J-pypy**: 29.3/ms python calls with 7371.21/s ticks processed
 - **Japyb-python3**: 14.6/ms python calls with 3625.96/s ticks processed
-- **Jython**: 2050.49/s python calls with 511.63/s ticks processed 
-  - starts with up to ~5900/s python calls but slows down the longer it runs
 
 ### Solution
 For faster backtests it might be better to reduce the calls to python to as little as possible. Export data from platform, precalculate data in python using some machine learning frameworks, then use an exported file from python with the results during the strategy backtest. This utilizes the full speed of both python and java. The steps can all be automated from the java side using this python integration. During live trading or visual backtests the communication overhead for a tigther integration should be acceptable as long as no high frequency trading is performed. Also the overhead could become acceptable on backtests on higher granular (e.g. daily) bars since there are a lot less data points to be processed or the decision interval for communicating with python is less frequent.
