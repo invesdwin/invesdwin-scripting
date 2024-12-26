@@ -124,7 +124,7 @@ public class PolyglotScriptEngineFactory implements ScriptEngineFactory {
     public CompiledScript newCompiledScript(final Source src, final PolyglotScriptEngine engine)
             throws ScriptException {
         //return new EvalPolyglotCompiledScript(src, engine);
-        return new ParseAndExecutePolyglotCompiledScript(src, engine);
+        return new ParseAndExecutePolyglotCompiledScript(src, engine, false);
     }
 
 }
