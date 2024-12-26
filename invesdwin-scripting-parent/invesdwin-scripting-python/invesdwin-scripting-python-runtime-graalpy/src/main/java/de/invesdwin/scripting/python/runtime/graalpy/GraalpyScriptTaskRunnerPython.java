@@ -6,10 +6,10 @@ import org.springframework.beans.factory.FactoryBean;
 
 import de.invesdwin.scripting.callback.IScriptTaskCallback;
 import de.invesdwin.scripting.callback.LoggingDelegateScriptTaskCallback;
-import de.invesdwin.scripting.graalvm.jsr223.PolyglotScriptEngine;
 import de.invesdwin.scripting.python.runtime.contract.AScriptTaskPython;
 import de.invesdwin.scripting.python.runtime.contract.IScriptTaskRunnerPython;
 import de.invesdwin.scripting.python.runtime.graalpy.pool.GraalpyScriptEngineObjectPool;
+import de.invesdwin.scripting.python.runtime.graalpy.pool.WrappedGraalpyScriptEngine;
 import de.invesdwin.util.error.Throwables;
 import jakarta.inject.Named;
 
@@ -30,7 +30,7 @@ public final class GraalpyScriptTaskRunnerPython
     @Override
     public <T> T run(final AScriptTaskPython<T> scriptTask) {
         //get session
-        final PolyglotScriptEngine pyScriptEngine = GraalpyScriptEngineObjectPool.INSTANCE.borrowObject();
+        final WrappedGraalpyScriptEngine pyScriptEngine = GraalpyScriptEngineObjectPool.INSTANCE.borrowObject();
         final IScriptTaskCallback callback = scriptTask.getCallback();
         final GraalpyScriptTaskCallbackContext context;
         if (callback != null) {

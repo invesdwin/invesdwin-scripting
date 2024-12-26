@@ -1,7 +1,6 @@
 package de.invesdwin.scripting.python.runtime.jython;
 
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.script.ScriptException;
 
 import de.invesdwin.scripting.python.runtime.contract.IScriptTaskResultsPython;
 import de.invesdwin.util.lang.string.Strings;
@@ -30,245 +29,137 @@ public class JythonScriptTaskResultsPython implements IScriptTaskResultsPython {
 
     @Override
     public byte getByte(final String variable) {
-        try {
-            return Bytes.checkedCast(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Bytes.checkedCast(engine.unwrap().eval(variable));
     }
 
     @Override
     public byte[] getByteVector(final String variable) {
-        try {
-            return Bytes.checkedCastVector(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Bytes.checkedCastVector(engine.unwrap().eval(variable));
     }
 
     @Override
     public byte[][] getByteMatrix(final String variable) {
-        try {
-            return Bytes.checkedCastMatrix(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Bytes.checkedCastMatrix(engine.unwrap().eval(variable));
     }
 
     @Override
     public char getCharacter(final String variable) {
-        try {
-            return Characters.checkedCast(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Characters.checkedCast(engine.unwrap().eval(variable));
     }
 
     @Override
     public char[] getCharacterVector(final String variable) {
-        try {
-            return Characters.checkedCastVector(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Characters.checkedCastVector(engine.unwrap().eval(variable));
     }
 
     @Override
     public char[][] getCharacterMatrix(final String variable) {
-        try {
-            return Characters.checkedCastMatrix(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Characters.checkedCastMatrix(engine.unwrap().eval(variable));
     }
 
     @Override
     public String getString(final String variable) {
-        try {
-            return Strings.checkedCast(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Strings.checkedCast(engine.unwrap().eval(variable));
     }
 
     @Override
     public String[] getStringVector(final String variable) {
-        try {
-            return Strings.checkedCastVector(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Strings.checkedCastVector(engine.unwrap().eval(variable));
     }
 
     @Override
     public String[][] getStringMatrix(final String variable) {
-        try {
-            return Strings.checkedCastMatrix(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Strings.checkedCastMatrix(engine.unwrap().eval(variable));
     }
 
     @Override
     public float getFloat(final String variable) {
-        try {
-            return Floats.checkedCast(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Floats.checkedCast(engine.unwrap().eval(variable));
     }
 
     @Override
     public float[] getFloatVector(final String variable) {
-        try {
-            return Floats.checkedCastVector(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Floats.checkedCastVector(engine.unwrap().eval(variable));
     }
 
     @Override
     public float[][] getFloatMatrix(final String variable) {
-        try {
-            return Floats.checkedCastMatrix(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Floats.checkedCastMatrix(engine.unwrap().eval(variable));
     }
 
     @Override
     public double getDouble(final String variable) {
-        try {
-            return Doubles.checkedCast(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Doubles.checkedCast(engine.unwrap().eval(variable));
     }
 
     @Override
     public double[] getDoubleVector(final String variable) {
-        try {
-            return Doubles.checkedCastVector(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Doubles.checkedCastVector(engine.unwrap().eval(variable));
     }
 
     @Override
     public double[][] getDoubleMatrix(final String variable) {
-        try {
-            return Doubles.checkedCastMatrix(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Doubles.checkedCastMatrix(engine.unwrap().eval(variable));
     }
 
     @Override
     public short getShort(final String variable) {
-        try {
-            return Shorts.checkedCast(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Shorts.checkedCast(engine.unwrap().eval(variable));
     }
 
     @Override
     public short[] getShortVector(final String variable) {
-        try {
-            return Shorts.checkedCastVector(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Shorts.checkedCastVector(engine.unwrap().eval(variable));
     }
 
     @Override
     public short[][] getShortMatrix(final String variable) {
-        try {
-            return Shorts.checkedCastMatrix(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Shorts.checkedCastMatrix(engine.unwrap().eval(variable));
     }
 
     @Override
     public int getInteger(final String variable) {
-        try {
-            return Integers.checkedCast(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Integers.checkedCast(engine.unwrap().eval(variable));
     }
 
     @Override
     public int[] getIntegerVector(final String variable) {
-        try {
-            return Integers.checkedCastVector(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Integers.checkedCastVector(engine.unwrap().eval(variable));
     }
 
     @Override
     public int[][] getIntegerMatrix(final String variable) {
-        try {
-            return Integers.checkedCastMatrix(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Integers.checkedCastMatrix(engine.unwrap().eval(variable));
     }
 
     @Override
     public long getLong(final String variable) {
-        try {
-            return Longs.checkedCast(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Longs.checkedCast(engine.unwrap().eval(variable));
     }
 
     @Override
     public long[] getLongVector(final String variable) {
-        try {
-            return Longs.checkedCastVector(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Longs.checkedCastVector(engine.unwrap().eval(variable));
     }
 
     @Override
     public long[][] getLongMatrix(final String variable) {
-        try {
-            return Longs.checkedCastMatrix(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Longs.checkedCastMatrix(engine.unwrap().eval(variable));
     }
 
     @Override
     public boolean getBoolean(final String variable) {
-        try {
-            return Booleans.checkedCast(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Booleans.checkedCast(engine.unwrap().eval(variable));
     }
 
     @Override
     public boolean[] getBooleanVector(final String variable) {
-        try {
-            return Booleans.checkedCastVector(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Booleans.checkedCastVector(engine.unwrap().eval(variable));
     }
 
     @Override
     public boolean[][] getBooleanMatrix(final String variable) {
-        try {
-            return Booleans.checkedCastMatrix(engine.unwrap().eval(variable));
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        return Booleans.checkedCastMatrix(engine.unwrap().eval(variable));
     }
 
 }

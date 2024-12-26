@@ -1,12 +1,10 @@
 package de.invesdwin.scripting.python.runtime.jython;
 
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.script.ScriptException;
-
-import org.python.jsr223.PyScriptEngine;
 
 import de.invesdwin.scripting.IScriptTaskEngine;
 import de.invesdwin.scripting.python.runtime.jython.pool.PyScriptEngineObjectPool;
+import de.invesdwin.scripting.python.runtime.jython.pool.WrappedPyScriptEngine;
 import de.invesdwin.util.concurrent.WrappedExecutorService;
 import de.invesdwin.util.concurrent.lock.ILock;
 import de.invesdwin.util.concurrent.lock.disabled.DisabledLock;
@@ -14,11 +12,11 @@ import de.invesdwin.util.concurrent.lock.disabled.DisabledLock;
 @NotThreadSafe
 public class JythonScriptTaskEnginePython implements IScriptTaskEngine {
 
-    private PyScriptEngine pyScriptEngine;
+    private WrappedPyScriptEngine pyScriptEngine;
     private final JythonScriptTaskInputsPython inputs;
     private final JythonScriptTaskResultsPython results;
 
-    public JythonScriptTaskEnginePython(final PyScriptEngine pyScriptEngine) {
+    public JythonScriptTaskEnginePython(final WrappedPyScriptEngine pyScriptEngine) {
         this.pyScriptEngine = pyScriptEngine;
         this.inputs = new JythonScriptTaskInputsPython(this);
         this.results = new JythonScriptTaskResultsPython(this);
@@ -29,11 +27,7 @@ public class JythonScriptTaskEnginePython implements IScriptTaskEngine {
      */
     @Override
     public void eval(final String expression) {
-        try {
-            pyScriptEngine.eval(expression);
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        pyScriptEngine.eval(expression);
     }
 
     @Override
@@ -52,7 +46,7 @@ public class JythonScriptTaskEnginePython implements IScriptTaskEngine {
     }
 
     @Override
-    public PyScriptEngine unwrap() {
+    public WrappedPyScriptEngine unwrap() {
         return pyScriptEngine;
     }
 
@@ -73,7 +67,7 @@ public class JythonScriptTaskEnginePython implements IScriptTaskEngine {
         return new JythonScriptTaskEnginePython(PyScriptEngineObjectPool.INSTANCE.borrowObject()) {
             @Override
             public void close() {
-                final PyScriptEngine unwrap = unwrap();
+                final WrappedPyScriptEngine unwrap = unwrap();
                 if (unwrap != null) {
                     PyScriptEngineObjectPool.INSTANCE.returnObject(unwrap);
                 }

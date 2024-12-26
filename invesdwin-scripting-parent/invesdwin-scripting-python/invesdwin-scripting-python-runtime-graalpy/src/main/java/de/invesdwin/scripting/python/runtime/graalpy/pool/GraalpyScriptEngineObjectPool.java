@@ -1,17 +1,9 @@
 package de.invesdwin.scripting.python.runtime.graalpy.pool;
 
-import java.io.OutputStreamWriter;
-
 import javax.annotation.concurrent.ThreadSafe;
-import javax.script.ScriptException;
 
 import org.springframework.beans.factory.FactoryBean;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jDebugOutputStream;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jWarnOutputStream;
 
-import de.invesdwin.scripting.graalvm.jsr223.PolyglotScriptEngine;
-import de.invesdwin.scripting.python.runtime.contract.IScriptTaskRunnerPython;
-import de.invesdwin.scripting.python.runtime.graalpy.jsr223.GraalpyScriptEngineFactory;
 import de.invesdwin.util.concurrent.pool.timeout.ATimeoutObjectPool;
 import de.invesdwin.util.time.date.FTimeUnit;
 import de.invesdwin.util.time.duration.Duration;
@@ -19,7 +11,7 @@ import jakarta.inject.Named;
 
 @ThreadSafe
 @Named
-public final class GraalpyScriptEngineObjectPool extends ATimeoutObjectPool<PolyglotScriptEngine>
+public final class GraalpyScriptEngineObjectPool extends ATimeoutObjectPool<WrappedGraalpyScriptEngine>
         implements FactoryBean<GraalpyScriptEngineObjectPool> {
 
     public static final GraalpyScriptEngineObjectPool INSTANCE = new GraalpyScriptEngineObjectPool();
@@ -29,17 +21,13 @@ public final class GraalpyScriptEngineObjectPool extends ATimeoutObjectPool<Poly
     }
 
     @Override
-    public void invalidateObject(final PolyglotScriptEngine element) {
+    public void invalidateObject(final WrappedGraalpyScriptEngine element) {
         element.close();
     }
 
     @Override
-    protected PolyglotScriptEngine newObject() {
-        final PolyglotScriptEngine engine = GraalpyScriptEngineFactory.INSTANCE.getScriptEngine();
-        engine.getContext().setWriter(new OutputStreamWriter(new Slf4jDebugOutputStream(IScriptTaskRunnerPython.LOG)));
-        engine.getContext()
-                .setErrorWriter(new OutputStreamWriter(new Slf4jWarnOutputStream(IScriptTaskRunnerPython.LOG)));
-        return engine;
+    protected WrappedGraalpyScriptEngine newObject() {
+        return new WrappedGraalpyScriptEngine();
     }
 
     /**
@@ -50,13 +38,9 @@ public final class GraalpyScriptEngineObjectPool extends ATimeoutObjectPool<Poly
      * http://stackoverflow.com/questions/3543833/how-do-i-clear-all-variables-in-the-middle-of-a-python-script
      */
     @Override
-    protected boolean passivateObject(final PolyglotScriptEngine element) {
-        try {
-            element.eval(IScriptTaskRunnerPython.CLEANUP_SCRIPT);
-            return true;
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+    protected boolean passivateObject(final WrappedGraalpyScriptEngine element) {
+        element.reset();
+        return true;
     }
 
     @Override

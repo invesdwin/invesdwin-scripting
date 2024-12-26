@@ -1,11 +1,10 @@
 package de.invesdwin.scripting.python.runtime.graalpy;
 
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.script.ScriptException;
 
 import de.invesdwin.scripting.IScriptTaskEngine;
-import de.invesdwin.scripting.graalvm.jsr223.PolyglotScriptEngine;
 import de.invesdwin.scripting.python.runtime.graalpy.pool.GraalpyScriptEngineObjectPool;
+import de.invesdwin.scripting.python.runtime.graalpy.pool.WrappedGraalpyScriptEngine;
 import de.invesdwin.util.concurrent.WrappedExecutorService;
 import de.invesdwin.util.concurrent.lock.ILock;
 import de.invesdwin.util.concurrent.lock.disabled.DisabledLock;
@@ -13,11 +12,11 @@ import de.invesdwin.util.concurrent.lock.disabled.DisabledLock;
 @NotThreadSafe
 public class GraalpyScriptTaskEnginePython implements IScriptTaskEngine {
 
-    private PolyglotScriptEngine pyScriptEngine;
+    private WrappedGraalpyScriptEngine pyScriptEngine;
     private final GraalpyScriptTaskInputsPython inputs;
     private final GraalpyScriptTaskResultsPython results;
 
-    public GraalpyScriptTaskEnginePython(final PolyglotScriptEngine pyScriptEngine) {
+    public GraalpyScriptTaskEnginePython(final WrappedGraalpyScriptEngine pyScriptEngine) {
         this.pyScriptEngine = pyScriptEngine;
         this.inputs = new GraalpyScriptTaskInputsPython(this);
         this.results = new GraalpyScriptTaskResultsPython(this);
@@ -28,11 +27,7 @@ public class GraalpyScriptTaskEnginePython implements IScriptTaskEngine {
      */
     @Override
     public void eval(final String expression) {
-        try {
-            pyScriptEngine.eval(expression);
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+        pyScriptEngine.eval(expression);
     }
 
     @Override
@@ -51,7 +46,7 @@ public class GraalpyScriptTaskEnginePython implements IScriptTaskEngine {
     }
 
     @Override
-    public PolyglotScriptEngine unwrap() {
+    public WrappedGraalpyScriptEngine unwrap() {
         return pyScriptEngine;
     }
 
@@ -72,7 +67,7 @@ public class GraalpyScriptTaskEnginePython implements IScriptTaskEngine {
         return new GraalpyScriptTaskEnginePython(GraalpyScriptEngineObjectPool.INSTANCE.borrowObject()) {
             @Override
             public void close() {
-                final PolyglotScriptEngine unwrap = unwrap();
+                final WrappedGraalpyScriptEngine unwrap = unwrap();
                 if (unwrap != null) {
                     GraalpyScriptEngineObjectPool.INSTANCE.returnObject(unwrap);
                 }

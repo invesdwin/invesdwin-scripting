@@ -1,17 +1,9 @@
 package de.invesdwin.scripting.python.runtime.jython.pool;
 
-import java.io.OutputStreamWriter;
-
 import javax.annotation.concurrent.ThreadSafe;
-import javax.script.ScriptException;
 
-import org.python.jsr223.PyScriptEngine;
-import org.python.jsr223.PyScriptEngineFactory;
 import org.springframework.beans.factory.FactoryBean;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jDebugOutputStream;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jWarnOutputStream;
 
-import de.invesdwin.scripting.python.runtime.contract.IScriptTaskRunnerPython;
 import de.invesdwin.util.concurrent.pool.timeout.ATimeoutObjectPool;
 import de.invesdwin.util.time.date.FTimeUnit;
 import de.invesdwin.util.time.duration.Duration;
@@ -19,28 +11,23 @@ import jakarta.inject.Named;
 
 @ThreadSafe
 @Named
-public final class PyScriptEngineObjectPool extends ATimeoutObjectPool<PyScriptEngine>
+public final class PyScriptEngineObjectPool extends ATimeoutObjectPool<WrappedPyScriptEngine>
         implements FactoryBean<PyScriptEngineObjectPool> {
 
     public static final PyScriptEngineObjectPool INSTANCE = new PyScriptEngineObjectPool();
-    private static final PyScriptEngineFactory FACTORY = new PyScriptEngineFactory();
 
     private PyScriptEngineObjectPool() {
         super(Duration.ONE_MINUTE, new Duration(10, FTimeUnit.SECONDS));
     }
 
     @Override
-    public void invalidateObject(final PyScriptEngine element) {
+    public void invalidateObject(final WrappedPyScriptEngine element) {
         element.close();
     }
 
     @Override
-    protected PyScriptEngine newObject() {
-        final PyScriptEngine engine = (PyScriptEngine) FACTORY.getScriptEngine();
-        engine.getContext().setWriter(new OutputStreamWriter(new Slf4jDebugOutputStream(IScriptTaskRunnerPython.LOG)));
-        engine.getContext()
-                .setErrorWriter(new OutputStreamWriter(new Slf4jWarnOutputStream(IScriptTaskRunnerPython.LOG)));
-        return engine;
+    protected WrappedPyScriptEngine newObject() {
+        return new WrappedPyScriptEngine();
     }
 
     /**
@@ -51,13 +38,9 @@ public final class PyScriptEngineObjectPool extends ATimeoutObjectPool<PyScriptE
      * http://stackoverflow.com/questions/3543833/how-do-i-clear-all-variables-in-the-middle-of-a-python-script
      */
     @Override
-    protected boolean passivateObject(final PyScriptEngine element) {
-        try {
-            element.eval(IScriptTaskRunnerPython.CLEANUP_SCRIPT);
-            return true;
-        } catch (final ScriptException e) {
-            throw new RuntimeException(e);
-        }
+    protected boolean passivateObject(final WrappedPyScriptEngine element) {
+        element.reset();
+        return true;
     }
 
     @Override

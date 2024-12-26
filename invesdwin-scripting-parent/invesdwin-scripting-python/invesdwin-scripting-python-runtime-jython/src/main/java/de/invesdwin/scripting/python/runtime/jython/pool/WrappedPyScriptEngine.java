@@ -1,8 +1,7 @@
-package de.invesdwin.scripting.ruby.runtime.truffleruby.pool;
+package de.invesdwin.scripting.python.runtime.jython.pool;
 
 import java.io.Closeable;
 import java.io.OutputStreamWriter;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -15,35 +14,35 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
+import org.python.jsr223.PyScriptEngine;
+import org.python.jsr223.PyScriptEngineFactory;
 import org.zeroturnaround.exec.stream.slf4j.Slf4jDebugOutputStream;
 import org.zeroturnaround.exec.stream.slf4j.Slf4jWarnOutputStream;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 
-import de.invesdwin.scripting.graalvm.jsr223.PolyglotScriptEngine;
-import de.invesdwin.scripting.ruby.runtime.IScriptTaskRunnerRuby;
-import de.invesdwin.scripting.ruby.runtime.truffleruby.jsr223.TrufflerubyScriptEngineFactory;
+import de.invesdwin.scripting.python.runtime.contract.IScriptTaskRunnerPython;
 
 @NotThreadSafe
-public class WrappedTrufflerubyScriptEngine implements Closeable {
+public class WrappedPyScriptEngine implements Closeable {
+
+    private static final PyScriptEngineFactory FACTORY = new PyScriptEngineFactory();
 
     private final LoadingCache<String, CompiledScript> scriptCache;
 
-    private final PolyglotScriptEngine engine;
+    private final PyScriptEngine engine;
     private final Compilable compilable;
     private final Invocable invocable;
     private final Bindings binding;
     private final Function<String, Object> evalF;
-    private final String origGlobalVariables;
 
-    public WrappedTrufflerubyScriptEngine() {
-        this.engine = TrufflerubyScriptEngineFactory.INSTANCE.getScriptEngine();
-        engine.getContext().setWriter(new OutputStreamWriter(new Slf4jDebugOutputStream(IScriptTaskRunnerRuby.LOG)));
+    public WrappedPyScriptEngine() {
+        this.engine = (PyScriptEngine) FACTORY.getScriptEngine();
+        engine.getContext().setWriter(new OutputStreamWriter(new Slf4jDebugOutputStream(IScriptTaskRunnerPython.LOG)));
         engine.getContext()
-                .setErrorWriter(new OutputStreamWriter(new Slf4jWarnOutputStream(IScriptTaskRunnerRuby.LOG)));
+                .setErrorWriter(new OutputStreamWriter(new Slf4jWarnOutputStream(IScriptTaskRunnerPython.LOG)));
         this.binding = engine.getBindings(ScriptContext.ENGINE_SCOPE);
-        this.binding.put("$binding", binding);
         if (engine instanceof Compilable) {
             compilable = engine;
             scriptCache = Caffeine.newBuilder()
@@ -62,22 +61,6 @@ public class WrappedTrufflerubyScriptEngine implements Closeable {
         } else {
             invocable = null;
         }
-        this.origGlobalVariables = newOrigGlobalVariables();
-    }
-
-    @SuppressWarnings("unchecked")
-    private String newOrigGlobalVariables() {
-        final StringBuilder sb = new StringBuilder("[");
-        final List<String> vars = (List<String>) eval("global_variables");
-        for (int i = 0; i < vars.size(); i++) {
-            if (i > 0) {
-                sb.append(",");
-            }
-            sb.append(":");
-            sb.append(vars.get(i));
-        }
-        sb.append("]");
-        return sb.toString();
     }
 
     public ScriptEngine getEngine() {
@@ -118,9 +101,7 @@ public class WrappedTrufflerubyScriptEngine implements Closeable {
     }
 
     public void reset() {
-        this.binding.put("$binding", binding);
-        //https://stackoverflow.com/a/72504691
-        eval("(local_variables + global_variables - " + origGlobalVariables + ").each { |e| eval(\"#{e} = nil\") }");
+        eval(IScriptTaskRunnerPython.CLEANUP_SCRIPT);
     }
 
     public void resetScriptCache() {

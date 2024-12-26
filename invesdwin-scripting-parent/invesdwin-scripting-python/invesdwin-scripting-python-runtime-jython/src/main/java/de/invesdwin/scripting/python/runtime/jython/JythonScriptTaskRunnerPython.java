@@ -2,7 +2,6 @@ package de.invesdwin.scripting.python.runtime.jython;
 
 import javax.annotation.concurrent.Immutable;
 
-import org.python.jsr223.PyScriptEngine;
 import org.springframework.beans.factory.FactoryBean;
 
 import de.invesdwin.scripting.callback.IScriptTaskCallback;
@@ -10,6 +9,7 @@ import de.invesdwin.scripting.callback.LoggingDelegateScriptTaskCallback;
 import de.invesdwin.scripting.python.runtime.contract.AScriptTaskPython;
 import de.invesdwin.scripting.python.runtime.contract.IScriptTaskRunnerPython;
 import de.invesdwin.scripting.python.runtime.jython.pool.PyScriptEngineObjectPool;
+import de.invesdwin.scripting.python.runtime.jython.pool.WrappedPyScriptEngine;
 import de.invesdwin.util.error.Throwables;
 import jakarta.inject.Named;
 
@@ -30,7 +30,7 @@ public final class JythonScriptTaskRunnerPython
     @Override
     public <T> T run(final AScriptTaskPython<T> scriptTask) {
         //get session
-        final PyScriptEngine pyScriptEngine = PyScriptEngineObjectPool.INSTANCE.borrowObject();
+        final WrappedPyScriptEngine pyScriptEngine = PyScriptEngineObjectPool.INSTANCE.borrowObject();
         final IScriptTaskCallback callback = scriptTask.getCallback();
         final JythonScriptTaskCallbackContext context;
         if (callback != null) {
