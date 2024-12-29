@@ -207,16 +207,16 @@ public class PythonStrategyTest extends ATest {
 ### Results
 (Intel i9-9900K)
 - **Java Only**: 3716.28/ms ticks processed
+- **GraalPY**: 1649.25/ms python calls with 382.71/ms ticks processed (GraalVM 21)
+  - without `-XX:+EnableJVMCI` or GraalVM
+    - 565.73/ms python calls with 137.92/ms ticks processed
+  - without `-XX:+EnableJVMCI` or GraalVM and without compiled script cache
+    - 78.11/ms python calls with 18.06/ms ticks processed
+  - without compiled script cache
+    - 65.85/ms python calls with 15.38/ms ticks processed (GraalVM 21)
 - **Jython**: 1051.84/ms python calls with 258.14/ms ticks processed
   - without compiled script cache
     - 2050.49/s python calls with 511.63/s ticks processed (starts with up to ~5900/s python calls but slows down the longer it runs)
-- **GraalPY**: TODO
-  - without `-XX:+EnableJVMCI`
-    - 565.73/ms python calls with 137.92/ms ticks processed
-  - without compiled script cache
-    - TODO
-  - without `-XX:+EnableJVMCI` and without compiled script cache
-    - TODO
 - **libpython-clj**: 404.95/ms python calls with 94.73/ms ticks processed
   - [Here](https://github.com/clj-python/libpython-clj/issues/191#issuecomment-1003828913) how to keep the GIL locked during the backtest to speed up python calls
     -  614.23/ms python calls with 139.61/ms ticks processed
