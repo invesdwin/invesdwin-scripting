@@ -7,14 +7,14 @@ import Control.Concurrent(threadDelay)
 import System.Directory(renameFile)
 import Data.Typeable (Typeable)
 
-:{
+-- :{
 -- https://stackoverflow.com/questions/57633136/how-to-write-a-retryforever-function-in-haskell-using-exception-handling
-retryForever :: IO a -> IO a
-retryForever prog = catchAll prog retry
-    where retry ex = do
-        threadDelay 1000
-        retryForever prog
-:}
+-- retryForever :: IO a -> IO a
+-- retryForever prog = catchAll prog retry
+--     where retry ex = do
+--         threadDelay 1000
+--         retryForever prog
+-- :}
 
 -- eval @Int "1 + 1"
 :{
@@ -29,7 +29,7 @@ eval s = do
 :}
 
 :{
-callback :: (Show args) => [args] -> IO result
+callback :: (Show args, Typeable t) => [args] -> IO t
 callback args = do
     let message = show ( toJSON ( args ) )
     writeFile scriptTaskCallbackContextRequestPartFile message
