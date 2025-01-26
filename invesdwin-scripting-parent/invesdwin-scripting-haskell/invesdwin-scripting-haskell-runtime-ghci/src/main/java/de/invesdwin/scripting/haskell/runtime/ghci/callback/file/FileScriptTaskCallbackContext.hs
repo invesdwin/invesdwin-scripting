@@ -16,22 +16,16 @@ import Data.Typeable (Typeable)
 --        retryForever prog
 -- :}
 
-:{
-evalEither :: forall t. Typeable t
-     => String -> IO (Either InterpreterError t)
-evalEither s = runInterpreter $ do
-  setImports ["Prelude"]
-  interpret s (as :: t)
-:}
-
 -- eval @Int "1 + 1"
 :{
 eval :: forall t. Typeable t
      => String -> IO (t)
 eval s = do 
-      x <- evalEither @t s
-      case x of
-         Right y -> return y
+       x <- runInterpreter $ do
+           setImports ["Prelude"]
+           interpret s (as :: t)
+       case x of
+           Right y -> return y
 :}
 
 -- :{
