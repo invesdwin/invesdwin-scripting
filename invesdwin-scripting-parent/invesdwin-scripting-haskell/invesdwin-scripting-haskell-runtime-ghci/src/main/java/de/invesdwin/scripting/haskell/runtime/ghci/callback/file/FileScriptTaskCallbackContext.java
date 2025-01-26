@@ -72,7 +72,7 @@ public class FileScriptTaskCallbackContext implements Closeable {
 
     public void init(final IScriptTaskEngine engine) {
         final ClassPathResource resource = new ClassPathResource(
-                FileScriptTaskCallbackContext.class.getSimpleName() + ".fr", FileScriptTaskCallbackContext.class);
+                FileScriptTaskCallbackContext.class.getSimpleName() + ".hs", FileScriptTaskCallbackContext.class);
         try (InputStream in = resource.getInputStream()) {
             String script = IOUtils.toString(in, Charset.defaultCharset());
             script = script.replace("{SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_PART_FILE}",
