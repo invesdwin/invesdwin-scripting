@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import de.invesdwin.context.test.ATest;
 import de.invesdwin.scripting.haskell.runtime.contract.InputsAndResultsTests;
+import de.invesdwin.scripting.haskell.runtime.contract.callback.SimpleCallbackTest;
 import jakarta.inject.Inject;
 
 @NotThreadSafe
@@ -34,9 +35,9 @@ public class GhciScriptTaskRunnerHaskellTest extends ATest {
     //        new ParametersAndReturnsTests(runner).testParallel();
     //    }
 
-    //    @Test
-    //    public void testSimpleCallback() {
-    //        new SimpleCallbackTest(runner).testSimpleCallback();
-    //    }
+    @Test
+    public void testSimpleCallback() {
+        new SimpleCallbackTest(runner).testSimpleCallback();
+    }
 
 }
