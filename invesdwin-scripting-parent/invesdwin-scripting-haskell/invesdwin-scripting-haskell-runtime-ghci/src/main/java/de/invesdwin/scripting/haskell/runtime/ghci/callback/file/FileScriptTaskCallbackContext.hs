@@ -18,8 +18,7 @@ import Data.Typeable (Typeable)
 
 -- eval @Int "1 + 1"
 :{
-eval :: forall t. Typeable t
-     => String -> IO (t)
+eval :: forall t. Typeable t => String -> IO (t)
 eval s = do 
        x <- runInterpreter $ do
            setImports ["Prelude"]
