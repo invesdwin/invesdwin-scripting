@@ -39,7 +39,7 @@ public class SocketScriptTaskCallbackServer implements ISynchronousChannel {
         }
         final NettySocketSynchronousChannel serverChannel = new NettySocketSynchronousChannel(
                 NioNettySocketChannelType.INSTANCE, new InetSocketAddress(host, port), true,
-                LZ4Streams.DEFAULT_BLOCK_SIZE_BYTES);
+                LZ4Streams.DEFAULT_BLOCK_SIZE_BYTES, false);
         server = new StringNettySocketAsynchronousChannel(serverChannel,
                 new AsynchronousHandlerFactorySupport<String, String>() {
                     @Override
