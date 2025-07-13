@@ -160,7 +160,7 @@ public class SimpleCallbackTest {
 
                 @Override
                 public void executeScript(final IScriptTaskEngine engine) {
-                    engine.eval(new ClassPathResource(SimpleCallbackTest.class.getSimpleName() + ".py",
+                    engine.eval(new ClassPathResource(SimpleCallbackTest.class.getSimpleName() + ".rs",
                             SimpleCallbackTest.class));
                 }
 

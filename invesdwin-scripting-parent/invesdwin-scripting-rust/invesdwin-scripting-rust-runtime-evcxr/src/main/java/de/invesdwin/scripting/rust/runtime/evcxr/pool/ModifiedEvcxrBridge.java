@@ -36,14 +36,14 @@ public class ModifiedEvcxrBridge {
     private static final char NEW_LINE = '\n';
     private static final String TERMINATOR_RAW = "__##@@##__";
     private static final String TERMINATOR = "\"" + TERMINATOR_RAW + "\"";
-    private static final String TERMINATOR_SUFFIX = "\nprint(" + TERMINATOR + ")";
+    private static final String TERMINATOR_COMMAND = "println!(" + TERMINATOR + ")";
+    private static final String TERMINATOR_SUFFIX = "\n" + TERMINATOR_COMMAND;
     private static final byte[] TERMINATOR_SUFFIX_BYTES = TERMINATOR_SUFFIX.getBytes();
 
-    private static final String[] PYTHON_ARGS = { "-u", "-i", "-c", "import json;" //
-            + "print(" + TERMINATOR + ")" };
+    private static final String[] EVCXR_ARGS = { "--disable-readline" };
 
     private final ProcessBuilder pbuilder;
-    private Process python = null;
+    private Process evcxr = null;
     private InputStream inp = null;
     private ModifiedEvcxrErrorConsoleWatcher errWatcher = null;
     private OutputStream out = null;
@@ -64,12 +64,12 @@ public class ModifiedEvcxrBridge {
     ////// public API
 
     /**
-     * Creates a Java-Python bridge with default settings.
+     * Creates a Java-Evcxr bridge with default settings.
      */
     public ModifiedEvcxrBridge() {
         final List<String> j = new ArrayList<String>();
         j.add(EvcxrProperties.EVCXR_COMMAND);
-        j.addAll(Arrays.asList(PYTHON_ARGS));
+        j.addAll(Arrays.asList(EVCXR_ARGS));
         pbuilder = new ProcessBuilder(j);
         this.mapper = MarshallerJsonJackson.getInstance().getJsonMapper(false);
     }
@@ -82,10 +82,10 @@ public class ModifiedEvcxrBridge {
     }
 
     /**
-     * Checks if Python process is already running.
+     * Checks if evcxr process is already running.
      */
     public boolean isOpen() {
-        return python != null;
+        return evcxr != null;
     }
 
     public ModifiedEvcxrErrorConsoleWatcher getErrWatcher() {
@@ -93,7 +93,7 @@ public class ModifiedEvcxrBridge {
     }
 
     /**
-     * Starts the Python process.
+     * Starts the evcxr process.
      *
      * @param timeout
      *            timeout in milliseconds for process to start.
@@ -102,18 +102,29 @@ public class ModifiedEvcxrBridge {
         if (isOpen()) {
             return;
         }
-        python = pbuilder.start();
-        inp = python.getInputStream();
-        errWatcher = new ModifiedEvcxrErrorConsoleWatcher(python);
+        evcxr = pbuilder.start();
+        inp = evcxr.getInputStream();
+        errWatcher = new ModifiedEvcxrErrorConsoleWatcher(evcxr);
         errWatcher.startWatching();
-        out = python.getOutputStream();
+        out = evcxr.getOutputStream();
+        boolean versionRequested = false;
         while (true) {
             final String s = readline();
             if (s == null) {
-                close();
-                throw new IOException("Bad Python process");
+                if (versionRequested) {
+                    versionRequested = false;
+                    continue;
+                } else {
+                    close();
+                    throw new IOException("Bad evcxr process");
+                }
             }
-            if (s.startsWith("Python ")) {
+            if (ver == null && s.startsWith(">> ")) {
+                out.write(":version\n".getBytes());
+                out.write((TERMINATOR_COMMAND + ";\n").getBytes());
+                out.flush();
+                versionRequested = true;
+            } else if (versionRequested) {
                 ver = s;
             } else if (s.contains(TERMINATOR_RAW)) {
                 break;
@@ -122,14 +133,14 @@ public class ModifiedEvcxrBridge {
     }
 
     /**
-     * Stops a running Python process.
+     * Stops a running evcxr process.
      */
     public void close() {
         if (!isOpen()) {
             return;
         }
-        python.destroy();
-        python = null;
+        evcxr.destroy();
+        evcxr = null;
         Closeables.closeQuietly(inp);
         inp = null;
         Closeables.closeQuietly(errWatcher);
@@ -140,7 +151,7 @@ public class ModifiedEvcxrBridge {
     }
 
     /**
-     * Gets Python version.
+     * Gets evcxr version.
      */
     public String getPythonVersion() {
         return ver;
@@ -169,7 +180,7 @@ public class ModifiedEvcxrBridge {
                 rsp.add(s);
             }
         } catch (final IOException ex) {
-            throw new RuntimeException("PythonBridge connection broken", ex);
+            throw new RuntimeException("EvcxrBridge connection broken", ex);
         }
     }
 
@@ -199,7 +210,7 @@ public class ModifiedEvcxrBridge {
 
     private String get() {
         if (rsp.size() < 1) {
-            throw new RuntimeException("Invalid response from Python REPL");
+            throw new RuntimeException("Invalid response from evcxr REPL");
         }
         try {
             //WORKAROUND: always extract the last output as the type because the executed code might have printed another line
@@ -213,12 +224,12 @@ public class ModifiedEvcxrBridge {
             read(buf);
             return new String(buf);
         } catch (final IOException ex) {
-            throw new RuntimeException("PythonBridge connection broken", ex);
+            throw new RuntimeException("EvcxrBridge connection broken", ex);
         }
     }
 
     /**
-     * Evaluates an expression in Python.
+     * Evaluates an expression in evcxr.
      *
      * @param jcode
      *            expression to evaluate.
@@ -289,6 +300,11 @@ public class ModifiedEvcxrBridge {
                         return true;
                     }
                     readLineBuffer.putByte(readLineBufferPosition++, (byte) b);
+                    //check for prompt
+                    if (readLineBufferPosition == 3 && ((char) readLineBuffer.getByte(0)) == '>'
+                            && ((char) readLineBuffer.getByte(1)) == '>' && ((char) readLineBuffer.getByte(2)) == ' ') {
+                        return true;
+                    }
                 }
                 return false;
             }

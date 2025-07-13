@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import de.invesdwin.context.test.ATest;
 import de.invesdwin.scripting.rust.runtime.contract.InputsAndResultsTests;
 import de.invesdwin.scripting.rust.runtime.contract.callback.ParametersAndReturnsTests;
+import de.invesdwin.util.error.Throwables;
 import jakarta.inject.Inject;
 
 @NotThreadSafe
@@ -14,6 +15,10 @@ public class EvcxrScriptTaskRunnerRustTest extends ATest {
 
     @Inject
     private EvcxrScriptTaskRunnerRust runner;
+
+    static {
+        Throwables.setDebugStackTraceEnabled(true);
+    }
 
     @Test
     public void test() {
