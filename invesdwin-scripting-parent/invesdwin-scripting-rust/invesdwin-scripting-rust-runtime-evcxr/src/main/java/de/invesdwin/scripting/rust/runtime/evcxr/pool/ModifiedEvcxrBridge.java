@@ -121,6 +121,7 @@ public class ModifiedEvcxrBridge {
             }
             if (ver == null && s.startsWith(">> ")) {
                 out.write(":version\n".getBytes());
+                out.write(":dep json\n".getBytes());
                 out.write((TERMINATOR_COMMAND + ";\n").getBytes());
                 out.flush();
                 versionRequested = true;
