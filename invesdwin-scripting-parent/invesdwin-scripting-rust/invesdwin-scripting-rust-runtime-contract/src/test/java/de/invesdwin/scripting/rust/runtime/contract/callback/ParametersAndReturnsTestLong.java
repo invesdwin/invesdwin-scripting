@@ -1,14 +1,10 @@
 package de.invesdwin.scripting.rust.runtime.contract.callback;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 
 import de.invesdwin.scripting.IScriptTaskEngine;
@@ -44,18 +40,8 @@ public class ParametersAndReturnsTestLong {
 
             @Override
             public void executeScript(final IScriptTaskEngine engine) {
-                final ClassPathResource resource = new ClassPathResource(
-                        ParametersAndReturnsTestLong.class.getSimpleName() + ".rs", ParametersAndReturnsTestLong.class);
-                try (InputStream in = resource.getInputStream()) {
-                    String str = IOUtils.toString(in, StandardCharsets.UTF_8);
-                    engine.eval("import sys");
-                    if (engine.getResults().getBoolean("sys.version_info >= (3, 0)")) {
-                        str = str.replace("long", "int");
-                    }
-                    engine.eval(str);
-                } catch (final IOException e) {
-                    throw new RuntimeException(e);
-                }
+                engine.eval(new ClassPathResource(ParametersAndReturnsTestLong.class.getSimpleName() + ".rs",
+                        ParametersAndReturnsTestLong.class));
             }
 
             @Override
