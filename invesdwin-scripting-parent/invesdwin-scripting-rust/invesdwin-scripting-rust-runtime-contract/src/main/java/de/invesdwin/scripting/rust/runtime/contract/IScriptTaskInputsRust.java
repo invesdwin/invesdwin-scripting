@@ -6,7 +6,7 @@ public interface IScriptTaskInputsRust extends IScriptTaskInputs {
 
     @Override
     default void putExpression(final String variable, final String expression) {
-        getEngine().eval(variable + " = " + expression);
+        getEngine().eval("let " + variable + " = " + expression + ";");
     }
 
     @Override

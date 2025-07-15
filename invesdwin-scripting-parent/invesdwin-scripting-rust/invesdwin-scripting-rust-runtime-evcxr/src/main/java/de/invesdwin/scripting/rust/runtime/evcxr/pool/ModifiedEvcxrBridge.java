@@ -33,14 +33,14 @@ import de.invesdwin.util.time.date.FTimeUnit;
 @NotThreadSafe
 public class ModifiedEvcxrBridge {
 
+    private static final String PROMPT = ">> ";
     private static final char NEW_LINE = '\n';
     private static final String TERMINATOR_RAW = "__##@@##__";
     private static final String TERMINATOR = "\"" + TERMINATOR_RAW + "\"";
-    private static final String TERMINATOR_COMMAND = "println!(" + TERMINATOR + ")";
-    private static final String TERMINATOR_SUFFIX = "\n" + TERMINATOR_COMMAND;
+    private static final String TERMINATOR_SUFFIX = "\nprintln!(" + TERMINATOR + ");";
     private static final byte[] TERMINATOR_SUFFIX_BYTES = TERMINATOR_SUFFIX.getBytes();
 
-    private static final String[] EVCXR_ARGS = { "--disable-readline" };
+    private static final String[] EVCXR_ARGS = { "--disable-readline" /* , "--ide-mode" */ };
 
     private final ProcessBuilder pbuilder;
     private Process evcxr = null;
@@ -58,6 +58,7 @@ public class ModifiedEvcxrBridge {
     private final IByteBuffer readLineBuffer = ByteBuffers.allocateExpandable();
     private int readLineBufferPosition = 0;
     private final ObjectMapper mapper;
+    private final byte[] promptBuf = new byte[PROMPT.length()];
 
     private final List<String> rsp = new ArrayList<>();
 
@@ -109,7 +110,7 @@ public class ModifiedEvcxrBridge {
         out = evcxr.getOutputStream();
         boolean versionRequested = false;
         while (true) {
-            final String s = readline();
+            final String s = readline(false);
             if (s == null) {
                 if (versionRequested) {
                     versionRequested = false;
@@ -119,15 +120,18 @@ public class ModifiedEvcxrBridge {
                     throw new IOException("Bad evcxr process");
                 }
             }
-            if (ver == null && s.startsWith(">> ")) {
-                out.write(":version\n".getBytes());
-                out.write(":dep json\n".getBytes());
-                out.write((TERMINATOR_COMMAND + ";\n").getBytes());
+            if (ver == null && s.startsWith(PROMPT)) {
+                out.write(":version".getBytes());
+                out.write(NEW_LINE);
+                out.write(":dep json".getBytes());
+                out.write(TERMINATOR_SUFFIX_BYTES);
+                out.write(NEW_LINE);
                 out.flush();
                 versionRequested = true;
             } else if (versionRequested) {
                 ver = s;
             } else if (s.contains(TERMINATOR_RAW)) {
+                getErrWatcher().clearLog();
                 break;
             }
         }
@@ -163,16 +167,17 @@ public class ModifiedEvcxrBridge {
         try {
             flush();
             IScriptTaskRunnerRust.LOG.debug(logMessage, logArgs);
-            out.write("exec('".getBytes());
-            out.write(jcode.replace("\\", "\\\\").replace("\n", "\\n").replace("'", "\\'").getBytes());
-            out.write("',globals())".getBytes());
+            out.write(jcode.getBytes());
             out.write(TERMINATOR_SUFFIX_BYTES);
             out.write(NEW_LINE);
             out.flush();
             while (true) {
-                final String s = readline();
+                final String s = readline(true);
                 if (s == null) {
                     //retry, we were a bit too fast as it seems
+                    continue;
+                }
+                if (s.equals(PROMPT)) {
                     continue;
                 }
                 if (Strings.equalsAny(s, TERMINATOR_RAW, TERMINATOR)) {
@@ -186,9 +191,11 @@ public class ModifiedEvcxrBridge {
     }
 
     public JsonNode getAsJsonNode(final String variable) {
-        final StringBuilder message = new StringBuilder("__ans__ = json.dumps(");
+        final StringBuilder message = new StringBuilder("let __ans__ = json::stringify(");
         message.append(variable);
-        message.append("); print(len(__ans__))");
+        //CHECKSTYLE:OFF
+        message.append("); println!(\"{}\", __ans__.len());");
+        //CHECKSTYLE:ON
         exec(message.toString(), "> get %s", variable);
 
         final String result = get();
@@ -220,7 +227,10 @@ public class ModifiedEvcxrBridge {
                 //Missing or Nothing
                 return null;
             }
-            write("print(__ans__)");
+            //CHECKSTYLE:OFF
+            write("println!(\"{}\", __ans__);");
+            //CHECKSTYLE:ON
+            read(promptBuf);
             final byte[] buf = new byte[n];
             read(buf);
             return new String(buf);
@@ -237,7 +247,7 @@ public class ModifiedEvcxrBridge {
      * @return value of the expression.
      */
     public void eval(final String jcode) {
-        exec(jcode, "> exec %s", jcode);
+        exec(jcode, "> exec %s", jcode.replace("{", "\\{"));
         checkError();
     }
 
@@ -286,14 +296,16 @@ public class ModifiedEvcxrBridge {
         return ofs.intValue();
     }
 
-    private String readline() throws IOException {
+    private String readline(final boolean checkError) throws IOException {
         readLineBufferPosition = 0;
         //WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
             @Override
             public boolean isConditionFulfilled() throws Exception {
-                if (interruptedCheck.check()) {
-                    checkError();
+                if (checkError) {
+                    if (interruptedCheck.check()) {
+                        checkError();
+                    }
                 }
                 while (inp.available() > 0 && !Thread.interrupted()) {
                     final int b = inp.read();
@@ -302,13 +314,13 @@ public class ModifiedEvcxrBridge {
                     }
                     readLineBuffer.putByte(readLineBufferPosition++, (byte) b);
                     //check for prompt
-                    if (readLineBufferPosition == 3 && ((char) readLineBuffer.getByte(0)) == '>'
-                            && ((char) readLineBuffer.getByte(1)) == '>' && ((char) readLineBuffer.getByte(2)) == ' ') {
+                    if (isPrompt()) {
                         return true;
                     }
                 }
                 return false;
             }
+
         };
         try {
             spinWait.awaitFulfill(System.nanoTime());
@@ -323,6 +335,18 @@ public class ModifiedEvcxrBridge {
             IScriptTaskRunnerRust.LOG.debug("< %s", s);
         }
         return s;
+    }
+
+    private boolean isPrompt() {
+        if (readLineBufferPosition != PROMPT.length()) {
+            return false;
+        }
+        for (int i = 0; i < PROMPT.length(); i++) {
+            if (readLineBuffer.getByte(i) != (byte) PROMPT.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     protected void checkError() {

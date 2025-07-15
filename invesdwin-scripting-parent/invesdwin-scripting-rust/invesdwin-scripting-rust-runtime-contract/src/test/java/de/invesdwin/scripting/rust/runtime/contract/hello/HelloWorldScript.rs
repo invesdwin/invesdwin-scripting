@@ -1,1 +1,1 @@
-let world = "Hello " + hello + "!";
+let world = format!("Hello {}!", hello);
