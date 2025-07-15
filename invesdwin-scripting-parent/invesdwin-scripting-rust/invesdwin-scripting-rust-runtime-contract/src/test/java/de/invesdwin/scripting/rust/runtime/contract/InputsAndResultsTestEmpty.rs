@@ -1,185 +1,185 @@
-getBooleanVector = putBooleanVector
+let getBooleanVector = putBooleanVector;
 if len(getBooleanVector) != 0:
-	raise Exception("getBooleanVector not empty!")
+	raise Exception("getBooleanVector not empty!");
 
-getBooleanVectorAsList = putBooleanVectorAsList
+let getBooleanVectorAsList = putBooleanVectorAsList;
 if len(getBooleanVectorAsList) != 0:
-	raise Exception("getBooleanVectorAsList not empty!")
+	raise Exception("getBooleanVectorAsList not empty!");
 
-getBooleanMatrix = putBooleanMatrix
+let getBooleanMatrix = putBooleanMatrix;
 if len(getBooleanMatrix) != 0:
-	raise Exception("getBooleanMatrix not empty!")
+	raise Exception("getBooleanMatrix not empty!");
 
-getBooleanMatrixAsList = putBooleanMatrixAsList
+let getBooleanMatrixAsList = putBooleanMatrixAsList;
 if len(getBooleanMatrixAsList) != 0:
-	raise Exception("getBooleanMatrixAsList not empty!")
+	raise Exception("getBooleanMatrixAsList not empty!");
 
 
-getByteVector = putByteVector
+let getByteVector = putByteVector;
 if len(getByteVector) != 0:
-	raise Exception("getByteVector not empty!")
+	raise Exception("getByteVector not empty!");
 
-getByteVectorAsList = putByteVectorAsList
+let getByteVectorAsList = putByteVectorAsList;
 if len(getByteVectorAsList) != 0:
-	raise Exception("getByteVectorAsList not empty!")
+	raise Exception("getByteVectorAsList not empty!");
 
-getByteMatrix = putByteMatrix
+let getByteMatrix = putByteMatrix;
 if len(getByteMatrix) != 0:
-	raise Exception("getByteMatrix not empty!")
+	raise Exception("getByteMatrix not empty!");
 
-getByteMatrixAsList = putByteMatrixAsList
+let getByteMatrixAsList = putByteMatrixAsList;
 if len(getByteMatrixAsList) != 0:
-	raise Exception("getByteMatrixAsList not empty!")
+	raise Exception("getByteMatrixAsList not empty!");
 
 
-getCharacterVector = putCharacterVector
+let getCharacterVector = putCharacterVector;
 if len(getCharacterVector) != 0:
-	raise Exception("getCharacterVector not empty!")
+	raise Exception("getCharacterVector not empty!");
 
-getCharacterVectorAsList = putCharacterVectorAsList
+let getCharacterVectorAsList = putCharacterVectorAsList;
 if len(getCharacterVectorAsList) != 0:
-	raise Exception("getCharacterVectorAsList not empty!")
+	raise Exception("getCharacterVectorAsList not empty!");
 
-getCharacterMatrix = putCharacterMatrix
+let getCharacterMatrix = putCharacterMatrix;
 if len(getCharacterMatrix) != 0:
-	raise Exception("getCharacterMatrix not empty!")
+	raise Exception("getCharacterMatrix not empty!");
 
-getCharacterMatrixAsList = putCharacterMatrixAsList
+let getCharacterMatrixAsList = putCharacterMatrixAsList;
 if len(getCharacterMatrixAsList) != 0:
-	raise Exception("getCharacterMatrixAsList not empty!")
+	raise Exception("getCharacterMatrixAsList not empty!");
 
 
-getDecimalVector = putDecimalVector
+let getDecimalVector = putDecimalVector;
 if len(getDecimalVector) != 0:
-	raise Exception("getDecimalVector not empty!")
+	raise Exception("getDecimalVector not empty!");
 
-getDecimalVectorAsList = putDecimalVectorAsList
+let getDecimalVectorAsList = putDecimalVectorAsList;
 if len(getDecimalVectorAsList) != 0:
-	raise Exception("getDecimalVectorAsList not empty!")
+	raise Exception("getDecimalVectorAsList not empty!");
 
-getDecimalMatrix = putDecimalMatrix
+let getDecimalMatrix = putDecimalMatrix;
 if len(getDecimalMatrix) != 0:
-	raise Exception("getDecimalMatrix not empty!")
+	raise Exception("getDecimalMatrix not empty!");
 
-getDecimalMatrixAsList = putDecimalMatrixAsList
+let getDecimalMatrixAsList = putDecimalMatrixAsList;
 if len(getDecimalMatrixAsList) != 0:
-	raise Exception("getDecimalMatrixAsList not empty!")
+	raise Exception("getDecimalMatrixAsList not empty!");
 
 
-getDoubleVector = putDoubleVector
+let getDoubleVector = putDoubleVector;
 if len(getDoubleVector) != 0:
-	raise Exception("getDoubleVector not empty!")
+	raise Exception("getDoubleVector not empty!");
 
-getDoubleVectorAsList = putDoubleVectorAsList
+let getDoubleVectorAsList = putDoubleVectorAsList;
 if len(getDoubleVectorAsList) != 0:
-	raise Exception("getDoubleVectorAsList not empty!")
+	raise Exception("getDoubleVectorAsList not empty!");
 
-getDoubleMatrix = putDoubleMatrix
+let getDoubleMatrix = putDoubleMatrix;
 if len(getDoubleMatrix) != 0:
-	raise Exception("getDoubleMatrix not empty!")
+	raise Exception("getDoubleMatrix not empty!");
 
-getDoubleMatrixAsList = putDoubleMatrixAsList
+let getDoubleMatrixAsList = putDoubleMatrixAsList;
 if len(getDoubleMatrixAsList) != 0:
-	raise Exception("getDoubleMatrixAsList not empty!")
+	raise Exception("getDoubleMatrixAsList not empty!");
 
 
-getFloatVector = putFloatVector
+let getFloatVector = putFloatVector;
 if len(getFloatVector) != 0:
-	raise Exception("getFloatVector not empty!")
+	raise Exception("getFloatVector not empty!");
 
-getFloatVectorAsList = putFloatVectorAsList
+let getFloatVectorAsList = putFloatVectorAsList;
 if len(getFloatVectorAsList) != 0:
-	raise Exception("getFloatVectorAsList not empty!")
+	raise Exception("getFloatVectorAsList not empty!");
 
-getFloatMatrix = putFloatMatrix
+let getFloatMatrix = putFloatMatrix;
 if len(getFloatMatrix) != 0:
-	raise Exception("getFloatMatrix not empty!")
+	raise Exception("getFloatMatrix not empty!");
 
-getFloatMatrixAsList = putFloatMatrixAsList
+let getFloatMatrixAsList = putFloatMatrixAsList;
 if len(getFloatMatrixAsList) != 0:
-	raise Exception("getFloatMatrixAsList not empty!")
+	raise Exception("getFloatMatrixAsList not empty!");
 
 
-getIntegerVector = putIntegerVector
+let getIntegerVector = putIntegerVector;
 if len(getIntegerVector) != 0:
-	raise Exception("getIntegerVector not empty!")
+	raise Exception("getIntegerVector not empty!");
 
-getIntegerVectorAsList = putIntegerVectorAsList
+let getIntegerVectorAsList = putIntegerVectorAsList;
 if len(getIntegerVectorAsList) != 0:
-	raise Exception("getIntegerVectorAsList not empty!")
+	raise Exception("getIntegerVectorAsList not empty!");
 
-getIntegerMatrix = putIntegerMatrix
+let getIntegerMatrix = putIntegerMatrix;
 if len(getIntegerMatrix) != 0:
-	raise Exception("getIntegerMatrix not empty!")
+	raise Exception("getIntegerMatrix not empty!");
 
-getIntegerMatrixAsList = putIntegerMatrixAsList
+let getIntegerMatrixAsList = putIntegerMatrixAsList;
 if len(getIntegerMatrixAsList) != 0:
-	raise Exception("getIntegerMatrixAsList not empty!")
+	raise Exception("getIntegerMatrixAsList not empty!");
 
 
-getLongVector = putLongVector
+let getLongVector = putLongVector;
 if len(getLongVector) != 0:
-	raise Exception("getLongVector not empty!")
+	raise Exception("getLongVector not empty!");
 
-getLongVectorAsList = putLongVectorAsList
+let getLongVectorAsList = putLongVectorAsList;
 if len(getLongVectorAsList) != 0:
-	raise Exception("getLongVectorAsList not empty!")
+	raise Exception("getLongVectorAsList not empty!");
 
-getLongMatrix = putLongMatrix
+let getLongMatrix = putLongMatrix;
 if len(getLongMatrix) != 0:
-	raise Exception("getLongMatrix not empty!")
+	raise Exception("getLongMatrix not empty!");
 
-getLongMatrixAsList = putLongMatrixAsList
+let getLongMatrixAsList = putLongMatrixAsList;
 if len(getLongMatrixAsList) != 0:
-	raise Exception("getLongMatrixAsList not empty!")
+	raise Exception("getLongMatrixAsList not empty!");
 
 
-getPercentVector = putPercentVector
+let getPercentVector = putPercentVector;
 if len(getPercentVector) != 0:
-	raise Exception("getPercentVector not empty!")
+	raise Exception("getPercentVector not empty!");
 
-getPercentVectorAsList = putPercentVectorAsList
+let getPercentVectorAsList = putPercentVectorAsList;
 if len(getPercentVectorAsList) != 0:
-	raise Exception("getPercentVectorAsList not empty!")
+	raise Exception("getPercentVectorAsList not empty!");
 
-getPercentMatrix = putPercentMatrix
+let getPercentMatrix = putPercentMatrix;
 if len(getPercentMatrix) != 0:
-	raise Exception("getPercentMatrix not empty!")
+	raise Exception("getPercentMatrix not empty!");
 
-getPercentMatrixAsList = putPercentMatrixAsList
+let getPercentMatrixAsList = putPercentMatrixAsList;
 if len(getPercentMatrixAsList) != 0:
-	raise Exception("getPercentMatrixAsList not empty!")
+	raise Exception("getPercentMatrixAsList not empty!");
 
 
-getShortVector = putShortVector
+let getShortVector = putShortVector;
 if len(getShortVector) != 0:
-	raise Exception("getShortVector not empty!")
+	raise Exception("getShortVector not empty!");
 
-getShortVectorAsList = putShortVectorAsList
+let getShortVectorAsList = putShortVectorAsList;
 if len(getShortVectorAsList) != 0:
-	raise Exception("getShortVectorAsList not empty!")
+	raise Exception("getShortVectorAsList not empty!");
 
-getShortMatrix = putShortMatrix
+let getShortMatrix = putShortMatrix;
 if len(getShortMatrix) != 0:
-	raise Exception("getShortMatrix not empty!")
+	raise Exception("getShortMatrix not empty!");
 
-getShortMatrixAsList = putShortMatrixAsList
+let getShortMatrixAsList = putShortMatrixAsList;
 if len(getShortMatrixAsList) != 0:
-	raise Exception("getShortMatrixAsList not empty!")
+	raise Exception("getShortMatrixAsList not empty!");
 
 
-getStringVector = putStringVector
+let getStringVector = putStringVector;
 if len(getStringVector) != 0:
-	raise Exception("getStringVector not empty!")
+	raise Exception("getStringVector not empty!");
 
-getStringVectorAsList = putStringVectorAsList
+let getStringVectorAsList = putStringVectorAsList;
 if len(getStringVectorAsList) != 0:
-	raise Exception("getStringVectorAsList not empty!")
+	raise Exception("getStringVectorAsList not empty!");
 
-getStringMatrix = putStringMatrix
+let getStringMatrix = putStringMatrix;
 if len(getStringMatrix) != 0:
-	raise Exception("getStringMatrix not empty!")
+	raise Exception("getStringMatrix not empty!");
 
-getStringMatrixAsList = putStringMatrixAsList
+let getStringMatrixAsList = putStringMatrixAsList;
 if len(getStringMatrixAsList) != 0:
-	raise Exception("getStringMatrixAsList not empty!")
+	raise Exception("getStringMatrixAsList not empty!");

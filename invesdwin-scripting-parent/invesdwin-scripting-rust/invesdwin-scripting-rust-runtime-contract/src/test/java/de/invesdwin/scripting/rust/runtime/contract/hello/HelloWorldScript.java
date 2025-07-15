@@ -31,7 +31,9 @@ public class HelloWorldScript {
             @Override
             public void executeScript(final IScriptTaskEngine engine) {
                 //execute this script inline:
-                //                engine.eval("let world = \"Hello \" + hello + \"!\";");
+                //CHECKSTYLE:OFF
+                //                engine.eval("let world = format!(\"Hello {}!\", hello);");
+                //CHECKSTYLE:ON
                 //or run it from a file:
                 engine.eval(new ClassPathResource(HelloWorldScript.class.getSimpleName() + ".rs", getClass()));
             }

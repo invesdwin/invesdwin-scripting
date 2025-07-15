@@ -33,6 +33,7 @@ import de.invesdwin.util.time.date.FTimeUnit;
 @NotThreadSafe
 public class ModifiedEvcxrBridge {
 
+    public static final String DEP_JSON = ":dep serde_json";
     private static final String PROMPT = ">> ";
     private static final char NEW_LINE = '\n';
     private static final String TERMINATOR_RAW = "__##@@##__";
@@ -123,7 +124,7 @@ public class ModifiedEvcxrBridge {
             if (ver == null && s.startsWith(PROMPT)) {
                 out.write(":version".getBytes());
                 out.write(NEW_LINE);
-                out.write(":dep json".getBytes());
+                out.write(DEP_JSON.getBytes());
                 out.write(TERMINATOR_SUFFIX_BYTES);
                 out.write(NEW_LINE);
                 out.flush();
@@ -191,10 +192,10 @@ public class ModifiedEvcxrBridge {
     }
 
     public JsonNode getAsJsonNode(final String variable) {
-        final StringBuilder message = new StringBuilder("let __ans__ = json::stringify(");
+        final StringBuilder message = new StringBuilder("let __ans__ = serde_json::to_string(&");
         message.append(variable);
         //CHECKSTYLE:OFF
-        message.append("); println!(\"{}\", __ans__.len());");
+        message.append(").unwrap(); println!(\"{}\", __ans__.len());");
         //CHECKSTYLE:ON
         exec(message.toString(), "> get %s", variable);
 
@@ -231,9 +232,20 @@ public class ModifiedEvcxrBridge {
             write("println!(\"{}\", __ans__);");
             //CHECKSTYLE:ON
             read(promptBuf);
+            final StringBuilder sb = new StringBuilder();
+            if (!startsWithPrompt(promptBuf)) {
+                sb.append(new String(promptBuf));
+            }
             final byte[] buf = new byte[n];
             read(buf);
-            return new String(buf);
+            if (startsWithPrompt(buf)) {
+                sb.append(new String(buf, PROMPT.length(), n - PROMPT.length()));
+                read(promptBuf);
+                sb.append(new String(promptBuf));
+            } else {
+                sb.append(new String(buf));
+            }
+            return sb.toString();
         } catch (final IOException ex) {
             throw new RuntimeException("EvcxrBridge connection broken", ex);
         }
@@ -292,7 +304,7 @@ public class ModifiedEvcxrBridge {
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
-        IScriptTaskRunnerRust.LOG.trace("< (" + ofs + " bytes)");
+        IScriptTaskRunnerRust.LOG.debug("< (" + ofs + " bytes)");
         return ofs.intValue();
     }
 
@@ -343,6 +355,15 @@ public class ModifiedEvcxrBridge {
         }
         for (int i = 0; i < PROMPT.length(); i++) {
             if (readLineBuffer.getByte(i) != (byte) PROMPT.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean startsWithPrompt(final byte[] buf) {
+        for (int i = 0; i < PROMPT.length(); i++) {
+            if (buf[i] != (byte) PROMPT.charAt(i)) {
                 return false;
             }
         }

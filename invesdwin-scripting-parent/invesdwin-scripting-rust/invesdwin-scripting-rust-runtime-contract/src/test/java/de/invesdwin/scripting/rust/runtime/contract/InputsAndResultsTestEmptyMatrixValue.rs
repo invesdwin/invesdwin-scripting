@@ -1,37 +1,37 @@
-getBooleanMatrix = putBooleanMatrix
+let getBooleanMatrix = putBooleanMatrix;
 if len(getBooleanMatrix) != 2:
-	raise Exception("getBooleanMatrix empty!")
+	raise Exception("getBooleanMatrix empty!");
 
-getBooleanMatrixAsList = putBooleanMatrixAsList
+let getBooleanMatrixAsList = putBooleanMatrixAsList;
 if len(getBooleanMatrixAsList) != 2:
-	raise Exception("getBooleanMatrixAsList empty!")
+	raise Exception("getBooleanMatrixAsList empty!");
 
 
-getByteMatrix = putByteMatrix
+let getByteMatrix = putByteMatrix;
 if len(getByteMatrix) != 2:
-	raise Exception("getByteMatrix empty!")
+	raise Exception("getByteMatrix empty!");
 
-getByteMatrixAsList = putByteMatrixAsList
+let getByteMatrixAsList = putByteMatrixAsList;
 if len(getByteMatrixAsList) != 2:
-	raise Exception("getByteMatrixAsList empty!")
+	raise Exception("getByteMatrixAsList empty!");
 
 
-getCharacterMatrix = putCharacterMatrix
+let getCharacterMatrix = putCharacterMatrix;
 if len(getCharacterMatrix) != 2:
-	raise Exception("getCharacterMatrix empty!")
+	raise Exception("getCharacterMatrix empty!");
 
-getCharacterMatrixAsList = putCharacterMatrixAsList
+let getCharacterMatrixAsList = putCharacterMatrixAsList;
 if len(getCharacterMatrixAsList) != 2:
-	raise Exception("getCharacterMatrixAsList empty!")
+	raise Exception("getCharacterMatrixAsList empty!");
 
 
-getDecimalMatrix = putDecimalMatrix
+let getDecimalMatrix = putDecimalMatrix;
 if len(getDecimalMatrix) != 2:
-	raise Exception("getDecimalMatrix empty!")
+	raise Exception("getDecimalMatrix empty!");
 
-getDecimalMatrixAsList = putDecimalMatrixAsList
+let getDecimalMatrixAsList = putDecimalMatrixAsList;
 if len(getDecimalMatrixAsList) != 2:
-	raise Exception("getDecimalMatrixAsList empty!")
+	raise Exception("getDecimalMatrixAsList empty!");
 
 
 getDoubleMatrix = putDoubleMatrix

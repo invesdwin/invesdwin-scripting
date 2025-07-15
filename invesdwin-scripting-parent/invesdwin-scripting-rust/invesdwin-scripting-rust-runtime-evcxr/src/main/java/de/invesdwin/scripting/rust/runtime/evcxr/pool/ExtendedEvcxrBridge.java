@@ -14,6 +14,7 @@ public class ExtendedEvcxrBridge extends ModifiedEvcxrBridge {
     public void reset() throws IOException {
         getErrWatcher().clearLog();
         eval(":clear");
+        eval(DEP_JSON);
         getErrWatcher().clearLog();
     }
 
