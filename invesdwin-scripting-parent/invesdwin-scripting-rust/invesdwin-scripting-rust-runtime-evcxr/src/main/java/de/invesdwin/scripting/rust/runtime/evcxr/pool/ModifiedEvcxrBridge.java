@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -26,6 +27,7 @@ import de.invesdwin.util.lang.string.Strings;
 import de.invesdwin.util.streams.buffer.bytes.ByteBuffers;
 import de.invesdwin.util.streams.buffer.bytes.IByteBuffer;
 import de.invesdwin.util.time.date.FTimeUnit;
+import de.invesdwin.util.time.duration.Duration;
 
 /**
  * Fork of: https://github.com/org-arl/jajub/issues/2
@@ -42,6 +44,13 @@ public class ModifiedEvcxrBridge {
     private static final byte[] TERMINATOR_SUFFIX_BYTES = TERMINATOR_SUFFIX.getBytes();
 
     private static final String[] EVCXR_ARGS = { "--disable-readline" /* , "--ide-mode" */ };
+
+    private static final Duration CHECK_ERROR_DELAY = new Duration(10, FTimeUnit.MILLISECONDS);
+    /*
+     * remove color codes: https://stackoverflow.com/questions/14652538/remove-ascii-color-codes
+     */
+    private static final String COLOR_CODE_REGEX = "\u001B\\[[;\\d]*m";
+    private static final Pattern COLOR_CODE_PATTERN = Pattern.compile(COLOR_CODE_REGEX);
 
     private final ProcessBuilder pbuilder;
     private Process evcxr = null;
@@ -111,7 +120,7 @@ public class ModifiedEvcxrBridge {
         out = evcxr.getOutputStream();
         boolean versionRequested = false;
         while (true) {
-            final String s = readline(false);
+            final String s = readline(false, false);
             if (s == null) {
                 if (versionRequested) {
                     versionRequested = false;
@@ -174,19 +183,45 @@ public class ModifiedEvcxrBridge {
             out.write(TERMINATOR_SUFFIX_BYTES);
             out.write(NEW_LINE);
             out.flush();
+            int errorsFound = 0;
             while (true) {
-                final String s = readline(true);
+                final String s = readline(true, errorsFound > 0);
                 if (s == null) {
-                    //retry, we were a bit too fast as it seems
-                    continue;
+                    if (errorsFound > 0) {
+                        //throw error
+                        break;
+                    } else {
+                        //retry, we were a bit too fast as it seems
+                        continue;
+                    }
                 }
                 if (s.equals(PROMPT)) {
                     continue;
                 }
-                if (Strings.equalsAny(s, TERMINATOR_RAW, TERMINATOR)) {
+                if (errorsFound == 0 && Strings.equalsAny(s, TERMINATOR_RAW, TERMINATOR)) {
                     return;
                 }
-                rsp.add(s);
+                if (s.startsWith("[31mError:[0m ")) {
+                    errorsFound++;
+                }
+                if (errorsFound <= 1) {
+                    rsp.add(s);
+                }
+            }
+            if (errorsFound > 0) {
+                final StringBuilder errorMsg = new StringBuilder();
+                for (int i = 0; i < rsp.size(); i++) {
+                    if (i > 0) {
+                        errorMsg.append("\n");
+                    }
+                    errorMsg.append(COLOR_CODE_PATTERN.matcher(rsp.get(i)).replaceAll(""));
+                }
+                if (errorsFound > 1) {
+                    errorMsg.append("\n ... ");
+                    errorMsg.append(errorsFound - 1);
+                    errorMsg.append(" more evcxr rust errors ...");
+                }
+                throw new IllegalStateException(errorMsg.toString());
             }
         } catch (final IOException ex) {
             throw new RuntimeException("EvcxrBridge connection broken", ex);
@@ -310,7 +345,7 @@ public class ModifiedEvcxrBridge {
         return ofs.intValue();
     }
 
-    private String readline(final boolean checkError) throws IOException {
+    private String readline(final boolean checkError, final boolean errorFound) throws IOException {
         readLineBufferPosition = 0;
         //WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
@@ -337,7 +372,11 @@ public class ModifiedEvcxrBridge {
 
         };
         try {
-            spinWait.awaitFulfill(System.nanoTime());
+            if (errorFound) {
+                spinWait.awaitFulfill(System.nanoTime(), CHECK_ERROR_DELAY);
+            } else {
+                spinWait.awaitFulfill(System.nanoTime());
+            }
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
@@ -382,7 +421,7 @@ public class ModifiedEvcxrBridge {
     private void checkErrorDelayed() {
         //give a bit of time to read the actual error
         try {
-            FTimeUnit.MILLISECONDS.sleep(10);
+            CHECK_ERROR_DELAY.sleep();
         } catch (final InterruptedException e) {
             throw new RuntimeException(e);
         }
