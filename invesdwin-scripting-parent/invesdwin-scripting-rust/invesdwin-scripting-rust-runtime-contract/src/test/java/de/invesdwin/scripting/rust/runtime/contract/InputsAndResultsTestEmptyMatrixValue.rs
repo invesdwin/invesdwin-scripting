@@ -1,97 +1,97 @@
 let getBooleanMatrix = putBooleanMatrix;
 if len(getBooleanMatrix) != 2:
-	raise Exception("getBooleanMatrix empty!");
+	panic!("getBooleanMatrix empty!");
 
 let getBooleanMatrixAsList = putBooleanMatrixAsList;
 if len(getBooleanMatrixAsList) != 2:
-	raise Exception("getBooleanMatrixAsList empty!");
+	panic!("getBooleanMatrixAsList empty!");
 
 
 let getByteMatrix = putByteMatrix;
 if len(getByteMatrix) != 2:
-	raise Exception("getByteMatrix empty!");
+	panic!("getByteMatrix empty!");
 
 let getByteMatrixAsList = putByteMatrixAsList;
 if len(getByteMatrixAsList) != 2:
-	raise Exception("getByteMatrixAsList empty!");
+	panic!("getByteMatrixAsList empty!");
 
 
 let getCharacterMatrix = putCharacterMatrix;
 if len(getCharacterMatrix) != 2:
-	raise Exception("getCharacterMatrix empty!");
+	panic!("getCharacterMatrix empty!");
 
 let getCharacterMatrixAsList = putCharacterMatrixAsList;
 if len(getCharacterMatrixAsList) != 2:
-	raise Exception("getCharacterMatrixAsList empty!");
+	panic!("getCharacterMatrixAsList empty!");
 
 
 let getDecimalMatrix = putDecimalMatrix;
 if len(getDecimalMatrix) != 2:
-	raise Exception("getDecimalMatrix empty!");
+	panic!("getDecimalMatrix empty!");
 
 let getDecimalMatrixAsList = putDecimalMatrixAsList;
 if len(getDecimalMatrixAsList) != 2:
-	raise Exception("getDecimalMatrixAsList empty!");
+	panic!("getDecimalMatrixAsList empty!");
 
 
 getDoubleMatrix = putDoubleMatrix
 if len(getDoubleMatrix) != 2:
-	raise Exception("getDoubleMatrix empty!")
+	panic!("getDoubleMatrix empty!")
 
 getDoubleMatrixAsList = putDoubleMatrixAsList
 if len(getDoubleMatrixAsList) != 2:
-	raise Exception("getDoubleMatrixAsList empty!")
+	panic!("getDoubleMatrixAsList empty!")
 
 
 getFloatMatrix = putFloatMatrix
 if len(getFloatMatrix) != 2:
-	raise Exception("getFloatMatrix empty!")
+	panic!("getFloatMatrix empty!")
 
 getFloatMatrixAsList = putFloatMatrixAsList
 if len(getFloatMatrixAsList) != 2:
-	raise Exception("getFloatMatrixAsList empty!")
+	panic!("getFloatMatrixAsList empty!")
 
 
 getIntegerMatrix = putIntegerMatrix
 if len(getIntegerMatrix) != 2:
-	raise Exception("getIntegerMatrix empty!")
+	panic!("getIntegerMatrix empty!")
 
 getIntegerMatrixAsList = putIntegerMatrixAsList
 if len(getIntegerMatrixAsList) != 2:
-	raise Exception("getIntegerMatrixAsList empty!")
+	panic!("getIntegerMatrixAsList empty!")
 
 
 getLongMatrix = putLongMatrix
 if len(getLongMatrix) != 2:
-	raise Exception("getLongMatrix empty!")
+	panic!("getLongMatrix empty!")
 
 getLongMatrixAsList = putLongMatrixAsList
 if len(getLongMatrixAsList) != 2:
-	raise Exception("getLongMatrixAsList empty!")
+	panic!("getLongMatrixAsList empty!")
 
 
 getPercentMatrix = putPercentMatrix
 if len(getPercentMatrix) != 2:
-	raise Exception("getPercentMatrix empty!")
+	panic!("getPercentMatrix empty!")
 
 getPercentMatrixAsList = putPercentMatrixAsList
 if len(getPercentMatrixAsList) != 2:
-	raise Exception("getPercentMatrixAsList empty!")
+	panic!("getPercentMatrixAsList empty!")
 
 
 getShortMatrix = putShortMatrix
 if len(getShortMatrix) != 2:
-	raise Exception("getShortMatrix empty!")
+	panic!("getShortMatrix empty!")
 
 getShortMatrixAsList = putShortMatrixAsList
 if len(getShortMatrixAsList) != 2:
-	raise Exception("getShortMatrixAsList empty!")
+	panic!("getShortMatrixAsList empty!")
 
 
 getStringMatrix = putStringMatrix
 if len(getStringMatrix) != 2:
-	raise Exception("getStringMatrix empty!")
+	panic!("getStringMatrix empty!")
 
 getStringMatrixAsList = putStringMatrixAsList
 if len(getStringMatrixAsList) != 2:
-	raise Exception("getStringMatrixAsList empty!")
+	panic!("getStringMatrixAsList empty!")

@@ -1,142 +1,142 @@
 let getBooleanVector = putBooleanVector;
 if getBooleanVector is not None:
-	raise Exception("getBooleanVector not None!");
+	panic!("getBooleanVector not NAN!");
 let getBooleanVectorAsList = putBooleanVectorAsList;
 if getBooleanVectorAsList is not None:
-	raise Exception("getBooleanVectorAsList not None!");
+	panic!("getBooleanVectorAsList not NAN!");
 let getBooleanMatrix = putBooleanMatrix;
 if getBooleanMatrix is not None:
-	raise Exception("getBooleanMatrix not None!");
+	panic!("getBooleanMatrix not NAN!");
 let getBooleanMatrixAsList = putBooleanMatrixAsList;
 if getBooleanMatrixAsList is not None:
-	raise Exception("getBooleanMatrixAsList not None!");
+	panic!("getBooleanMatrixAsList not NAN!");
 
 let getByteVector = putByteVector;
 if getByteVector is not None:
-	raise Exception("getByteVector not None!");
+	panic!("getByteVector not NAN!");
 let getByteVectorAsList = putByteVectorAsList;
 if getByteVectorAsList is not None:
-	raise Exception("getByteVectorAsList not None!");
+	panic!("getByteVectorAsList not NAN!");
 let getByteMatrix = putByteMatrix;
 if getByteMatrix is not None:
-	raise Exception("getByteMatrix not None!");
+	panic!("getByteMatrix not NAN!");
 let getByteMatrixAsList = putByteMatrixAsList;
 if getByteMatrixAsList is not None:
-	raise Exception("getByteMatrixAsList not None!");
+	panic!("getByteMatrixAsList not NAN!");
 
 let getCharacterVector = putCharacterVector;
 if getCharacterVector is not None:
-	raise Exception("getCharacterVector not None!");
+	panic!("getCharacterVector not NAN!");
 let getCharacterVectorAsList = putCharacterVectorAsList;
 if getCharacterVectorAsList is not None:
-	raise Exception("getCharacterVectorAsList not None!");
+	panic!("getCharacterVectorAsList not NAN!");
 let getCharacterMatrix = putCharacterMatrix;
 if getCharacterMatrix is not None:
-	raise Exception("getCharacterMatrix not None!");
+	panic!("getCharacterMatrix not NAN!");
 let getCharacterMatrixAsList = putCharacterMatrixAsList;
 if getCharacterMatrixAsList is not None:
-	raise Exception("getCharacterMatrixAsList not None!");
+	panic!("getCharacterMatrixAsList not NAN!");
 
 let getDecimalVector = putDecimalVector;
 if getDecimalVector is not None:
-	raise Exception("getDecimalVector not None!");
+	panic!("getDecimalVector not NAN!");
 let getDecimalVectorAsList = putDecimalVectorAsList;
 if getDecimalVectorAsList is not None:
-	raise Exception("getDecimalVectorAsList not None!");
+	panic!("getDecimalVectorAsList not NAN!");
 let getDecimalMatrix = putDecimalMatrix;
 if getDecimalMatrix is not None:
-	raise Exception("getDecimalMatrix not None!");
+	panic!("getDecimalMatrix not NAN!");
 let getDecimalMatrixAsList = putDecimalMatrixAsList;
 if getDecimalMatrixAsList is not None:
-	raise Exception("getDecimalMatrixAsList not None!");
+	panic!("getDecimalMatrixAsList not NAN!");
 
 let getDoubleVector = putDoubleVector;
 if getDoubleVector is not None:
-	raise Exception("getDoubleVector not None!");
+	panic!("getDoubleVector not NAN!");
 let getDoubleVectorAsList = putDoubleVectorAsList;
 if getDoubleVectorAsList is not None:
-	raise Exception("getDoubleVectorAsList not None!");
+	panic!("getDoubleVectorAsList not NAN!");
 let getDoubleMatrix = putDoubleMatrix;
 if getDoubleMatrix is not None:
-	raise Exception("getDoubleMatrix not None!");
+	panic!("getDoubleMatrix not NAN!");
 let getDoubleMatrixAsList = putDoubleMatrixAsList;
 if getDoubleMatrixAsList is not None:
-	raise Exception("getDoubleMatrixAsList not None!");
+	panic!("getDoubleMatrixAsList not NAN!");
 
 let getFloatVector = putFloatVector;
 if getFloatVector is not None:
-	raise Exception("getFloatVector not None!");
+	panic!("getFloatVector not NAN!");
 let getFloatVectorAsList = putFloatVectorAsList;
 if getFloatVectorAsList is not None:
-	raise Exception("getFloatVectorAsList not None!");
+	panic!("getFloatVectorAsList not NAN!");
 let getFloatMatrix = putFloatMatrix;
 if getFloatMatrix is not None:
-	raise Exception("getFloatMatrix not None!");
+	panic!("getFloatMatrix not NAN!");
 let getFloatMatrixAsList = putFloatMatrixAsList;
 if getFloatMatrixAsList is not None:
-	raise Exception("getFloatMatrixAsList not None!");
+	panic!("getFloatMatrixAsList not NAN!");
 
 let getIntegerVector = putIntegerVector;
 if getIntegerVector is not None:
-	raise Exception("getIntegerVector not None!");
+	panic!("getIntegerVector not NAN!");
 let getIntegerVectorAsList = putIntegerVectorAsList;
 if getIntegerVectorAsList is not None:
-	raise Exception("getIntegerVectorAsList not None!");
+	panic!("getIntegerVectorAsList not NAN!");
 let getIntegerMatrix = putIntegerMatrix;
 if getIntegerMatrix is not None:
-	raise Exception("getIntegerMatrix not None!");
+	panic!("getIntegerMatrix not NAN!");
 let getIntegerMatrixAsList = putIntegerMatrixAsList;
 if getIntegerMatrixAsList is not None:
-	raise Exception("getIntegerMatrixAsList not None!");
+	panic!("getIntegerMatrixAsList not NAN!");
 
 let getLongVector = putLongVector;
 if getLongVector is not None:
-	raise Exception("getLongVector not None!");
+	panic!("getLongVector not NAN!");
 let getLongVectorAsList = putLongVectorAsList;
 if getLongVectorAsList is not None:
-	raise Exception("getLongVectorAsList not None!");
+	panic!("getLongVectorAsList not NAN!");
 let getLongMatrix = putLongMatrix;
 if getLongMatrix is not None:
-	raise Exception("getLongMatrix not None!");
+	panic!("getLongMatrix not NAN!");
 let getLongMatrixAsList = putLongMatrixAsList;
 if getLongMatrixAsList is not None:
-	raise Exception("getLongMatrixAsList not None!");
+	panic!("getLongMatrixAsList not NAN!");
 
 let getPercentVector = putPercentVector;
 if getPercentVector is not None:
-	raise Exception("getPercentVector not None!");
+	panic!("getPercentVector not NAN!");
 let getPercentVectorAsList = putPercentVectorAsList;
 if getPercentVectorAsList is not None:
-	raise Exception("getPercentVectorAsList not None!");
+	panic!("getPercentVectorAsList not NAN!");
 let getPercentMatrix = putPercentMatrix;
 if getPercentMatrix is not None:
-	raise Exception("getPercentMatrix not None!");
+	panic!("getPercentMatrix not NAN!");
 let getPercentMatrixAsList = putPercentMatrixAsList;
 if getPercentMatrixAsList is not None:
-	raise Exception("getPercentMatrixAsList not None!");
+	panic!("getPercentMatrixAsList not NAN!");
 
 let getShortVector = putShortVector;
 if getShortVector is not None:
-	raise Exception("getShortVector not None!");
+	panic!("getShortVector not NAN!");
 let getShortVectorAsList = putShortVectorAsList;
 if getShortVectorAsList is not None:
-	raise Exception("getShortVectorAsList not None!");
+	panic!("getShortVectorAsList not NAN!");
 let getShortMatrix = putShortMatrix;
 if getShortMatrix is not None:
-	raise Exception("getShortMatrix not None!");
+	panic!("getShortMatrix not NAN!");
 let getShortMatrixAsList = putShortMatrixAsList;
 if getShortMatrixAsList is not None:
-	raise Exception("getShortMatrixAsList not None!");
+	panic!("getShortMatrixAsList not NAN!");
 
 let getStringVector = putStringVector;
 if getStringVector is not None:
-	raise Exception("getStringVector not None!");
+	panic!("getStringVector not NAN!");
 let getStringVectorAsList = putStringVectorAsList;
 if getStringVectorAsList is not None:
-	raise Exception("getStringVectorAsList not None!");
+	panic!("getStringVectorAsList not NAN!");
 let getStringMatrix = putStringMatrix;
 if getStringMatrix is not None:
-	raise Exception("getStringMatrix not None!");
+	panic!("getStringMatrix not NAN!");
 let getStringMatrixAsList = putStringMatrixAsList;
 if getStringMatrixAsList is not None:
-	raise Exception("getStringMatrixAsList not None!");
+	panic!("getStringMatrixAsList not NAN!");
