@@ -43,7 +43,7 @@ public class ModifiedEvcxrBridge {
     private static final String TERMINATOR_SUFFIX = "\nprintln!(" + TERMINATOR + ");";
     private static final byte[] TERMINATOR_SUFFIX_BYTES = TERMINATOR_SUFFIX.getBytes();
 
-    private static final String[] EVCXR_ARGS = { "--disable-readline" /* , "--ide-mode" */ };
+    private static final String[] EVCXR_ARGS = { /* "--disable-readline" /* , "--ide-mode" */ };
 
     private static final Duration CHECK_ERROR_DELAY = new Duration(10, FTimeUnit.MILLISECONDS);
     /*
@@ -69,6 +69,7 @@ public class ModifiedEvcxrBridge {
     private int readLineBufferPosition = 0;
     private final ObjectMapper mapper;
     private final byte[] promptBuf = new byte[PROMPT.length()];
+    private boolean usePromptBuf = false;
 
     private final List<String> rsp = new ArrayList<>();
 
@@ -130,7 +131,11 @@ public class ModifiedEvcxrBridge {
                     throw new IOException("Bad evcxr process");
                 }
             }
-            if (ver == null && s.startsWith(PROMPT)) {
+            if (s.startsWith(PROMPT)) {
+                //needed when --disable-readline is configured
+                usePromptBuf = true;
+            }
+            if (!versionRequested && ver == null) {
                 out.write(":version".getBytes());
                 out.write(NEW_LINE);
                 out.write(DEP_JSON.getBytes());
@@ -268,21 +273,27 @@ public class ModifiedEvcxrBridge {
             //CHECKSTYLE:OFF
             write("println!(\"{}\", __ans__);");
             //CHECKSTYLE:ON
-            read(promptBuf);
-            final StringBuilder sb = new StringBuilder();
-            if (!startsWithPrompt(promptBuf)) {
-                sb.append(new String(promptBuf));
-            }
-            final byte[] buf = new byte[n];
-            read(buf);
-            if (startsWithPrompt(buf)) {
-                sb.append(new String(buf, PROMPT.length(), n - PROMPT.length()));
+            if (usePromptBuf) {
                 read(promptBuf);
-                sb.append(new String(promptBuf));
+                final StringBuilder sb = new StringBuilder();
+                if (!startsWithPrompt(promptBuf)) {
+                    sb.append(new String(promptBuf));
+                }
+                final byte[] buf = new byte[n];
+                read(buf);
+                if (startsWithPrompt(buf)) {
+                    sb.append(new String(buf, PROMPT.length(), n - PROMPT.length()));
+                    read(promptBuf);
+                    sb.append(new String(promptBuf));
+                } else {
+                    sb.append(new String(buf));
+                }
+                return sb.toString();
             } else {
-                sb.append(new String(buf));
+                final byte[] buf = new byte[n];
+                read(buf);
+                return new String(buf);
             }
-            return sb.toString();
         } catch (final IOException ex) {
             throw new RuntimeException("EvcxrBridge connection broken", ex);
         }

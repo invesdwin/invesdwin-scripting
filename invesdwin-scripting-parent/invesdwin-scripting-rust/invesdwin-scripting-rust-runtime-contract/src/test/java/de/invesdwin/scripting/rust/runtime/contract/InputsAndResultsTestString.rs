@@ -22,7 +22,7 @@ let let getStringVectorAsList = putStringVectorAsList;
 println!("{:?}", getStringVectorAsList);
 
 println!("getStringVectorAsListWithNull");
-getStringVectorAsListWithNull = putStringVectorAsListWithNull;
+let getStringVectorAsListWithNull = putStringVectorAsListWithNull;
 println!("{:?}", getStringVectorAsListWithNull);
 if(!getStringVectorAsListWithNull[1].is_empty()) {
 	panic!("getStringVectorAsListWithNull[1] not empty!");
