@@ -219,7 +219,7 @@ public class ModifiedEvcxrBridge {
                 if (errorsFound > 1) {
                     errorMsg.append("\n ... ");
                     errorMsg.append(errorsFound - 1);
-                    errorMsg.append(" more evcxr rust errors ...");
+                    errorMsg.append(" more evcxr rust errors (see debug logs) ...");
                 }
                 throw new IllegalStateException(errorMsg.toString());
             }
