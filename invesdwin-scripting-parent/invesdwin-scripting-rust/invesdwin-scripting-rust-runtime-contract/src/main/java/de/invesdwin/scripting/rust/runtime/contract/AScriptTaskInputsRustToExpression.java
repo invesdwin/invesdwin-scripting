@@ -85,7 +85,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 }
                 final String v = value[i];
                 if (v == null) {
-                    sb.append("None");
+                    sb.append("\"\"");
                 } else {
                     sb.append("\"");
                     sb.append(v);
@@ -120,7 +120,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                     }
                     final String v = valueRow[col];
                     if (v == null) {
-                        sb.append("None");
+                        sb.append("\"\"");
                     } else {
                         sb.append("\"");
                         sb.append(v);
@@ -141,9 +141,9 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
 
     private String booleanToString(final boolean value) {
         if (value) {
-            return "True";
+            return "true";
         } else {
-            return "False";
+            return "false";
         }
     }
 
@@ -473,7 +473,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
 
     private String doubleToString(final double value) {
         if (Doubles.isNaN(value)) {
-            return "float('nan')";
+            return NAN;
         } else {
             return String.valueOf(value);
         }

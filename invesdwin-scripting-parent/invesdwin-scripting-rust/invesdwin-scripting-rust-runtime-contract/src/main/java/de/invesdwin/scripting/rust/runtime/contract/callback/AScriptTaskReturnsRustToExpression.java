@@ -3,11 +3,14 @@ package de.invesdwin.scripting.rust.runtime.contract.callback;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.scripting.callback.IScriptTaskReturns;
+import de.invesdwin.scripting.rust.runtime.contract.IScriptTaskInputsRust;
 import de.invesdwin.util.assertions.Assertions;
 import de.invesdwin.util.math.Doubles;
 
 @NotThreadSafe
 public abstract class AScriptTaskReturnsRustToExpression implements IScriptTaskReturns {
+
+    public static final String NAN = IScriptTaskInputsRust.NAN;
 
     @Override
     public void returnCharacter(final char value) {
@@ -86,7 +89,7 @@ public abstract class AScriptTaskReturnsRustToExpression implements IScriptTaskR
                 }
                 final String v = value[i];
                 if (v == null) {
-                    sb.append("None");
+                    sb.append("\"\"");
                 } else {
                     sb.append("\"");
                     sb.append(v);
@@ -121,7 +124,7 @@ public abstract class AScriptTaskReturnsRustToExpression implements IScriptTaskR
                     }
                     final String v = valueRow[col];
                     if (v == null) {
-                        sb.append("None");
+                        sb.append("\"\"");
                     } else {
                         sb.append("\"");
                         sb.append(v);
@@ -142,9 +145,9 @@ public abstract class AScriptTaskReturnsRustToExpression implements IScriptTaskR
 
     private String booleanToString(final boolean value) {
         if (value) {
-            return "True";
+            return "true";
         } else {
-            return "False";
+            return "false";
         }
     }
 

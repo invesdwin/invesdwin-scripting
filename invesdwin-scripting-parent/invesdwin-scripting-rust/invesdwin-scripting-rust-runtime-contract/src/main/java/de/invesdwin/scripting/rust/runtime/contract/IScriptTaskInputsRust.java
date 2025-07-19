@@ -4,6 +4,8 @@ import de.invesdwin.scripting.IScriptTaskInputs;
 
 public interface IScriptTaskInputsRust extends IScriptTaskInputs {
 
+    String NAN = "f64::NAN";
+
     @Override
     default void putExpression(final String variable, final String expression) {
         getEngine().eval("let " + variable + " = " + expression + ";");
@@ -11,12 +13,12 @@ public interface IScriptTaskInputsRust extends IScriptTaskInputs {
 
     @Override
     default void putNull(final String variable) {
-        putExpression(variable, "None");
+        putExpression(variable, NAN);
     }
 
     @Override
     default void remove(final String variable) {
-        getEngine().eval("del " + variable);
+        putNull(variable);
     }
 
 }

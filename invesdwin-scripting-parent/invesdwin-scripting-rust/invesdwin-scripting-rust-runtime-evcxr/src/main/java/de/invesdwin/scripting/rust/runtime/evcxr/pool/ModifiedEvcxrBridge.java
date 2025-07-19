@@ -167,7 +167,9 @@ public class ModifiedEvcxrBridge {
         rsp.clear();
         try {
             flush();
-            IScriptTaskRunnerRust.LOG.debug(logMessage, logArgs);
+            if (IScriptTaskRunnerRust.LOG.isDebugEnabled()) {
+                IScriptTaskRunnerRust.LOG.debug(logMessage.replace("{", "\\{"), logArgs);
+            }
             out.write(jcode.getBytes());
             out.write(TERMINATOR_SUFFIX_BYTES);
             out.write(NEW_LINE);
@@ -259,7 +261,7 @@ public class ModifiedEvcxrBridge {
      * @return value of the expression.
      */
     public void eval(final String jcode) {
-        exec(jcode, "> exec %s", jcode.replace("{", "\\{"));
+        exec(jcode, "> exec %s", jcode);
         checkError();
     }
 
@@ -304,7 +306,7 @@ public class ModifiedEvcxrBridge {
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
-        IScriptTaskRunnerRust.LOG.debug("< (" + ofs + " bytes)");
+        IScriptTaskRunnerRust.LOG.trace("< (" + ofs + " bytes)");
         return ofs.intValue();
     }
 
