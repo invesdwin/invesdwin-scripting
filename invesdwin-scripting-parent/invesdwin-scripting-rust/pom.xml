@@ -13,6 +13,7 @@
 	<modules>
 		<module>invesdwin-scripting-rust-runtime-contract</module>
 		<module>invesdwin-scripting-rust-runtime-evcxr</module>
+		<module>invesdwin-scripting-rust-runtime-irust</module>
 	</modules>
 
 </project>

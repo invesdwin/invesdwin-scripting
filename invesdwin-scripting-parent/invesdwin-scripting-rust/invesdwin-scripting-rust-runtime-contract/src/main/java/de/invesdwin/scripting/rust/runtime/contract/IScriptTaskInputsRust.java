@@ -31,4 +31,16 @@ public interface IScriptTaskInputsRust extends IScriptTaskInputs {
         putNull(variable);
     }
 
+    default String newVariable(final String variable, final String type) {
+        return variable + ": " + type;
+    }
+
+    default String newVectorVariable(final String variable, final String type, final int cols) {
+        return variable + ": [" + type + "; " + cols + "]";
+    }
+
+    default String newMatrixVariable(final String variable, final String type, final int cols, final int rows) {
+        return variable + ": [[" + type + "; " + cols + "]; " + rows + "]";
+    }
+
 }

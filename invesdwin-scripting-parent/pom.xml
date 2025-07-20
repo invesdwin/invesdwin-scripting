@@ -661,6 +661,11 @@
 				<artifactId>invesdwin-scripting-rust-runtime-evcxr</artifactId>
 				<version>${project.version.invesdwin-scripting}</version>
 			</dependency>
+			<dependency>
+				<groupId>de.invesdwin</groupId>
+				<artifactId>invesdwin-scripting-rust-runtime-irust</artifactId>
+				<version>${project.version.invesdwin-scripting}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

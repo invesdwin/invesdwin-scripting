@@ -10,7 +10,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
 
     @Override
     public void putCharacter(final String variable, final char value) {
-        putExpression(variable, "'" + value + "'");
+        putExpression(newVariable(variable, TYPE_CHARACTER), "'" + value + "'");
     }
 
     @Override
@@ -69,7 +69,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
         if (value == null) {
             putNull(variable);
         } else {
-            putExpression(variable, "\"" + value + "\"");
+            putExpression(newVariable(variable, TYPE_STRING), "\"" + value + "\"");
         }
     }
 
@@ -136,7 +136,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
 
     @Override
     public void putBoolean(final String variable, final boolean value) {
-        putExpression(variable, booleanToString(value));
+        putExpression(newVariable(variable, TYPE_BOOLEAN), booleanToString(value));
     }
 
     private String booleanToString(final boolean value) {
@@ -206,17 +206,9 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
         putExpression(newMatrixVariable(variable, type, 0, rows), sb.toString());
     }
 
-    private String newMatrixVariable(final String variable, final String type, final int cols, final int rows) {
-        return variable + ": [[" + type + "; " + cols + "]; " + rows + "]";
-    }
-
-    private String newVectorVariable(final String variable, final String type, final int cols) {
-        return variable + ": [" + type + "; " + cols + "]";
-    }
-
     @Override
     public void putByte(final String variable, final byte value) {
-        putExpression(variable, String.valueOf(value));
+        putExpression(newVariable(variable, TYPE_BYTE), String.valueOf(value));
     }
 
     @Override
@@ -268,7 +260,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
 
     @Override
     public void putShort(final String variable, final short value) {
-        putExpression(variable, String.valueOf(value));
+        putExpression(newVariable(variable, TYPE_SHORT), String.valueOf(value));
     }
 
     @Override
@@ -320,7 +312,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
 
     @Override
     public void putInteger(final String variable, final int value) {
-        putExpression(variable, String.valueOf(value));
+        putExpression(newVariable(variable, TYPE_INTEGER), String.valueOf(value));
     }
 
     @Override
@@ -372,7 +364,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
 
     @Override
     public void putLong(final String variable, final long value) {
-        putExpression(variable, String.valueOf(value));
+        putExpression(newVariable(variable, TYPE_LONG), String.valueOf(value));
     }
 
     @Override
@@ -424,7 +416,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
 
     @Override
     public void putFloat(final String variable, final float value) {
-        putExpression(variable, String.valueOf(value));
+        putExpression(newVariable(variable, TYPE_FLOAT), String.valueOf(value));
     }
 
     @Override
@@ -476,7 +468,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
 
     @Override
     public void putDouble(final String variable, final double value) {
-        putExpression(variable, doubleToString(value));
+        putExpression(newVariable(variable, TYPE_DOUBLE), doubleToString(value));
     }
 
     private String doubleToString(final double value) {
