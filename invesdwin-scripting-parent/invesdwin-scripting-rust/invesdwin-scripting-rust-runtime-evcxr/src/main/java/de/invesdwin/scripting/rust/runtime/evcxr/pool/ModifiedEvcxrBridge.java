@@ -214,23 +214,27 @@ public class ModifiedEvcxrBridge {
                 }
             }
             if (errorsFound > 0) {
-                final StringBuilder errorMsg = new StringBuilder();
-                for (int i = 0; i < rsp.size(); i++) {
-                    if (i > 0) {
-                        errorMsg.append("\n");
-                    }
-                    errorMsg.append(COLOR_CODE_PATTERN.matcher(rsp.get(i)).replaceAll(""));
-                }
-                if (errorsFound > 1) {
-                    errorMsg.append("\n ... ");
-                    errorMsg.append(errorsFound - 1);
-                    errorMsg.append(" more evcxr rust errors (see debug logs) ...");
-                }
-                throw new IllegalStateException(errorMsg.toString());
+                throw newRspError(errorsFound, null);
             }
         } catch (final IOException ex) {
             throw new RuntimeException("EvcxrBridge connection broken", ex);
         }
+    }
+
+    private IllegalStateException newRspError(final int errorsFound, final Throwable cause) {
+        final StringBuilder errorMsg = new StringBuilder();
+        for (int i = 0; i < rsp.size(); i++) {
+            if (i > 0) {
+                errorMsg.append("\n");
+            }
+            errorMsg.append(COLOR_CODE_PATTERN.matcher(rsp.get(i)).replaceAll(""));
+        }
+        if (errorsFound > 1) {
+            errorMsg.append("\n ... ");
+            errorMsg.append(errorsFound - 1);
+            errorMsg.append(" more evcxr rust errors (see debug logs) ...");
+        }
+        return new IllegalStateException(errorMsg.toString(), cause);
     }
 
     public JsonNode getAsJsonNode(final String variable) {
@@ -265,7 +269,12 @@ public class ModifiedEvcxrBridge {
         }
         try {
             //WORKAROUND: always extract the last output as the type because the executed code might have printed another line
-            final int n = Integer.parseInt(rsp.get(rsp.size() - 1));
+            final int n;
+            try {
+                n = Integer.parseInt(rsp.get(rsp.size() - 1));
+            } catch (final Throwable t) {
+                throw newRspError(1, t);
+            }
             if (n == 0) {
                 //Missing or Nothing
                 return null;

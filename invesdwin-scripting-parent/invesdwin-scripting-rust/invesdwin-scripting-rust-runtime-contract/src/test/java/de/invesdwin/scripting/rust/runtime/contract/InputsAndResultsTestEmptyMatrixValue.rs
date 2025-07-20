@@ -1,97 +1,119 @@
 let getBooleanMatrix = putBooleanMatrix;
-if len(getBooleanMatrix) != 2:
+if(getBooleanMatrix.len() != 2) {
 	panic!("getBooleanMatrix empty!");
+}
 
 let getBooleanMatrixAsList = putBooleanMatrixAsList;
-if len(getBooleanMatrixAsList) != 2:
+if(getBooleanMatrixAsList.len() != 2) {
 	panic!("getBooleanMatrixAsList empty!");
+}
 
 
 let getByteMatrix = putByteMatrix;
-if len(getByteMatrix) != 2:
+if(getByteMatrix.len() != 2) {
 	panic!("getByteMatrix empty!");
+}
 
 let getByteMatrixAsList = putByteMatrixAsList;
-if len(getByteMatrixAsList) != 2:
+if(getByteMatrixAsList.len() != 2) {
 	panic!("getByteMatrixAsList empty!");
+}
 
 
 let getCharacterMatrix = putCharacterMatrix;
-if len(getCharacterMatrix) != 2:
+if(getCharacterMatrix.len() != 2) {
 	panic!("getCharacterMatrix empty!");
+}
 
 let getCharacterMatrixAsList = putCharacterMatrixAsList;
-if len(getCharacterMatrixAsList) != 2:
+if(getCharacterMatrixAsList.len() != 2) {
 	panic!("getCharacterMatrixAsList empty!");
+}
 
 
 let getDecimalMatrix = putDecimalMatrix;
-if len(getDecimalMatrix) != 2:
+if(getDecimalMatrix.len() != 2) {
 	panic!("getDecimalMatrix empty!");
+}
 
 let getDecimalMatrixAsList = putDecimalMatrixAsList;
-if len(getDecimalMatrixAsList) != 2:
+if(getDecimalMatrixAsList.len() != 2) {
 	panic!("getDecimalMatrixAsList empty!");
+}
 
 
-getDoubleMatrix = putDoubleMatrix
-if len(getDoubleMatrix) != 2:
-	panic!("getDoubleMatrix empty!")
+let getDoubleMatrix = putDoubleMatrix;
+if(getDoubleMatrix.len() != 2) {
+	panic!("getDoubleMatrix empty!");
+}
 
-getDoubleMatrixAsList = putDoubleMatrixAsList
-if len(getDoubleMatrixAsList) != 2:
-	panic!("getDoubleMatrixAsList empty!")
-
-
-getFloatMatrix = putFloatMatrix
-if len(getFloatMatrix) != 2:
-	panic!("getFloatMatrix empty!")
-
-getFloatMatrixAsList = putFloatMatrixAsList
-if len(getFloatMatrixAsList) != 2:
-	panic!("getFloatMatrixAsList empty!")
+let getDoubleMatrixAsList = putDoubleMatrixAsList;
+if(getDoubleMatrixAsList.len() != 2) {
+	panic!("getDoubleMatrixAsList empty!");
+}
 
 
-getIntegerMatrix = putIntegerMatrix
-if len(getIntegerMatrix) != 2:
-	panic!("getIntegerMatrix empty!")
+let getFloatMatrix = putFloatMatrix;
+if(getFloatMatrix.len() != 2) {
+	panic!("getFloatMatrix empty!");
+}
 
-getIntegerMatrixAsList = putIntegerMatrixAsList
-if len(getIntegerMatrixAsList) != 2:
-	panic!("getIntegerMatrixAsList empty!")
-
-
-getLongMatrix = putLongMatrix
-if len(getLongMatrix) != 2:
-	panic!("getLongMatrix empty!")
-
-getLongMatrixAsList = putLongMatrixAsList
-if len(getLongMatrixAsList) != 2:
-	panic!("getLongMatrixAsList empty!")
+let getFloatMatrixAsList = putFloatMatrixAsList;
+if(getFloatMatrixAsList.len() != 2) {
+	panic!("getFloatMatrixAsList empty!");
+}
 
 
-getPercentMatrix = putPercentMatrix
-if len(getPercentMatrix) != 2:
-	panic!("getPercentMatrix empty!")
+let getIntegerMatrix = putIntegerMatrix;
+if(getIntegerMatrix.len() != 2) {
+	panic!("getIntegerMatrix empty!");
+}
 
-getPercentMatrixAsList = putPercentMatrixAsList
-if len(getPercentMatrixAsList) != 2:
-	panic!("getPercentMatrixAsList empty!")
-
-
-getShortMatrix = putShortMatrix
-if len(getShortMatrix) != 2:
-	panic!("getShortMatrix empty!")
-
-getShortMatrixAsList = putShortMatrixAsList
-if len(getShortMatrixAsList) != 2:
-	panic!("getShortMatrixAsList empty!")
+let getIntegerMatrixAsList = putIntegerMatrixAsList;
+if(getIntegerMatrixAsList.len() != 2) {
+	panic!("getIntegerMatrixAsList empty!");
+}
 
 
-getStringMatrix = putStringMatrix
-if len(getStringMatrix) != 2:
-	panic!("getStringMatrix empty!")
+let getLongMatrix = putLongMatrix;
+if(getLongMatrix.len() != 2) {
+	panic!("getLongMatrix empty!");
+}
 
-getStringMatrixAsList = putStringMatrixAsList
-if len(getStringMatrixAsList) != 2:
-	panic!("getStringMatrixAsList empty!")
+let getLongMatrixAsList = putLongMatrixAsList;
+if(getLongMatrixAsList.len() != 2) {
+	panic!("getLongMatrixAsList empty!");
+}
+
+
+let getPercentMatrix = putPercentMatrix;
+if(getPercentMatrix.len() != 2) {
+	panic!("getPercentMatrix empty!");
+}
+
+let getPercentMatrixAsList = putPercentMatrixAsList;
+if(getPercentMatrixAsList.len() != 2) {
+	panic!("getPercentMatrixAsList empty!");
+}
+
+
+let getShortMatrix = putShortMatrix;
+if(getShortMatrix.len() != 2) {
+	panic!("getShortMatrix empty!");
+}
+
+let getShortMatrixAsList = putShortMatrixAsList;
+if(getShortMatrixAsList.len() != 2) {
+	panic!("getShortMatrixAsList empty!");
+}
+
+
+let getStringMatrix = putStringMatrix;
+if(getStringMatrix.len() != 2) {
+	panic!("getStringMatrix empty!");
+}
+
+let getStringMatrixAsList = putStringMatrixAsList;
+if(getStringMatrixAsList.len() != 2) {
+	panic!("getStringMatrixAsList empty!");
+}

@@ -28,7 +28,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append("'");
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newVectorVariable(variable, TYPE_CHARACTER, value.length), sb.toString());
         }
     }
 
@@ -37,7 +37,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
         if (value == null) {
             putNull(variable);
         } else if (value.length == 0 || value[0].length == 0) {
-            putEmptyMatrix(variable, value.length);
+            putEmptyMatrix(variable, TYPE_CHARACTER, value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
@@ -60,7 +60,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append("]");
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newMatrixVariable(variable, TYPE_CHARACTER, cols, rows), sb.toString());
         }
     }
 
@@ -93,7 +93,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 }
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newVectorVariable(variable, TYPE_STRING, value.length), sb.toString());
         }
     }
 
@@ -102,7 +102,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
         if (value == null) {
             putNull(variable);
         } else if (value.length == 0 || value[0].length == 0) {
-            putEmptyMatrix(variable, value.length);
+            putEmptyMatrix(variable, TYPE_STRING, value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
@@ -130,7 +130,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append("]");
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newMatrixVariable(variable, TYPE_STRING, cols, rows), sb.toString());
         }
     }
 
@@ -160,7 +160,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append(booleanToString(value[i]));
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newVectorVariable(variable, TYPE_BOOLEAN, value.length), sb.toString());
         }
     }
 
@@ -169,7 +169,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
         if (value == null) {
             putNull(variable);
         } else if (value.length == 0 || value[0].length == 0) {
-            putEmptyMatrix(variable, value.length);
+            putEmptyMatrix(variable, TYPE_BOOLEAN, value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
@@ -190,11 +190,11 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append("]");
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newMatrixVariable(variable, TYPE_BOOLEAN, cols, rows), sb.toString());
         }
     }
 
-    public void putEmptyMatrix(final String variable, final int rows) {
+    public void putEmptyMatrix(final String variable, final String type, final int rows) {
         final StringBuilder sb = new StringBuilder("[");
         for (int row = 0; row < rows; row++) {
             if (row > 0) {
@@ -203,7 +203,15 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
             sb.append("[]");
         }
         sb.append("]");
-        putExpression(variable, sb.toString());
+        putExpression(newMatrixVariable(variable, type, 0, rows), sb.toString());
+    }
+
+    private String newMatrixVariable(final String variable, final String type, final int cols, final int rows) {
+        return variable + ": [[" + type + "; " + cols + "]; " + rows + "]";
+    }
+
+    private String newVectorVariable(final String variable, final String type, final int cols) {
+        return variable + ": [" + type + "; " + cols + "]";
     }
 
     @Override
@@ -224,7 +232,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append(value[i]);
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newVectorVariable(variable, TYPE_BYTE, value.length), sb.toString());
         }
     }
 
@@ -233,7 +241,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
         if (value == null) {
             putNull(variable);
         } else if (value.length == 0 || value[0].length == 0) {
-            putEmptyMatrix(variable, value.length);
+            putEmptyMatrix(variable, TYPE_BYTE, value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
@@ -254,7 +262,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append("]");
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newMatrixVariable(variable, TYPE_BYTE, cols, rows), sb.toString());
         }
     }
 
@@ -276,7 +284,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append(value[i]);
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newVectorVariable(variable, TYPE_SHORT, value.length), sb.toString());
         }
     }
 
@@ -285,7 +293,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
         if (value == null) {
             putNull(variable);
         } else if (value.length == 0 || value[0].length == 0) {
-            putEmptyMatrix(variable, value.length);
+            putEmptyMatrix(variable, TYPE_SHORT, value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
@@ -306,7 +314,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append("]");
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newMatrixVariable(variable, TYPE_SHORT, cols, rows), sb.toString());
         }
     }
 
@@ -328,7 +336,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append(value[i]);
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newVectorVariable(variable, TYPE_INTEGER, value.length), sb.toString());
         }
     }
 
@@ -337,7 +345,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
         if (value == null) {
             putNull(variable);
         } else if (value.length == 0 || value[0].length == 0) {
-            putEmptyMatrix(variable, value.length);
+            putEmptyMatrix(variable, TYPE_INTEGER, value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
@@ -358,7 +366,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append("]");
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newMatrixVariable(variable, TYPE_INTEGER, cols, rows), sb.toString());
         }
     }
 
@@ -380,7 +388,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append(value[i]);
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newVectorVariable(variable, TYPE_LONG, value.length), sb.toString());
         }
     }
 
@@ -389,7 +397,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
         if (value == null) {
             putNull(variable);
         } else if (value.length == 0 || value[0].length == 0) {
-            putEmptyMatrix(variable, value.length);
+            putEmptyMatrix(variable, TYPE_LONG, value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
@@ -410,7 +418,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append("]");
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newMatrixVariable(variable, TYPE_LONG, cols, rows), sb.toString());
         }
     }
 
@@ -432,7 +440,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append(value[i]);
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newVectorVariable(variable, TYPE_FLOAT, value.length), sb.toString());
         }
     }
 
@@ -441,7 +449,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
         if (value == null) {
             putNull(variable);
         } else if (value.length == 0 || value[0].length == 0) {
-            putEmptyMatrix(variable, value.length);
+            putEmptyMatrix(variable, TYPE_FLOAT, value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
@@ -462,7 +470,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append("]");
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newMatrixVariable(variable, TYPE_FLOAT, cols, rows), sb.toString());
         }
     }
 
@@ -493,7 +501,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append(doubleToString(v));
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newVectorVariable(variable, TYPE_DOUBLE, value.length), sb.toString());
         }
     }
 
@@ -502,7 +510,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
         if (value == null) {
             putNull(variable);
         } else if (value.length == 0 || value[0].length == 0) {
-            putEmptyMatrix(variable, value.length);
+            putEmptyMatrix(variable, TYPE_DOUBLE, value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
@@ -524,7 +532,7 @@ public abstract class AScriptTaskInputsRustToExpression implements IScriptTaskIn
                 sb.append("]");
             }
             sb.append("]");
-            putExpression(variable, sb.toString());
+            putExpression(newMatrixVariable(variable, TYPE_DOUBLE, cols, rows), sb.toString());
         }
     }
 

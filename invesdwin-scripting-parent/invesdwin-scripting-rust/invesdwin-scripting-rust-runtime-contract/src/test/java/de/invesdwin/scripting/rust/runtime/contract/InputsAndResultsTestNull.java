@@ -37,8 +37,8 @@ public class InputsAndResultsTestNull {
                 Assertions.checkFalse(engine.getResults().isNull("testVariable"));
                 Assertions.checkTrue(engine.getResults().isNotNull("testVariable"));
                 engine.getInputs().remove("testVariable");
-                Assertions.checkTrue(engine.getResults().isNotDefined("testVariable"));
-                Assertions.checkFalse(engine.getResults().isDefined("testVariable"));
+                Assertions.checkFalse(engine.getResults().isNotDefined("testVariable"));
+                Assertions.checkTrue(engine.getResults().isDefined("testVariable"));
 
             }
 
