@@ -72,10 +72,10 @@ public class IRustFlushTest {
 
         System.out.println("sending commands ...");
 
-        System.out.println("sending command line : println!(\"hello\");\\n");
-        stdout.write("println!(\"hello\");\n".getBytes());
-        System.out.println("sending command line: 1+1\\n");
-        stdout.write("1+1\n".getBytes());
+        System.out.println("sending command line : println!(\"hello\"); \\n\\r");
+        stdout.write("println!(\"hello\");\n\r".getBytes());
+        System.out.println("sending command line: 1+1\\n\\r");
+        stdout.write("1+1\n\r".getBytes());
         stdout.flush();
 
         System.out.println("waiting 5 seconds for stdin/stderr streams to return output ...");
