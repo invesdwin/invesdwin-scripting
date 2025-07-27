@@ -51,6 +51,7 @@
 		<version.jshellscriptengine>1.0</version.jshellscriptengine>
 		<version.bsh>2.1.1</version.bsh>
 		<version.mvel>2.5.0.Final</version.mvel>
+		<version.pty4j>0.13.10-1</version.pty4j>
 
 		<!-- haskell -->
 		<version.frege>3.25.115-inv</version.frege>
@@ -165,6 +166,11 @@
 				<groupId>org.mvel</groupId>
 				<artifactId>mvel2</artifactId>
 				<version>${version.mvel}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.jetbrains.pty4j</groupId>
+			    <artifactId>pty4j</artifactId>
+			    <version>${version.pty4j}</version>
 			</dependency>
 
 			<!-- haskell -->
@@ -638,7 +644,7 @@
 				<artifactId>invesdwin-scripting-ruby-runtime-truffleruby</artifactId>
 				<version>${project.version.invesdwin-scripting}</version>
 			</dependency>
-			
+
 			<!-- rust -->
 			<dependency>
 				<groupId>de.invesdwin</groupId>
