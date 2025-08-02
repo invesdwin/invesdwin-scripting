@@ -8,15 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import de.invesdwin.util.time.date.FTimeUnit;
+
 public class IRustFlushTest {
 
     private static boolean stdinReceived = false;
     private static boolean stderrReceived = false;
 
-    public static void main(final String[] args) throws IOException {
+    public static void main(final String[] args) throws IOException, InterruptedException {
         final List<String> j = new ArrayList<String>();
         j.add("irust");
-        //        j.add("--default-config");
+        //                j.add("--default-config");
+        j.add("--bare-repl");
         final ProcessBuilder pbuilder = new ProcessBuilder(j);
 
         final Process irust = pbuilder.start();
@@ -70,24 +73,46 @@ public class IRustFlushTest {
             throw new RuntimeException(e);
         }
 
-        System.out.println("sending commands ...");
+        System.out.println("//sending commands ...");
 
-        System.out.println("sending command line : println!(\"hello\"); \\n\\r");
-        stdout.write("println!(\"hello\");\n\r".getBytes());
-        System.out.println("sending command line: 1+1\\n\\r");
-        stdout.write("1+1\n\r".getBytes());
+        //        writeCommand(stdout, "use std::fs;");
+        //        writeCommand(stdout, "let data = \"Some data!\";");
+        //        writeCommand(stdout, "fs::write(\"/tmp/foo\", data);");
+        //
+        //        writeCommand(stdout, "println!(\"hello\");");
+        writeCommand(stdout, "1+1");
+        //does not execute this, instead silently fails
+        writeCommand(stdout, "1+1");
         stdout.flush();
-        stdout.close();
 
-        System.out.println("waiting 5 seconds for stdin/stderr streams to return output ...");
+        System.out.println("//waiting 5 seconds for stdin/stderr streams to return output ...");
 
         try {
             TimeUnit.SECONDS.sleep(5);
         } catch (final InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("received from irust: stdinReceived=" + stdinReceived + " stderrReceived=" + stderrReceived);
+        System.out
+                .println("//received from irust: stdinReceived=" + stdinReceived + " stderrReceived=" + stderrReceived);
+
+        writeCommand(stdout, ":exit");
+        stdout.flush();
+
+        irust.destroy();
+
+        final int result = irust.waitFor();
+
+        FTimeUnit.SECONDS.sleep(1);
+
+        System.out.println("//irust exit code " + result);
+
         System.exit(0);
+    }
+
+    private static void writeCommand(final OutputStream stdout, final String line) throws IOException {
+        final String command = "IRUST_INPUT_START" + line + "IRUST_INPUT_END";
+        System.out.println("//sending command line: " + command.replace("\\", "\\\\"));
+        stdout.write(command.getBytes());
     }
 
 }
