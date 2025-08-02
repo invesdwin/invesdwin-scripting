@@ -30,13 +30,14 @@ public class IRustFlushTest {
             public void run() {
                 try {
                     while (true) {
-                        final byte b = (byte) stdin.read();
-                        if (b != -1) {
+                        if (stdin.available() > 0) {
+                            final byte b = (byte) stdin.read();
                             stdinReceived = true;
                             System.out.print((char) b);
                         } else {
                             TimeUnit.MILLISECONDS.sleep(1);
                         }
+
                     }
                 } catch (final Throwable t) {
                     t.printStackTrace();
@@ -50,8 +51,8 @@ public class IRustFlushTest {
             public void run() {
                 try {
                     while (true) {
-                        final byte b = (byte) stderr.read();
-                        if (b != -1) {
+                        if (stdin.available() > 0) {
+                            final byte b = (byte) stderr.read();
                             stderrReceived = true;
                             System.err.print((char) b);
                         } else {
@@ -94,7 +95,6 @@ public class IRustFlushTest {
                 .println("//received from irust: stdinReceived=" + stdinReceived + " stderrReceived=" + stderrReceived);
 
         writeCommand(stdout, ":exit");
-        stdout.flush();
 
         irust.destroy();
 
@@ -111,6 +111,7 @@ public class IRustFlushTest {
         final String command = "IRUST_INPUT_START" + line + "IRUST_INPUT_END";
         System.out.println("//sending command line: " + command.replace("\\", "\\\\"));
         stdout.write(command.getBytes());
+        stdout.flush();
     }
 
 }

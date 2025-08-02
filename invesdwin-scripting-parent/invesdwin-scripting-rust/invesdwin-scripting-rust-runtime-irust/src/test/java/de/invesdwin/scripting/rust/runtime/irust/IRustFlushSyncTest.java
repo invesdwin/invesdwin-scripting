@@ -45,25 +45,25 @@ public class IRustFlushSyncTest {
         //        };
         //        inputThread.start();
 
-        //        final Thread errorThread = new Thread() {
-        //            @Override
-        //            public void run() {
-        //                try {
-        //                    while (true) {
-        //                        final byte b = (byte) stderr.read();
-        //                        if (b != -1) {
-        //                            stderrReceived = true;
-        //                            System.err.print((char) b);
-        //                        } else {
-        //                            TimeUnit.MILLISECONDS.sleep(1);
-        //                        }
-        //                    }
-        //                } catch (final Throwable t) {
-        //                    t.printStackTrace();
-        //                }
-        //            }
-        //        };
-        //        errorThread.start();
+        final Thread errorThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        if (stdin.available() > 0) {
+                            final byte b = (byte) stderr.read();
+                            stderrReceived = true;
+                            System.err.print((char) b);
+                        } else {
+                            TimeUnit.MILLISECONDS.sleep(1);
+                        }
+                    }
+                } catch (final Throwable t) {
+                    t.printStackTrace();
+                }
+            }
+        };
+        errorThread.start();
 
         try {
             TimeUnit.SECONDS.sleep(5);
