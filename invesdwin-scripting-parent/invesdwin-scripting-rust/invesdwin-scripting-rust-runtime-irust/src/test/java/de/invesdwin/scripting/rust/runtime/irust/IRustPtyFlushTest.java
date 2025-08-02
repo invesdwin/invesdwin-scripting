@@ -13,9 +13,6 @@ import java.util.concurrent.TimeUnit;
 import com.pty4j.PtyProcess;
 import com.pty4j.PtyProcessBuilder;
 
-import de.invesdwin.util.lang.string.Strings;
-import de.invesdwin.util.time.date.FTimeUnit;
-
 public class IRustPtyFlushTest {
 
     private static boolean stdinReceived = false;
@@ -31,7 +28,7 @@ public class IRustPtyFlushTest {
         final PtyProcessBuilder pbuilder = new PtyProcessBuilder();
         pbuilder.setInitialColumns(80);
         pbuilder.setInitialRows(25);
-        pbuilder.setCommand(j.toArray(Strings.EMPTY_ARRAY));
+        pbuilder.setCommand(j.toArray(new String[0]));
         //
         final Map<String, String> env = new HashMap<>(System.getenv());
         if (!env.containsKey("TERM")) {
@@ -58,7 +55,7 @@ public class IRustPtyFlushTest {
                             final char c = (char) b;
                             System.out.print(c);
                             sb.append(c);
-                            if (Strings.endsWith(sb, "IRUST_OUTPUT_END")) {
+                            if (sb.toString().endsWith("IRUST_OUTPUT_END")) {
                                 sb.setLength(0);
                                 System.out.print("\n");
                             }
@@ -128,7 +125,7 @@ public class IRustPtyFlushTest {
 
         final int result = irust.waitFor();
 
-        FTimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(1);
 
         System.out.println("//irust exit code " + result);
 

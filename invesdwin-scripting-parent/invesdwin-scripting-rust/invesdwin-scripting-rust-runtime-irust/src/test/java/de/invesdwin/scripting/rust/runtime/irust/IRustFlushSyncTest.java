@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import de.invesdwin.util.lang.string.Strings;
-import de.invesdwin.util.time.date.FTimeUnit;
-
 public class IRustFlushSyncTest {
 
     private static boolean stdinReceived = false;
@@ -103,7 +100,7 @@ public class IRustFlushSyncTest {
 
         final int result = irust.waitFor();
 
-        FTimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(1);
 
         System.out.println("//irust exit code " + result);
 
@@ -129,7 +126,7 @@ public class IRustFlushSyncTest {
                     final char c = (char) b;
                     System.out.print(c);
                     sb.append(c);
-                    if (Strings.endsWith(sb, "IRUST_OUTPUT_END")) {
+                    if (sb.toString().endsWith("IRUST_OUTPUT_END")) {
                         System.out.print("\n");
                         return sb.toString();
                     }
