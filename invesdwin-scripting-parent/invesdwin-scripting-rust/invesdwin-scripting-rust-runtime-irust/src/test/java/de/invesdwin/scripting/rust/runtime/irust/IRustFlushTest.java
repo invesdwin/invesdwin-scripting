@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import de.invesdwin.util.time.date.FTimeUnit;
-
 public class IRustFlushTest {
 
     private static boolean stdinReceived = false;
@@ -102,7 +100,7 @@ public class IRustFlushTest {
 
         final int result = irust.waitFor();
 
-        FTimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(1);
 
         System.out.println("//irust exit code " + result);
 
