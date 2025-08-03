@@ -293,6 +293,7 @@ public class ModifiedScilabBridge {
         final StringBuilder message = new StringBuilder("__ans__ = toJSON(");
         message.append(variable);
         message.append("); disp(length(__ans__));");
+        //using a different separator for the length here to make it more robust against reading previous messages
         exec(true, message.toString(), "> get %s", variable);
 
         final String result = get();
@@ -326,9 +327,14 @@ public class ModifiedScilabBridge {
                 // Missing or Nothing
                 return null;
             }
-            write("disp(__ans__);");
-            read(n);
-            return readLineBuffer.getStringUtf8(0, n);
+            /*
+             * add terminator in front so that we at least read as many bytes as we need for the blacklist to work
+             * correctly
+             */
+            write("disp(" + TERMINATOR + "+__ans__);");
+            final int terminatorLength = TERMINATOR_RAW.length();
+            read(terminatorLength + n);
+            return readLineBuffer.getStringUtf8(terminatorLength, n);
         } catch (final IOException ex) {
             throw new RuntimeException("ScilabBridge connection broken", ex);
         }
@@ -376,7 +382,9 @@ public class ModifiedScilabBridge {
                         if (readLineBufferPosition == 0 && (b == 13 || b == 10)) {
                             continue;
                         }
-                        System.out.println(b + " | " + (char) b);
+                        //CHECKSTYLE:OFF
+                        //                        System.out.println(b + " | " + (char) b);
+                        //CHECKSTYlE:ON
                         if (readLineBufferPosition == size && trailingBytesExpected > 0) {
                             trailingBytesExpected--;
                             continue;
@@ -421,7 +429,7 @@ public class ModifiedScilabBridge {
                             return true;
                         }
                         //CHECKSTYLE:OFF
-                        System.out.println(b + " | " + (char) b);
+                        //                        System.out.println(b + " | " + (char) b);
                         //CHECKSTYLE:ON
                         readLineBuffer.putByte(readLineBufferPosition++, (byte) b);
                         checkReadlineBlacklist();
@@ -488,7 +496,7 @@ public class ModifiedScilabBridge {
             if (readLineBufferPosition == entry.length) {
                 if (bufferEqualsWildcard(entry, readLineBuffer.sliceTo(readLineBufferPosition))) {
                     //CHECKSTYLE:OFF
-                    System.out.println(" ************** reset " + i + " -> " + readLineBufferPosition);
+                    //                    System.out.println(" ************** reset " + i + " -> " + readLineBufferPosition);
                     //CHECKSTYLE:ON
                     readLineBufferPosition = 0;
                     return;

@@ -18,4 +18,9 @@ public class JascibScriptTaskInputsMatlab extends AScriptTaskInputsMatlabToExpre
         return engine;
     }
 
+    @Override
+    protected String getFloatType() {
+        return "double";
+    }
+
 }

@@ -327,7 +327,11 @@ public abstract class AScriptTaskInputsMatlabToExpression implements IScriptTask
 
     @Override
     public void putFloat(final String variable, final float value) {
-        putExpression(variable, "single(" + value + ")");
+        putExpression(variable, getFloatType() + "(" + value + ")");
+    }
+
+    protected String getFloatType() {
+        return "single";
     }
 
     @Override
@@ -346,7 +350,7 @@ public abstract class AScriptTaskInputsMatlabToExpression implements IScriptTask
                 sb.append(v);
             }
             sb.append("]");
-            putExpression(variable, "single(" + sb.toString() + ")");
+            putExpression(variable, getFloatType() + "(" + sb.toString() + ")");
         }
     }
 
@@ -377,7 +381,7 @@ public abstract class AScriptTaskInputsMatlabToExpression implements IScriptTask
                 }
             }
             sb.append("]");
-            putExpression(variable, "single(" + sb.toString() + ")");
+            putExpression(variable, getFloatType() + "(" + sb.toString() + ")");
         }
     }
 
