@@ -11,6 +11,10 @@ import de.invesdwin.util.concurrent.Threads;
 import de.invesdwin.util.lang.Closeables;
 import de.invesdwin.util.time.date.FTimeUnit;
 
+/**
+ * pty4j does not offer a non-blocking read option, no timeout and does not offer available() method, thus we have to
+ * use a separate thread where we can use blocking IO to read input stream without stalling the main application.
+ */
 @ThreadSafe
 public class ModifiedScilabOutputConsoleWatcher implements Closeable {
 
