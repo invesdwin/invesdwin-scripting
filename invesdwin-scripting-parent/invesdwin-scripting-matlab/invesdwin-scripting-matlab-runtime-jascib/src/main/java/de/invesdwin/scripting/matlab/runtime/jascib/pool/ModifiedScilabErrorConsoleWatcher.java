@@ -9,6 +9,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import de.invesdwin.scripting.matlab.runtime.contract.IScriptTaskRunnerMatlab;
 import de.invesdwin.util.concurrent.Threads;
+import de.invesdwin.util.lang.Closeables;
 import de.invesdwin.util.lang.string.Strings;
 import de.invesdwin.util.time.date.FTimeUnit;
 
@@ -50,6 +51,8 @@ public class ModifiedScilabErrorConsoleWatcher implements Closeable {
                     }
                 } catch (final Throwable e) {
                     //ignore, process must have been closed
+                } finally {
+                    Closeables.closeQuietly(errorReader);
                 }
             }
         });

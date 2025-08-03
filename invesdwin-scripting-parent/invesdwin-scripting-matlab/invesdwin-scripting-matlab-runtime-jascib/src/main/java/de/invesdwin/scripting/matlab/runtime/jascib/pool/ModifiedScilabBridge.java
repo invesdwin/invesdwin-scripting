@@ -1,7 +1,6 @@
 package de.invesdwin.scripting.matlab.runtime.jascib.pool;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,6 @@ import com.pty4j.PtyProcessBuilder;
 import de.invesdwin.context.integration.marshaller.MarshallerJsonJackson;
 import de.invesdwin.scripting.matlab.runtime.contract.IScriptTaskRunnerMatlab;
 import de.invesdwin.scripting.matlab.runtime.jascib.JascibProperties;
-import de.invesdwin.util.assertions.Assertions;
 import de.invesdwin.util.collections.Arrays;
 import de.invesdwin.util.concurrent.loop.ASpinWait;
 import de.invesdwin.util.concurrent.loop.LoopInterruptedCheck;
@@ -109,8 +107,8 @@ public class ModifiedScilabBridge {
 
     private final PtyProcessBuilder pbuilder;
     private Process scilab = null;
-    private InputStream inp = null;
     private ModifiedScilabErrorConsoleWatcher errWatcher = null;
+    private ModifiedScilabOutputConsoleWatcher outWatcher = null;
     private OutputStream out = null;
     private String ver = null;
     private final LoopInterruptedCheck interruptedCheck = new LoopInterruptedCheck();
@@ -163,9 +161,10 @@ public class ModifiedScilabBridge {
             return;
         }
         scilab = pbuilder.start();
-        inp = scilab.getInputStream();
         errWatcher = new ModifiedScilabErrorConsoleWatcher(scilab);
         errWatcher.startWatching();
+        outWatcher = new ModifiedScilabOutputConsoleWatcher(scilab);
+        outWatcher.startWatching();
         out = scilab.getOutputStream();
         boolean terminatorRequested = true;
         while (true) {
@@ -199,8 +198,8 @@ public class ModifiedScilabBridge {
         }
         scilab.destroy();
         scilab = null;
-        Closeables.closeQuietly(inp);
-        inp = null;
+        Closeables.closeQuietly(outWatcher);
+        outWatcher = null;
         Closeables.closeQuietly(errWatcher);
         errWatcher = null;
         Closeables.closeQuietly(out);
@@ -269,9 +268,8 @@ public class ModifiedScilabBridge {
     }
 
     private void flush() throws IOException {
-        //TODO: find a way to properly flush stdin or make reading from stdin async and fetch results from there, or patch pty4j to include a timeout
-        while (inp.available() > 0) {
-            inp.read();
+        while (outWatcher.available() > 0) {
+            outWatcher.read();
         }
     }
 
@@ -362,7 +360,7 @@ public class ModifiedScilabBridge {
         // WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
 
-            boolean quoteFound = false;
+            private int trailingBytesExpected = 0;
 
             @Override
             public boolean isConditionFulfilled() throws Exception {
@@ -370,28 +368,27 @@ public class ModifiedScilabBridge {
                     checkError();
                 }
                 while (!Thread.interrupted()) {
-                    final int b = inp.read();
+                    if (readLineBufferPosition == size && trailingBytesExpected == 0) {
+                        return true;
+                    }
+                    final int b = outWatcher.read();
                     if (b != -1) {
                         if (readLineBufferPosition == 0 && (b == 13 || b == 10)) {
                             continue;
                         }
                         System.out.println(b + " | " + (char) b);
+                        if (readLineBufferPosition == size && trailingBytesExpected > 0) {
+                            trailingBytesExpected--;
+                            continue;
+                        }
                         readLineBuffer.putByte(readLineBufferPosition, (byte) b);
                         readLineBufferPosition++;
                         if (readLineBufferPosition == 3 && readLineBuffer.getByte(0) == 32
                                 && readLineBuffer.getByte(1) == 32 && readLineBuffer.getByte(2) == '"') {
-                            quoteFound = true;
+                            trailingBytesExpected = 2;
                             readLineBufferPosition = 0;
                         } else {
                             checkReadlineBlacklist();
-                        }
-                        if (readLineBufferPosition == size) {
-                            if (quoteFound) {
-                                Assertions.checkEquals('"', inp.read());
-                                Assertions.checkEquals('\r', inp.read());
-                                inp.read();
-                            }
-                            return true;
                         }
                     }
                 }
@@ -418,15 +415,19 @@ public class ModifiedScilabBridge {
                     checkError();
                 }
                 while (!Thread.interrupted()) {
-                    final int b = inp.read();
-                    if (b == NEW_LINE) {
-                        return true;
+                    final int b = outWatcher.read();
+                    if (b != -1) {
+                        if (b == NEW_LINE) {
+                            return true;
+                        }
+                        //CHECKSTYLE:OFF
+                        System.out.println(b + " | " + (char) b);
+                        //CHECKSTYLE:ON
+                        readLineBuffer.putByte(readLineBufferPosition++, (byte) b);
+                        checkReadlineBlacklist();
+                    } else {
+                        FTimeUnit.MILLISECONDS.sleep(1);
                     }
-                    //CHECKSTYLE:OFF
-                    //                    System.out.println(b + " | " + (char) b);
-                    //CHECKSTYLE:ON
-                    readLineBuffer.putByte(readLineBufferPosition++, (byte) b);
-                    checkReadlineBlacklist();
                 }
                 return false;
             }
@@ -487,7 +488,7 @@ public class ModifiedScilabBridge {
             if (readLineBufferPosition == entry.length) {
                 if (bufferEqualsWildcard(entry, readLineBuffer.sliceTo(readLineBufferPosition))) {
                     //CHECKSTYLE:OFF
-                    //                    System.out.println(" ************** reset " + i + " -> " + readLineBufferPosition);
+                    System.out.println(" ************** reset " + i + " -> " + readLineBufferPosition);
                     //CHECKSTYLE:ON
                     readLineBufferPosition = 0;
                     return;

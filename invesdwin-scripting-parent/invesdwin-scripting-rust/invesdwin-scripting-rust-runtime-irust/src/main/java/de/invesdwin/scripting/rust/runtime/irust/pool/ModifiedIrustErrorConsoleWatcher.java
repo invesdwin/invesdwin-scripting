@@ -9,6 +9,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import de.invesdwin.scripting.rust.runtime.contract.IScriptTaskRunnerRust;
 import de.invesdwin.util.concurrent.Threads;
+import de.invesdwin.util.lang.Closeables;
 import de.invesdwin.util.lang.string.Strings;
 import de.invesdwin.util.time.date.FTimeUnit;
 
@@ -51,6 +52,8 @@ public class ModifiedIrustErrorConsoleWatcher implements Closeable {
                     }
                 } catch (final Throwable e) {
                     //ignore, process must have been closed
+                } finally {
+                    Closeables.closeQuietly(errorReader);
                 }
             }
         });
