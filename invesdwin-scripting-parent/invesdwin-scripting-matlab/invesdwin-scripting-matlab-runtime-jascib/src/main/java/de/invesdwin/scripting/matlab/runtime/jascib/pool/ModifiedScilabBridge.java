@@ -180,7 +180,7 @@ public class ModifiedScilabBridge {
                 out.write(NEW_LINE);
                 out.flush();
                 terminatorRequested = true;
-            } else if (s.contains(TERMINATOR)) {
+            } else if (s.contains(TERMINATOR_RAW)) {
                 break;
             }
         }
@@ -212,6 +212,7 @@ public class ModifiedScilabBridge {
     }
 
     private void exec(final String jcode, final String logMessage, final Object... logArgs) {
+        System.out.println("exec " + jcode);
         rsp.clear();
         try {
             flush();
@@ -253,7 +254,7 @@ public class ModifiedScilabBridge {
     }
 
     private void flush() throws IOException {
-        //TODO: find a way to properly flush stdin
+        //TODO: find a way to properly flush stdin or make reading from stdin async and fetch results from there, or patch pty4j to include a timeout
         while (inp.available() > 0) {
             inp.read();
         }
@@ -445,21 +446,45 @@ public class ModifiedScilabBridge {
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
-        boolean carriageReturnFound = false;
         while (readLineBufferPosition > 0 && readLineBuffer.getByte(readLineBufferPosition - 1) == '\r') {
             readLineBufferPosition--;
-            carriageReturnFound = true;
         }
         if (readLineBufferPosition == 0) {
             return null;
         }
-        final String s;
-        if (readLineBufferPosition > 1 && readLineBuffer.getByte(0) == ' ' && carriageReturnFound) {
-            // trim spaces at start and end
-            s = readLineBuffer.getStringUtf8(1, readLineBufferPosition - 1);
-        } else {
-            s = readLineBuffer.getStringUtf8(0, readLineBufferPosition);
+        //        13 |
+        //        32 |
+        //        32 |
+        //        34 | "
+        //        95 | _
+        //        95 | _
+        //        35 | #
+        //        35 | #
+        //        64 | @
+        //        64 | @
+        //        35 | #
+        //        35 | #
+        //        95 | _
+        //        95 | _
+        //        34 | "
+        //        13 |
+        //trim spaces and quotes at start and end
+        int start = 0;
+        while (start < readLineBufferPosition) {
+            final byte b = readLineBuffer.getByte(start);
+            if (b == '"') {
+                start++;
+                if (readLineBuffer.getByte(readLineBufferPosition - 1) == '"') {
+                    readLineBufferPosition--;
+                }
+            } else if (b == '\r' || b == ' ') {
+                start++;
+            } else {
+                break;
+            }
         }
+
+        final String s = readLineBuffer.getStringUtf8(start, readLineBufferPosition - start);
         if (!Strings.equalsAny(s, TERMINATOR_RAW, TERMINATOR)) {
             IScriptTaskRunnerMatlab.LOG.debug("< %s", s);
         }
