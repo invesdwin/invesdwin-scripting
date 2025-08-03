@@ -4,20 +4,20 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>de.invesdwin</groupId>
-		<artifactId>invesdwin-scripting-rust</artifactId>
+		<artifactId>invesdwin-scripting-matlab</artifactId>
 		<version>1.0.4-SNAPSHOT</version>
 	</parent>
-	<artifactId>invesdwin-scripting-rust-runtime-irust</artifactId>
+	<artifactId>invesdwin-scripting-matlab-runtime-jascib</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
 			<groupId>de.invesdwin</groupId>
-			<artifactId>invesdwin-scripting-rust-runtime-contract</artifactId>
+			<artifactId>invesdwin-scripting-matlab-runtime-contract</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.invesdwin</groupId>
-			<artifactId>invesdwin-scripting-rust-runtime-contract</artifactId>
+			<artifactId>invesdwin-scripting-matlab-runtime-contract</artifactId>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
@@ -26,13 +26,14 @@
 			<artifactId>invesdwin-context-integration-channel</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-handler</artifactId>
+			<groupId>de.invesdwin</groupId>
+			<artifactId>invesdwin-scripting-matlab-runtime-javasci</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 		    <groupId>org.jetbrains.pty4j</groupId>
 		    <artifactId>pty4j</artifactId>
-		    <scope>test</scope>
 		</dependency>
 	</dependencies>
 

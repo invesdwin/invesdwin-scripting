@@ -303,6 +303,18 @@
 				<artifactId>invesdwin-scripting-matlab-runtime-javasci</artifactId>
 				<version>${project.version.invesdwin-scripting}</version>
 			</dependency>
+			<dependency>
+				<groupId>de.invesdwin</groupId>
+				<artifactId>invesdwin-scripting-matlab-runtime-javasci</artifactId>
+				<version>${project.version.invesdwin-scripting}</version>
+				<type>test-jar</type>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>de.invesdwin</groupId>
+				<artifactId>invesdwin-scripting-matlab-runtime-jascib</artifactId>
+				<version>${project.version.invesdwin-scripting}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>dk.ange</groupId>

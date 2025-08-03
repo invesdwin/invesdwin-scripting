@@ -1,5 +1,5 @@
 // CHECKSTYLE:OFF
-package de.invesdwin.scripting.rust.runtime.irust;
+package de.invesdwin.scripting.rust.runtime.irust.examples;
 
 import java.io.IOException;
 import java.io.InputStream;

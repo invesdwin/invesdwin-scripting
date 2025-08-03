@@ -15,6 +15,7 @@
 		<module>invesdwin-scripting-matlab-runtime-javaoctave</module>
 		<module>invesdwin-scripting-matlab-runtime-matconsolectl</module>
 		<module>invesdwin-scripting-matlab-runtime-javasci</module>
+		<module>invesdwin-scripting-matlab-runtime-jascib</module>
 	</modules>
 
 </project>
