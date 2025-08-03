@@ -42,6 +42,9 @@ public class ModifiedScilabBridge {
     private static final String TERMINATOR_NUM_SUFFIX = "\ndisp(" + TERMINATOR_NUM + ");";
     private static final byte[] TERMINATOR_NUM_SUFFIX_BYTES = TERMINATOR_NUM_SUFFIX.getBytes();
 
+    /**
+     * Scilab 2024.0.0 hangs sometimes without a reason, use 2025.1.0 or higher instead
+     */
     private static final String[] SCILAB_ARGS = { "-nwni" };
 
     private static final byte[][] READLINE_BLACKLIST = {
@@ -128,9 +131,7 @@ public class ModifiedScilabBridge {
         j.add(JascibProperties.SCILAB_COMMAND);
         j.addAll(Arrays.asList(SCILAB_ARGS));
         pbuilder = new PtyProcessBuilder();
-        //        final Map<String, String> env = new HashMap<>();
-        //        //        env.put("TERM", "xterm");
-        //        pbuilder.setEnvironment(env);
+        //scilab crashes when trying to add env vars
         pbuilder.setInitialColumns(1000);
         pbuilder.setInitialRows(1000);
         pbuilder.setCommand(j.toArray(Strings.EMPTY_ARRAY));
