@@ -128,6 +128,11 @@ public class ModifiedScilabBridge {
         j.add(JascibProperties.SCILAB_COMMAND);
         j.addAll(Arrays.asList(SCILAB_ARGS));
         pbuilder = new PtyProcessBuilder();
+        //        final Map<String, String> env = new HashMap<>();
+        //        //        env.put("TERM", "xterm");
+        //        pbuilder.setEnvironment(env);
+        pbuilder.setInitialColumns(1000);
+        pbuilder.setInitialRows(1000);
         pbuilder.setCommand(j.toArray(Strings.EMPTY_ARRAY));
         this.mapper = MarshallerJsonJackson.getInstance().getJsonMapper(false);
     }
@@ -366,17 +371,12 @@ public class ModifiedScilabBridge {
         // WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
 
-            private int trailingBytesExpected = 0;
-
             @Override
             public boolean isConditionFulfilled() throws Exception {
                 if (interruptedCheck.check()) {
                     checkError();
                 }
                 while (!Thread.interrupted()) {
-                    if (readLineBufferPosition == size && trailingBytesExpected == 0) {
-                        return true;
-                    }
                     final int b = outWatcher.read();
                     if (b != -1) {
                         if (readLineBufferPosition == 0 && (b == 13 || b == 10)) {
@@ -385,18 +385,17 @@ public class ModifiedScilabBridge {
                         //CHECKSTYLE:OFF
                         //                        System.out.println(b + " | " + (char) b);
                         //CHECKSTYlE:ON
-                        if (readLineBufferPosition == size && trailingBytesExpected > 0) {
-                            trailingBytesExpected--;
-                            continue;
-                        }
                         readLineBuffer.putByte(readLineBufferPosition, (byte) b);
                         readLineBufferPosition++;
                         if (readLineBufferPosition == 3 && readLineBuffer.getByte(0) == 32
                                 && readLineBuffer.getByte(1) == 32 && readLineBuffer.getByte(2) == '"') {
-                            trailingBytesExpected = 2;
+                            //                            trailingBytesExpected = 2;
                             readLineBufferPosition = 0;
                         } else {
                             checkReadlineBlacklist();
+                        }
+                        if (readLineBufferPosition == size) {
+                            return true;
                         }
                     }
                 }

@@ -198,7 +198,11 @@ public abstract class AScriptTaskInputsMatlabToExpression implements IScriptTask
 
     @Override
     public void putBoolean(final String variable, final boolean value) {
-        putExpression(variable, String.valueOf(value));
+        putExpression(variable, booleanToString(value));
+    }
+
+    protected String booleanToString(final boolean value) {
+        return String.valueOf(value);
     }
 
     @Override
@@ -214,7 +218,7 @@ public abstract class AScriptTaskInputsMatlabToExpression implements IScriptTask
                     sb.append(" ");
                 }
                 final boolean v = value[i];
-                sb.append(v);
+                sb.append(booleanToString(v));
             }
             sb.append("]");
             putExpression(variable, sb.toString());
@@ -244,7 +248,7 @@ public abstract class AScriptTaskInputsMatlabToExpression implements IScriptTask
                         sb.append(" ");
                     }
                     final boolean v = valueRow[col];
-                    sb.append(v);
+                    sb.append(booleanToString(v));
                 }
             }
             sb.append("]");

@@ -94,10 +94,14 @@ public class JavasciScriptTaskReturnsMatlabToExpression extends ScriptTaskReturn
 
     @Override
     public void returnBoolean(final boolean value) {
+        returnExpression(booleanToString(value));
+    }
+
+    public static String booleanToString(final boolean value) {
         if (value) {
-            returnExpression("%T");
+            return "%T";
         } else {
-            returnExpression("%F");
+            return "%F";
         }
     }
 
@@ -114,11 +118,7 @@ public class JavasciScriptTaskReturnsMatlabToExpression extends ScriptTaskReturn
                     sb.append(" ");
                 }
                 final boolean v = value[i];
-                if (v) {
-                    sb.append("%T");
-                } else {
-                    sb.append("%F");
-                }
+                sb.append(booleanToString(v));
             }
             sb.append("]");
             returnExpression(sb.toString());
@@ -148,11 +148,7 @@ public class JavasciScriptTaskReturnsMatlabToExpression extends ScriptTaskReturn
                         sb.append(" ");
                     }
                     final boolean v = valueRow[col];
-                    if (v) {
-                        sb.append("%T");
-                    } else {
-                        sb.append("%F");
-                    }
+                    sb.append(booleanToString(v));
                 }
             }
             sb.append("]");
