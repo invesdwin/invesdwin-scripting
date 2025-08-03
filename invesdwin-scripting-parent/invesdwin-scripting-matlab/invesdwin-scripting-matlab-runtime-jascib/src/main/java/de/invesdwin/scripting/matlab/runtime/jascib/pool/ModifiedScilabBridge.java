@@ -214,6 +214,7 @@ public class ModifiedScilabBridge {
     private void exec(final String jcode, final String logMessage, final Object... logArgs) {
         rsp.clear();
         try {
+            flush();
             if (IScriptTaskRunnerMatlab.LOG.isDebugEnabled()) {
                 IScriptTaskRunnerMatlab.LOG.debug(logMessage.replace("{", "\\{"), logArgs);
             }
@@ -248,6 +249,13 @@ public class ModifiedScilabBridge {
             }
         } catch (final IOException ex) {
             throw new RuntimeException("ScilabBridge connection broken", ex);
+        }
+    }
+
+    private void flush() throws IOException {
+        //TODO: find a way to properly flush stdin
+        while (inp.available() > 0) {
+            inp.read();
         }
     }
 
