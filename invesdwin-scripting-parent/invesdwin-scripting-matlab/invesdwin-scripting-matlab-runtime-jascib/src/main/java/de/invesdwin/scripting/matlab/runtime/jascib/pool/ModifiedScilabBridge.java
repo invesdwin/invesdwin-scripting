@@ -8,8 +8,6 @@ import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.apache.commons.lang3.mutable.MutableInt;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
@@ -18,6 +16,7 @@ import com.pty4j.PtyProcessBuilder;
 import de.invesdwin.context.integration.marshaller.MarshallerJsonJackson;
 import de.invesdwin.scripting.matlab.runtime.contract.IScriptTaskRunnerMatlab;
 import de.invesdwin.scripting.matlab.runtime.jascib.JascibProperties;
+import de.invesdwin.util.assertions.Assertions;
 import de.invesdwin.util.collections.Arrays;
 import de.invesdwin.util.concurrent.loop.ASpinWait;
 import de.invesdwin.util.concurrent.loop.LoopInterruptedCheck;
@@ -39,6 +38,11 @@ public class ModifiedScilabBridge {
     private static final String TERMINATOR = "'" + TERMINATOR_RAW + "'";
     private static final String TERMINATOR_SUFFIX = "\ndisp(" + TERMINATOR + ");";
     private static final byte[] TERMINATOR_SUFFIX_BYTES = TERMINATOR_SUFFIX.getBytes();
+
+    private static final String TERMINATOR_NUM_RAW = "__##NN##__";
+    private static final String TERMINATOR_NUM = "'" + TERMINATOR_NUM_RAW + "'";
+    private static final String TERMINATOR_NUM_SUFFIX = "\ndisp(" + TERMINATOR_NUM + ");";
+    private static final byte[] TERMINATOR_NUM_SUFFIX_BYTES = TERMINATOR_NUM_SUFFIX.getBytes();
 
     private static final String[] SCILAB_ARGS = { "-nwni" };
 
@@ -211,18 +215,23 @@ public class ModifiedScilabBridge {
         return ver;
     }
 
-    private void exec(final String jcode, final String logMessage, final Object... logArgs) {
-        System.out.println("exec " + jcode);
+    private void exec(final boolean number, final String jcode, final String logMessage, final Object... logArgs) {
         rsp.clear();
         try {
-            flush();
-            if (IScriptTaskRunnerMatlab.LOG.isDebugEnabled()) {
-                IScriptTaskRunnerMatlab.LOG.debug(logMessage.replace("{", "\\{"), logArgs);
+            if (jcode != null) {
+                flush();
+                if (IScriptTaskRunnerMatlab.LOG.isDebugEnabled()) {
+                    IScriptTaskRunnerMatlab.LOG.debug(logMessage.replace("{", "\\{"), logArgs);
+                }
+                out.write(jcode.getBytes());
+                if (number) {
+                    out.write(TERMINATOR_NUM_SUFFIX_BYTES);
+                } else {
+                    out.write(TERMINATOR_SUFFIX_BYTES);
+                }
+                out.write(NEW_LINE);
+                out.flush();
             }
-            out.write(jcode.getBytes());
-            out.write(TERMINATOR_SUFFIX_BYTES);
-            out.write(NEW_LINE);
-            out.flush();
             int errorsFound = 0;
             while (true) {
                 final String s = readline();
@@ -235,8 +244,14 @@ public class ModifiedScilabBridge {
                         continue;
                     }
                 }
-                if (errorsFound == 0 && Strings.equalsAny(s, TERMINATOR_RAW, TERMINATOR)) {
-                    return;
+                if (number) {
+                    if (errorsFound == 0 && Strings.equalsAny(s, TERMINATOR_NUM_RAW, TERMINATOR_NUM)) {
+                        return;
+                    }
+                } else {
+                    if (errorsFound == 0 && Strings.equalsAny(s, TERMINATOR_RAW, TERMINATOR)) {
+                        return;
+                    }
                 }
                 rsp.add(s);
                 if (s.startsWith("Error: ")) {
@@ -280,7 +295,7 @@ public class ModifiedScilabBridge {
         final StringBuilder message = new StringBuilder("__ans__ = toJSON(");
         message.append(variable);
         message.append("); disp(length(__ans__));");
-        exec(message.toString(), "> get %s", variable);
+        exec(true, message.toString(), "> get %s", variable);
 
         final String result = get();
         try {
@@ -307,15 +322,15 @@ public class ModifiedScilabBridge {
         try {
             // WORKAROUND: always extract the last output as the type because the executed
             // code might have printed another line
-            final int n = Integer.parseInt(rsp.get(rsp.size() - 1));
+            final String res = rsp.get(rsp.size() - 2);
+            final int n = Integer.parseInt(Strings.removeEnd(res, "."));
             if (n == 0) {
                 // Missing or Nothing
                 return null;
             }
             write("disp(__ans__);");
-            final byte[] buf = new byte[n];
-            read(buf);
-            return new String(buf);
+            read(n);
+            return readLineBuffer.getStringUtf8(0, n);
         } catch (final IOException ex) {
             throw new RuntimeException("ScilabBridge connection broken", ex);
         }
@@ -329,7 +344,7 @@ public class ModifiedScilabBridge {
      * @return value of the expression.
      */
     public void eval(final String jcode) {
-        exec(jcode, "> exec %s", jcode);
+        exec(false, jcode, "> exec %s", jcode);
         checkError();
     }
 
@@ -342,10 +357,13 @@ public class ModifiedScilabBridge {
         out.flush();
     }
 
-    private int read(final byte[] buf) throws IOException {
-        final MutableInt ofs = new MutableInt(0);
+    private int read(final int size) throws IOException {
+        readLineBufferPosition = 0;
         // WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
+
+            boolean quoteFound = false;
+
             @Override
             public boolean isConditionFulfilled() throws Exception {
                 if (interruptedCheck.check()) {
@@ -354,11 +372,27 @@ public class ModifiedScilabBridge {
                 while (!Thread.interrupted()) {
                     final int b = inp.read();
                     if (b != -1) {
-                        buf[ofs.intValue()] = (byte) b;
-                        ofs.add(1);
-                    }
-                    if (ofs.intValue() == buf.length) {
-                        return true;
+                        if (readLineBufferPosition == 0 && (b == 13 || b == 10)) {
+                            continue;
+                        }
+                        System.out.println(b + " | " + (char) b);
+                        readLineBuffer.putByte(readLineBufferPosition, (byte) b);
+                        readLineBufferPosition++;
+                        if (readLineBufferPosition == 3 && readLineBuffer.getByte(0) == 32
+                                && readLineBuffer.getByte(1) == 32 && readLineBuffer.getByte(2) == '"') {
+                            quoteFound = true;
+                            readLineBufferPosition = 0;
+                        } else {
+                            checkReadlineBlacklist();
+                        }
+                        if (readLineBufferPosition == size) {
+                            if (quoteFound) {
+                                Assertions.checkEquals('"', inp.read());
+                                Assertions.checkEquals('\r', inp.read());
+                                inp.read();
+                            }
+                            return true;
+                        }
                     }
                 }
                 return false;
@@ -370,7 +404,7 @@ public class ModifiedScilabBridge {
             throw new RuntimeException(e);
         }
         // IScriptTaskRunnerMatlab.LOG.debug("< (" + ofs + " bytes)");
-        return ofs.intValue();
+        return readLineBufferPosition;
     }
 
     private String readline() throws IOException {
@@ -395,50 +429,6 @@ public class ModifiedScilabBridge {
                     checkReadlineBlacklist();
                 }
                 return false;
-            }
-
-            private void checkReadlineBlacklist() {
-                for (int i = 0; i < READLINE_BLACKLIST.length; i++) {
-                    final byte[] entry = READLINE_BLACKLIST[i];
-                    if (readLineBufferPosition == entry.length) {
-                        if (equals(entry, readLineBuffer.sliceTo(readLineBufferPosition))) {
-                            //CHECKSTYLE:OFF
-                            //                            System.out.println(" ************** reset " + i + " -> " + readLineBufferPosition);
-                            //CHECKSTYLE:ON
-                            readLineBufferPosition = 0;
-                            return;
-                        }
-                    }
-                }
-            }
-
-            private boolean equals(final byte[] digesta, final IByteBuffer digestb) {
-                if (digesta == null || digestb == null) {
-                    return false;
-                }
-
-                final int lenA = digesta.length;
-                final int lenB = digestb.capacity();
-
-                if (lenB == 0) {
-                    return lenA == 0;
-                }
-
-                if (lenA != lenB) {
-                    return false;
-                }
-
-                for (int i = 0; i < lenA; i++) {
-                    final byte a = digesta[i];
-                    if (a == Byte.MIN_VALUE) {
-                        //wildcard
-                        continue;
-                    }
-                    if (a != digestb.getByte(i)) {
-                        return false;
-                    }
-                }
-                return true;
             }
         };
         try {
@@ -489,6 +479,50 @@ public class ModifiedScilabBridge {
             IScriptTaskRunnerMatlab.LOG.debug("< %s", s);
         }
         return s;
+    }
+
+    private void checkReadlineBlacklist() {
+        for (int i = 0; i < READLINE_BLACKLIST.length; i++) {
+            final byte[] entry = READLINE_BLACKLIST[i];
+            if (readLineBufferPosition == entry.length) {
+                if (bufferEqualsWildcard(entry, readLineBuffer.sliceTo(readLineBufferPosition))) {
+                    //CHECKSTYLE:OFF
+                    //                    System.out.println(" ************** reset " + i + " -> " + readLineBufferPosition);
+                    //CHECKSTYLE:ON
+                    readLineBufferPosition = 0;
+                    return;
+                }
+            }
+        }
+    }
+
+    private boolean bufferEqualsWildcard(final byte[] digesta, final IByteBuffer digestb) {
+        if (digesta == null || digestb == null) {
+            return false;
+        }
+
+        final int lenA = digesta.length;
+        final int lenB = digestb.capacity();
+
+        if (lenB == 0) {
+            return lenA == 0;
+        }
+
+        if (lenA != lenB) {
+            return false;
+        }
+
+        for (int i = 0; i < lenA; i++) {
+            final byte a = digesta[i];
+            if (a == Byte.MIN_VALUE) {
+                //wildcard
+                continue;
+            }
+            if (a != digestb.getByte(i)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     protected void checkError() {
