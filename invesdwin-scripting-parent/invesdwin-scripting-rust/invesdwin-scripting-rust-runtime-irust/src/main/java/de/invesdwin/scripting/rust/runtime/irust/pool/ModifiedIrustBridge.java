@@ -163,6 +163,7 @@ public class ModifiedIrustBridge {
         errWatcher = null;
         Closeables.closeQuietly(out);
         out = null;
+        Files.deleteQuietly(responseFile);
     }
 
     private String exec(final String jcode, final String logMessage, final Object... logArgs) {
