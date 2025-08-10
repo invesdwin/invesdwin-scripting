@@ -142,7 +142,7 @@ public class ModifiedIrustBridge {
         out.flush();
         final String response = readResponse(false, Duration.FIVE_SECONDS);
         if (!"Ok!\n".equals(response)) {
-            throw new IllegalStateException("Failed to execute: " + ADD_JSON);
+            throw new IllegalStateException("Failed to execute [" + ADD_JSON + "]: " + response);
         }
     }
 
