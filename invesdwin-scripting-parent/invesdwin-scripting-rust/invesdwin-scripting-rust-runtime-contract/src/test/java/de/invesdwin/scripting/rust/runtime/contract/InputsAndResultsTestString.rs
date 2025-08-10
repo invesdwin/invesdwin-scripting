@@ -18,7 +18,7 @@ if(!getStringVectorWithNull[1].is_empty()) {
 }
 
 println!("getStringVectorAsList");
-let let getStringVectorAsList = putStringVectorAsList;
+let getStringVectorAsList = putStringVectorAsList;
 println!("{:?}", getStringVectorAsList);
 
 println!("getStringVectorAsListWithNull");
