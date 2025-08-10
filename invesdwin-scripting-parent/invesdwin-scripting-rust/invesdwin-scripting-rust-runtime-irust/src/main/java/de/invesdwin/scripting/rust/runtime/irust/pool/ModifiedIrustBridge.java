@@ -136,24 +136,13 @@ public class ModifiedIrustBridge {
     }
 
     void start() throws IOException {
-        //        out.write(IRUST_INPUT_START_BYTES);
-        //        out.write(ADD_JSON_BYTES);
-        //        out.write(IRUST_INPUT_END_BYTES);
         out.write(IRUST_INPUT_START_BYTES);
-        out.write(TERMINATOR_SUFFIX_BYTES);
+        out.write(ADD_JSON_BYTES);
         out.write(IRUST_INPUT_END_BYTES);
-        out.write(NEW_LINE);
         out.flush();
-        while (true) {
-            final String s = readResponse(false, Duration.FIVE_SECONDS);
-            if (s == null) {
-                close();
-                throw new IOException("Bad irust process");
-            }
-            if (s.contains(TERMINATOR_RAW)) {
-                getErrWatcher().clearLog();
-                break;
-            }
+        final String response = readResponse(false, Duration.FIVE_SECONDS);
+        if (!"Ok!\n".equals(response)) {
+            throw new IllegalStateException("Failed to execute: " + ADD_JSON);
         }
     }
 
