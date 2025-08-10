@@ -70,7 +70,6 @@ public class ModifiedIrustBridge {
     private InputStream inp = null;
     private ModifiedIrustErrorConsoleWatcher errWatcher = null;
     private OutputStream out = null;
-    private String ver = null;
     private final LoopInterruptedCheck interruptedCheck = new LoopInterruptedCheck() {
         @Override
         protected boolean onInterval() throws InterruptedException {
@@ -143,7 +142,7 @@ public class ModifiedIrustBridge {
         out.write(ADD_JSON_BYTES);
         out.write(IRUST_INPUT_END_BYTES);
         out.flush();
-        final String response = readResponse(false, Duration.FIVE_SECONDS);
+        final String response = readResponse(true, Duration.FIVE_SECONDS);
         if (!"Ok!\n".equals(response)) {
             throw new IllegalStateException("Failed to execute [" + ADD_JSON + "]: " + response);
         }
@@ -164,14 +163,6 @@ public class ModifiedIrustBridge {
         errWatcher = null;
         Closeables.closeQuietly(out);
         out = null;
-        ver = null;
-    }
-
-    /**
-     * Gets irust version.
-     */
-    public String getPythonVersion() {
-        return ver;
     }
 
     private String exec(final String jcode, final String logMessage, final Object... logArgs) {
@@ -185,28 +176,27 @@ public class ModifiedIrustBridge {
             out.write(jcode.getBytes());
             out.write(IRUST_INPUT_END_BYTES);
             out.flush();
-            final String response = readResponse(true, false);
-            if (response == null) {
-                return null;
-            }
-            int errorsFound = 0;
-            final String[] lines = Strings.splitPreserveAllTokens(response, NEW_LINE_STR);
-            for (int i = 0; i < lines.length; i++) {
-                final String s = lines[i];
-                if (s.startsWith("[0m[1m[38;5;9merror[")) {
-                    errorsFound++;
-                }
-                if (errorsFound <= 1) {
-                    rsp.add(s);
-                }
-            }
-            if (errorsFound > 0) {
-                throw newRspError(errorsFound, null);
-            } else {
-                return response;
-            }
+            final String response = readResponse(true, null);
+            return response;
         } catch (final IOException ex) {
             throw new RuntimeException("IrustBridge connection broken", ex);
+        }
+    }
+
+    private void checkResponseErrors(final String response) {
+        int errorsFound = 0;
+        final String[] lines = Strings.splitPreserveAllTokens(response, NEW_LINE_STR);
+        for (int i = 0; i < lines.length; i++) {
+            final String s = lines[i];
+            if (s.startsWith("[0m[1m[38;5;9merror[")) {
+                errorsFound++;
+            }
+            if (errorsFound <= 1) {
+                rsp.add(s);
+            }
+        }
+        if (errorsFound > 0) {
+            throw newRspError(errorsFound, null);
         }
     }
 
@@ -227,11 +217,12 @@ public class ModifiedIrustBridge {
     }
 
     public JsonNode getAsJsonNode(final String variable) {
-        final StringBuilder message = new StringBuilder("std::fs::write(\"");
-        message.append(responseFile.getAbsolutePath());
-        message.append("\", serde_json::to_string(&");
+        final StringBuilder message = new StringBuilder("let __ans__ = ");
         message.append(variable);
-        message.append(").unwrap())");
+        message.append("; std::fs::write(\"");
+        message.append(responseFile.getAbsolutePath());
+        message.append("\", serde_json::to_string(&__ans__).unwrap())");
+        message.append("");
         final String response = exec(message.toString(), "> get %s", variable);
         if (!response.endsWith("Ok(())\n")) {
             throw new IllegalStateException("Invalid response: " + response);
@@ -272,14 +263,6 @@ public class ModifiedIrustBridge {
     private void flush() throws IOException {
         while (inp.available() > 0) {
             inp.read();
-        }
-    }
-
-    private String readResponse(final boolean checkError, final boolean errorsFound) throws IOException {
-        if (errorsFound) {
-            return readResponse(checkError, CHECK_ERROR_DELAY);
-        } else {
-            return readResponse(checkError, null);
         }
     }
 
@@ -328,6 +311,9 @@ public class ModifiedIrustBridge {
         }
         final String s = readLineBuffer.getStringUtf8(0, readLineBufferPosition);
         IScriptTaskRunnerRust.LOG.debug("< %s", s);
+        if (checkError) {
+            checkResponseErrors(s);
+        }
         return s;
     }
 

@@ -10,7 +10,7 @@ public interface IScriptTaskResultsRust extends IScriptTaskResults {
             getBoolean("f64::is_nan(" + variable + ")");
             return true;
         } catch (final Throwable t) {
-            return !t.getMessage().startsWith("[E0425]");
+            return !t.getMessage().contains("[E0425]");
         }
     }
 
