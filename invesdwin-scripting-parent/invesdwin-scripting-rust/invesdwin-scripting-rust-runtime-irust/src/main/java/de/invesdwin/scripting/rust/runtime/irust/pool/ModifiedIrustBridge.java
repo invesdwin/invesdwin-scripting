@@ -1,5 +1,6 @@
 package de.invesdwin.scripting.rust.runtime.irust.pool;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -9,12 +10,11 @@ import java.util.regex.Pattern;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.apache.commons.lang3.mutable.MutableInt;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
 
+import de.invesdwin.context.ContextProperties;
 import de.invesdwin.context.integration.marshaller.MarshallerJsonJackson;
 import de.invesdwin.scripting.rust.runtime.contract.IScriptTaskRunnerRust;
 import de.invesdwin.scripting.rust.runtime.irust.IrustProperties;
@@ -23,6 +23,9 @@ import de.invesdwin.util.concurrent.loop.ASpinWait;
 import de.invesdwin.util.concurrent.loop.LoopInterruptedCheck;
 import de.invesdwin.util.error.Throwables;
 import de.invesdwin.util.lang.Closeables;
+import de.invesdwin.util.lang.Files;
+import de.invesdwin.util.lang.UUIDs;
+import de.invesdwin.util.lang.string.Charsets;
 import de.invesdwin.util.lang.string.Strings;
 import de.invesdwin.util.streams.buffer.bytes.ByteBuffers;
 import de.invesdwin.util.streams.buffer.bytes.IByteBuffer;
@@ -39,11 +42,6 @@ public class ModifiedIrustBridge {
     private static final byte[] ADD_JSON_BYTES = ADD_JSON.getBytes();
     private static final char NEW_LINE = '\n';
     private static final String NEW_LINE_STR = String.valueOf(NEW_LINE);
-    private static final char SEMICOLON = ';';
-    private static final String TERMINATOR_RAW = "__##@@##__";
-    private static final String TERMINATOR = "\"" + TERMINATOR_RAW + "\"";
-    private static final String TERMINATOR_SUFFIX = "\nprintln!(" + TERMINATOR + ")";
-    private static final byte[] TERMINATOR_SUFFIX_BYTES = TERMINATOR_SUFFIX.getBytes();
 
     private static final String IRUST_INPUT_START = "IRUST_INPUT_START";
     private static final byte[] IRUST_INPUT_START_BYTES = IRUST_INPUT_START.getBytes();
@@ -85,6 +83,7 @@ public class ModifiedIrustBridge {
     private final ObjectMapper mapper;
 
     private final List<String> rsp = new ArrayList<>();
+    private final File responseFile;
 
     ////// public API
 
@@ -97,6 +96,9 @@ public class ModifiedIrustBridge {
         j.addAll(Arrays.asList(IRUST_ARGS));
         pbuilder = new ProcessBuilder(j);
         this.mapper = MarshallerJsonJackson.getInstance().getJsonMapper(false);
+        this.responseFile = new File(
+                new File(ContextProperties.TEMP_DIRECTORY, ModifiedIrustBridge.class.getSimpleName()),
+                UUIDs.newPseudoRandomUUID() + "_ans.txt");
     }
 
     //CHECKSTYLE:OFF
@@ -133,6 +135,7 @@ public class ModifiedIrustBridge {
         errWatcher.startWatching();
         out = irust.getOutputStream();
         start();
+        Files.forceMkdirParent(responseFile);
     }
 
     void start() throws IOException {
@@ -171,7 +174,7 @@ public class ModifiedIrustBridge {
         return ver;
     }
 
-    private void exec(final String jcode, final String logMessage, final Object... logArgs) {
+    private String exec(final String jcode, final String logMessage, final Object... logArgs) {
         rsp.clear();
         try {
             flush();
@@ -184,7 +187,7 @@ public class ModifiedIrustBridge {
             out.flush();
             final String response = readResponse(true, false);
             if (response == null) {
-                return;
+                return null;
             }
             int errorsFound = 0;
             final String[] lines = Strings.splitPreserveAllTokens(response, NEW_LINE_STR);
@@ -199,6 +202,8 @@ public class ModifiedIrustBridge {
             }
             if (errorsFound > 0) {
                 throw newRspError(errorsFound, null);
+            } else {
+                return response;
             }
         } catch (final IOException ex) {
             throw new RuntimeException("IrustBridge connection broken", ex);
@@ -222,15 +227,18 @@ public class ModifiedIrustBridge {
     }
 
     public JsonNode getAsJsonNode(final String variable) {
-        final StringBuilder message = new StringBuilder("let __ans__ = serde_json::to_string(&");
+        final StringBuilder message = new StringBuilder("std::fs::write(\"");
+        message.append(responseFile.getAbsolutePath());
+        message.append("\", serde_json::to_string(&");
         message.append(variable);
-        //CHECKSTYLE:OFF
-        message.append(").unwrap(); println!(\"{}\", __ans__.len()) ");
-        //CHECKSTYLE:ON
-        exec(message.toString(), "> get %s", variable);
+        message.append(").unwrap())");
+        final String response = exec(message.toString(), "> get %s", variable);
+        if (!response.endsWith("Ok(())\n")) {
+            throw new IllegalStateException("Invalid response: " + response);
+        }
 
-        final String result = get();
         try {
+            final String result = Files.readFileToString(responseFile, Charsets.DEFAULT);
             final JsonNode node = mapper.readTree(result);
             checkError();
             if (result == null) {
@@ -244,33 +252,6 @@ public class ModifiedIrustBridge {
         } catch (final Throwable t) {
             checkErrorDelayed();
             throw Throwables.propagate(t);
-        }
-    }
-
-    private String get() {
-        if (rsp.size() < 1) {
-            throw new RuntimeException("Invalid response from irust REPL");
-        }
-        try {
-            //WORKAROUND: always extract the last output as the type because the executed code might have printed another line
-            final int n;
-            try {
-                n = Integer.parseInt(rsp.get(rsp.size() - 1));
-            } catch (final Throwable t) {
-                throw newRspError(1, t);
-            }
-            if (n == 0) {
-                //Missing or Nothing
-                return null;
-            }
-            //CHECKSTYLE:OFF
-            write("println!(\"{}\", __ans__)");
-            //CHECKSTYLE:ON
-            final byte[] buf = new byte[n];
-            read(buf);
-            return new String(buf);
-        } catch (final IOException ex) {
-            throw new RuntimeException("IrustBridge connection broken", ex);
         }
     }
 
@@ -288,49 +269,10 @@ public class ModifiedIrustBridge {
 
     ////// private stuff
 
-    private void write(final String s) throws IOException {
-        IScriptTaskRunnerRust.LOG.trace("> " + s);
-        out.write(IRUST_INPUT_START_BYTES);
-        out.write(s.getBytes());
-        out.write(IRUST_INPUT_END_BYTES);
-        out.write(NEW_LINE);
-        out.flush();
-    }
-
     private void flush() throws IOException {
         while (inp.available() > 0) {
             inp.read();
         }
-    }
-
-    private int read(final byte[] buf) throws IOException {
-        final MutableInt ofs = new MutableInt(0);
-        //WORKAROUND: sleeping 10 ms between messages is way too slow
-        final ASpinWait spinWait = new ASpinWait() {
-            @Override
-            public boolean isConditionFulfilled() throws Exception {
-                if (interruptedCheck.check()) {
-                    checkError();
-                }
-                int n = inp.available();
-                while (n > 0 && !Thread.interrupted()) {
-                    final int m = buf.length - ofs.intValue();
-                    ofs.add(inp.read(buf, ofs.intValue(), n > m ? m : n));
-                    if (ofs.intValue() == buf.length) {
-                        return true;
-                    }
-                    n = inp.available();
-                }
-                return false;
-            }
-        };
-        try {
-            spinWait.awaitFulfill(System.nanoTime());
-        } catch (final Exception e) {
-            throw new RuntimeException(e);
-        }
-        IScriptTaskRunnerRust.LOG.trace("< (" + ofs + " bytes)");
-        return ofs.intValue();
     }
 
     private String readResponse(final boolean checkError, final boolean errorsFound) throws IOException {
@@ -385,9 +327,7 @@ public class ModifiedIrustBridge {
             return null;
         }
         final String s = readLineBuffer.getStringUtf8(0, readLineBufferPosition);
-        if (!Strings.equalsAny(s, TERMINATOR_RAW, TERMINATOR)) {
-            IScriptTaskRunnerRust.LOG.debug("< %s", s);
-        }
+        IScriptTaskRunnerRust.LOG.debug("< %s", s);
         return s;
     }
 
