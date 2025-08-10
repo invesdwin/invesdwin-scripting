@@ -217,6 +217,14 @@ public class ModifiedIrustBridge {
     }
 
     public JsonNode getAsJsonNode(final String variable) {
+        /*
+         * By writing everything in one line that is executed immediately, that line will not be added to the internal
+         * script, instead it will be executed immediately. This will also execute anything that was written before the
+         * get() call as long as everything was written with ; at the end of the statement (which tells irust to add it
+         * to the internal script. For optimal performance, each script should always return only one result that
+         * contains all data of interest, that way the buffered script is only called once, instead of each time for
+         * each get() call.
+         */
         final StringBuilder message = new StringBuilder("let __ans__ = ");
         message.append(variable);
         message.append("; std::fs::write(\"");
