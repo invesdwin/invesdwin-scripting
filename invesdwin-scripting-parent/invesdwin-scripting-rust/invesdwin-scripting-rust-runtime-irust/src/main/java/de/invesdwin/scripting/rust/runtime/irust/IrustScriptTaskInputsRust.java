@@ -14,6 +14,11 @@ public class IrustScriptTaskInputsRust extends AScriptTaskInputsRustToExpression
     }
 
     @Override
+    public void cargoAdd(final String module) {
+        engine.eval(":add " + module);
+    }
+
+    @Override
     public IrustScriptTaskEngineRust getEngine() {
         return engine;
     }

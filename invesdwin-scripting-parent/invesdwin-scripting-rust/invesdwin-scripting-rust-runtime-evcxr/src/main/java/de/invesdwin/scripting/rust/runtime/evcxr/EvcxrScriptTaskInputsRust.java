@@ -14,6 +14,11 @@ public class EvcxrScriptTaskInputsRust extends AScriptTaskInputsRustToExpression
     }
 
     @Override
+    public void cargoAdd(final String module) {
+        engine.eval(":dep " + module);
+    }
+
+    @Override
     public EvcxrScriptTaskEngineRust getEngine() {
         return engine;
     }
