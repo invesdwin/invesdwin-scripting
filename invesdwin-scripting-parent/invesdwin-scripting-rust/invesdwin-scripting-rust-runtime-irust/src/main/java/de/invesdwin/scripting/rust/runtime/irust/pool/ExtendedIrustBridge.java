@@ -14,7 +14,7 @@ public class ExtendedIrustBridge extends ModifiedIrustBridge {
     public void reset() throws IOException {
         getErrWatcher().clearLog();
         eval(":reset");
-        eval(DEP_JSON);
+        eval(ADD_JSON);
         getErrWatcher().clearLog();
     }
 

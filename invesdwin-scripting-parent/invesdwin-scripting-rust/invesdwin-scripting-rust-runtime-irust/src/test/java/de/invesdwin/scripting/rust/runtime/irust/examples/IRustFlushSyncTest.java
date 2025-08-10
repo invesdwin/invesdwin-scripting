@@ -73,13 +73,15 @@ public class IRustFlushSyncTest {
 
         System.out.println("//sending commands ...");
 
+        writeCommand(stdin, stdout, ":add serde_json");
         writeCommand(stdin, stdout, "use std::fs;");
         writeCommand(stdin, stdout, "let data = \"Some data!\";");
         writeCommand(stdin, stdout, "fs::write(\"/tmp/foo\", data);");
-        //
-        writeCommand(stdin, stdout, "println!(\"hello\");");
+        //statements with a semicolon are added to the internal code buffer
+        writeCommand(stdin, stdout, "println!(\"hello\")");
         writeCommand(stdin, stdout, "1+1");
         writeCommand(stdin, stdout, "asdf");
+        writeCommand(stdin, stdout, "let mut a = 1; a+=1; println!(\"{}\", a)");
         writeCommand(stdin, stdout, "println!(\"finished\")");
         //does not execute this, instead silently fails
 

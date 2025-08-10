@@ -35,15 +35,30 @@ import de.invesdwin.util.time.duration.Duration;
 @NotThreadSafe
 public class ModifiedIrustBridge {
 
-    public static final String DEP_JSON = ":add serde_json";
-    private static final String PROMPT = ">> ";
+    public static final String ADD_JSON = ":add serde_json";
+    private static final byte[] ADD_JSON_BYTES = ADD_JSON.getBytes();
     private static final char NEW_LINE = '\n';
+    private static final String NEW_LINE_STR = String.valueOf(NEW_LINE);
+    private static final char SEMICOLON = ';';
     private static final String TERMINATOR_RAW = "__##@@##__";
     private static final String TERMINATOR = "\"" + TERMINATOR_RAW + "\"";
-    private static final String TERMINATOR_SUFFIX = "\nprintln!(" + TERMINATOR + ");";
+    private static final String TERMINATOR_SUFFIX = "\nprintln!(" + TERMINATOR + ")";
     private static final byte[] TERMINATOR_SUFFIX_BYTES = TERMINATOR_SUFFIX.getBytes();
 
-    private static final String[] IRUST_ARGS = { /* "--disable-readline" /* , "--ide-mode" */ };
+    private static final String IRUST_INPUT_START = "IRUST_INPUT_START";
+    private static final byte[] IRUST_INPUT_START_BYTES = IRUST_INPUT_START.getBytes();
+    private static final String IRUST_INPUT_END = "IRUST_INPUT_END";
+    private static final byte[] IRUST_INPUT_END_BYTES = IRUST_INPUT_END.getBytes();
+
+    private static final String IRUST_OUTPUT_START = "IRUST_OUTPUT_START";
+    private static final byte[] IRUST_OUTPUT_START_BYTES = IRUST_OUTPUT_START.getBytes();
+    private static final String IRUST_OUTPUT_END = "IRUST_OUTPUT_END";
+    private static final byte[] IRUST_OUTPUT_END_BYTES = IRUST_OUTPUT_END.getBytes();
+
+    private static final String POP = ":pop";
+    private static final byte[] POP_BYTES = POP.getBytes();
+
+    private static final String[] IRUST_ARGS = { "--bare-repl" /* , "--default-config" */ };
 
     private static final Duration CHECK_ERROR_DELAY = new Duration(10, FTimeUnit.MILLISECONDS);
     /*
@@ -68,8 +83,6 @@ public class ModifiedIrustBridge {
     private final IByteBuffer readLineBuffer = ByteBuffers.allocateExpandable();
     private int readLineBufferPosition = 0;
     private final ObjectMapper mapper;
-    private final byte[] promptBuf = new byte[PROMPT.length()];
-    private boolean usePromptBuf = false;
 
     private final List<String> rsp = new ArrayList<>();
 
@@ -119,33 +132,25 @@ public class ModifiedIrustBridge {
         errWatcher = new ModifiedIrustErrorConsoleWatcher(irust);
         errWatcher.startWatching();
         out = irust.getOutputStream();
-        boolean versionRequested = false;
+        start();
+    }
+
+    void start() throws IOException {
+        //        out.write(IRUST_INPUT_START_BYTES);
+        //        out.write(ADD_JSON_BYTES);
+        //        out.write(IRUST_INPUT_END_BYTES);
+        out.write(IRUST_INPUT_START_BYTES);
+        out.write(TERMINATOR_SUFFIX_BYTES);
+        out.write(IRUST_INPUT_END_BYTES);
+        out.write(NEW_LINE);
+        out.flush();
         while (true) {
-            final String s = readline(false, false);
+            final String s = readResponse(false, Duration.FIVE_SECONDS);
             if (s == null) {
-                if (versionRequested) {
-                    versionRequested = false;
-                    continue;
-                } else {
-                    close();
-                    throw new IOException("Bad irust process");
-                }
+                close();
+                throw new IOException("Bad irust process");
             }
-            if (s.startsWith(PROMPT)) {
-                //needed when --disable-readline is configured
-                usePromptBuf = true;
-            }
-            if (!versionRequested && ver == null) {
-                out.write(":version".getBytes());
-                out.write(NEW_LINE);
-                out.write(DEP_JSON.getBytes());
-                out.write(TERMINATOR_SUFFIX_BYTES);
-                out.write(NEW_LINE);
-                out.flush();
-                versionRequested = true;
-            } else if (versionRequested) {
-                ver = s;
-            } else if (s.contains(TERMINATOR_RAW)) {
+            if (s.contains(TERMINATOR_RAW)) {
                 getErrWatcher().clearLog();
                 break;
             }
@@ -184,29 +189,19 @@ public class ModifiedIrustBridge {
             if (IScriptTaskRunnerRust.LOG.isDebugEnabled()) {
                 IScriptTaskRunnerRust.LOG.debug(logMessage.replace("{", "\\{"), logArgs);
             }
+            out.write(IRUST_INPUT_START_BYTES);
             out.write(jcode.getBytes());
-            out.write(TERMINATOR_SUFFIX_BYTES);
-            out.write(NEW_LINE);
+            out.write(IRUST_INPUT_END_BYTES);
             out.flush();
+            final String response = readResponse(true, false);
+            if (response == null) {
+                return;
+            }
             int errorsFound = 0;
-            while (true) {
-                final String s = readline(true, errorsFound > 0);
-                if (s == null) {
-                    if (errorsFound > 0) {
-                        //throw error
-                        break;
-                    } else {
-                        //retry, we were a bit too fast as it seems
-                        continue;
-                    }
-                }
-                if (s.equals(PROMPT)) {
-                    continue;
-                }
-                if (errorsFound == 0 && Strings.equalsAny(s, TERMINATOR_RAW, TERMINATOR)) {
-                    return;
-                }
-                if (s.startsWith("[31mError:[0m ")) {
+            final String[] lines = Strings.splitPreserveAllTokens(response, NEW_LINE_STR);
+            for (int i = 0; i < lines.length; i++) {
+                final String s = lines[i];
+                if (s.startsWith("[0m[1m[38;5;9merror[")) {
                     errorsFound++;
                 }
                 if (errorsFound <= 1) {
@@ -241,7 +236,7 @@ public class ModifiedIrustBridge {
         final StringBuilder message = new StringBuilder("let __ans__ = serde_json::to_string(&");
         message.append(variable);
         //CHECKSTYLE:OFF
-        message.append(").unwrap(); println!(\"{}\", __ans__.len());");
+        message.append(").unwrap(); println!(\"{}\", __ans__.len()) ");
         //CHECKSTYLE:ON
         exec(message.toString(), "> get %s", variable);
 
@@ -280,29 +275,11 @@ public class ModifiedIrustBridge {
                 return null;
             }
             //CHECKSTYLE:OFF
-            write("println!(\"{}\", __ans__);");
+            write("println!(\"{}\", __ans__)");
             //CHECKSTYLE:ON
-            if (usePromptBuf) {
-                read(promptBuf);
-                final StringBuilder sb = new StringBuilder();
-                if (!startsWithPrompt(promptBuf)) {
-                    sb.append(new String(promptBuf));
-                }
-                final byte[] buf = new byte[n];
-                read(buf);
-                if (startsWithPrompt(buf)) {
-                    sb.append(new String(buf, PROMPT.length(), n - PROMPT.length()));
-                    read(promptBuf);
-                    sb.append(new String(promptBuf));
-                } else {
-                    sb.append(new String(buf));
-                }
-                return sb.toString();
-            } else {
-                final byte[] buf = new byte[n];
-                read(buf);
-                return new String(buf);
-            }
+            final byte[] buf = new byte[n];
+            read(buf);
+            return new String(buf);
         } catch (final IOException ex) {
             throw new RuntimeException("IrustBridge connection broken", ex);
         }
@@ -324,7 +301,9 @@ public class ModifiedIrustBridge {
 
     private void write(final String s) throws IOException {
         IScriptTaskRunnerRust.LOG.trace("> " + s);
+        out.write(IRUST_INPUT_START_BYTES);
         out.write(s.getBytes());
+        out.write(IRUST_INPUT_END_BYTES);
         out.write(NEW_LINE);
         out.flush();
     }
@@ -365,7 +344,15 @@ public class ModifiedIrustBridge {
         return ofs.intValue();
     }
 
-    private String readline(final boolean checkError, final boolean errorFound) throws IOException {
+    private String readResponse(final boolean checkError, final boolean errorsFound) throws IOException {
+        if (errorsFound) {
+            return readResponse(checkError, CHECK_ERROR_DELAY);
+        } else {
+            return readResponse(checkError, null);
+        }
+    }
+
+    private String readResponse(final boolean checkError, final Duration timeout) throws IOException {
         readLineBufferPosition = 0;
         //WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
@@ -378,12 +365,17 @@ public class ModifiedIrustBridge {
                 }
                 while (inp.available() > 0 && !Thread.interrupted()) {
                     final int b = inp.read();
-                    if (b == NEW_LINE) {
-                        return true;
-                    }
+                    //CHECKSTYLE:OFF
+                    //                    System.out.println((char) b);
+                    //CHECKSTYLE:ON
                     readLineBuffer.putByte(readLineBufferPosition++, (byte) b);
-                    //check for prompt
-                    if (isPrompt()) {
+                    if (ByteBuffers.endsWithReverse(readLineBuffer.sliceTo(readLineBufferPosition),
+                            IRUST_OUTPUT_START_BYTES)) {
+                        readLineBufferPosition = 0;
+                    }
+                    if (ByteBuffers.endsWithReverse(readLineBuffer.sliceTo(readLineBufferPosition),
+                            IRUST_OUTPUT_END_BYTES)) {
+                        readLineBufferPosition -= IRUST_OUTPUT_END_BYTES.length;
                         return true;
                     }
                 }
@@ -392,8 +384,8 @@ public class ModifiedIrustBridge {
 
         };
         try {
-            if (errorFound) {
-                spinWait.awaitFulfill(System.nanoTime(), CHECK_ERROR_DELAY);
+            if (timeout != null) {
+                spinWait.awaitFulfill(System.nanoTime(), timeout);
             } else {
                 spinWait.awaitFulfill(System.nanoTime());
             }
@@ -408,27 +400,6 @@ public class ModifiedIrustBridge {
             IScriptTaskRunnerRust.LOG.debug("< %s", s);
         }
         return s;
-    }
-
-    private boolean isPrompt() {
-        if (readLineBufferPosition != PROMPT.length()) {
-            return false;
-        }
-        for (int i = 0; i < PROMPT.length(); i++) {
-            if (readLineBuffer.getByte(i) != (byte) PROMPT.charAt(i)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean startsWithPrompt(final byte[] buf) {
-        for (int i = 0; i < PROMPT.length(); i++) {
-            if (buf[i] != (byte) PROMPT.charAt(i)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     protected void checkError() {
