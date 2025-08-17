@@ -61,7 +61,3 @@ For more elaborate examples of the Haskell script integration, have a look at th
 ## More Documentation and Programming Languages
 
 Further documentation and similar integration modules like this one also can be found here: https://github.com/invesdwin/invesdwin-scripting
-
-## More Programming Languages
-
-Similar integration modules like this one also exist for the following other programming languages: https://github.com/invesdwin/invesdwin-scripting
