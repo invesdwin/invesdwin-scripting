@@ -97,7 +97,7 @@ public class FileScriptTaskCallbackContext implements Closeable {
     public String invoke(final String dims, final String args) {
         final ScriptTaskParametersMatlabFromJson parameters = ScriptTaskParametersMatlabFromJsonPool.INSTANCE
                 .borrowObject();
-        final JavasciScriptTaskReturnsMatlabToExpression returns = JavasciScriptTaskReturnsMatlabToExpressionPool.INSTANCE
+        final JascibScriptTaskReturnsMatlabToExpression returns = JascibScriptTaskReturnsMatlabToExpressionPool.INSTANCE
                 .borrowObject();
         try {
             final JsonNode jsonDims = toJsonNode(dims);
@@ -114,7 +114,7 @@ public class FileScriptTaskCallbackContext implements Closeable {
             returns.returnExpression("error('CallbackException: " + errorMessage + "')");
             return returns.getReturnExpression();
         } finally {
-            JavasciScriptTaskReturnsMatlabToExpressionPool.INSTANCE.returnObject(returns);
+            JascibScriptTaskReturnsMatlabToExpressionPool.INSTANCE.returnObject(returns);
             ScriptTaskParametersMatlabFromJsonPool.INSTANCE.returnObject(parameters);
         }
     }

@@ -15,6 +15,19 @@ public class JavasciScriptTaskReturnsMatlabToExpression extends ScriptTaskReturn
     }
 
     @Override
+    protected void returnEmptyRows(final int rows) {
+        final StringBuilder sb = new StringBuilder("list(");
+        for (int i = 0; i < rows; i++) {
+            if (i > 0) {
+                sb.append(",");
+            }
+            sb.append("[]");
+        }
+        sb.append(")");
+        returnExpression(sb.toString());
+    }
+
+    @Override
     public void returnStringVector(final String[] value) {
         if (value == null) {
             returnNull();

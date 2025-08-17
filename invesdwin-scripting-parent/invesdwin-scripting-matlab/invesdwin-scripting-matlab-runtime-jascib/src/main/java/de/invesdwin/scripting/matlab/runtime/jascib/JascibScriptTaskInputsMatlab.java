@@ -3,7 +3,7 @@ package de.invesdwin.scripting.matlab.runtime.jascib;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.scripting.matlab.runtime.contract.AScriptTaskInputsMatlabToExpression;
-import de.invesdwin.scripting.matlab.runtime.jascib.callback.file.JavasciScriptTaskReturnsMatlabToExpression;
+import de.invesdwin.scripting.matlab.runtime.jascib.callback.file.JascibScriptTaskReturnsMatlabToExpression;
 import de.invesdwin.util.assertions.Assertions;
 import de.invesdwin.util.math.Doubles;
 
@@ -33,7 +33,7 @@ public class JascibScriptTaskInputsMatlab extends AScriptTaskInputsMatlabToExpre
 
     @Override
     protected String booleanToString(final boolean value) {
-        return JavasciScriptTaskReturnsMatlabToExpression.booleanToString(value);
+        return JascibScriptTaskReturnsMatlabToExpression.booleanToString(value);
     }
 
     @Override
