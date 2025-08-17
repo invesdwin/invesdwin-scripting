@@ -21,7 +21,6 @@ Dependency declaration:
 
 We have a few options available for integrating Haskell:
 - **invesdwin-scripting-haskell-runtime-ghci**: 
-- **invesdwin-scripting-haskell-runtime-eta**: 
 - **invesdwin-scripting-haskell-runtime-frege**: 
 
 You are free to choose which integration method you prefer by selecting the appropriate runtime module as a dependency for your application. The `invesdwin-scripting-haskell-runtime-contract` module defines interfaces for integrating your Haskell scripts in a way that works with all of the above runtime modules. So you have the benefit of being able to write your Haskell scripts once and easily test against different runtimes in order to: 
