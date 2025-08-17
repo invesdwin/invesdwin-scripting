@@ -46,12 +46,10 @@ public class ModifiedScilabBridge {
 	private static final String TERMINATOR_RAW = "__##@@##__";
 	private static final String TERMINATOR = "'" + TERMINATOR_RAW + "'";
 	private static final String TERMINATOR_SUFFIX = "\r\ndisp(" + TERMINATOR + ");";
-	private static final byte[] TERMINATOR_SUFFIX_BYTES = TERMINATOR_SUFFIX.getBytes();
 
 	private static final String TERMINATOR_NUM_RAW = "__##NN##__";
 	private static final String TERMINATOR_NUM = "'" + TERMINATOR_NUM_RAW + "'";
 	private static final String TERMINATOR_NUM_SUFFIX = "\r\ndisp(" + TERMINATOR_NUM + ");";
-	private static final byte[] TERMINATOR_NUM_SUFFIX_BYTES = TERMINATOR_NUM_SUFFIX.getBytes();
 
 	/**
 	 * Scilab 2024.0.0 hangs sometimes without a reason, use 2025.1.0 or higher
@@ -222,16 +220,28 @@ public class ModifiedScilabBridge {
 			}
 			if (s.contains("Scilab ")) {
 				ver = s;
-				out.write(TERMINATOR_SUFFIX_BYTES);
-				out.write(CARRIAGE_RETURN);
-				out.write(NEW_LINE);
-				out.flush();
+				final StringBuilder command = new StringBuilder();
+				command.append(TERMINATOR_SUFFIX);
+				command.append(CARRIAGE_RETURN);
+				command.append(NEW_LINE);
+				write(command.toString());
 				terminatorRequested = true;
 			} else if (s.contains(TERMINATOR_RAW)) {
 				break;
 			}
 		}
 		Files.forceMkdirParent(responseFile);
+	}
+
+	private void write(final String command) throws IOException {
+		outWatcher.setWriting(true);
+		try {
+			FTimeUnit.MILLISECONDS.sleepNoInterrupt(1);
+			out.write(command.getBytes());
+			out.flush();
+		} finally {
+			outWatcher.setWriting(false);
+		}
 	}
 
 	/**
@@ -268,15 +278,15 @@ public class ModifiedScilabBridge {
 				if (IScriptTaskRunnerMatlab.LOG.isDebugEnabled()) {
 					IScriptTaskRunnerMatlab.LOG.debug(logMessage.replace("{", "\\{"), logArgs);
 				}
-				out.write(jcode.replace("\n", "\r\n").replace("\r\r\n", "\r\n").getBytes());
+				final StringBuilder command = new StringBuilder(jcode.replace("\n", "\r\n").replace("\r\r\n", "\r\n"));
 				if (number) {
-					out.write(TERMINATOR_NUM_SUFFIX_BYTES);
+					command.append(TERMINATOR_NUM_SUFFIX);
 				} else {
-					out.write(TERMINATOR_SUFFIX_BYTES);
+					command.append(TERMINATOR_SUFFIX);
 				}
-				out.write(CARRIAGE_RETURN);
-				out.write(NEW_LINE);
-				out.flush();
+				command.append(CARRIAGE_RETURN);
+				command.append(NEW_LINE);
+				write(command.toString());
 			}
 			int errorsFound = 0;
 			while (true) {
@@ -318,6 +328,7 @@ public class ModifiedScilabBridge {
 		while (outWatcher.available() > 0) {
 			outWatcher.read();
 		}
+		FTimeUnit.MILLISECONDS.sleepNoInterrupt(1);
 	}
 
 	private IllegalStateException newRspError(final int errorsFound, final Throwable cause) {
@@ -376,14 +387,6 @@ public class ModifiedScilabBridge {
 	}
 
 	////// private stuff
-
-	private void write(final String s) throws IOException {
-		// IScriptTaskRunnerMatlab.LOG.debug("> " + s);
-		out.write(s.getBytes());
-		out.write(CARRIAGE_RETURN);
-		out.write(NEW_LINE);
-		out.flush();
-	}
 
 	private String readline() throws IOException {
 		readLineBufferPosition = 0;
