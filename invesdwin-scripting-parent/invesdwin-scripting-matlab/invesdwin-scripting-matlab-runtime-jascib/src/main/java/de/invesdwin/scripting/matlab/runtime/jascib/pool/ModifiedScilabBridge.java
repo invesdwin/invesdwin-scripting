@@ -1,5 +1,6 @@
 package de.invesdwin.scripting.matlab.runtime.jascib.pool;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.pty4j.PtyProcessBuilder;
 
+import de.invesdwin.context.ContextProperties;
 import de.invesdwin.context.integration.marshaller.MarshallerJsonJackson;
 import de.invesdwin.scripting.matlab.runtime.contract.IScriptTaskRunnerMatlab;
 import de.invesdwin.scripting.matlab.runtime.jascib.JascibProperties;
@@ -20,6 +22,9 @@ import de.invesdwin.util.concurrent.loop.ASpinWait;
 import de.invesdwin.util.concurrent.loop.LoopInterruptedCheck;
 import de.invesdwin.util.error.Throwables;
 import de.invesdwin.util.lang.Closeables;
+import de.invesdwin.util.lang.Files;
+import de.invesdwin.util.lang.UUIDs;
+import de.invesdwin.util.lang.string.Charsets;
 import de.invesdwin.util.lang.string.Strings;
 import de.invesdwin.util.streams.buffer.bytes.ByteBuffers;
 import de.invesdwin.util.streams.buffer.bytes.IByteBuffer;
@@ -116,17 +121,17 @@ public class ModifiedScilabBridge {
 			// 48 | 0
 			// 75 | K
 			{ 27, '[', '0', 'K' }, //
-//27 | 
-//91 | [
-//53 | 5
-//71 | G
+			// 27 | 
+			// 91 | [
+			// 53 | 5
+			// 71 | G
 			{ 27, '[', '5', 'G' }, //
-//27 | 
-//91 | [
-//63 | ?
-//50 | 2
-//53 | 5
-//104 | h
+			// 27 | 
+			// 91 | [
+			// 63 | ?
+			// 50 | 2
+			// 53 | 5
+			// 104 | h
 			{ 27, '[', '?', '2', '5', Byte.MIN_VALUE }, //
 	};
 
@@ -140,6 +145,8 @@ public class ModifiedScilabBridge {
 	private int readLineBufferPosition = 0;
 	private final ObjectMapper mapper;
 
+	private final File responseFile;
+
 	private final List<String> rsp = new ArrayList<>();
 
 	////// public API
@@ -149,6 +156,9 @@ public class ModifiedScilabBridge {
 	 */
 	public ModifiedScilabBridge() {
 		this.mapper = MarshallerJsonJackson.getInstance().getJsonMapper(false);
+		this.responseFile = new File(
+				new File(ContextProperties.TEMP_DIRECTORY, ModifiedScilabBridge.class.getSimpleName()),
+				UUIDs.newPseudoRandomUUID() + "_ans.txt");
 	}
 
 	// CHECKSTYLE:OFF
@@ -217,6 +227,7 @@ public class ModifiedScilabBridge {
 				break;
 			}
 		}
+		Files.forceMkdirParent(responseFile);
 	}
 
 	/**
@@ -235,6 +246,7 @@ public class ModifiedScilabBridge {
 		Closeables.closeQuietly(out);
 		out = null;
 		ver = null;
+		Files.deleteQuietly(responseFile);
 	}
 
 	/**
@@ -252,7 +264,7 @@ public class ModifiedScilabBridge {
 				if (IScriptTaskRunnerMatlab.LOG.isDebugEnabled()) {
 					IScriptTaskRunnerMatlab.LOG.debug(logMessage.replace("{", "\\{"), logArgs);
 				}
-				out.write(jcode.getBytes());
+				out.write(jcode.replace("\n", "\r\n").replace("\r\r\n", "\r\n").getBytes());
 				if (number) {
 					out.write(TERMINATOR_NUM_SUFFIX_BYTES);
 				} else {
@@ -323,13 +335,15 @@ public class ModifiedScilabBridge {
 	public JsonNode getAsJsonNode(final String variable) {
 		final StringBuilder message = new StringBuilder("__ans__ = toJSON(");
 		message.append(variable);
-		message.append("); disp(length(__ans__));");
+		message.append("); __ans__fd__ = mopen(\"");
+		message.append(responseFile.getAbsolutePath());
+		message.append("\", \"wt\"); mputstr(__ans__, __ans__fd__); mclose(__ans__fd__);");
 		// using a different separator for the length here to make it more robust
 		// against reading previous messages
 		exec(true, message.toString(), "> get %s", variable);
 
-		final String result = get();
 		try {
+			final String result = Files.readFileToString(responseFile, Charsets.DEFAULT);
 			final JsonNode node = mapper.readTree(result);
 			checkError();
 			if (result == null) {
@@ -343,32 +357,6 @@ public class ModifiedScilabBridge {
 		} catch (final Throwable t) {
 			checkErrorDelayed();
 			throw Throwables.propagate(t);
-		}
-	}
-
-	private String get() {
-		if (rsp.size() < 1) {
-			throw new RuntimeException("Invalid response from Scilab REPL");
-		}
-		try {
-			// WORKAROUND: always extract the last output as the type because the executed
-			// code might have printed another line
-			final String res = rsp.get(rsp.size() - 2);
-			final int n = Integer.parseInt(Strings.removeEnd(res, "."));
-			if (n == 0) {
-				// Missing or Nothing
-				return null;
-			}
-			/*
-			 * add terminator in front so that we at least read as many bytes as we need for
-			 * the blacklist to work correctly
-			 */
-			write("disp(" + TERMINATOR + "+__ans__);");
-			final int terminatorLength = TERMINATOR_RAW.length();
-			read(terminatorLength + n);
-			return readLineBuffer.getStringUtf8(terminatorLength, n);
-		} catch (final IOException ex) {
-			throw new RuntimeException("ScilabBridge connection broken", ex);
 		}
 	}
 
@@ -393,55 +381,6 @@ public class ModifiedScilabBridge {
 		out.flush();
 	}
 
-	private int read(final int size) throws IOException {
-		readLineBufferPosition = 0;
-		// WORKAROUND: sleeping 10 ms between messages is way too slow
-		final ASpinWait spinWait = new ASpinWait() {
-
-			@Override
-			protected boolean determineSpinAllowed() {
-				return false;
-			}
-
-			@Override
-			public boolean isConditionFulfilled() throws Exception {
-				if (interruptedCheck.check()) {
-					checkError();
-				}
-				while (!Thread.interrupted()) {
-					final int b = outWatcher.read();
-					if (b != -1) {
-						if (readLineBufferPosition == 0 && (b == 13 || b == 10)) {
-							continue;
-						}
-						// CHECKSTYLE:OFF
-						System.out.println(b + " | " + (char) b);
-						// CHECKSTYlE:ON
-						readLineBuffer.putByte(readLineBufferPosition, (byte) b);
-						readLineBufferPosition++;
-						if (readLineBufferPosition == 3 && readLineBuffer.getByte(0) == 32
-								&& readLineBuffer.getByte(1) == 32 && readLineBuffer.getByte(2) == '"') {
-							readLineBufferPosition = 0;
-						} else {
-							checkReadlineBlacklist();
-						}
-						if (readLineBufferPosition == size) {
-							return true;
-						}
-					}
-				}
-				return false;
-			}
-		};
-		try {
-			spinWait.awaitFulfill(System.nanoTime());
-		} catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
-		// IScriptTaskRunnerMatlab.LOG.debug("< (" + ofs + " bytes)");
-		return readLineBufferPosition;
-	}
-
 	private String readline() throws IOException {
 		readLineBufferPosition = 0;
 		// WORKAROUND: sleeping 10 ms between messages is way too slow
@@ -464,7 +403,7 @@ public class ModifiedScilabBridge {
 							return true;
 						}
 						// CHECKSTYLE:OFF
-						System.out.println(b + " | " + (char) b);
+						// System.out.println(b + " | " + (char) b);
 						// CHECKSTYLE:ON
 						readLineBuffer.putByte(readLineBufferPosition++, (byte) b);
 						checkReadlineBlacklist();
@@ -559,7 +498,8 @@ public class ModifiedScilabBridge {
 				if (readLineBufferPosition - offset == entry.length) {
 					if (bufferEqualsWildcard(entry, readLineBuffer.slice(offset, readLineBufferPosition - offset))) {
 						// CHECKSTYLE:OFF
-						System.out.println(" ************** reset " + i + " -> " + readLineBufferPosition);
+						// System.out.println(" ************** reset " + i + " -> " +
+						// readLineBufferPosition);
 						// CHECKSTYLE:ON
 						readLineBufferPosition = 0;
 						return;
