@@ -42,7 +42,7 @@ de.invesdwin.scripting.matlab.runtime.jascib.JascibProperties.SCILAB_COMMAND=sci
 
 With this you can switch easily between Matlab/Octave for your scripts to test for interoperability and decide which implementation provides the best performance for your use case. Notably Matlab takes a long time to start up but has efficient data transfer, while Octave is faster to start up but the data transfer is less efficient. Scilab might be interesting to access a wider pool of mathematical tools.
 
-Also Octave is free while Matlab requires a paid license. Even though Octave is licensed as GPL, usage and integration with it can happen without your application falling under the GPL. Though please consider that when using modules for Octave/Matlab that are licensed under the GPL, you might have to make your own scripts available under the GPL too. Since Scilab and javasci are both licensed under the GPL, `invesdwin-scripting--matlab-runtime-javasci` also had to be put under the GPL, so please be aware of this fact when using the Scilab integration. For a more elaborate license discussion, see the documentation of [invesdwin-scripting--r](https://github.com/subes/invesdwin-scripting--r) which faces the same topic.
+Also Octave is free while Matlab requires a paid license. Even though Octave is licensed as GPL, usage and integration with it can happen without your application falling under the GPL. Though please consider that when using modules for Octave/Matlab that are licensed under the GPL, you might have to make your own scripts available under the GPL too. Since Scilab and javasci are both licensed under the GPL, `invesdwin-scripting-matlab-runtime-javasci` also had to be put under the GPL, so please be aware of this fact when using the Scilab integration. The other Scilab integration `invesdwin-scripting-matlab-runtime-jascib` runs Scilab as a separate process, which might be the better approach for scripting with Scilab from a licensing perspective. For a more elaborate license discussion, see the documentation of [invesdwin-scripting-r](https://github.com/subes/invesdwin-scripting-r) which faces the same topic.
 
 ## Example Code
 
@@ -73,11 +73,11 @@ final String result = script.run(); //optionally pass a specific runner as an ar
 Assertions.assertThat(result).isEqualTo("Hello World!");
 ```
 
-For more elaborate examples of the Matlab/Octave script integration, have a look at the test cases in `invesdwin-scripting--matlab-runtime-contract` which are executed in each individual runtime module test suite.
+For more elaborate examples of the Matlab/Octave script integration, have a look at the test cases in `invesdwin-scripting-matlab-runtime-contract` which are executed in each individual runtime module test suite.
 
 ## Recommended Editor
 
-For working with Matlab we recommend using the default user interface of Matlab. If you want to run your scripts from your main application, you can do this easily with `invesdwin-scripting--python-runtime-matconsolectl` (add this module as a `test` scope dependency) during development (you also need to add a dependecy to the type `test-jar` of `invesdwin-scripting--matlab-runtime-contract` for the log level to get activated, or alternatively change the log level of `de.invesdwin.scripting.matlab.runtime.contract.IScriptTaskRunnerMatlab` to `DEBUG` on your own). The actual deployment distribution can choose a different runtime then as a hard dependency.
+For working with Matlab we recommend using the default user interface of Matlab. If you want to run your scripts from your main application, you can do this easily with `invesdwin-scripting-matlab-runtime-matconsolectl` (add this module as a `test` scope dependency) during development (you also need to add a dependecy to the type `test-jar` of `invesdwin-scripting-matlab-runtime-contract` for the log level to get activated, or alternatively change the log level of `de.invesdwin.scripting.matlab.runtime.contract.IScriptTaskRunnerMatlab` to `DEBUG` on your own). The actual deployment distribution can choose a different runtime then as a hard dependency.
 
 ## More Documentation and Programming Languages
 
