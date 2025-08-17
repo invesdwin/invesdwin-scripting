@@ -195,6 +195,9 @@ public class ModifiedScilabBridge {
 		j.addAll(Arrays.asList(SCILAB_ARGS));
 		final PtyProcessBuilder pbuilder = new PtyProcessBuilder();
 		// scilab crashes when trying to add env vars
+		pbuilder.setConsole(true); // fixes race condition
+//		pbuilder.setUseWinConPty(true);
+//		pbuilder.setCygwin(true);
 		pbuilder.setInitialColumns(1000);
 		pbuilder.setInitialRows(1000);
 		pbuilder.setCommand(j.toArray(Strings.EMPTY_ARRAY));
@@ -236,7 +239,6 @@ public class ModifiedScilabBridge {
 	private void write(final String command) throws IOException {
 		outWatcher.setWriting(true);
 		try {
-			FTimeUnit.MILLISECONDS.sleepNoInterrupt(1);
 			out.write(command.getBytes());
 			out.flush();
 		} finally {
@@ -328,7 +330,7 @@ public class ModifiedScilabBridge {
 		while (outWatcher.available() > 0) {
 			outWatcher.read();
 		}
-		FTimeUnit.MILLISECONDS.sleepNoInterrupt(1);
+		errWatcher.clearLog();
 	}
 
 	private IllegalStateException newRspError(final int errorsFound, final Throwable cause) {
