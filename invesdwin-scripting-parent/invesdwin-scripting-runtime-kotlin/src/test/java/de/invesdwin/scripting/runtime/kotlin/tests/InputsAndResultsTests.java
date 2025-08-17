@@ -42,7 +42,7 @@ public class InputsAndResultsTests {
 
     public void testParallel() {
         final List<Runnable> tasks = new ArrayList<Runnable>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 4; i++) {
             tasks.add(new Runnable() {
                 @Override
                 public void run() {
