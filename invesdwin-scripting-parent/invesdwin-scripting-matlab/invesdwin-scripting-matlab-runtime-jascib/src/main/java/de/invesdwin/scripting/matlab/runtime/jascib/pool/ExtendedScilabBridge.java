@@ -7,20 +7,20 @@ import javax.annotation.concurrent.NotThreadSafe;
 @NotThreadSafe
 public class ExtendedScilabBridge extends ModifiedScilabBridge {
 
-	public static final String CLEANUP_SCRIPT = "clear; clearglobal; clc";
+    public static final String CLEANUP_SCRIPT = "clear; clearglobal; clc";
 
-	public ExtendedScilabBridge() {
-		super();
-	}
+    public ExtendedScilabBridge() {
+        super();
+    }
 
-	@Override
-	public void open() throws IOException {
-		super.open();
-	}
+    @Override
+    public void open() throws IOException {
+        super.open();
+    }
 
-	public void reset() throws IOException {
-		eval(CLEANUP_SCRIPT);
-		getErrWatcher().clearLog();
-	}
+    public void reset() throws IOException {
+        eval(CLEANUP_SCRIPT);
+        getErrWatcher().clearLog();
+    }
 
 }
