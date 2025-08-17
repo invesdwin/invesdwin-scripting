@@ -362,7 +362,7 @@ public class ModifiedScilabBridge {
 		exec(true, message.toString(), "> get %s", variable);
 
 		try {
-			final String result = Files.readFileToString(responseFile, Charsets.DEFAULT);
+			final String result = readFile();
 			final JsonNode node = mapper.readTree(result);
 			checkError();
 			if (result == null) {
@@ -376,6 +376,21 @@ public class ModifiedScilabBridge {
 		} catch (final Throwable t) {
 			checkErrorDelayed();
 			throw Throwables.propagate(t);
+		}
+	}
+
+	private String readFile() throws InterruptedException {
+		while (true) {
+			try {
+				final String result = Files.readFileToString(responseFile, Charsets.DEFAULT);
+				if (Strings.isBlank(result)) {
+					FTimeUnit.MILLISECONDS.sleep(1);
+					continue;
+				}
+				return result;
+			} catch (final Throwable t) {
+				FTimeUnit.MILLISECONDS.sleep(1);
+			}
 		}
 	}
 

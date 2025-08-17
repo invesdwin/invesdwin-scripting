@@ -237,7 +237,7 @@ public class ModifiedIrustBridge {
 		}
 
 		try {
-			final String result = Files.readFileToString(responseFile, Charsets.DEFAULT);
+			final String result = readFile();
 			final JsonNode node = mapper.readTree(result);
 			checkError();
 			if (result == null) {
@@ -251,6 +251,21 @@ public class ModifiedIrustBridge {
 		} catch (final Throwable t) {
 			checkErrorDelayed();
 			throw Throwables.propagate(t);
+		}
+	}
+
+	private final String readFile() throws InterruptedException {
+		while (true) {
+			try {
+				final String result = Files.readFileToString(responseFile, Charsets.DEFAULT);
+				if (Strings.isBlank(result)) {
+					FTimeUnit.MILLISECONDS.sleep(1);
+					continue;
+				}
+				return result;
+			} catch (final Throwable t) {
+				FTimeUnit.MILLISECONDS.sleep(1);
+			}
 		}
 	}
 
