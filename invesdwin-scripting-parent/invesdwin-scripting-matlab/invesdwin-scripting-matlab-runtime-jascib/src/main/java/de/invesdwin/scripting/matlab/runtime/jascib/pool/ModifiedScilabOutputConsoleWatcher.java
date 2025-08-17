@@ -25,16 +25,15 @@ public class ModifiedScilabOutputConsoleWatcher implements Closeable {
 
     @GuardedBy("self")
     private final CircularByteBuffer buffer = new CircularByteBuffer();
-    private volatile boolean writing;
-    private final boolean sync;
+    private final boolean windows;
 
     public ModifiedScilabOutputConsoleWatcher(final Process process) {
         this.inp = process.getInputStream();
-        this.sync = OperatingSystem.isWindows();
+        this.windows = OperatingSystem.isWindows();
     }
 
     public void startWatching() {
-        if (sync) {
+        if (windows) {
             return;
         }
         inputThread = new Thread(new Runnable() {
@@ -42,7 +41,7 @@ public class ModifiedScilabOutputConsoleWatcher implements Closeable {
             public void run() {
                 try {
                     while (!Threads.isInterrupted() && inputThread != null) {
-                        if (isFull() || isWriting()) {
+                        if (isFull()) {
                             FTimeUnit.MILLISECONDS.sleep(1);
                         } else {
                             //inp.available is not available on linux in pty4j
@@ -75,14 +74,14 @@ public class ModifiedScilabOutputConsoleWatcher implements Closeable {
             inputThread.interrupt();
             inputThread = null;
         }
-        if (sync) {
+        if (windows) {
             Closeables.closeQuietly(inp);
         }
         clearLog();
     }
 
     public void clearLog() {
-        if (sync) {
+        if (windows) {
             return;
         }
         synchronized (buffer) {
@@ -91,7 +90,8 @@ public class ModifiedScilabOutputConsoleWatcher implements Closeable {
     }
 
     public int available() {
-        if (sync) {
+        if (windows) {
+            //on windows avaiable works
             try {
                 return inp.available();
             } catch (final IOException e) {
@@ -104,7 +104,7 @@ public class ModifiedScilabOutputConsoleWatcher implements Closeable {
     }
 
     public boolean isFull() {
-        if (sync) {
+        if (windows) {
             return false;
         }
         synchronized (buffer) {
@@ -113,7 +113,7 @@ public class ModifiedScilabOutputConsoleWatcher implements Closeable {
     }
 
     public int read() {
-        if (sync) {
+        if (windows) {
             try {
                 return inp.read();
             } catch (final IOException e) {
@@ -129,11 +129,8 @@ public class ModifiedScilabOutputConsoleWatcher implements Closeable {
         }
     }
 
-    public void setWriting(final boolean writing) {
-        this.writing = writing;
+    public boolean isWindows() {
+        return windows;
     }
 
-    public boolean isWriting() {
-        return writing;
-    }
 }

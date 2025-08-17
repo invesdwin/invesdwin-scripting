@@ -195,11 +195,9 @@ public class ModifiedScilabBridge {
         j.addAll(Arrays.asList(SCILAB_ARGS));
         final PtyProcessBuilder pbuilder = new PtyProcessBuilder();
         // scilab crashes when trying to add env vars
-        pbuilder.setConsole(true); // fixes race condition
-        //pbuilder.setUseWinConPty(true);
-        //pbuilder.setCygwin(true);
-        pbuilder.setInitialColumns(1000);
-        pbuilder.setInitialRows(1000);
+        pbuilder.setConsole(true);
+        pbuilder.setInitialColumns(10_000);
+        pbuilder.setInitialRows(10_000);
         pbuilder.setCommand(j.toArray(Strings.EMPTY_ARRAY));
         scilab = pbuilder.start();
         // scilab hangs without a PTY
@@ -237,13 +235,25 @@ public class ModifiedScilabBridge {
     }
 
     private void write(final String command) throws IOException {
-        outWatcher.setWriting(true);
-        try {
+        if (outWatcher.isWindows()) {
+            //try to make it less likely for scilab to receive commands incompletely on windows
+            //though it seems even with this, it does not solve the stability issues
+            final String[] lines = Strings.splitPreserveAllTokens(command, "\n");
+            for (int i = 0; i < lines.length; i++) {
+                out.write(lines[i].getBytes());
+                out.write(NEW_LINE);
+                out.flush();
+                FTimeUnit.MILLISECONDS.sleepNoInterrupt(i);
+            }
+        } else {
+            //though linux is rather stable compared to windows
             out.write(command.getBytes());
             out.flush();
-        } finally {
-            outWatcher.setWriting(false);
         }
+    }
+
+    public boolean isWindows() {
+        return outWatcher.isWindows();
     }
 
     /**
@@ -312,7 +322,7 @@ public class ModifiedScilabBridge {
                     }
                 }
                 rsp.add(s);
-                if (s.startsWith("Error: ")) {
+                if (s.startsWith("Error: ") || s.startsWith("Fehler: ")) {
                     errorsFound++;
                     // throw error immediately
                     break;
