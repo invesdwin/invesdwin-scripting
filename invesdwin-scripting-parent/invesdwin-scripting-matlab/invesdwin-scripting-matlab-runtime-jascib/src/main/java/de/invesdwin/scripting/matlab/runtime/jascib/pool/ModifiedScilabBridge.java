@@ -36,7 +36,11 @@ import de.invesdwin.util.time.date.FTimeUnit;
 @NotThreadSafe
 public class ModifiedScilabBridge {
 
-	private static final byte[] WINDOWS_SUFFIX_PATTERN = new byte[] { 27, '[', '0', 'K' };
+	private static final byte[][] WINDOWS_SUFFIX_PATTERNS = { //
+			{ 27, '[', '0', 'K' }, //
+			{ 27, '[', '5', 'G' }, //
+			{ 27, '[', '?', '2', '5', Byte.MIN_VALUE }, //
+	};
 	private static final char CARRIAGE_RETURN = '\r';
 	private static final char NEW_LINE = '\n';
 	private static final String TERMINATOR_RAW = "__##@@##__";
@@ -444,9 +448,17 @@ public class ModifiedScilabBridge {
 //		48 | 0
 //		75 | K
 //		13 |
-		if (ByteBuffers.endsWithReverse(readLineBuffer.sliceTo(readLineBufferPosition), WINDOWS_SUFFIX_PATTERN)) {
-			readLineBufferPosition -= WINDOWS_SUFFIX_PATTERN.length;
-		}
+		boolean found;
+		do {
+			found = false;
+			for (int i = 0; i < WINDOWS_SUFFIX_PATTERNS.length; i++) {
+				final byte[] pattern = WINDOWS_SUFFIX_PATTERNS[i];
+				if (bufferEndsWithReverseWildcard(readLineBuffer.sliceTo(readLineBufferPosition), pattern)) {
+					readLineBufferPosition -= pattern.length;
+					found = true;
+				}
+			}
+		} while (found);
 
 		// 13 |
 		// 32 |
@@ -485,7 +497,7 @@ public class ModifiedScilabBridge {
 			return "";
 		}
 		final String s = readLineBuffer.getStringUtf8(start, length);
-		if (!Strings.equalsAny(s, TERMINATOR_RAW, TERMINATOR)) {
+		if (!Strings.equalsAny(s, TERMINATOR_RAW, TERMINATOR, TERMINATOR_NUM_RAW, TERMINATOR_NUM)) {
 			IScriptTaskRunnerMatlab.LOG.debug("< %s", s);
 		}
 		return s;
@@ -532,6 +544,36 @@ public class ModifiedScilabBridge {
 				continue;
 			}
 			if (a != digestb.getByte(i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean bufferEndsWithReverseWildcard(final IByteBuffer digesta, final byte[] digestb) {
+		if (digesta == null || digestb == null) {
+			return false;
+		}
+
+		final int lenBuffer = digesta.capacity();
+		final int lenStart = digestb.length;
+
+		if (lenStart == 0) {
+			return true;
+		}
+
+		if (lenBuffer < lenStart) {
+			return false;
+		}
+
+		final int offsetBuffer = lenBuffer - lenStart;
+		for (int i = lenStart - 1; i >= 0; i--) {
+			final byte b = digestb[i];
+			if (b == Byte.MIN_VALUE) {
+				// wildcard
+				continue;
+			}
+			if (digesta.getByte(offsetBuffer + i) != b) {
 				return false;
 			}
 		}
