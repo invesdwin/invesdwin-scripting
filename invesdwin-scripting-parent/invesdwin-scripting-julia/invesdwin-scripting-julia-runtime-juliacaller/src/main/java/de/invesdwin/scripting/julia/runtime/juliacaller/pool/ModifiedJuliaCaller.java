@@ -202,6 +202,12 @@ public class ModifiedJuliaCaller {
         final StringBuilder sb = new StringBuilder();
         //WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
+
+            @Override
+            protected boolean determineSpinAllowed() {
+                return false;
+            }
+
             @Override
             public boolean isConditionFulfilled() throws Exception {
                 if (interruptedCheck.check()) {

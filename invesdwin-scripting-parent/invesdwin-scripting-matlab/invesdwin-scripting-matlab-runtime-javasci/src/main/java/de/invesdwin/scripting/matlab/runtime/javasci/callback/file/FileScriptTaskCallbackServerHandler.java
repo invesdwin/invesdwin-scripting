@@ -24,6 +24,11 @@ public class FileScriptTaskCallbackServerHandler implements Runnable {
         this.requestSpinWait = new ASpinWait() {
 
             @Override
+            protected boolean determineSpinAllowed() {
+                return false;
+            }
+
+            @Override
             public boolean isConditionFulfilled() throws Exception {
                 return callbackContext.getRequestFile().exists();
             }
@@ -51,7 +56,13 @@ public class FileScriptTaskCallbackServerHandler implements Runnable {
     private String readRequest() throws InterruptedException {
         while (true) {
             try {
-                return Files.readFileToString(callbackContext.getRequestFile(), Charset.defaultCharset());
+                final String request = Files.readFileToString(callbackContext.getRequestFile(),
+                        Charset.defaultCharset());
+                if (Strings.isBlank(request)) {
+                    FTimeUnit.MILLISECONDS.sleep(1);
+                    continue;
+                }
+                return request;
             } catch (final IOException e) {
                 //windows file lock might still be active
                 FTimeUnit.MILLISECONDS.sleep(1);

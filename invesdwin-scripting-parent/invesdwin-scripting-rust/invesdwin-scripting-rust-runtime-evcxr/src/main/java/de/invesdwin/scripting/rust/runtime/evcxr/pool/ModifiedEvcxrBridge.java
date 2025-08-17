@@ -339,6 +339,12 @@ public class ModifiedEvcxrBridge {
         final MutableInt ofs = new MutableInt(0);
         //WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
+
+            @Override
+            protected boolean determineSpinAllowed() {
+                return false;
+            }
+
             @Override
             public boolean isConditionFulfilled() throws Exception {
                 if (interruptedCheck.check()) {
@@ -369,6 +375,12 @@ public class ModifiedEvcxrBridge {
         readLineBufferPosition = 0;
         //WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
+
+            @Override
+            protected boolean determineSpinAllowed() {
+                return false;
+            }
+
             @Override
             public boolean isConditionFulfilled() throws Exception {
                 if (checkError) {

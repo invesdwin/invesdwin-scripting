@@ -54,6 +54,10 @@ public class ModifiedScilabBridge {
             //109 | m
             { 27, '[', '0', 'm' }, //
             //45 | -
+            //62 | >
+            //32 |
+            { '-', '>', ' ' }, //
+            //45 | -
             //45 | -
             //62 | >
             //32 |
@@ -93,19 +97,10 @@ public class ModifiedScilabBridge {
             //48 | 0
             //109 | m
             { 8, 27, '[', '0', 'm' }, //
-            //8 | 
-            //27 | 
             //91 | [
-            //50 | 2
+            //48 | 0
             //109 | m
-            { 8, 27, '[', '2', 'm' }, //
-            //8 | 
-            //27 | 
-            //91 | [
-            //52 | 4
-            //104 | h
-            //72 | H
-            { 8, 27, '[', '4', 'h', Byte.MIN_VALUE }, //
+            { '[', '0', 'm' }, //
     };
 
     private final PtyProcessBuilder pbuilder;
@@ -373,6 +368,11 @@ public class ModifiedScilabBridge {
         final ASpinWait spinWait = new ASpinWait() {
 
             @Override
+            protected boolean determineSpinAllowed() {
+                return false;
+            }
+
+            @Override
             public boolean isConditionFulfilled() throws Exception {
                 if (interruptedCheck.check()) {
                     checkError();
@@ -390,7 +390,6 @@ public class ModifiedScilabBridge {
                         readLineBufferPosition++;
                         if (readLineBufferPosition == 3 && readLineBuffer.getByte(0) == 32
                                 && readLineBuffer.getByte(1) == 32 && readLineBuffer.getByte(2) == '"') {
-                            //                            trailingBytesExpected = 2;
                             readLineBufferPosition = 0;
                         } else {
                             checkReadlineBlacklist();
@@ -416,6 +415,11 @@ public class ModifiedScilabBridge {
         readLineBufferPosition = 0;
         // WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
+
+            @Override
+            protected boolean determineSpinAllowed() {
+                return false;
+            }
 
             @Override
             public boolean isConditionFulfilled() throws Exception {
@@ -483,7 +487,11 @@ public class ModifiedScilabBridge {
             }
         }
 
-        final String s = readLineBuffer.getStringUtf8(start, readLineBufferPosition - start);
+        final int length = readLineBufferPosition - start;
+        if (length <= 0) {
+            return "";
+        }
+        final String s = readLineBuffer.getStringUtf8(start, length);
         if (!Strings.equalsAny(s, TERMINATOR_RAW, TERMINATOR)) {
             IScriptTaskRunnerMatlab.LOG.debug("< %s", s);
         }
@@ -493,13 +501,15 @@ public class ModifiedScilabBridge {
     private void checkReadlineBlacklist() {
         for (int i = 0; i < READLINE_BLACKLIST.length; i++) {
             final byte[] entry = READLINE_BLACKLIST[i];
-            if (readLineBufferPosition == entry.length) {
-                if (bufferEqualsWildcard(entry, readLineBuffer.sliceTo(readLineBufferPosition))) {
-                    //CHECKSTYLE:OFF
-                    //                    System.out.println(" ************** reset " + i + " -> " + readLineBufferPosition);
-                    //CHECKSTYLE:ON
-                    readLineBufferPosition = 0;
-                    return;
+            for (int offset = 0; offset <= 3; offset++) {
+                if (readLineBufferPosition - offset == entry.length) {
+                    if (bufferEqualsWildcard(entry, readLineBuffer.slice(offset, readLineBufferPosition - offset))) {
+                        //CHECKSTYLE:OFF
+                        //                    System.out.println(" ************** reset " + i + " -> " + readLineBufferPosition);
+                        //CHECKSTYLE:ON
+                        readLineBufferPosition = 0;
+                        return;
+                    }
                 }
             }
         }

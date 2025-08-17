@@ -8,14 +8,14 @@ import de.invesdwin.util.lang.string.Strings;
 @NotThreadSafe
 public abstract class AScriptTaskInputsMatlabToExpression implements IScriptTaskInputsMatlab {
 
-    private void putEmptyRows(final String variable, final int rows) {
+    protected void putEmptyRows(final String variable, final int rows) {
         putExpression(variable, "cell(" + rows + ",1)");
     }
 
     @Override
     public void putString(final String variable, final String value) {
         if (value == null) {
-            putNull(value);
+            putNull(variable);
         } else {
             putExpression(variable, "'" + value + "'");
         }
@@ -86,7 +86,11 @@ public abstract class AScriptTaskInputsMatlabToExpression implements IScriptTask
 
     @Override
     public void putDouble(final String variable, final double value) {
-        putExpression(variable, String.valueOf(value));
+        putExpression(variable, doubleToString(value));
+    }
+
+    protected String doubleToString(final double value) {
+        return String.valueOf(value);
     }
 
     @Override
@@ -102,7 +106,7 @@ public abstract class AScriptTaskInputsMatlabToExpression implements IScriptTask
                     sb.append(" ");
                 }
                 final double v = value[i];
-                sb.append(v);
+                sb.append(doubleToString(v));
             }
             sb.append("]");
             putExpression(variable, sb.toString());
@@ -132,7 +136,7 @@ public abstract class AScriptTaskInputsMatlabToExpression implements IScriptTask
                         sb.append(" ");
                     }
                     final double v = valueRow[col];
-                    sb.append(v);
+                    sb.append(doubleToString(v));
                 }
             }
             sb.append("]");

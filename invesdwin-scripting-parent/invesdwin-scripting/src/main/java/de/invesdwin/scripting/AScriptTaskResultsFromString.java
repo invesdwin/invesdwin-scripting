@@ -69,8 +69,12 @@ public abstract class AScriptTaskResultsFromString implements IScriptTaskResults
         if (str == null) {
             return Booleans.DEFAULT_MISSING_VALUE;
         } else {
-            return Boolean.parseBoolean(str);
+            return parseBoolean(str);
         }
+    }
+
+    protected boolean parseBoolean(final String str) {
+        return Boolean.parseBoolean(str);
     }
 
     @Override
@@ -85,7 +89,7 @@ public abstract class AScriptTaskResultsFromString implements IScriptTaskResults
             if (str == null) {
                 values[i] = Booleans.DEFAULT_MISSING_VALUE;
             } else {
-                values[i] = Boolean.parseBoolean(str);
+                values[i] = parseBoolean(str);
             }
         }
         return values;
@@ -107,7 +111,7 @@ public abstract class AScriptTaskResultsFromString implements IScriptTaskResults
                 if (str == null) {
                     values[j] = Booleans.DEFAULT_MISSING_VALUE;
                 } else {
-                    values[j] = Boolean.parseBoolean(str);
+                    values[j] = parseBoolean(str);
                 }
             }
         }

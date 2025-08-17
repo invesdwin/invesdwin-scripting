@@ -312,6 +312,12 @@ public class ModifiedFregeBridge {
         readLineBufferPosition = 0;
         //WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
+
+            @Override
+            protected boolean determineSpinAllowed() {
+                return false;
+            }
+
             @Override
             public boolean isConditionFulfilled() throws Exception {
                 if (interruptedCheck.check()) {

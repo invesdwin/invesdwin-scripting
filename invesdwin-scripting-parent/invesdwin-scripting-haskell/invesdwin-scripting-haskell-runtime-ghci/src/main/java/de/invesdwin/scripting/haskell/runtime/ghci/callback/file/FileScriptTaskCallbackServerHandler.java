@@ -8,6 +8,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import de.invesdwin.util.concurrent.loop.ASpinWait;
 import de.invesdwin.util.error.Throwables;
 import de.invesdwin.util.lang.Files;
+import de.invesdwin.util.lang.string.Strings;
 import de.invesdwin.util.time.date.FTimeUnit;
 
 @NotThreadSafe
@@ -19,6 +20,11 @@ public class FileScriptTaskCallbackServerHandler implements Runnable {
     public FileScriptTaskCallbackServerHandler(final FileScriptTaskCallbackContext callbackContext) {
         this.callbackContext = callbackContext;
         this.requestSpinWait = new ASpinWait() {
+
+            @Override
+            protected boolean determineSpinAllowed() {
+                return false;
+            }
 
             @Override
             public boolean isConditionFulfilled() throws Exception {
@@ -48,7 +54,13 @@ public class FileScriptTaskCallbackServerHandler implements Runnable {
     private String readRequest() throws InterruptedException {
         while (true) {
             try {
-                return Files.readFileToString(callbackContext.getRequestFile(), Charset.defaultCharset());
+                final String request = Files.readFileToString(callbackContext.getRequestFile(),
+                        Charset.defaultCharset());
+                if (Strings.isBlank(request)) {
+                    FTimeUnit.MILLISECONDS.sleep(1);
+                    continue;
+                }
+                return request;
             } catch (final IOException e) {
                 //windows file lock might still be active
                 FTimeUnit.MILLISECONDS.sleep(1);
