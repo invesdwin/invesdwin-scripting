@@ -238,6 +238,7 @@ public class ModifiedScilabBridge {
 
 	private void write(final String command) throws IOException {
 		outWatcher.setWriting(true);
+		FTimeUnit.MILLISECONDS.sleepNoInterrupt(1);
 		try {
 			out.write(command.getBytes());
 			out.flush();
@@ -330,6 +331,7 @@ public class ModifiedScilabBridge {
 		while (outWatcher.available() > 0) {
 			outWatcher.read();
 		}
+		FTimeUnit.MILLISECONDS.sleepNoInterrupt(1);
 		errWatcher.clearLog();
 	}
 
