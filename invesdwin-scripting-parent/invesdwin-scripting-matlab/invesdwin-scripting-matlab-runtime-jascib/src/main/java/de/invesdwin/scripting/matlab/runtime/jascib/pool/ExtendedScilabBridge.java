@@ -7,7 +7,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 @NotThreadSafe
 public class ExtendedScilabBridge extends ModifiedScilabBridge {
 
-	public static final String CLEANUP_SCRIPT = "clear; clc";
+	public static final String CLEANUP_SCRIPT = "clear; clearglobal; clc";
 
 	public ExtendedScilabBridge() {
 		super();

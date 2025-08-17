@@ -20,7 +20,7 @@ import jakarta.inject.Named;
 public final class JavasciScriptTaskRunnerMatlab
         implements IScriptTaskRunnerMatlab, FactoryBean<JavasciScriptTaskRunnerMatlab> {
 
-    public static final String CLEANUP_SCRIPT = "clear; clc";
+    public static final String CLEANUP_SCRIPT = "clear; clearglobal; clc";
     public static final String INTERNAL_RESULT_VARIABLE = "JSTRM_result";
 
     public static final JavasciScriptTaskRunnerMatlab INSTANCE = new JavasciScriptTaskRunnerMatlab();
