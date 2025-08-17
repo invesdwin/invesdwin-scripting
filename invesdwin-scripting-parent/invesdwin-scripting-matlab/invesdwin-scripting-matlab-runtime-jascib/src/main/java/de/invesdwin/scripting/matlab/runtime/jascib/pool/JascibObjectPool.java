@@ -43,7 +43,7 @@ public final class JascibObjectPool extends ATimeoutObjectPool<ExtendedScilabBri
 	protected boolean passivateObject(final ExtendedScilabBridge element) {
 		try {
 			element.reset();
-			return false;
+			return true;
 		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
