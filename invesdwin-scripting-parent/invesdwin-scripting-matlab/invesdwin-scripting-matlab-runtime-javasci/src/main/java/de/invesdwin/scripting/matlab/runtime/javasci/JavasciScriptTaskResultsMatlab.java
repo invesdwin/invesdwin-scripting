@@ -113,7 +113,7 @@ public class JavasciScriptTaskResultsMatlab implements IScriptTaskResultsMatlab 
         if (isNull(variable)) {
             return null;
         } else if (isEmpty(variable)) {
-            final int rows = getInteger("size(" + variable + ",1)");
+            final int rows = size(variable);
             final String[][] matrix = new String[rows][];
             for (int i = 0; i < rows; i++) {
                 matrix[i] = new String[0];
@@ -122,6 +122,15 @@ public class JavasciScriptTaskResultsMatlab implements IScriptTaskResultsMatlab 
         } else {
             final Object obj = get(variable);
             return Strings.checkedCastMatrix(obj);
+        }
+    }
+
+    protected int size(final String variable) {
+        try {
+            return getInteger("size(" + variable + ",1)");
+        } catch (final Throwable t) {
+            //might be an empty list instead
+            return getInteger("size(" + variable + ")");
         }
     }
 
@@ -148,7 +157,7 @@ public class JavasciScriptTaskResultsMatlab implements IScriptTaskResultsMatlab 
         if (isNull(variable)) {
             return null;
         } else if (isEmpty(variable)) {
-            final int rows = getInteger("size(" + variable + ",1)");
+            final int rows = size(variable);
             final double[][] matrix = new double[rows][];
             for (int i = 0; i < rows; i++) {
                 matrix[i] = new double[0];
@@ -183,7 +192,7 @@ public class JavasciScriptTaskResultsMatlab implements IScriptTaskResultsMatlab 
         if (isNull(variable)) {
             return null;
         } else if (isEmpty(variable)) {
-            final int rows = getInteger("size(" + variable + ",1)");
+            final int rows = size(variable);
             final int[][] matrix = new int[rows][];
             for (int i = 0; i < rows; i++) {
                 matrix[i] = new int[0];
@@ -218,7 +227,7 @@ public class JavasciScriptTaskResultsMatlab implements IScriptTaskResultsMatlab 
         if (isNull(variable)) {
             return null;
         } else if (isEmpty(variable)) {
-            final int rows = getInteger("size(" + variable + ",1)");
+            final int rows = size(variable);
             final boolean[][] matrix = new boolean[rows][];
             for (int i = 0; i < rows; i++) {
                 matrix[i] = new boolean[0];
@@ -253,7 +262,7 @@ public class JavasciScriptTaskResultsMatlab implements IScriptTaskResultsMatlab 
         if (isNull(variable)) {
             return null;
         } else if (isEmpty(variable)) {
-            final int rows = getInteger("size(" + variable + ",1)");
+            final int rows = size(variable);
             final byte[][] matrix = new byte[rows][];
             for (int i = 0; i < rows; i++) {
                 matrix[i] = new byte[0];
@@ -324,7 +333,7 @@ public class JavasciScriptTaskResultsMatlab implements IScriptTaskResultsMatlab 
         if (isNull(variable)) {
             return null;
         } else if (isEmpty(variable)) {
-            final int rows = getInteger("size(" + variable + ",1)");
+            final int rows = size(variable);
             final short[][] matrix = new short[rows][];
             for (int i = 0; i < rows; i++) {
                 matrix[i] = new short[0];
@@ -360,7 +369,7 @@ public class JavasciScriptTaskResultsMatlab implements IScriptTaskResultsMatlab 
         if (isNull(variable)) {
             return null;
         } else if (isEmpty(variable)) {
-            final int rows = getInteger("size(" + variable + ",1)");
+            final int rows = size(variable);
             final long[][] matrix = new long[rows][];
             for (int i = 0; i < rows; i++) {
                 matrix[i] = new long[0];

@@ -81,8 +81,7 @@ public class JavasciScriptTaskInputsMatlab implements IScriptTaskInputsMatlab {
         } else if (value.length == 0) {
             putEmpty(variable);
         } else if (value[0].length == 0) {
-            //empty string matrix is not really empty in scilab, so we use empty double matrix instead
-            putDoubleMatrix(variable, Doubles.checkedCastMatrix(value));
+            putEmptyRows(variable, value.length);
         } else {
             final ScilabString matrix = new ScilabString(Objects.deepClone(value));
             replaceNullWithEmpty(matrix);
@@ -115,6 +114,8 @@ public class JavasciScriptTaskInputsMatlab implements IScriptTaskInputsMatlab {
             putNull(variable);
         } else if (value.length == 0) {
             putEmpty(variable);
+        } else if (value[0].length == 0) {
+            putEmptyRows(variable, value.length);
         } else {
             final ScilabDouble matrix = new ScilabDouble(value);
             put(variable, matrix);
@@ -146,6 +147,8 @@ public class JavasciScriptTaskInputsMatlab implements IScriptTaskInputsMatlab {
             putNull(variable);
         } else if (value.length == 0) {
             putEmpty(variable);
+        } else if (value[0].length == 0) {
+            putEmptyRows(variable, value.length);
         } else {
             final ScilabInteger matrix = new ScilabInteger(value, false);
             put(variable, matrix);
@@ -178,6 +181,8 @@ public class JavasciScriptTaskInputsMatlab implements IScriptTaskInputsMatlab {
             putNull(variable);
         } else if (value.length == 0) {
             putEmpty(variable);
+        } else if (value[0].length == 0) {
+            putEmptyRows(variable, value.length);
         } else {
             final ScilabBoolean matrix = new ScilabBoolean(value);
             put(variable, matrix);
@@ -209,6 +214,8 @@ public class JavasciScriptTaskInputsMatlab implements IScriptTaskInputsMatlab {
             putNull(variable);
         } else if (value.length == 0) {
             putEmpty(variable);
+        } else if (value[0].length == 0) {
+            putEmptyRows(variable, value.length);
         } else {
             final ScilabInteger matrix = new ScilabInteger(value, false);
             put(variable, matrix);
@@ -256,6 +263,8 @@ public class JavasciScriptTaskInputsMatlab implements IScriptTaskInputsMatlab {
             putNull(variable);
         } else if (value.length == 0) {
             putEmpty(variable);
+        } else if (value[0].length == 0) {
+            putEmptyRows(variable, value.length);
         } else {
             final double[][] doubleValue = Doubles.checkedCastMatrix(value);
             putDoubleMatrix(variable, doubleValue);
@@ -287,6 +296,8 @@ public class JavasciScriptTaskInputsMatlab implements IScriptTaskInputsMatlab {
             putNull(variable);
         } else if (value.length == 0) {
             putEmpty(variable);
+        } else if (value[0].length == 0) {
+            putEmptyRows(variable, value.length);
         } else {
             final ScilabInteger matrix = new ScilabInteger(value, false);
             put(variable, matrix);
@@ -309,15 +320,35 @@ public class JavasciScriptTaskInputsMatlab implements IScriptTaskInputsMatlab {
 
     @Override
     public void putLongMatrix(final String variable, final long[][] value) {
-        putDoubleMatrix(variable, Doubles.checkedCastMatrix(value));
-        if (value != null) {
-            putExpression(variable, "int64(" + variable + ")");
+        if (value == null) {
+            putNull(variable);
+        } else if (value.length == 0) {
+            putEmpty(variable);
+        } else if (value[0].length == 0) {
+            putEmptyRows(variable, value.length);
+        } else {
+            putDoubleMatrix(variable, Doubles.checkedCastMatrix(value));
+            if (value != null) {
+                putExpression(variable, "int64(" + variable + ")");
+            }
         }
     }
 
     @Override
     public void putNull(final String variable) {
         putExpression(variable, "%nan");
+    }
+
+    protected void putEmptyRows(final String variable, final int rows) {
+        final StringBuilder sb = new StringBuilder("list(");
+        for (int i = 0; i < rows; i++) {
+            if (i > 0) {
+                sb.append(",");
+            }
+            sb.append("[]");
+        }
+        sb.append(")");
+        putExpression(variable, sb.toString());
     }
 
 }

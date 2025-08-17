@@ -64,7 +64,7 @@
 		<!-- matlab -->
 		<version.javaoctave>0.6.5-inv</version.javaoctave>
 		<version.matconsolectl>4.6.0</version.matconsolectl>
-		<version.javasci>2024.0.0</version.javasci>
+		<version.javasci>2025.1.0</version.javasci>
 
 		<!-- python -->
 		<version.jython>2.7.3</version.jython>
