@@ -109,7 +109,3 @@ If you want to run your scripts from your main application, you can do this easi
 ## More Documentation and Programming Languages
 
 Further documentation and similar integration modules like this one also can be found here: https://github.com/invesdwin/invesdwin-scripting
-
-## More Programming Languages
-
-Similar integration modules like this one also exist for the following other programming languages: https://github.com/invesdwin/invesdwin-scripting
