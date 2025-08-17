@@ -49,6 +49,8 @@ There are also more elaborate integrations available for other languages:
 	- https://github.com/invesdwin/invesdwin-scripting/tree/main/invesdwin-scripting-parent/invesdwin-scripting-julia
 - **Haskell Modules**: Scripting with Haskell
 	- https://github.com/invesdwin/invesdwin-scripting/tree/main/invesdwin-scripting-parent/invesdwin-scripting-haskell
+- **Rust Modules**: Scripting with Rust
+	- https://github.com/invesdwin/invesdwin-scripting/tree/main/invesdwin-scripting-parent/invesdwin-scripting-rust
 
 ## Avoiding Bootstrap
 
