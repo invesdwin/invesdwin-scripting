@@ -1,6 +1,6 @@
 package de.invesdwin.scripting.haskell.runtime.contract.internal;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.Immutable;
 
 import de.invesdwin.context.test.ATest;
 import de.invesdwin.context.test.TestContext;
@@ -9,7 +9,7 @@ import de.invesdwin.scripting.haskell.runtime.contract.ProvidedScriptTaskRunnerH
 import jakarta.inject.Named;
 
 @Named
-@NotThreadSafe
+@Immutable
 public class ProvidedScriptTaskRunnerHaskellStub extends StubSupport {
 
     @Override

@@ -1,6 +1,6 @@
 package de.invesdwin.scripting.r.runtime.contract.internal;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.Immutable;
 
 import de.invesdwin.context.test.ATest;
 import de.invesdwin.context.test.TestContext;
@@ -9,7 +9,7 @@ import de.invesdwin.scripting.r.runtime.contract.ProvidedScriptTaskRunnerR;
 import jakarta.inject.Named;
 
 @Named
-@NotThreadSafe
+@Immutable
 public class ProvidedScriptTaskRunnerRStub extends StubSupport {
 
     @Override
