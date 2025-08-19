@@ -14,7 +14,7 @@ public class ProvidedScriptTaskRunnerMatlabStub extends StubSupport {
 
     @Override
     public void tearDownOnce(final ATest test, final TestContext ctx) {
-        if (!ctx.isFinished()) {
+        if (!ctx.isFinishedGlobal()) {
             return;
         }
         ProvidedScriptTaskRunnerMatlab.setProvidedInstance(null);
