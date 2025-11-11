@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import com.pty4j.PtyProcess;
 import com.pty4j.PtyProcessBuilder;
 
+// @NotThreadSafe
 public class IRustPtyFlushTest {
 
     private static boolean stdinReceived = false;
