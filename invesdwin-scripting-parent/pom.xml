@@ -330,6 +330,12 @@
 				<groupId>com.diffplug.matsim</groupId>
 				<artifactId>matlabcontrol</artifactId>
 				<version>${version.matlabcontrol}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>com.google.code.findbugs</groupId>
+						<artifactId>annotations</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.scilab.modules</groupId>
