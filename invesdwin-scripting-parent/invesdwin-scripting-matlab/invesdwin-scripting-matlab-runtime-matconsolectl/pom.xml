@@ -22,7 +22,7 @@
 
 		<dependency>
 			<groupId>com.diffplug.matsim</groupId>
-			<artifactId>matconsolectl</artifactId>
+			<artifactId>matlabcontrol</artifactId>
 		</dependency>
 	</dependencies>
 
