@@ -71,7 +71,7 @@ begin
 				__varname__ = __line__[5:end]
 				try
 					__D__ = Dict(__varname__ => eval(Meta.parse(__varname__)))
-					writeln(client, json(__D__))
+					writeln(client, JSON.json(__D__; allownan=true))
 				catch err
 					@error err
 				end
