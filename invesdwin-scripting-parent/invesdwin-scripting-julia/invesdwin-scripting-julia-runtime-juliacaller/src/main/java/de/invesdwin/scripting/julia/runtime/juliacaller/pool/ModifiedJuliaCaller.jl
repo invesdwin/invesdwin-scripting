@@ -3,6 +3,7 @@ begin
 
 	using Sockets
 	using Pkg
+	using InteractiveUtils
 	
 	# https://discourse.julialang.org/t/how-to-use-pkg-dependencies-instead-of-pkg-installed/36416/10
 	isinstalled(pkg::String) = any(x -> x.name == pkg && x.is_direct_dep, values(Pkg.dependencies()))
