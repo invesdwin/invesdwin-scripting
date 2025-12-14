@@ -51,7 +51,7 @@ public class SocketScriptTaskCallbackContext implements Closeable {
         engine.getInputs().putString("socketScriptTaskCallbackContextUuid", getUuid());
         engine.getInputs().putString("socketScriptTaskCallbackServerHost", getServerHost());
         engine.getInputs().putInteger("socketScriptTaskCallbackServerPort", getServerPort());
-        engine.eval(new ClassPathResource(SocketScriptTaskCallbackContext.class.getSimpleName() + ".py",
+        engine.eval(new ClassPathResource(SocketScriptTaskCallbackContext.class.getSimpleName() + ".rs",
                 SocketScriptTaskCallbackContext.class));
     }
 
@@ -74,8 +74,7 @@ public class SocketScriptTaskCallbackContext implements Closeable {
     public String invoke(final String methodName, final String args) {
         final ScriptTaskParametersRustFromJson parameters = ScriptTaskParametersRustFromJsonPool.INSTANCE
                 .borrowObject();
-        final ScriptTaskReturnsRustToExpression returns = ScriptTaskReturnsRustToExpressionPool.INSTANCE
-                .borrowObject();
+        final ScriptTaskReturnsRustToExpression returns = ScriptTaskReturnsRustToExpressionPool.INSTANCE.borrowObject();
         try {
             final JsonNode jsonArgs = toJsonNode(args);
             parameters.setParameters(jsonArgs);

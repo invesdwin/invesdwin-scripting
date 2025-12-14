@@ -1,4 +1,4 @@
-#https://stackoverflow.com/a/65637828
+//https://stackoverflow.com/a/65637828
 import socket
 import json
 from asyncio import IncompleteReadError  # only import the exception class
