@@ -75,7 +75,7 @@ public final class UnsafeJuliaEngineWrapper implements IJuliaEngineWrapper {
         evalUnchecked(
                 "function j4j_exec(cmd) try eval(Meta.parse(cmd)); return nothing catch err @error err; return sprint(showerror, err, backtrace()); end; end");
         evalUnchecked(
-                "function j4j_get(cmd) try return JSON.json(eval(Meta.parse(cmd))); catch err @error err; return sprint(showerror, err, backtrace()); end; end;");
+                "function j4j_get(cmd) try return JSON.json(eval(Meta.parse(cmd)); allownan=true); catch err @error err; return sprint(showerror, err, backtrace()); end; end;");
         this.resetContext.init();
         initialized = true;
     }

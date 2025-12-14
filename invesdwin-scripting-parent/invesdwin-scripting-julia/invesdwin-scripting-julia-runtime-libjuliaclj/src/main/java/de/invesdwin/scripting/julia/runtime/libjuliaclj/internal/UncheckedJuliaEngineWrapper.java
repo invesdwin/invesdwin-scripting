@@ -90,7 +90,7 @@ public final class UncheckedJuliaEngineWrapper implements IJuliaEngineWrapper {
 
     @Override
     public JsonNode getAsJsonNode(final String variable) {
-        final String command = "JSON.json(" + variable + ")";
+        final String command = "JSON.json(" + variable + "; allownan=true)";
         IScriptTaskRunnerJulia.LOG.debug("> get %s", variable);
         final Object result = libjulia_clj.java_api.runString(command);
         try {

@@ -131,7 +131,7 @@ public class JuliaResetContext {
     }
 
     private String getVarinfo() {
-        return engine.getResults().getString("JSON.json(varinfo())");
+        return engine.getResults().getString("JSON.json(varinfo(); allownan=true)");
     }
 
 }

@@ -178,7 +178,7 @@ public class ModifiedJuliaBridge {
     public JsonNode getAsJsonNode(final String variable) {
         final StringBuilder message = new StringBuilder("__ans__ = JSON.json(");
         message.append(variable);
-        message.append("); println(sizeof(__ans__))");
+        message.append("; allownan=true); println(sizeof(__ans__))");
         exec(message.toString(), "> get %s", variable);
 
         final String result = get();
