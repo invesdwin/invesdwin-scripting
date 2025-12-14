@@ -35,7 +35,7 @@ begin
 	
 	function callback_invokeSocket(methodName, parameters)
 		dims = map(callback_paramSize, parameters)
-	    write(socketScriptTaskCallbackSocket, methodName  * ";" * json(dims) * ";" * json(parameters) * "\n")
+	    write(socketScriptTaskCallbackSocket, methodName  * ";" * JSON.json(dims; allownan=true) * ";" * JSON.json(parameters; allownan=true) * "\n")
 	    # WORKAOUND: newlines need to be escaped over the wire, unescape here
 	    returnExpression = replace(readline(socketScriptTaskCallbackSocket), "__##J@NL@C##__" => "\n")
 	    # https://stackoverflow.com/a/54317201
