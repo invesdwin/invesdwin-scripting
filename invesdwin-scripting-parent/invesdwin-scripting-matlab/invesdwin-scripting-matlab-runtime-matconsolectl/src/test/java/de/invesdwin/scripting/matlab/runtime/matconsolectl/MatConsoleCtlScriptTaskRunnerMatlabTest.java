@@ -2,6 +2,7 @@ package de.invesdwin.scripting.matlab.runtime.matconsolectl;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import de.invesdwin.context.test.ATest;
@@ -10,6 +11,7 @@ import de.invesdwin.scripting.matlab.runtime.contract.callback.ParametersAndRetu
 import de.invesdwin.scripting.matlab.runtime.contract.callback.SimpleCallbackTest;
 import jakarta.inject.Inject;
 
+@Disabled("TODO: matlab process seems to hang on startup, maybe matlab needs to be updated?")
 @NotThreadSafe
 public class MatConsoleCtlScriptTaskRunnerMatlabTest extends ATest {
 
