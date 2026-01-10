@@ -107,15 +107,14 @@ public class FileScriptTaskCallbackContext implements Closeable {
         return responsePartFile;
     }
 
-    public String invoke(final String args) {
+    public String invoke(final String methodName, final String args) {
         final ScriptTaskParametersHaskellFromJson parameters = ScriptTaskParametersHaskellFromJsonPool.INSTANCE
                 .borrowObject();
         final ScriptTaskReturnsHaskellToExpression returns = ScriptTaskReturnsHaskellToExpressionPool.INSTANCE
                 .borrowObject();
         try {
             final JsonNode jsonArgs = toJsonNode(args);
-            parameters.setParameters(jsonArgs, 1);
-            final String methodName = parameters.getString(-1);
+            parameters.setParameters(jsonArgs, 0);
             callback.invoke(methodName, parameters, returns);
             return returns.getReturnExpression();
         } catch (final Throwable t) {

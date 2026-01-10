@@ -70,7 +70,14 @@ public class FileScriptTaskCallbackServerHandler implements Runnable {
     }
 
     private String handle(final String input) throws IOException {
-        return callbackContext.invoke(input);
+        final int methodNameEndIndex = Strings.indexOf(input, ";");
+        if (methodNameEndIndex <= 0) {
+            throw new IllegalArgumentException(
+                    "requiring request format [<dims>;<args>] where first arg is methodName: " + input);
+        }
+        final String methodName = input.substring(0, methodNameEndIndex);
+        final String args = input.substring(methodNameEndIndex + 1, input.length());
+        return callbackContext.invoke(methodName, args);
     }
 
 }

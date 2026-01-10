@@ -39,9 +39,69 @@ public class ModifiedFregeBridge {
     public static final String VALUE_START = "__##@VALUE@##__[";
     public static final String VALUE_END = "]__##@VALUE@##__";
     public static final String LENGTH_PREFIX = "__##@LENGTH@##__=";
-    public static final String STARTUP_SCRIPT = "import Data.JSON\n__get__ variable = do putStrLn ( \"" + LENGTH_PREFIX
-            + "\" ++ show ( length ( __ans__ ) ) ) ; putStrLn \"" + VALUE_START + "\" ; putStrLn __ans__ ; putStrLn \""
-            + VALUE_END + "\" where __ans__ = show ( toJSON ( variable ) )";
+    public static final String STARTUP_SCRIPT = "import Data.JSON\n" //
+            + "data StrArg = Pure String | Effect (IO String)\n"//
+            + ":{\n"//
+            + "class ToStrArg a where\n"//
+            + "  toStrArg :: a -> StrArg\n"//
+            + ":}\n"//
+            + ":{\n"//
+            + "instance ToStrArg String where\n"//
+            + "  toStrArg s = Pure (show s)\n"//
+            + ":}\n"//
+            + ":{\n"//
+            + "instance ToStrArg (IO String) where\n"//
+            + "  toStrArg = Effect\n"//
+            + ":}\n"//
+            + ":{\n"//
+            + "instance ToStrArg Char where\n"//
+            + "  toStrArg c = Pure (show (ctos c))\n" + ":}\n"//
+            + ":{\n"//
+            + "instance ToStrArg Int where\n"//
+            + "  toStrArg n = Pure (show n)\n"//
+            + ":}\n"//
+            + ":{\n"//
+            + "instance ToStrArg Bool where\n"//
+            + "  toStrArg b = Pure (show b)\n"//
+            + ":}\n"//
+            + ":{\n"//
+            + "instance ToStrArg Double where\n"//
+            + "  toStrArg d = Pure (show d)\n"//
+            + ":}\n"//
+            + ":{\n"//
+            + "instance Show a => ToStrArg (Maybe a) where\n"//
+            + "  toStrArg m = Pure (show m)\n"//
+            + ":}\n"//
+            + ":{\n"//
+            + "instance Show a => ToStrArg [a] where\n"//
+            + "  toStrArg xs = Pure (show xs)\n"//
+            + ":}\n"//
+            + ":{\n"//
+            + "normalize :: StrArg -> IO String\n"//
+            + "normalize (Pure s)   = pure s\n"//
+            + "normalize (Effect a) = a\n"//
+            + ":}\n"//
+            + ":{\n"//
+            + "convertToJSON :: ToStrArg a => a -> IO Value\n"//
+            + "convertToJSON x = do\n"//
+            + "  s <- normalize (toStrArg x)\n"//
+            + "  pure (toJSON s)\n"//
+            + ":}\n"//
+            + ":{\n"//
+            + "showJSON :: ToStrArg a => a -> IO String\n"//
+            + "showJSON x = do\n"//
+            + "  s <- normalize (toStrArg x)\n"//
+            + "  pure s\n"//
+            + ":}\n"//
+            + ":{\n"//
+            + "__get__ variable = do\n"//
+            + "    ans <- showJSON variable\n"//
+            + "    putStrLn ( \"" + LENGTH_PREFIX + "\" ++ show (length ans) )\n"//
+            + "    putStrLn \"" + VALUE_START + "\"\n"//
+            + "    putStrLn ans\n"//
+            + "    putStrLn \"" + VALUE_END + "\"\n"//
+            + ":}\n"//
+    ;
     private static final String PROMPT = "frege> ";
     private static final char NEW_LINE = '\n';
     private static final String TERMINATOR_RAW = "__##@@##__";
