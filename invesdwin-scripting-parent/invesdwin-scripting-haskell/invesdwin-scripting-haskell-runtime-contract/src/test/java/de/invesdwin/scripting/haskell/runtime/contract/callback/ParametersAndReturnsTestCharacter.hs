@@ -1,59 +1,24 @@
-println("getCharacter")
-if isdefined(Main, :getCharacter) && !isnothing(getCharacter)
-	error("getCharacter already defined!")
-end
-getCharacter = callback("getCharacter")
-println(typeof(getCharacter))
-println(getCharacter)
-if typeof(getCharacter) != Char
-	error("getCharacter not Char!")
-end
-callback("setCharacter",getCharacter)
+putStrLn ( show ( "getCharacter" ) )
+getCharacter :: Char <- callback "getCharacter" []
+putStrLn ( show ( getCharacter ) )
+callback "setCharacter" [param getCharacter] :: IO ()
 
-println("getCharacterVector")
-if isdefined(Main, :getCharacterVector) && !isnothing(getCharacterVector)
-	error("getCharacterVector already defined!")
-end
-getCharacterVector = callback("getCharacterVector")
-println(eltype(getCharacterVector))
-println(getCharacterVector)
-if eltype(getCharacterVector) != Char
-	error("getCharacterVector not Char!")
-end
-callback("setCharacterVector",getCharacterVector)
+putStrLn ( show ( "getCharacterVector" ) )
+getCharacterVector :: [Char] <- callback "getCharacterVector" []
+putStrLn ( show ( getCharacterVector ) )
+callback "setCharacterVector" [param getCharacterVector] :: IO ()
 
-println("getCharacterVectorAsList")
-if isdefined(Main, :getCharacterVectorAsList) && !isnothing(getCharacterVectorAsList)
-	error("getCharacterVectorAsList already defined!")
-end
-getCharacterVectorAsList = callback("getCharacterVectorAsList")
-println(eltype(getCharacterVectorAsList))
-println(getCharacterVectorAsList)
-if eltype(getCharacterVectorAsList) != Char
-	error("getCharacterVectorAsList not Char!")
-end
-callback("setCharacterVectorAsList",getCharacterVectorAsList)
+putStrLn ( show ( "getCharacterVectorAsList" ) )
+getCharacterVectorAsList :: [Char] <- callback "getCharacterVectorAsList" []
+putStrLn ( show ( getCharacterVectorAsList ) )
+callback "setCharacterVectorAsList" [param getCharacterVectorAsList] :: IO ()
 
-println("getCharacterMatrix")
-if isdefined(Main, :getCharacterMatrix) && !isnothing(getCharacterMatrix)
-	error("getCharacterMatrix already defined!")
-end
-getCharacterMatrix = callback("getCharacterMatrix")
-println(eltype(getCharacterMatrix))
-println(getCharacterMatrix)
-if eltype(getCharacterMatrix) != Char
-	error("getCharacterMatrix not Char!")
-end
-callback("setCharacterMatrix",getCharacterMatrix)
+putStrLn ( show ( "getCharacterMatrix" ) )
+getCharacterMatrix :: [[Char]] <- callback "getCharacterMatrix" []
+putStrLn ( show ( getCharacterMatrix ) )
+callback "setCharacterMatrix" [param getCharacterMatrix] :: IO ()
 
-println("getCharacterMatrixAsList")
-if isdefined(Main, :getCharacterMatrixAsList) && !isnothing(getCharacterMatrixAsList)
-	error("getCharacterMatrixAsList already defined!")
-end
-getCharacterMatrixAsList = callback("getCharacterMatrixAsList")
-println(eltype(getCharacterMatrixAsList))
-println(getCharacterMatrixAsList)
-if eltype(getCharacterMatrixAsList) != Char
-	error("getCharacterMatrixAsList not Char!")
-end
-callback("setCharacterMatrixAsList",getCharacterMatrixAsList)
+putStrLn ( show ( "getCharacterMatrixAsList" ) )
+getCharacterMatrixAsList :: [[Char]] <- callback "getCharacterMatrixAsList" []
+putStrLn ( show ( getCharacterMatrixAsList ) )
+callback "setCharacterMatrixAsList" [param getCharacterMatrixAsList] :: IO ()

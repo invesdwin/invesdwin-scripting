@@ -4,13 +4,15 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.scripting.callback.IScriptTaskReturns;
 import de.invesdwin.util.assertions.Assertions;
+import de.invesdwin.util.math.Doubles;
+import de.invesdwin.util.math.Floats;
 
 @NotThreadSafe
 public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTaskReturns {
 
     @Override
     public void returnCharacter(final char value) {
-        returnExpression("Char('" + value + "')");
+        returnExpression("'" + value + "'");
     }
 
     @Override
@@ -18,7 +20,7 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else {
-            final StringBuilder sb = new StringBuilder("Array{Char}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int i = 0; i < value.length; i++) {
                 if (i > 0) {
                     sb.append(",");
@@ -27,7 +29,7 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
                 sb.append(value[i]);
                 sb.append("'");
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
@@ -37,27 +39,29 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else if (value.length == 0 || value[0].length == 0) {
-            returnExpression("Array{Char}(undef, " + value.length + ", 0)");
+            returnEmptyMatrix(value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
-            final StringBuilder sb = new StringBuilder("Array{Char}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int row = 0; row < rows; row++) {
                 final char[] valueRow = value[row];
                 Assertions.checkEquals(valueRow.length, cols);
                 if (row > 0) {
-                    sb.append(";");
+                    sb.append(",");
                 }
+                sb.append("[");
                 for (int col = 0; col < cols; col++) {
                     if (col > 0) {
-                        sb.append(" ");
+                        sb.append(",");
                     }
                     sb.append("'");
                     sb.append(valueRow[col]);
                     sb.append("'");
                 }
+                sb.append("]");
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
@@ -76,7 +80,7 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else {
-            final StringBuilder sb = new StringBuilder("Array{String}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int i = 0; i < value.length; i++) {
                 if (i > 0) {
                     sb.append(",");
@@ -90,7 +94,7 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
                     sb.append("\"");
                 }
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
@@ -100,20 +104,21 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else if (value.length == 0 || value[0].length == 0) {
-            returnExpression("Array{String}(undef, " + value.length + ", 0)");
+            returnEmptyMatrix(value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
-            final StringBuilder sb = new StringBuilder("Array{String}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int row = 0; row < rows; row++) {
                 final String[] valueRow = value[row];
                 Assertions.checkEquals(valueRow.length, cols);
                 if (row > 0) {
-                    sb.append(";");
+                    sb.append(",");
                 }
+                sb.append("[");
                 for (int col = 0; col < cols; col++) {
                     if (col > 0) {
-                        sb.append(" ");
+                        sb.append(",");
                     }
                     final String v = valueRow[col];
                     if (v == null) {
@@ -124,15 +129,24 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
                         sb.append("\"");
                     }
                 }
+                sb.append("]");
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
 
     @Override
     public void returnBoolean(final boolean value) {
-        returnExpression("Bool(" + String.valueOf(value) + ")");
+        returnExpression(booleanToString(value));
+    }
+
+    protected String booleanToString(final boolean value) {
+        if (value) {
+            return "True";
+        } else {
+            return "False";
+        }
     }
 
     @Override
@@ -140,14 +154,14 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else {
-            final StringBuilder sb = new StringBuilder("Array{Bool}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int i = 0; i < value.length; i++) {
                 if (i > 0) {
                     sb.append(",");
                 }
-                sb.append(value[i]);
+                sb.append(booleanToString(value[i]));
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
@@ -157,32 +171,46 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else if (value.length == 0 || value[0].length == 0) {
-            returnExpression("Array{Bool}(undef, " + value.length + ", 0)");
+            returnEmptyMatrix(value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
-            final StringBuilder sb = new StringBuilder("Array{Bool}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int row = 0; row < rows; row++) {
                 final boolean[] valueRow = value[row];
                 Assertions.checkEquals(valueRow.length, cols);
                 if (row > 0) {
-                    sb.append(";");
+                    sb.append(",");
                 }
+                sb.append("[");
                 for (int col = 0; col < cols; col++) {
                     if (col > 0) {
-                        sb.append(" ");
+                        sb.append(",");
                     }
-                    sb.append(valueRow[col]);
+                    sb.append(booleanToString(valueRow[col]));
                 }
+                sb.append("]");
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
 
+    public void returnEmptyMatrix(final int rows) {
+        final StringBuilder sb = new StringBuilder("[");
+        for (int row = 0; row < rows; row++) {
+            if (row > 0) {
+                sb.append(",");
+            }
+            sb.append("[]");
+        }
+        sb.append("]");
+        returnExpression(sb.toString());
+    }
+
     @Override
     public void returnByte(final byte value) {
-        returnExpression("Int8(" + String.valueOf(value) + ")");
+        returnExpression(String.valueOf(value));
     }
 
     @Override
@@ -190,14 +218,14 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else {
-            final StringBuilder sb = new StringBuilder("Array{Int8}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int i = 0; i < value.length; i++) {
                 if (i > 0) {
                     sb.append(",");
                 }
                 sb.append(value[i]);
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
@@ -207,32 +235,34 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else if (value.length == 0 || value[0].length == 0) {
-            returnExpression("Array{Int8}(undef, " + value.length + ", 0)");
+            returnEmptyMatrix(value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
-            final StringBuilder sb = new StringBuilder("Array{Int8}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int row = 0; row < rows; row++) {
                 final byte[] valueRow = value[row];
                 Assertions.checkEquals(valueRow.length, cols);
                 if (row > 0) {
-                    sb.append(";");
+                    sb.append(",");
                 }
+                sb.append("[");
                 for (int col = 0; col < cols; col++) {
                     if (col > 0) {
-                        sb.append(" ");
+                        sb.append(",");
                     }
                     sb.append(valueRow[col]);
                 }
+                sb.append("]");
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
 
     @Override
     public void returnShort(final short value) {
-        returnExpression("Int16(" + String.valueOf(value) + ")");
+        returnExpression(String.valueOf(value));
     }
 
     @Override
@@ -240,14 +270,14 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else {
-            final StringBuilder sb = new StringBuilder("Array{Int16}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int i = 0; i < value.length; i++) {
                 if (i > 0) {
                     sb.append(",");
                 }
                 sb.append(value[i]);
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
@@ -257,32 +287,34 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else if (value.length == 0 || value[0].length == 0) {
-            returnExpression("Array{Int16}(undef, " + value.length + ", 0)");
+            returnEmptyMatrix(value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
-            final StringBuilder sb = new StringBuilder("Array{Int16}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int row = 0; row < rows; row++) {
                 final short[] valueRow = value[row];
                 Assertions.checkEquals(valueRow.length, cols);
                 if (row > 0) {
-                    sb.append(";");
+                    sb.append(",");
                 }
+                sb.append("[");
                 for (int col = 0; col < cols; col++) {
                     if (col > 0) {
-                        sb.append(" ");
+                        sb.append(",");
                     }
                     sb.append(valueRow[col]);
                 }
+                sb.append("]");
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
 
     @Override
     public void returnInteger(final int value) {
-        returnExpression("Int32(" + String.valueOf(value) + ")");
+        returnExpression(String.valueOf(value));
     }
 
     @Override
@@ -290,14 +322,14 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else {
-            final StringBuilder sb = new StringBuilder("Array{Int32}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int i = 0; i < value.length; i++) {
                 if (i > 0) {
                     sb.append(",");
                 }
                 sb.append(value[i]);
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
@@ -307,32 +339,34 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else if (value.length == 0 || value[0].length == 0) {
-            returnExpression("Array{Int32}(undef, " + value.length + ", 0)");
+            returnEmptyMatrix(value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
-            final StringBuilder sb = new StringBuilder("Array{Int32}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int row = 0; row < rows; row++) {
                 final int[] valueRow = value[row];
                 Assertions.checkEquals(valueRow.length, cols);
                 if (row > 0) {
-                    sb.append(";");
+                    sb.append(",");
                 }
+                sb.append("[");
                 for (int col = 0; col < cols; col++) {
                     if (col > 0) {
-                        sb.append(" ");
+                        sb.append(",");
                     }
                     sb.append(valueRow[col]);
                 }
+                sb.append("]");
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
 
     @Override
     public void returnLong(final long value) {
-        returnExpression("Int64(" + String.valueOf(value) + ")");
+        returnExpression(String.valueOf(value));
     }
 
     @Override
@@ -340,14 +374,14 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else {
-            final StringBuilder sb = new StringBuilder("Array{Int64}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int i = 0; i < value.length; i++) {
                 if (i > 0) {
                     sb.append(",");
                 }
                 sb.append(value[i]);
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
@@ -357,32 +391,34 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else if (value.length == 0 || value[0].length == 0) {
-            returnExpression("Array{Int64}(undef, " + value.length + ", 0)");
+            returnEmptyMatrix(value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
-            final StringBuilder sb = new StringBuilder("Array{Int64}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int row = 0; row < rows; row++) {
                 final long[] valueRow = value[row];
                 Assertions.checkEquals(valueRow.length, cols);
                 if (row > 0) {
-                    sb.append(";");
+                    sb.append(",");
                 }
+                sb.append("[");
                 for (int col = 0; col < cols; col++) {
                     if (col > 0) {
-                        sb.append(" ");
+                        sb.append(",");
                     }
                     sb.append(valueRow[col]);
                 }
+                sb.append("]");
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
 
     @Override
     public void returnFloat(final float value) {
-        returnExpression("Float32(" + String.valueOf(value) + ")");
+        returnExpression(floatToString(value));
     }
 
     @Override
@@ -390,14 +426,14 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else {
-            final StringBuilder sb = new StringBuilder("Array{Float32}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int i = 0; i < value.length; i++) {
                 if (i > 0) {
                     sb.append(",");
                 }
-                sb.append(value[i]);
+                sb.append(floatToString(value[i]));
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
@@ -407,32 +443,42 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else if (value.length == 0 || value[0].length == 0) {
-            returnExpression("Array{Float32}(undef, " + value.length + ", 0)");
+            returnEmptyMatrix(value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
-            final StringBuilder sb = new StringBuilder("Array{Float32}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int row = 0; row < rows; row++) {
                 final float[] valueRow = value[row];
                 Assertions.checkEquals(valueRow.length, cols);
                 if (row > 0) {
-                    sb.append(";");
+                    sb.append(",");
                 }
+                sb.append("[");
                 for (int col = 0; col < cols; col++) {
                     if (col > 0) {
-                        sb.append(" ");
+                        sb.append(",");
                     }
-                    sb.append(valueRow[col]);
+                    sb.append(floatToString(valueRow[col]));
                 }
+                sb.append("]");
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
+        }
+    }
+
+    protected String floatToString(final float value) {
+        if (Floats.isNaN(value)) {
+            return "0/0";
+        } else {
+            return String.valueOf(value);
         }
     }
 
     @Override
     public void returnDouble(final double value) {
-        returnExpression("Float64(" + String.valueOf(value) + ")");
+        returnExpression(doubleToString(value));
     }
 
     @Override
@@ -440,14 +486,14 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else {
-            final StringBuilder sb = new StringBuilder("Array{Float64}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int i = 0; i < value.length; i++) {
                 if (i > 0) {
                     sb.append(",");
                 }
-                sb.append(value[i]);
+                sb.append(doubleToString(value[i]));
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
@@ -457,31 +503,50 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else if (value.length == 0 || value[0].length == 0) {
-            returnExpression("Array{Float64}(undef, " + value.length + ", 0)");
+            returnEmptyMatrix(value.length);
         } else {
             final int rows = value.length;
             final int cols = value[0].length;
-            final StringBuilder sb = new StringBuilder("Array{Float64}([");
+            final StringBuilder sb = new StringBuilder("[");
             for (int row = 0; row < rows; row++) {
                 final double[] valueRow = value[row];
                 Assertions.checkEquals(valueRow.length, cols);
                 if (row > 0) {
-                    sb.append(";");
+                    sb.append(",");
                 }
+                sb.append("[");
                 for (int col = 0; col < cols; col++) {
                     if (col > 0) {
-                        sb.append(" ");
+                        sb.append(",");
                     }
-                    sb.append(valueRow[col]);
+                    sb.append(doubleToString(valueRow[col]));
                 }
+                sb.append("]");
             }
-            sb.append("])");
+            sb.append("]");
             returnExpression(sb.toString());
         }
     }
 
+    protected String doubleToString(final double value) {
+        if (Doubles.isNaN(value)) {
+            return "0/0";
+        } else {
+            return String.valueOf(value);
+        }
+    }
+
+    /**
+     * For callback return values, Nothing works correctly since we go from java to Haskell which does not require JSON
+     * encoding with Aeson which gives errors about encoding Nothing.
+     */
     @Override
     public void returnNull() {
+        returnExpression("Nothing");
+    }
+
+    @Override
+    public void returnVoid() {
         returnExpression("()");
     }
 

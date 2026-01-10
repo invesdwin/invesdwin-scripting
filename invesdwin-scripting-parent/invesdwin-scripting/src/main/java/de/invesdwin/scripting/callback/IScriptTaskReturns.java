@@ -165,4 +165,8 @@ public interface IScriptTaskReturns {
 
     void returnNull();
 
+    default void returnVoid() {
+        returnNull();
+    }
+
 }

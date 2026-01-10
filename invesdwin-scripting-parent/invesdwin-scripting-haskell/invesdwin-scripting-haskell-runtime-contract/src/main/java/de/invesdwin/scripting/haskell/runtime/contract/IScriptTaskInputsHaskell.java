@@ -10,8 +10,8 @@ public interface IScriptTaskInputsHaskell extends IScriptTaskInputs {
     }
 
     /**
-     * frege/ghci does not really support Nothing/null, causes exceptions when "show" or "encode" is called on it, so we
-     * use empty string as a workaround
+     * frege/ghci does not really support Nothing/null for retrieving values from Haskell to Java, causes exceptions
+     * when Aeson "encode" is called on it, so we use empty string as a workaround to denote null values.
      */
     @Override
     default void putNull(final String variable) {

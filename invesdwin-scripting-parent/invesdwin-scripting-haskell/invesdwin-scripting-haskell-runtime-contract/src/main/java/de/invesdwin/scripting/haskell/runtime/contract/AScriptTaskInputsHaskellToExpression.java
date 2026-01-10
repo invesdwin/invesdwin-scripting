@@ -4,6 +4,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.util.assertions.Assertions;
 import de.invesdwin.util.math.Doubles;
+import de.invesdwin.util.math.Floats;
 
 @NotThreadSafe
 public abstract class AScriptTaskInputsHaskellToExpression implements IScriptTaskInputsHaskell {
@@ -416,7 +417,7 @@ public abstract class AScriptTaskInputsHaskellToExpression implements IScriptTas
 
     @Override
     public void putFloat(final String variable, final float value) {
-        putExpression(variable, String.valueOf(value));
+        putExpression(variable, floatToString(value));
     }
 
     @Override
@@ -429,7 +430,7 @@ public abstract class AScriptTaskInputsHaskellToExpression implements IScriptTas
                 if (i > 0) {
                     sb.append(",");
                 }
-                sb.append(value[i]);
+                sb.append(floatToString(value[i]));
             }
             sb.append("]");
             putExpression(variable, sb.toString());
@@ -457,12 +458,20 @@ public abstract class AScriptTaskInputsHaskellToExpression implements IScriptTas
                     if (col > 0) {
                         sb.append(",");
                     }
-                    sb.append(valueRow[col]);
+                    sb.append(floatToString(valueRow[col]));
                 }
                 sb.append("]");
             }
             sb.append("]");
             putExpression(variable, sb.toString());
+        }
+    }
+
+    protected String floatToString(final float value) {
+        if (Floats.isNaN(value)) {
+            return "0/0";
+        } else {
+            return String.valueOf(value);
         }
     }
 

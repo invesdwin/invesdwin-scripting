@@ -4,6 +4,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 
 import de.invesdwin.scripting.callback.AScriptTaskParametersFromString;
 import de.invesdwin.util.lang.string.Strings;
@@ -43,6 +44,14 @@ public abstract class AScriptTaskParametersHaskellFromJson extends AScriptTaskPa
         while (strs.size() == 1 && strs.get(0).size() > 1) {
             strs = strs.get(0);
         }
+        if (strs.size() == 0 && strs instanceof TextNode) {
+            final String text = strs.asText();
+            final String[] characters = new String[text.length()];
+            for (int i = 0; i < characters.length; i++) {
+                characters[i] = String.valueOf(text.charAt(i));
+            }
+            return characters;
+        }
         final String[] values = new String[strs.size()];
         for (int i = 0; i < values.length; i++) {
             final String str = strs.get(i).asText();
@@ -57,25 +66,41 @@ public abstract class AScriptTaskParametersHaskellFromJson extends AScriptTaskPa
 
     @Override
     public String[][] getStringMatrix(final int index) {
-        //json returns the columns instead of rows
         final JsonNode strsMatrix = getAsJsonNode(index);
         if (strsMatrix == null) {
             return null;
         }
-        //[11 12 13;21 22 23;31 32 33;41 42 43]
-        //[[11,21,31,41],[12,22,32,42],[13,23,33,43]]
-        final int columns = strsMatrix.size();
-        final int rows = strsMatrix.get(0).size();
+        if (strsMatrix.size() == 0) {
+            final String[][] emptyMatrix = new String[0][];
+            return emptyMatrix;
+        }
+        final int rows = strsMatrix.size();
+        final int columns;
+        final JsonNode sampleRow = strsMatrix.get(0);
+        if (sampleRow.size() == 0 && sampleRow instanceof TextNode) {
+            columns = sampleRow.asText().length();
+        } else {
+            columns = sampleRow.size();
+        }
+
         final String[][] valuesMatrix = new String[rows][];
         for (int r = 0; r < rows; r++) {
             final String[] values = new String[columns];
             valuesMatrix[r] = values;
-            for (int c = 0; c < columns; c++) {
-                final String str = strsMatrix.get(c).get(r).asText();
-                if (Strings.isBlankOrNullText(str)) {
-                    values[c] = null;
-                } else {
-                    values[c] = str;
+            final JsonNode nodeRow = strsMatrix.get(r);
+            if (nodeRow.size() == 0 && nodeRow instanceof TextNode) {
+                final String text = nodeRow.asText();
+                for (int c = 0; c < columns; c++) {
+                    values[c] = String.valueOf(text.charAt(c));
+                }
+            } else {
+                for (int c = 0; c < columns; c++) {
+                    final String str = nodeRow.get(c).asText();
+                    if (Strings.isBlankOrNullText(str)) {
+                        values[c] = null;
+                    } else {
+                        values[c] = str;
+                    }
                 }
             }
         }

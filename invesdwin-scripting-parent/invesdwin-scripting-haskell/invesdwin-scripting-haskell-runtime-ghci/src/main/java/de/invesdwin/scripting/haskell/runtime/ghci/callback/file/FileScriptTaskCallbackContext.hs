@@ -6,7 +6,7 @@
 import Data.Aeson
 import qualified Data.Vector as V
 import Data.Text (pack)
-import qualified Data.ByteString.Lazy as BL
+import qualified Data.ByteString.Lazy.Char8 as BL
 -- cabal update && cabal install hint OR pacman -S haskell-hint
 import Language.Haskell.Interpreter
 import System.Directory
@@ -24,12 +24,11 @@ dynamicToJSON d =
         Nothing ->
             error ("Dynamic does not contain a JSON Value: " ++ show (dynTypeRep d))
 
-writeRequest :: String -> [Dynamic] -> BL.ByteString
+writeRequest :: String -> [Dynamic] -> String
 writeRequest method params =
     let jsonParams = map dynamicToJSON params
         jsonArray  = Array (V.fromList (String (pack method) : jsonParams))
-    in encode jsonArray
-
+    in BL.unpack (encode jsonArray)
 
 waitForFile :: FilePath -> IO ()
 waitForFile path = do
@@ -50,7 +49,7 @@ evaluateResponse expr = do
 callback :: Typeable a => String -> [Dynamic] -> IO a
 callback method params = do
     let json = writeRequest method params
-    BL.writeFile scriptTaskCallbackContextRequestPartFile json
+    writeFile scriptTaskCallbackContextRequestPartFile json
     renameFile scriptTaskCallbackContextRequestPartFile scriptTaskCallbackContextRequestFile
     waitForFile scriptTaskCallbackContextResponseFile
     expr <- readFile scriptTaskCallbackContextResponseFile

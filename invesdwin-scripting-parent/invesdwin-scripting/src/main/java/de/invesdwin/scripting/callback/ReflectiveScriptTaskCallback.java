@@ -540,7 +540,7 @@ public class ReflectiveScriptTaskCallback implements IScriptTaskCallback {
                     return (r, o) -> r.returnString(Strings.asString(o));
                 }
             } else if (type.isInstanceOf(void.class) || type.isInstanceOf(Void.class)) {
-                return (r, o) -> r.returnNull();
+                return (r, o) -> r.returnVoid();
             } else {
                 final BiConsumer<IScriptTaskReturns, Object> f = newReturnFunctionValueNotNullSafe(type);
                 if (f != null) {

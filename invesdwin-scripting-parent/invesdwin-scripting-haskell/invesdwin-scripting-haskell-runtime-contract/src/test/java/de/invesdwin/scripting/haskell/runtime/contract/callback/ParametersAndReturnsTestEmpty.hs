@@ -1,230 +1,98 @@
-getBooleanVector = callback("getBooleanVector")
-if length(getBooleanVector) != 0
-	error("getBooleanVector not empty!")
-end
-callback("setBooleanVector",getBooleanVector)
-getBooleanVectorAsList = callback("getBooleanVectorAsList")
-if length(getBooleanVectorAsList) != 0
-	error("getBooleanVectorAsList not empty!")
-end
-callback("setBooleanVectorAsList",getBooleanVectorAsList)
-getBooleanMatrix = callback("getBooleanMatrix")
-if length(getBooleanMatrix) != 0
-	error("getBooleanMatrix not empty!")
-end
-callback("setBooleanMatrix",getBooleanMatrix)
-getBooleanMatrixAsList = callback("getBooleanMatrixAsList")
-if length(getBooleanMatrixAsList) != 0
-	error("getBooleanMatrixAsList not empty!")
-end
-callback("setBooleanMatrixAsList",getBooleanMatrixAsList)
+getBooleanVector :: [Bool] <- callback "getBooleanVector" []
+callback "setBooleanVector" [param getBooleanVector] :: IO ()
+getBooleanVectorAsList :: [Bool] <- callback "getBooleanVectorAsList" []
+callback "setBooleanVectorAsList" [param getBooleanVectorAsList] :: IO ()
+getBooleanMatrix :: [[Bool]] <- callback "getBooleanMatrix" []
+callback "setBooleanMatrix" [param getBooleanMatrix] :: IO ()
+getBooleanMatrixAsList :: [[Bool]] <- callback "getBooleanMatrixAsList" []
+callback "setBooleanMatrixAsList" [param getBooleanMatrixAsList] :: IO ()
 
-getByteVector = callback("getByteVector")
-if length(getByteVector) != 0
-	error("getByteVector not empty!")
-end
-callback("setByteVector",getByteVector)
-getByteVectorAsList = callback("getByteVectorAsList")
-if length(getByteVectorAsList) != 0
-	error("getByteVectorAsList not empty!")
-end
-callback("setByteVectorAsList",getByteVectorAsList)
-getByteMatrix = callback("getByteMatrix")
-if length(getByteMatrix) != 0
-	error("getByteMatrix not empty!")
-end
-callback("setByteMatrix",getByteMatrix)
-getByteMatrixAsList = callback("getByteMatrixAsList")
-if length(getByteMatrixAsList) != 0
-	error("getByteMatrixAsList not empty!")
-end
-callback("setByteMatrixAsList",getByteMatrixAsList)
+getByteVector :: [Int] <- callback "getByteVector" []
+callback "setByteVector" [param getByteVector] :: IO ()
+getByteVectorAsList :: [Int] <- callback "getByteVectorAsList" []
+callback "setByteVectorAsList" [param getByteVectorAsList] :: IO ()
+getByteMatrix :: [[Int]] <- callback "getByteMatrix" []
+callback "setByteMatrix" [param getByteMatrix] :: IO ()
+getByteMatrixAsList :: [[Int]] <- callback "getByteMatrixAsList" []
+callback "setByteMatrixAsList" [param getByteMatrixAsList] :: IO ()
 
-getCharacterVector = callback("getCharacterVector")
-if length(getCharacterVector) != 0
-	error("getCharacterVector not empty!")
-end
-callback("setCharacterVector",getCharacterVector)
-getCharacterVectorAsList = callback("getCharacterVectorAsList")
-if length(getCharacterVectorAsList) != 0
-	error("getCharacterVectorAsList not empty!")
-end
-callback("setCharacterVectorAsList",getCharacterVectorAsList)
-getCharacterMatrix = callback("getCharacterMatrix")
-if length(getCharacterMatrix) != 0
-	error("getCharacterMatrix not empty!")
-end
-callback("setCharacterMatrix",getCharacterMatrix)
-getCharacterMatrixAsList = callback("getCharacterMatrixAsList")
-if length(getCharacterMatrixAsList) != 0
-	error("getCharacterMatrixAsList not empty!")
-end
-callback("setCharacterMatrixAsList",getCharacterMatrixAsList)
+getCharacterVector :: [Char] <- callback "getCharacterVector" []
+callback "setCharacterVector" [param getCharacterVector] :: IO ()
+getCharacterVectorAsList :: [Char] <- callback "getCharacterVectorAsList" []
+callback "setCharacterVectorAsList" [param getCharacterVectorAsList] :: IO ()
+getCharacterMatrix :: [[Char]] <- callback "getCharacterMatrix" []
+callback "setCharacterMatrix" [param getCharacterMatrix] :: IO ()
+getCharacterMatrixAsList :: [[Char]] <- callback "getCharacterMatrixAsList" []
+callback "setCharacterMatrixAsList" [param getCharacterMatrixAsList] :: IO ()
 
-getDecimalVector = callback("getDecimalVector")
-if length(getDecimalVector) != 0
-	error("getDecimalVector not empty!")
-end
-callback("setDecimalVector",getDecimalVector)
-getDecimalVectorAsList = callback("getDecimalVectorAsList")
-if length(getDecimalVectorAsList) != 0
-	error("getDecimalVectorAsList not empty!")
-end
-callback("setDecimalVectorAsList",getDecimalVectorAsList)
-getDecimalMatrix = callback("getDecimalMatrix")
-if length(getDecimalMatrix) != 0
-	error("getDecimalMatrix not empty!")
-end
-callback("setDecimalMatrix",getDecimalMatrix)
-getDecimalMatrixAsList = callback("getDecimalMatrixAsList")
-if length(getDecimalMatrixAsList) != 0
-	error("getDecimalMatrixAsList not empty!")
-end
-callback("setDecimalMatrixAsList",getDecimalMatrixAsList)
+getDecimalVector :: [Double] <- callback "getDecimalVector" []
+callback "setDecimalVector" [param getDecimalVector] :: IO ()
+getDecimalVectorAsList :: [Double] <- callback "getDecimalVectorAsList" []
+callback "setDecimalVectorAsList" [param getDecimalVectorAsList] :: IO ()
+getDecimalMatrix :: [[Double]] <- callback "getDecimalMatrix" []
+callback "setDecimalMatrix" [param getDecimalMatrix] :: IO ()
+getDecimalMatrixAsList :: [[Double]] <- callback "getDecimalMatrixAsList" []
+callback "setDecimalMatrixAsList" [param getDecimalMatrixAsList] :: IO ()
 
-getDoubleVector = callback("getDoubleVector")
-if length(getDoubleVector) != 0
-	error("getDoubleVector not empty!")
-end
-callback("setDoubleVector",getDoubleVector)
-getDoubleVectorAsList = callback("getDoubleVectorAsList")
-if length(getDoubleVectorAsList) != 0
-	error("getDoubleVectorAsList not empty!")
-end
-callback("setDoubleVectorAsList",getDoubleVectorAsList)
-getDoubleMatrix = callback("getDoubleMatrix")
-if length(getDoubleMatrix) != 0
-	error("getDoubleMatrix not empty!")
-end
-callback("setDoubleMatrix",getDoubleMatrix)
-getDoubleMatrixAsList = callback("getDoubleMatrixAsList")
-if length(getDoubleMatrixAsList) != 0
-	error("getDoubleMatrixAsList not empty!")
-end
-callback("setDoubleMatrixAsList",getDoubleMatrixAsList)
+getDoubleVector :: [Double] <- callback "getDoubleVector" []
+callback "setDoubleVector" [param getDoubleVector] :: IO ()
+getDoubleVectorAsList :: [Double] <- callback "getDoubleVectorAsList" []
+callback "setDoubleVectorAsList" [param getDoubleVectorAsList] :: IO ()
+getDoubleMatrix :: [[Double]] <- callback "getDoubleMatrix" []
+callback "setDoubleMatrix" [param getDoubleMatrix] :: IO ()
+getDoubleMatrixAsList :: [[Double]] <- callback "getDoubleMatrixAsList" []
+callback "setDoubleMatrixAsList" [param getDoubleMatrixAsList] :: IO ()
 
-getFloatVector = callback("getFloatVector")
-if length(getFloatVector) != 0
-	error("getFloatVector not empty!")
-end
-callback("setFloatVector",getFloatVector)
-getFloatVectorAsList = callback("getFloatVectorAsList")
-if length(getFloatVectorAsList) != 0
-	error("getFloatVectorAsList not empty!")
-end
-callback("setFloatVectorAsList",getFloatVectorAsList)
-getFloatMatrix = callback("getFloatMatrix")
-if length(getFloatMatrix) != 0
-	error("getFloatMatrix not empty!")
-end
-callback("setFloatMatrix",getFloatMatrix)
-getFloatMatrixAsList = callback("getFloatMatrixAsList")
-if length(getFloatMatrixAsList) != 0
-	error("getFloatMatrixAsList not empty!")
-end
-callback("setFloatMatrixAsList",getFloatMatrixAsList)
+getFloatVector :: [Float] <- callback "getFloatVector" []
+callback "setFloatVector" [param getFloatVector] :: IO ()
+getFloatVectorAsList :: [Float] <- callback "getFloatVectorAsList" []
+callback "setFloatVectorAsList" [param getFloatVectorAsList] :: IO ()
+getFloatMatrix :: [[Float]] <- callback "getFloatMatrix" []
+callback "setFloatMatrix" [param getFloatMatrix] :: IO ()
+getFloatMatrixAsList :: [[Float]] <- callback "getFloatMatrixAsList" []
+callback "setFloatMatrixAsList" [param getFloatMatrixAsList] :: IO ()
 
-getIntegerVector = callback("getIntegerVector")
-if length(getIntegerVector) != 0
-	error("getIntegerVector not empty!")
-end
-callback("setIntegerVector",getIntegerVector)
-getIntegerVectorAsList = callback("getIntegerVectorAsList")
-if length(getIntegerVectorAsList) != 0
-	error("getIntegerVectorAsList not empty!")
-end
-callback("setIntegerVectorAsList",getIntegerVectorAsList)
-getIntegerMatrix = callback("getIntegerMatrix")
-if length(getIntegerMatrix) != 0
-	error("getIntegerMatrix not empty!")
-end
-callback("setIntegerMatrix",getIntegerMatrix)
-getIntegerMatrixAsList = callback("getIntegerMatrixAsList")
-if length(getIntegerMatrixAsList) != 0
-	error("getIntegerMatrixAsList not empty!")
-end
-callback("setIntegerMatrixAsList",getIntegerMatrixAsList)
+getIntegerVector :: [Int] <- callback "getIntegerVector" []
+callback "setIntegerVector" [param getIntegerVector] :: IO ()
+getIntegerVectorAsList :: [Int] <- callback "getIntegerVectorAsList" []
+callback "setIntegerVectorAsList" [param getIntegerVectorAsList] :: IO ()
+getIntegerMatrix :: [[Int]] <- callback "getIntegerMatrix" []
+callback "setIntegerMatrix" [param getIntegerMatrix] :: IO ()
+getIntegerMatrixAsList :: [[Int]] <- callback "getIntegerMatrixAsList" []
+callback "setIntegerMatrixAsList" [param getIntegerMatrixAsList] :: IO ()
 
-getLongVector = callback("getLongVector")
-if length(getLongVector) != 0
-	error("getLongVector not empty!")
-end
-callback("setLongVector",getLongVector)
-getLongVectorAsList = callback("getLongVectorAsList")
-if length(getLongVectorAsList) != 0
-	error("getLongVectorAsList not empty!")
-end
-callback("setLongVectorAsList",getLongVectorAsList)
-getLongMatrix = callback("getLongMatrix")
-if length(getLongMatrix) != 0
-	error("getLongMatrix not empty!")
-end
-callback("setLongMatrix",getLongMatrix)
-getLongMatrixAsList = callback("getLongMatrixAsList")
-if length(getLongMatrixAsList) != 0
-	error("getLongMatrixAsList not empty!")
-end
-callback("setLongMatrixAsList",getLongMatrixAsList)
+getLongVector :: [Integer] <- callback "getLongVector" []
+callback "setLongVector" [param getLongVector] :: IO ()
+getLongVectorAsList :: [Integer] <- callback "getLongVectorAsList" []
+callback "setLongVectorAsList" [param getLongVectorAsList] :: IO ()
+getLongMatrix :: [[Integer]] <- callback "getLongMatrix" []
+callback "setLongMatrix" [param getLongMatrix] :: IO ()
+getLongMatrixAsList :: [[Integer]] <- callback "getLongMatrixAsList" []
+callback "setLongMatrixAsList" [param getLongMatrixAsList] :: IO ()
 
-getPercentVector = callback("getPercentVector")
-if length(getPercentVector) != 0
-	error("getPercentVector not empty!")
-end
-callback("setPercentVector",getPercentVector)
-getPercentVectorAsList = callback("getPercentVectorAsList")
-if length(getPercentVectorAsList) != 0
-	error("getPercentVectorAsList not empty!")
-end
-callback("setPercentVectorAsList",getPercentVectorAsList)
-getPercentMatrix = callback("getPercentMatrix")
-if length(getPercentMatrix) != 0
-	error("getPercentMatrix not empty!")
-end
-callback("setPercentMatrix",getPercentMatrix)
-getPercentMatrixAsList = callback("getPercentMatrixAsList")
-if length(getPercentMatrixAsList) != 0
-	error("getPercentMatrixAsList not empty!")
-end
-callback("setPercentMatrixAsList",getPercentMatrixAsList)
+getPercentVector :: [Double] <- callback "getPercentVector" []
+callback "setPercentVector" [param getPercentVector] :: IO ()
+getPercentVectorAsList :: [Double] <- callback "getPercentVectorAsList" []
+callback "setPercentVectorAsList" [param getPercentVectorAsList] :: IO ()
+getPercentMatrix :: [[Double]] <- callback "getPercentMatrix" []
+callback "setPercentMatrix" [param getPercentMatrix] :: IO ()
+getPercentMatrixAsList :: [[Double]] <- callback "getPercentMatrixAsList" []
+callback "setPercentMatrixAsList" [param getPercentMatrixAsList] :: IO ()
 
-getShortVector = callback("getShortVector")
-if length(getShortVector) != 0
-	error("getShortVector not empty!")
-end
-callback("setShortVector",getShortVector)
-getShortVectorAsList = callback("getShortVectorAsList")
-if length(getShortVectorAsList) != 0
-	error("getShortVectorAsList not empty!")
-end
-callback("setShortVectorAsList",getShortVectorAsList)
-getShortMatrix = callback("getShortMatrix")
-if length(getShortMatrix) != 0
-	error("getShortMatrix not empty!")
-end
-callback("setShortMatrix",getShortMatrix)
-getShortMatrixAsList = callback("getShortMatrixAsList")
-if length(getShortMatrixAsList) != 0
-	error("getShortMatrixAsList not empty!")
-end
-callback("setShortMatrixAsList",getShortMatrixAsList)
+getShortVector :: [Int] <- callback "getShortVector" []
+callback "setShortVector" [param getShortVector] :: IO ()
+getShortVectorAsList :: [Int] <- callback "getShortVectorAsList" []
+callback "setShortVectorAsList" [param getShortVectorAsList] :: IO ()
+getShortMatrix :: [[Int]] <- callback "getShortMatrix" []
+callback "setShortMatrix" [param getShortMatrix] :: IO ()
+getShortMatrixAsList :: [[Int]] <- callback "getShortMatrixAsList" []
+callback "setShortMatrixAsList" [param getShortMatrixAsList] :: IO ()
 
-getStringVector = callback("getStringVector")
-if length(getStringVector) != 0
-	error("getStringVector not empty!")
-end
-callback("setStringVector",getStringVector)
-getStringVectorAsList = callback("getStringVectorAsList")
-if length(getStringVectorAsList) != 0
-	error("getStringVectorAsList not empty!")
-end
-callback("setStringVectorAsList",getStringVectorAsList)
-getStringMatrix = callback("getStringMatrix")
-if length(getStringMatrix) != 0
-	error("getStringMatrix not empty!")
-end
-callback("setStringMatrix",getStringMatrix)
-getStringMatrixAsList = callback("getStringMatrixAsList")
-if length(getStringMatrixAsList) != 0
-	error("getStringMatrixAsList not empty!")
-end
-callback("setStringMatrixAsList",getStringMatrixAsList)
+getStringVector :: [String] <- callback "getStringVector" []
+callback "setStringVector" [param getStringVector] :: IO ()
+getStringVectorAsList :: [String] <- callback "getStringVectorAsList" []
+callback "setStringVectorAsList" [param getStringVectorAsList] :: IO ()
+getStringMatrix :: [[String]] <- callback "getStringMatrix" []
+callback "setStringMatrix" [param getStringMatrix] :: IO ()
+getStringMatrixAsList :: [[String]] <- callback "getStringMatrixAsList" []
+callback "setStringMatrixAsList" [param getStringMatrixAsList] :: IO ()

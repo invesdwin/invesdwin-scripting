@@ -1,59 +1,24 @@
-println("getBoolean")
-if isdefined(Main, :getBoolean) && !isnothing(getBoolean)
-	error("getBoolean already defined!")
-end
-getBoolean = callback("getBoolean")
-println(typeof(getBoolean))
-println(getBoolean)
-if typeof(getBoolean) != Bool
-	error("getBoolean not Bool!")
-end
-callback("setBoolean",getBoolean)
+putStrLn ( show ( "getBoolean" ) )
+getBoolean :: Bool <- callback "getBoolean" []
+putStrLn ( show ( getBoolean ) )
+callback "setBoolean" [param getBoolean] :: IO ()
 
-println("getBooleanVector")
-if isdefined(Main, :getBooleanVector) && !isnothing(getBooleanVector)
-	error("getBooleanVector already defined!")
-end
-getBooleanVector = callback("getBooleanVector")
-println(eltype(getBooleanVector))
-println(getBooleanVector)
-if eltype(getBooleanVector) != Bool 
-	error("getBooleanVector not Bool!")
-end
-callback("setBooleanVector",getBooleanVector)
+putStrLn ( show ( "getBooleanVector" ) )
+getBooleanVector :: [Bool] <- callback "getBooleanVector" []
+putStrLn ( show ( getBooleanVector ) )
+callback "setBooleanVector" [param getBooleanVector] :: IO ()
 
-println("getBooleanVectorAsList")
-if isdefined(Main, :getBooleanVectorAsList) && !isnothing(getBooleanVectorAsList)
-	error("getBooleanVectorAsList already defined!")
-end
-getBooleanVectorAsList = callback("getBooleanVectorAsList")
-println(eltype(getBooleanVectorAsList))
-println(getBooleanVectorAsList)
-if eltype(getBooleanVectorAsList) != Bool
-	error("getBooleanVectorAsList not Bool!")
-end
-callback("setBooleanVectorAsList",getBooleanVectorAsList)
+putStrLn ( show ( "getBooleanVectorAsList" ) )
+getBooleanVectorAsList :: [Bool] <- callback "getBooleanVectorAsList" []
+putStrLn ( show ( getBooleanVectorAsList ) )
+callback "setBooleanVectorAsList" [param getBooleanVectorAsList] :: IO ()
 
-println("getBooleanMatrix")
-if isdefined(Main, :getBooleanMatrix) && !isnothing(getBooleanMatrix)
-	error("getBooleanMatrix already defined!")
-end
-getBooleanMatrix = callback("getBooleanMatrix")
-println(eltype(getBooleanMatrix))
-println(getBooleanMatrix)
-if eltype(getBooleanMatrix) != Bool
-	error("getBooleanMatrix not Bool!")
-end
-callback("setBooleanMatrix",getBooleanMatrix)
+putStrLn ( show ( "getBooleanMatrix" ) )
+getBooleanMatrix :: [[Bool]] <- callback "getBooleanMatrix" []
+putStrLn ( show ( getBooleanMatrix ) )
+callback "setBooleanMatrix" [param getBooleanMatrix] :: IO ()
 
-println("getBooleanMatrixAsList")
-if isdefined(Main, :getBooleanMatrixAsList) && !isnothing(getBooleanMatrixAsList)
-	error("getBooleanMatrixAsList already defined!")
-end
-getBooleanMatrixAsList = callback("getBooleanMatrixAsList")
-println(eltype(getBooleanMatrixAsList))
-println(getBooleanMatrixAsList)
-if eltype(getBooleanMatrixAsList) != Bool
-	error("getBooleanMatrixAsList not Bool!")
-end
-callback("setBooleanMatrixAsList",getBooleanMatrixAsList)
+putStrLn ( show ( "getBooleanMatrixAsList" ) )
+getBooleanMatrixAsList :: [[Bool]] <- callback "getBooleanMatrixAsList" []
+putStrLn ( show ( getBooleanMatrixAsList ) )
+callback "setBooleanMatrixAsList" [param getBooleanMatrixAsList] :: IO ()
