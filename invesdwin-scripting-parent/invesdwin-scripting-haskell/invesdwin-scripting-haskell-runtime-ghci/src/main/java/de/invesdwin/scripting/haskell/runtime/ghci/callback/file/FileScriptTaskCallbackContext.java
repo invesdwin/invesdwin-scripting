@@ -81,7 +81,11 @@ public class FileScriptTaskCallbackContext implements Closeable {
                     "\"" + getRequestFile().getAbsolutePath() + "\"");
             script = script.replace("{SCRIPT_TASK_CALLBACK_CONTEXT_RESPONSE_FILE}",
                     "\"" + getResponseFile().getAbsolutePath() + "\"");
-            engine.eval(script);
+
+            final File file = new File(DIRECTORY, uuid + "_" + resource.getFilename());
+            Files.writeStringToFileIfDifferent(file, script);
+            engine.eval(":l " + file.getAbsolutePath());
+            Files.delete(file);
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }
@@ -114,7 +118,7 @@ public class FileScriptTaskCallbackContext implements Closeable {
                 .borrowObject();
         try {
             final JsonNode jsonArgs = toJsonNode(args);
-            parameters.setParameters(jsonArgs);
+            parameters.setParameters(jsonArgs, 1);
             final String methodName = parameters.getString(-1);
             callback.invoke(methodName, parameters, returns);
             return returns.getReturnExpression();

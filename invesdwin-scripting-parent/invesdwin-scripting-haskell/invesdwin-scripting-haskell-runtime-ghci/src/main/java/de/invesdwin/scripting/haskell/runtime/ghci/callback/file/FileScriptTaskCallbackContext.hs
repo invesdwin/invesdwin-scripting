@@ -1,41 +1,62 @@
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+
 -- cabal update && cabal install aeson OR pacman -S haskell-aseon
 import Data.Aeson
+import qualified Data.Vector as V
+import Data.Text (pack)
+import qualified Data.ByteString.Lazy as BL
 -- cabal update && cabal install hint OR pacman -S haskell-hint
 import Language.Haskell.Interpreter
-import Control.Monad.Catch(catchAll)
-import Control.Concurrent(threadDelay)
-import System.Directory(renameFile)
-import Data.Typeable (Typeable)
+import System.Directory
+import Control.Concurrent (threadDelay)
+import Data.Dynamic
+import Data.Typeable
 
--- :{
--- https://stackoverflow.com/questions/57633136/how-to-write-a-retryforever-function-in-haskell-using-exception-handling
--- retryForever :: IO a -> IO a
--- retryForever prog = catchAll prog retry
---     where retry ex = do
---         threadDelay 1000
---         retryForever prog
--- :}
+param :: ToJSON a => a -> Dynamic
+param x = toDyn (toJSON x)
 
--- eval @Int "1 + 1"
-:{
-eval :: forall t. Typeable t => String -> IO (t)
-eval s = do 
-       x <- runInterpreter $ do
-           setImports ["Prelude"]
-           interpret s (as :: t)
-       case x of
-           Right y -> return y
-:}
+dynamicToJSON :: Dynamic -> Value
+dynamicToJSON d =
+    case fromDynamic d of
+        Just (v :: Value) -> v
+        Nothing ->
+            error ("Dynamic does not contain a JSON Value: " ++ show (dynTypeRep d))
 
-:{
-callback :: (Show args, Typeable t) => [args] -> IO t
-callback args = do
-    let message = show ( toJSON ( args ) )
-    writeFile scriptTaskCallbackContextRequestPartFile message
+writeRequest :: String -> [Dynamic] -> BL.ByteString
+writeRequest method params =
+    let jsonParams = map dynamicToJSON params
+        jsonArray  = Array (V.fromList (String (pack method) : jsonParams))
+    in encode jsonArray
+
+
+waitForFile :: FilePath -> IO ()
+waitForFile path = do
+    exists <- doesFileExist path
+    if exists
+        then return ()
+        else threadDelay 1 >> waitForFile path
+
+evaluateResponse :: forall a. Typeable a => String -> IO a
+evaluateResponse expr = do
+    result <- runInterpreter $ do
+        setImports ["Prelude"]
+        interpret expr (as :: a)
+    case result of
+        Left err -> error ("Interpreter error: " ++ show err)
+        Right val -> return val
+
+callback :: Typeable a => String -> [Dynamic] -> IO a
+callback method params = do
+    let json = writeRequest method params
+    BL.writeFile scriptTaskCallbackContextRequestPartFile json
     renameFile scriptTaskCallbackContextRequestPartFile scriptTaskCallbackContextRequestFile
-    returnExpression <- readFile scriptTaskCallbackContextResponseFile
-    eval returnExpression
-    where scriptTaskCallbackContextRequestPartFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_PART_FILE}
-          scriptTaskCallbackContextRequestFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_FILE}
-          scriptTaskCallbackContextResponseFile = {SCRIPT_TASK_CALLBACK_CONTEXT_RESPONSE_FILE}
-:}
+    waitForFile scriptTaskCallbackContextResponseFile
+    expr <- readFile scriptTaskCallbackContextResponseFile
+    removeFile scriptTaskCallbackContextResponseFile
+    evaluateResponse expr
+  where
+    scriptTaskCallbackContextRequestPartFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_PART_FILE}
+    scriptTaskCallbackContextRequestFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_FILE}
+    scriptTaskCallbackContextResponseFile = {SCRIPT_TASK_CALLBACK_CONTEXT_RESPONSE_FILE}

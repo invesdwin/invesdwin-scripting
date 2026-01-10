@@ -114,7 +114,7 @@ public class FileScriptTaskCallbackContext implements Closeable {
                 .borrowObject();
         try {
             final JsonNode jsonArgs = toJsonNode(args);
-            parameters.setParameters(jsonArgs);
+            parameters.setParameters(jsonArgs, 1);
             final String methodName = parameters.getString(-1);
             callback.invoke(methodName, parameters, returns);
             return returns.getReturnExpression();

@@ -2,7 +2,6 @@ package de.invesdwin.scripting.haskell.runtime.ghci;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import de.invesdwin.context.test.ATest;
@@ -36,7 +35,7 @@ public class GhciScriptTaskRunnerHaskellTest extends ATest {
     //        new ParametersAndReturnsTests(runner).testParallel();
     //    }
 
-    @Disabled("TODO: still needs more development")
+    //    @Disabled("TODO: still needs more development")
     @Test
     public void testSimpleCallback() {
         new SimpleCallbackTest(runner).testSimpleCallback();

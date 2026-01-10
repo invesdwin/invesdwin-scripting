@@ -67,7 +67,7 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
         if (value == null) {
             returnNull();
         } else {
-            returnExpression("String(\"" + value + "\")");
+            returnExpression("\"" + value + "\"");
         }
     }
 
@@ -482,7 +482,7 @@ public abstract class AScriptTaskReturnsHaskellToExpression implements IScriptTa
 
     @Override
     public void returnNull() {
-        returnExpression("nothing");
+        returnExpression("()");
     }
 
 }
