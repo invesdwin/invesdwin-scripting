@@ -35,3 +35,7 @@ callback method args = do
   bridge <- FregeEval.new ()
   resultObj <- FregeEval.eval bridge returnExpression
   pure resultObj
+
+callbackIO :: forall r. String -> [String] -> r
+callbackIO method args = IO.performUnsafe $ do
+  callback method args
