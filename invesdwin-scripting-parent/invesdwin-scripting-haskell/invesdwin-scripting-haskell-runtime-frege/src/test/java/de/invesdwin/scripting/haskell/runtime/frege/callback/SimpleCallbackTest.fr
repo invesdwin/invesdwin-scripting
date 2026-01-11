@@ -1,15 +1,15 @@
 putStrLn ( show ( "putUuid" ) )
 putStrLn ( show ( putUuid ) )
 
-getSecretStaticCallback = callbackIO "getSecretStatic" [putUuid] :: String
+getSecretStaticCallback = callbackIO "getSecretStatic" [putUuid] () :: String
 putStrLn ( show ( "getSecretStaticCallback" ) )
 putStrLn ( show ( getSecretStaticCallback ) )
 
-getSecretCallback = callbackIO "getSecret" [putUuid] :: String
+getSecretCallback = callbackIO "getSecret" [putUuid] () :: String
 putStrLn ( show ( "getSecretCallback" ) )
 putStrLn ( show ( getSecretCallback ) )
 
-getSecretExpressionCallback = callbackIO "getSecretExpression" [putUuid] :: String
+getSecretExpressionCallback = callbackIO "getSecretExpression" [putUuid] () :: String
 putStrLn ( show ( "getSecretExpressionCallback" ) )
 putStrLn ( show ( getSecretExpressionCallback ) )
 
