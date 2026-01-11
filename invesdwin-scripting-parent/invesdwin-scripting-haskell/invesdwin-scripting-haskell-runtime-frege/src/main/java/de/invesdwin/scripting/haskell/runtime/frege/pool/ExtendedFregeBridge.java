@@ -14,7 +14,7 @@ public class ExtendedFregeBridge extends ModifiedFregeBridge {
     public void reset() throws IOException {
         getErrWatcher().clearLog();
         eval(":reset");
-        eval(ModifiedFregeBridge.STARTUP_SCRIPT);
+        eval(":l " + getStartupScript().getAbsolutePath());
         getErrWatcher().clearLog();
     }
 

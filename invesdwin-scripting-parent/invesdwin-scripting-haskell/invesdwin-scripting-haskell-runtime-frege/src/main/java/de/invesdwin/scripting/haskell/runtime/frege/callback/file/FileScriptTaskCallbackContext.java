@@ -81,7 +81,11 @@ public class FileScriptTaskCallbackContext implements Closeable {
                     "\"" + getRequestFile().getAbsolutePath() + "\"");
             script = script.replace("{SCRIPT_TASK_CALLBACK_CONTEXT_RESPONSE_FILE}",
                     "\"" + getResponseFile().getAbsolutePath() + "\"");
-            engine.eval(script);
+
+            final File file = new File(DIRECTORY, uuid + "_" + resource.getFilename());
+            Files.writeStringToFileIfDifferent(file, script);
+            engine.eval(":l " + file.getAbsolutePath());
+            Files.delete(file);
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }

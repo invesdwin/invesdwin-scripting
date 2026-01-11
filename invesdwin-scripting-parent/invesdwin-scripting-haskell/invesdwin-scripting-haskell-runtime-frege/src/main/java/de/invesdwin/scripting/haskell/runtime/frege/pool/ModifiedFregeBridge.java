@@ -5,16 +5,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ClassPathResource;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 
+import de.invesdwin.context.ContextProperties;
 import de.invesdwin.context.integration.marshaller.MarshallerJsonJackson;
 import de.invesdwin.context.system.properties.SystemProperties;
 import de.invesdwin.instrument.DynamicInstrumentationReflections;
@@ -23,6 +28,7 @@ import de.invesdwin.util.concurrent.loop.ASpinWait;
 import de.invesdwin.util.concurrent.loop.LoopInterruptedCheck;
 import de.invesdwin.util.error.Throwables;
 import de.invesdwin.util.lang.Closeables;
+import de.invesdwin.util.lang.Files;
 import de.invesdwin.util.lang.string.Strings;
 import de.invesdwin.util.streams.buffer.bytes.ByteBuffers;
 import de.invesdwin.util.streams.buffer.bytes.IByteBuffer;
@@ -39,69 +45,9 @@ public class ModifiedFregeBridge {
     public static final String VALUE_START = "__##@VALUE@##__[";
     public static final String VALUE_END = "]__##@VALUE@##__";
     public static final String LENGTH_PREFIX = "__##@LENGTH@##__=";
-    public static final String STARTUP_SCRIPT = "import Data.JSON\n" //
-            + "data StrArg = Pure String | Effect (IO String)\n"//
-            + ":{\n"//
-            + "class ToStrArg a where\n"//
-            + "  toStrArg :: a -> StrArg\n"//
-            + ":}\n"//
-            + ":{\n"//
-            + "instance ToStrArg String where\n"//
-            + "  toStrArg s = Pure (show s)\n"//
-            + ":}\n"//
-            + ":{\n"//
-            + "instance ToStrArg (IO String) where\n"//
-            + "  toStrArg = Effect\n"//
-            + ":}\n"//
-            + ":{\n"//
-            + "instance ToStrArg Char where\n"//
-            + "  toStrArg c = Pure (show (ctos c))\n" + ":}\n"//
-            + ":{\n"//
-            + "instance ToStrArg Int where\n"//
-            + "  toStrArg n = Pure (show n)\n"//
-            + ":}\n"//
-            + ":{\n"//
-            + "instance ToStrArg Bool where\n"//
-            + "  toStrArg b = Pure (show b)\n"//
-            + ":}\n"//
-            + ":{\n"//
-            + "instance ToStrArg Double where\n"//
-            + "  toStrArg d = Pure (show d)\n"//
-            + ":}\n"//
-            + ":{\n"//
-            + "instance Show a => ToStrArg (Maybe a) where\n"//
-            + "  toStrArg m = Pure (show m)\n"//
-            + ":}\n"//
-            + ":{\n"//
-            + "instance Show a => ToStrArg [a] where\n"//
-            + "  toStrArg xs = Pure (show xs)\n"//
-            + ":}\n"//
-            + ":{\n"//
-            + "normalize :: StrArg -> IO String\n"//
-            + "normalize (Pure s)   = pure s\n"//
-            + "normalize (Effect a) = a\n"//
-            + ":}\n"//
-            + ":{\n"//
-            + "convertToJSON :: ToStrArg a => a -> IO Value\n"//
-            + "convertToJSON x = do\n"//
-            + "  s <- normalize (toStrArg x)\n"//
-            + "  pure (toJSON s)\n"//
-            + ":}\n"//
-            + ":{\n"//
-            + "showJSON :: ToStrArg a => a -> IO String\n"//
-            + "showJSON x = do\n"//
-            + "  s <- normalize (toStrArg x)\n"//
-            + "  pure s\n"//
-            + ":}\n"//
-            + ":{\n"//
-            + "__get__ variable = do\n"//
-            + "    ans <- showJSON variable\n"//
-            + "    putStrLn ( \"" + LENGTH_PREFIX + "\" ++ show (length ans) )\n"//
-            + "    putStrLn \"" + VALUE_START + "\"\n"//
-            + "    putStrLn ans\n"//
-            + "    putStrLn \"" + VALUE_END + "\"\n"//
-            + ":}\n"//
-    ;
+
+    private static final File DIRECTORY = new File(ContextProperties.TEMP_DIRECTORY,
+            ModifiedFregeBridge.class.getSimpleName());
     private static final String PROMPT = "frege> ";
     private static final char NEW_LINE = '\n';
     private static final String TERMINATOR_RAW = "__##@@##__";
@@ -186,6 +132,7 @@ public class ModifiedFregeBridge {
         errWatcher = new ModifiedFregeErrorConsoleWatcher(frege);
         errWatcher.startWatching();
         out = frege.getOutputStream();
+
         final Instant start = new Instant();
         while (true) {
             final String s = readline();
@@ -204,13 +151,29 @@ public class ModifiedFregeBridge {
             }
             if (s.startsWith("Welcome to Frege")) {
                 ver = s;
-                out.write(STARTUP_SCRIPT.getBytes());
+
+                out.write((":l " + getStartupScript().getAbsolutePath()).getBytes());
                 out.write(TERMINATOR_SUFFIX_BYTES);
                 out.write(NEW_LINE);
                 out.flush();
             } else if (s.equals(TERMINATOR_RAW)) {
                 break;
             }
+        }
+    }
+
+    protected static File getStartupScript() {
+        final ClassPathResource resource = new ClassPathResource(ModifiedFregeBridge.class.getSimpleName() + ".fr",
+                ModifiedFregeBridge.class);
+        final File file;
+        try (InputStream in = resource.getInputStream()) {
+            final String script = IOUtils.toString(in, Charset.defaultCharset());
+
+            file = new File(DIRECTORY, resource.getFilename());
+            Files.writeStringToFileIfDifferent(file, script);
+            return file;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

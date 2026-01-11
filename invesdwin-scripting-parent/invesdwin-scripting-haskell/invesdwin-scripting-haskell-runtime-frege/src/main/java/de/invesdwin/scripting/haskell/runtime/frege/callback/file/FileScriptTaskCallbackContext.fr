@@ -1,5 +1,5 @@
 import Data.JSON
-:{
+
 waitForFile :: File -> IO ()
 waitForFile file = do
   exists <- file.exists
@@ -8,13 +8,12 @@ waitForFile file = do
      else do
        Thread.sleep 1
        waitForFile file
-:}
-scriptTaskCallbackContextRequestPartFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_PART_FILE}
-scriptTaskCallbackContextRequestFile     = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_FILE}
-scriptTaskCallbackContextResponseFile    = {SCRIPT_TASK_CALLBACK_CONTEXT_RESPONSE_FILE}
-:{
+
 callback :: String -> [String] -> IO String
 callback method args = do
+  let scriptTaskCallbackContextRequestPartFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_PART_FILE}
+  let scriptTaskCallbackContextRequestFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_FILE}
+  let scriptTaskCallbackContextResponseFile = {SCRIPT_TASK_CALLBACK_CONTEXT_RESPONSE_FILE}
   let message = method ++ ";" ++ show (toJSON args)
 
   writeFile scriptTaskCallbackContextRequestPartFile message
@@ -34,10 +33,8 @@ callback method args = do
   -- TODO eval
   putStrLn "****************************************** ---"
   pure returnExpression
-:}
-:{
+
 callbackIO :: String -> [IO String] -> IO String
 callbackIO method ioArgs = do
   args <- sequence ioArgs      -- args :: [String]
   callback method args
-:}
