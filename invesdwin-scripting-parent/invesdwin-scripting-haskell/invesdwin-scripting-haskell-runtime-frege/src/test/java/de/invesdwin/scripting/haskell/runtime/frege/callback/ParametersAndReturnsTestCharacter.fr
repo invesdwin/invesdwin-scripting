@@ -1,24 +1,24 @@
 putStrLn ( show ( "getCharacter" ) )
-getCharacter :: Char <- callback "getCharacter" []
+getCharacter = callbackIO "getCharacter" [] () :: Char
 putStrLn ( show ( getCharacter ) )
-callback "setCharacter" [param getCharacter] :: IO ()
+callback "setCharacter" [getCharacter] :: IO ()
 
 putStrLn ( show ( "getCharacterVector" ) )
-getCharacterVector :: [Char] <- callback "getCharacterVector" []
+getCharacterVector = callbackIO "getCharacterVector" [] () :: [Char]
 putStrLn ( show ( getCharacterVector ) )
-callback "setCharacterVector" [param getCharacterVector] :: IO ()
+callback "setCharacterVector" [getCharacterVector] :: IO ()
 
 putStrLn ( show ( "getCharacterVectorAsList" ) )
-getCharacterVectorAsList :: [Char] <- callback "getCharacterVectorAsList" []
+getCharacterVectorAsList = callbackIO "getCharacterVectorAsList" [] () :: [Char]
 putStrLn ( show ( getCharacterVectorAsList ) )
-callback "setCharacterVectorAsList" [param getCharacterVectorAsList] :: IO ()
+callback "setCharacterVectorAsList" [getCharacterVectorAsList] :: IO ()
 
 putStrLn ( show ( "getCharacterMatrix" ) )
-getCharacterMatrix :: [[Char]] <- callback "getCharacterMatrix" []
+getCharacterMatrix = callbackIO "getCharacterMatrix" [] () :: [[Char]]
 putStrLn ( show ( getCharacterMatrix ) )
-callback "setCharacterMatrix" [param getCharacterMatrix] :: IO ()
+callback "setCharacterMatrix" [getCharacterMatrix] :: IO ()
 
 putStrLn ( show ( "getCharacterMatrixAsList" ) )
-getCharacterMatrixAsList :: [[Char]] <- callback "getCharacterMatrixAsList" []
+getCharacterMatrixAsList = callbackIO "getCharacterMatrixAsList" [] () :: [[Char]]
 putStrLn ( show ( getCharacterMatrixAsList ) )
-callback "setCharacterMatrixAsList" [param getCharacterMatrixAsList] :: IO ()
+callback "setCharacterMatrixAsList" [getCharacterMatrixAsList] :: IO ()

@@ -1,24 +1,24 @@
 putStrLn ( show ( "getBoolean" ) )
-getBoolean :: Bool <- callback "getBoolean" []
+getBoolean = callbackIO "getBoolean" [] () :: Bool
 putStrLn ( show ( getBoolean ) )
-callback "setBoolean" [param getBoolean] :: IO ()
+callback "setBoolean" [getBoolean] :: IO ()
 
 putStrLn ( show ( "getBooleanVector" ) )
-getBooleanVector :: [Bool] <- callback "getBooleanVector" []
+getBooleanVector = callbackIO "getBooleanVector" [] () :: [Bool]
 putStrLn ( show ( getBooleanVector ) )
-callback "setBooleanVector" [param getBooleanVector] :: IO ()
+callback "setBooleanVector" [getBooleanVector] :: IO ()
 
 putStrLn ( show ( "getBooleanVectorAsList" ) )
-getBooleanVectorAsList :: [Bool] <- callback "getBooleanVectorAsList" []
+getBooleanVectorAsList = callbackIO "getBooleanVectorAsList" [] () :: [Bool]
 putStrLn ( show ( getBooleanVectorAsList ) )
-callback "setBooleanVectorAsList" [param getBooleanVectorAsList] :: IO ()
+callback "setBooleanVectorAsList" [getBooleanVectorAsList] :: IO ()
 
 putStrLn ( show ( "getBooleanMatrix" ) )
-getBooleanMatrix :: [[Bool]] <- callback "getBooleanMatrix" []
+getBooleanMatrix = callbackIO "getBooleanMatrix" [] () :: [[Bool]]
 putStrLn ( show ( getBooleanMatrix ) )
-callback "setBooleanMatrix" [param getBooleanMatrix] :: IO ()
+callback "setBooleanMatrix" [getBooleanMatrix] :: IO ()
 
 putStrLn ( show ( "getBooleanMatrixAsList" ) )
-getBooleanMatrixAsList :: [[Bool]] <- callback "getBooleanMatrixAsList" []
+getBooleanMatrixAsList = callbackIO "getBooleanMatrixAsList" [] () :: [[Bool]]
 putStrLn ( show ( getBooleanMatrixAsList ) )
-callback "setBooleanMatrixAsList" [param getBooleanMatrixAsList] :: IO ()
+callback "setBooleanMatrixAsList" [getBooleanMatrixAsList] :: IO ()

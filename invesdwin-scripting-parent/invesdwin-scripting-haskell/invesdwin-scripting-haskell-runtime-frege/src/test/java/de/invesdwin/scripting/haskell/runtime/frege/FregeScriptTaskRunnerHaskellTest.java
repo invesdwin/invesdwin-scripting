@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import de.invesdwin.context.test.ATest;
 import de.invesdwin.scripting.haskell.runtime.contract.InputsAndResultsTests;
+import de.invesdwin.scripting.haskell.runtime.frege.callback.ParametersAndReturnsTests;
 import de.invesdwin.scripting.haskell.runtime.frege.callback.SimpleCallbackTest;
 import jakarta.inject.Inject;
 
@@ -27,16 +28,16 @@ public class FregeScriptTaskRunnerHaskellTest extends ATest {
         new InputsAndResultsTests(runner).testParallel();
     }
 
-    //    @Test
-    //    public void testCallback() {
-    //        new ParametersAndReturnsTests(runner).test();
-    //    }
+    @Test
+    public void testCallback() {
+        new ParametersAndReturnsTests(runner).test();
+    }
 
-    //    @Disabled("frege is too slow")
-    //    @Test
-    //    public void testCallbackParallel() {
-    //        new ParametersAndReturnsTests(runner).testParallel();
-    //    }
+    @Disabled("frege is too slow")
+    @Test
+    public void testCallbackParallel() {
+        new ParametersAndReturnsTests(runner).testParallel();
+    }
 
     @Test
     public void testSimpleCallback() {

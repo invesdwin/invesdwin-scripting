@@ -1,24 +1,24 @@
 putStrLn ( show ( "getByte" ) )
-getByte :: Int <- callback "getByte" []
+getByte = callbackIO "getByte" [] () :: Int
 putStrLn ( show ( getByte ) )
-callback "setByte" [param getByte] :: IO ()
+callback "setByte" [getByte] :: IO ()
 
 putStrLn ( show ( "getByteVector" ) )
-getByteVector :: [Int] <- callback "getByteVector" []
+getByteVector = callbackIO "getByteVector" [] () :: [Int]
 putStrLn ( show ( getByteVector ) )
-callback "setByteVector" [param getByteVector] :: IO ()
+callback "setByteVector" [getByteVector] :: IO ()
 
 putStrLn ( show ( "getByteVectorAsList" ) )
-getByteVectorAsList :: [Int] <- callback "getByteVectorAsList" []
+getByteVectorAsList = callbackIO "getByteVectorAsList" [] () :: [Int]
 putStrLn ( show ( getByteVectorAsList ) )
-callback "setByteVectorAsList" [param getByteVectorAsList] :: IO ()
+callback "setByteVectorAsList" [getByteVectorAsList] :: IO ()
 
 putStrLn ( show ( "getByteMatrix" ) )
-getByteMatrix :: [[Int]] <- callback "getByteMatrix" []
+getByteMatrix = callbackIO "getByteMatrix" [] () :: [[Int]]
 putStrLn ( show ( getByteMatrix ) )
-callback "setByteMatrix" [param getByteMatrix] :: IO ()
+callback "setByteMatrix" [getByteMatrix] :: IO ()
 
 putStrLn ( show ( "getByteMatrixAsList" ) )
-getByteMatrixAsList :: [[Int]] <- callback "getByteMatrixAsList" []
+getByteMatrixAsList = callbackIO "getByteMatrixAsList" [] () :: [[Int]]
 putStrLn ( show ( getByteMatrixAsList ) )
-callback "setByteMatrixAsList" [param getByteMatrixAsList] :: IO ()
+callback "setByteMatrixAsList" [getByteMatrixAsList] :: IO ()

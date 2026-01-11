@@ -1,24 +1,24 @@
 putStrLn ( show ( "getPercent" ) )
-getPercent :: Double <- callback "getPercent" []
+getPercent = callbackIO "getPercent" [] () :: Double
 putStrLn ( show ( getPercent ) )
-callback "setPercent" [param getPercent] :: IO ()
+callback "setPercent" [getPercent] :: IO ()
 
 putStrLn ( show ( "getPercentVector" ) )
-getPercentVector :: [Double] <- callback "getPercentVector" []
+getPercentVector = callbackIO "getPercentVector" [] () :: [Double]
 putStrLn ( show ( getPercentVector ) )
-callback "setPercentVector" [param getPercentVector] :: IO ()
+callback "setPercentVector" [getPercentVector] :: IO ()
 
 putStrLn ( show ( "getPercentVectorAsList" ) )
-getPercentVectorAsList :: [Double] <- callback "getPercentVectorAsList" []
+getPercentVectorAsList = callbackIO "getPercentVectorAsList" [] () :: [Double]
 putStrLn ( show ( getPercentVectorAsList ) )
-callback "setPercentVectorAsList" [param getPercentVectorAsList] :: IO ()
+callback "setPercentVectorAsList" [getPercentVectorAsList] :: IO ()
 
 putStrLn ( show ( "getPercentMatrix" ) )
-getPercentMatrix :: [[Double]] <- callback "getPercentMatrix" []
+getPercentMatrix = callbackIO "getPercentMatrix" [] () :: [[Double]]
 putStrLn ( show ( getPercentMatrix ) )
-callback "setPercentMatrix" [param getPercentMatrix] :: IO ()
+callback "setPercentMatrix" [getPercentMatrix] :: IO ()
 
 putStrLn ( show ( "getPercentMatrixAsList" ) )
-getPercentMatrixAsList :: [[Double]] <- callback "getPercentMatrixAsList" []
+getPercentMatrixAsList = callbackIO "getPercentMatrixAsList" [] () :: [[Double]]
 putStrLn ( show ( getPercentMatrixAsList ) )
-callback "setPercentMatrixAsList" [param getPercentMatrixAsList] :: IO ()
+callback "setPercentMatrixAsList" [getPercentMatrixAsList] :: IO ()

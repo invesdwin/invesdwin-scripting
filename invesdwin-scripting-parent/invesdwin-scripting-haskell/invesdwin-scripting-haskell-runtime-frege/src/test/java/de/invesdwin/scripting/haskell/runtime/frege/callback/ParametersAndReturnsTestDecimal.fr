@@ -1,24 +1,24 @@
 putStrLn ( show ( "getDecimal" ) )
-getDecimal :: Double <- callback "getDecimal" []
+getDecimal = callbackIO "getDecimal" [] () :: Double
 putStrLn ( show ( getDecimal ) )
-callback "setDecimal" [param getDecimal] :: IO ()
+callback "setDecimal" [getDecimal] :: IO ()
 
 putStrLn ( show ( "getDecimalVector" ) )
-getDecimalVector :: [Double] <- callback "getDecimalVector" []
+getDecimalVector = callbackIO "getDecimalVector" [] () :: [Double]
 putStrLn ( show ( getDecimalVector ) )
-callback "setDecimalVector" [param getDecimalVector] :: IO ()
+callback "setDecimalVector" [getDecimalVector] :: IO ()
 
 putStrLn ( show ( "getDecimalVectorAsList" ) )
-getDecimalVectorAsList :: [Double] <- callback "getDecimalVectorAsList" []
+getDecimalVectorAsList = callbackIO "getDecimalVectorAsList" [] () :: [Double]
 putStrLn ( show ( getDecimalVectorAsList ) )
-callback "setDecimalVectorAsList" [param getDecimalVectorAsList] :: IO ()
+callback "setDecimalVectorAsList" [getDecimalVectorAsList] :: IO ()
 
 putStrLn ( show ( "getDecimalMatrix" ) )
-getDecimalMatrix :: [[Double]] <- callback "getDecimalMatrix" []
+getDecimalMatrix = callbackIO "getDecimalMatrix" [] () :: [[Double]]
 putStrLn ( show ( getDecimalMatrix ) )
-callback "setDecimalMatrix" [param getDecimalMatrix] :: IO ()
+callback "setDecimalMatrix" [getDecimalMatrix] :: IO ()
 
 putStrLn ( show ( "getDecimalMatrixAsList" ) )
-getDecimalMatrixAsList :: [[Double]] <- callback "getDecimalMatrixAsList" []
+getDecimalMatrixAsList = callbackIO "getDecimalMatrixAsList" [] () :: [[Double]]
 putStrLn ( show ( getDecimalMatrixAsList ) )
-callback "setDecimalMatrixAsList" [param getDecimalMatrixAsList] :: IO ()
+callback "setDecimalMatrixAsList" [getDecimalMatrixAsList] :: IO ()

@@ -1,24 +1,24 @@
 putStrLn ( show ( "getInteger" ) )
-getInteger :: Int <- callback "getInteger" []
+getInteger = callbackIO "getInteger" [] () :: Int
 putStrLn ( show ( getInteger ) )
-callback "setInteger" [param getInteger] :: IO ()
+callback "setInteger" [getInteger] :: IO ()
 
 putStrLn ( show ( "getIntegerVector" ) )
-getIntegerVector :: [Int] <- callback "getIntegerVector" []
+getIntegerVector = callbackIO "getIntegerVector" [] () :: [Int]
 putStrLn ( show ( getIntegerVector ) )
-callback "setIntegerVector" [param getIntegerVector] :: IO ()
+callback "setIntegerVector" [getIntegerVector] :: IO ()
 
 putStrLn ( show ( "getIntegerVectorAsList" ) )
-getIntegerVectorAsList :: [Int] <- callback "getIntegerVectorAsList" []
+getIntegerVectorAsList = callbackIO "getIntegerVectorAsList" [] () :: [Int]
 putStrLn ( show ( getIntegerVectorAsList ) )
-callback "setIntegerVectorAsList" [param getIntegerVectorAsList] :: IO ()
+callback "setIntegerVectorAsList" [getIntegerVectorAsList] :: IO ()
 
 putStrLn ( show ( "getIntegerMatrix" ) )
-getIntegerMatrix :: [[Int]] <- callback "getIntegerMatrix" []
+getIntegerMatrix = callbackIO "getIntegerMatrix" [] () :: [[Int]]
 putStrLn ( show ( getIntegerMatrix ) )
-callback "setIntegerMatrix" [param getIntegerMatrix] :: IO ()
+callback "setIntegerMatrix" [getIntegerMatrix] :: IO ()
 
 putStrLn ( show ( "getIntegerMatrixAsList" ) )
-getIntegerMatrixAsList :: [[Int]] <- callback "getIntegerMatrixAsList" []
+getIntegerMatrixAsList = callbackIO "getIntegerMatrixAsList" [] () :: [[Int]]
 putStrLn ( show ( getIntegerMatrixAsList ) )
-callback "setIntegerMatrixAsList" [param getIntegerMatrixAsList] :: IO ()
+callback "setIntegerMatrixAsList" [getIntegerMatrixAsList] :: IO ()

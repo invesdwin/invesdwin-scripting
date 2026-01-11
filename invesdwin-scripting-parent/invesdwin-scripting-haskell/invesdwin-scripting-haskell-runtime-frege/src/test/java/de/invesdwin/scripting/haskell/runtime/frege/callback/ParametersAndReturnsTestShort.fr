@@ -1,24 +1,24 @@
 putStrLn ( show ( "getShort" ) )
-getShort :: Int <- callback "getShort" []
+getShort = callbackIO "getShort" [] () :: Int
 putStrLn ( show ( getShort ) )
-callback "setShort" [param getShort] :: IO ()
+callback "setShort" [getShort] :: IO ()
 
 putStrLn ( show ( "getShortVector" ) )
-getShortVector :: [Int] <- callback "getShortVector" []
+getShortVector = callbackIO "getShortVector" [] () :: [Int]
 putStrLn ( show ( getShortVector ) )
-callback "setShortVector" [param getShortVector] :: IO ()
+callback "setShortVector" [getShortVector] :: IO ()
 
 putStrLn ( show ( "getShortVectorAsList" ) )
-getShortVectorAsList :: [Int] <- callback "getShortVectorAsList" []
+getShortVectorAsList = callbackIO "getShortVectorAsList" [] () :: [Int]
 putStrLn ( show ( getShortVectorAsList ) )
-callback "setShortVectorAsList" [param getShortVectorAsList] :: IO ()
+callback "setShortVectorAsList" [getShortVectorAsList] :: IO ()
 
 putStrLn ( show ( "getShortMatrix" ) )
-getShortMatrix :: [[Int]] <- callback "getShortMatrix" []
+getShortMatrix = callbackIO "getShortMatrix" [] () :: [[Int]]
 putStrLn ( show ( getShortMatrix ) )
-callback "setShortMatrix" [param getShortMatrix] :: IO ()
+callback "setShortMatrix" [getShortMatrix] :: IO ()
 
 putStrLn ( show ( "getShortMatrixAsList" ) )
-getShortMatrixAsList :: [[Int]] <- callback "getShortMatrixAsList" []
+getShortMatrixAsList = callbackIO "getShortMatrixAsList" [] () :: [[Int]]
 putStrLn ( show ( getShortMatrixAsList ) )
-callback "setShortMatrixAsList" [param getShortMatrixAsList] :: IO ()
+callback "setShortMatrixAsList" [getShortMatrixAsList] :: IO ()
