@@ -1,16 +1,7 @@
-putStrLn ( show ( "putUuid" ) )
-putStrLn ( show ( putUuid ) )
+getSecretStaticCallback = callback "getSecretStatic" [putUuid] :: IO String
 
-getSecretStaticCallback :: String <- callback "getSecretStatic" [param putUuid]
-putStrLn ( show ( "getSecretStaticCallback" ) )
-putStrLn ( show ( getSecretStaticCallback ) )
+getSecretCallback = callback "getSecret" [putUuid] :: IO String
 
-getSecretCallback :: String <- callback "getSecret" [param putUuid]
-putStrLn ( show ( "getSecretCallback" ) )
-putStrLn ( show ( getSecretCallback ) )
+getSecretExpressionCallback = callback "getSecretExpression" [putUuid] :: IO String
 
-getSecretExpressionCallback :: String <- callback "getSecretExpression" [param putUuid]
-putStrLn ( show ( "getSecretExpressionCallback" ) )
-putStrLn ( show ( getSecretExpressionCallback ) )
-
-callback "voidMethod" [] :: IO ()
+callback "voidMethod" []:: IO ()

@@ -9,7 +9,7 @@ instance ToStrArg String where
   toStrArg s = Pure (show s)
 
 instance ToStrArg (IO String) where
-  toStrArg = Effect
+  toStrArg io = Effect (fmap show io)
 
 instance ToStrArg Char where
   toStrArg c = Pure (show (ctos c))
