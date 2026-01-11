@@ -1,24 +1,24 @@
 putStrLn ( show ( "getFloat" ) )
 getFloat = callbackIO "getFloat" [] () :: Float
 putStrLn ( show ( getFloat ) )
-callback "setFloat" [getFloat] :: IO ()
+callback "setFloat" [param getFloat] :: IO ()
 
 putStrLn ( show ( "getFloatVector" ) )
 getFloatVector = callbackIO "getFloatVector" [] () :: [Float]
 putStrLn ( show ( getFloatVector ) )
-callback "setFloatVector" [getFloatVector] :: IO ()
+callback "setFloatVector" [param getFloatVector] :: IO ()
 
 putStrLn ( show ( "getFloatVectorAsList" ) )
 getFloatVectorAsList = callbackIO "getFloatVectorAsList" [] () :: [Float]
 putStrLn ( show ( getFloatVectorAsList ) )
-callback "setFloatVectorAsList" [getFloatVectorAsList] :: IO ()
+callback "setFloatVectorAsList" [param getFloatVectorAsList] :: IO ()
 
 putStrLn ( show ( "getFloatMatrix" ) )
 getFloatMatrix = callbackIO "getFloatMatrix" [] () :: [[Float]]
 putStrLn ( show ( getFloatMatrix ) )
-callback "setFloatMatrix" [getFloatMatrix] :: IO ()
+callback "setFloatMatrix" [param getFloatMatrix] :: IO ()
 
 putStrLn ( show ( "getFloatMatrixAsList" ) )
 getFloatMatrixAsList = callbackIO "getFloatMatrixAsList" [] () :: [[Float]]
 putStrLn ( show ( getFloatMatrixAsList ) )
-callback "setFloatMatrixAsList" [getFloatMatrixAsList] :: IO ()
+callback "setFloatMatrixAsList" [param getFloatMatrixAsList] :: IO ()

@@ -1,24 +1,24 @@
 putStrLn ( show ( "getLong" ) )
 getLong = callbackIO "getLong" [] () :: Integer
 putStrLn ( show ( getLong ) )
-callback "setLong" [getLong] :: IO ()
+callback "setLong" [param getLong] :: IO ()
 
 putStrLn ( show ( "getLongVector" ) )
 getLongVector = callbackIO "getLongVector" [] () :: [Integer]
 putStrLn ( show ( getLongVector ) )
-callback "setLongVector" [getLongVector] :: IO ()
+callback "setLongVector" [param getLongVector] :: IO ()
 
 putStrLn ( show ( "getLongVectorAsList" ) )
 getLongVectorAsList = callbackIO "getLongVectorAsList" [] () :: [Integer]
 putStrLn ( show ( getLongVectorAsList ) )
-callback "setLongVectorAsList" [getLongVectorAsList] :: IO ()
+callback "setLongVectorAsList" [param getLongVectorAsList] :: IO ()
 
 putStrLn ( show ( "getLongMatrix" ) )
 getLongMatrix = callbackIO "getLongMatrix" [] () :: [[Integer]]
 putStrLn ( show ( getLongMatrix ) )
-callback "setLongMatrix" [getLongMatrix] :: IO ()
+callback "setLongMatrix" [param getLongMatrix] :: IO ()
 
 putStrLn ( show ( "getLongMatrixAsList" ) )
 getLongMatrixAsList = callbackIO "getLongMatrixAsList" [] () :: [[Integer]]
 putStrLn ( show ( getLongMatrixAsList ) )
-callback "setLongMatrixAsList" [getLongMatrixAsList] :: IO ()
+callback "setLongMatrixAsList" [param getLongMatrixAsList] :: IO ()

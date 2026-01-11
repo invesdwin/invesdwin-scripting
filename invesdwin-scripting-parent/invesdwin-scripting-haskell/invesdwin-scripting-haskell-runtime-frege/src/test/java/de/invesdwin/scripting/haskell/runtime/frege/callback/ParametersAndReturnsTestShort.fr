@@ -1,24 +1,24 @@
 putStrLn ( show ( "getShort" ) )
 getShort = callbackIO "getShort" [] () :: Int
 putStrLn ( show ( getShort ) )
-callback "setShort" [getShort] :: IO ()
+callback "setShort" [param getShort] :: IO ()
 
 putStrLn ( show ( "getShortVector" ) )
 getShortVector = callbackIO "getShortVector" [] () :: [Int]
 putStrLn ( show ( getShortVector ) )
-callback "setShortVector" [getShortVector] :: IO ()
+callback "setShortVector" [param getShortVector] :: IO ()
 
 putStrLn ( show ( "getShortVectorAsList" ) )
 getShortVectorAsList = callbackIO "getShortVectorAsList" [] () :: [Int]
 putStrLn ( show ( getShortVectorAsList ) )
-callback "setShortVectorAsList" [getShortVectorAsList] :: IO ()
+callback "setShortVectorAsList" [param getShortVectorAsList] :: IO ()
 
 putStrLn ( show ( "getShortMatrix" ) )
 getShortMatrix = callbackIO "getShortMatrix" [] () :: [[Int]]
 putStrLn ( show ( getShortMatrix ) )
-callback "setShortMatrix" [getShortMatrix] :: IO ()
+callback "setShortMatrix" [param getShortMatrix] :: IO ()
 
 putStrLn ( show ( "getShortMatrixAsList" ) )
 getShortMatrixAsList = callbackIO "getShortMatrixAsList" [] () :: [[Int]]
 putStrLn ( show ( getShortMatrixAsList ) )
-callback "setShortMatrixAsList" [getShortMatrixAsList] :: IO ()
+callback "setShortMatrixAsList" [param getShortMatrixAsList] :: IO ()

@@ -3,7 +3,7 @@ import Data.JSON
 data FregeEval = native de.invesdwin.scripting.haskell.runtime.frege.callback.file.FregeEval where
     native new :: () -> IO (MutableIO FregeEval)
     native eval :: MutableIO FregeEval -> String -> IO a
-
+    
 waitForFile :: File -> IO ()
 waitForFile file = do
   exists <- file.exists
@@ -12,8 +12,12 @@ waitForFile file = do
      else do
        Thread.sleep 1
        waitForFile file
+       
+    
+param :: ToJSON a => a -> Value
+param x = toJSON x
 
-callback :: forall r. String -> [String] -> IO r
+callback :: forall r. String -> [Value] -> IO r
 callback method args = do
   let scriptTaskCallbackContextRequestPartFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_PART_FILE}
   let scriptTaskCallbackContextRequestFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_FILE}
@@ -35,6 +39,3 @@ callback method args = do
   bridge <- FregeEval.new ()
   resultObj <- FregeEval.eval bridge returnExpression
   pure resultObj
-
-callbackIO :: forall r. String -> [String] -> () -> r
-callbackIO method args () = IO.performUnsafe (callback method args)

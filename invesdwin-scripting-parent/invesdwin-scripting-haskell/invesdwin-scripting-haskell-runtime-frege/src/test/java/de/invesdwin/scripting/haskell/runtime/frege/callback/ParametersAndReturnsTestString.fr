@@ -1,51 +1,51 @@
 putStrLn ( show ( "getString" ) )
 getString = callbackIO "getString" [] () :: String
 putStrLn ( show ( getString ) )
-callback "setString" [getString] :: IO ()
+callback "setString" [param getString] :: IO ()
 
 putStrLn ( show ( "getStringWithNull" ) )
 getStringWithNull = callbackIO "getStringWithNull" [] () :: Maybe String
 putStrLn ( show ( getStringWithNull ) )
-callback "setStringWithNull" [getStringWithNull] :: IO ()
+callback "setStringWithNull" [param getStringWithNull] :: IO ()
 
 putStrLn ( show ( "getStringVector" ) )
 getStringVector = callbackIO "getStringVector" [] () :: [String]
 putStrLn ( show ( getStringVector ) )
-callback "setStringVector" [getStringVector] :: IO ()
+callback "setStringVector" [param getStringVector] :: IO ()
 
 
 putStrLn ( show ( "getStringVectorWithNull" ) )
 getStringVectorWithNull = callbackIO "getStringVectorWithNull" [] () :: [String]
 putStrLn ( show ( getStringVectorWithNull ) )
-callback "setStringVectorWithNull" [getStringVectorWithNull] :: IO ()
+callback "setStringVectorWithNull" [param getStringVectorWithNull] :: IO ()
 
 putStrLn ( show ( "getStringVectorAsList" ) )
 getStringVectorAsList = callbackIO "getStringVectorAsList" [] () :: [String]
 putStrLn ( show ( getStringVectorAsList ) )
-callback "setStringVectorAsList" [getStringVectorAsList] :: IO ()
+callback "setStringVectorAsList" [param getStringVectorAsList] :: IO ()
 
 putStrLn ( show ( "getStringVectorAsListWithNull" ) )
 getStringVectorAsListWithNull = callbackIO "getStringVectorAsListWithNull" [] () :: [String]
 putStrLn ( show ( getStringVectorAsListWithNull ) )
-callback "setStringVectorAsListWithNull" [getStringVectorAsListWithNull] :: IO ()
+callback "setStringVectorAsListWithNull" [param getStringVectorAsListWithNull] :: IO ()
 
 putStrLn ( show ( "getStringMatrix" ) )
 getStringMatrix = callbackIO "getStringMatrix" [] () :: [[String]]
 putStrLn ( show ( getStringMatrix ) )
-callback "setStringMatrix" [getStringMatrix] :: IO ()
+callback "setStringMatrix" [param getStringMatrix] :: IO ()
 
 
 putStrLn ( show ( "getStringMatrixWithNull" ) )
 getStringMatrixWithNull = callbackIO "getStringMatrixWithNull" [] () :: [[String]]
 putStrLn ( show ( getStringMatrixWithNull ) )
-callback "setStringMatrixWithNull" [getStringMatrixWithNull] :: IO ()
+callback "setStringMatrixWithNull" [param getStringMatrixWithNull] :: IO ()
 
 putStrLn ( show ( "getStringMatrixAsList" ) )
 getStringMatrixAsList = callbackIO "getStringMatrixAsList" [] () :: [[String]]
 putStrLn ( show ( getStringMatrixAsList ) )
-callback "setStringMatrixAsList" [getStringMatrixAsList] :: IO ()
+callback "setStringMatrixAsList" [param getStringMatrixAsList] :: IO ()
 
 putStrLn ( show ( "getStringMatrixAsListWithNull" ) )
 getStringMatrixAsListWithNull = callbackIO "getStringMatrixAsListWithNull" [] () :: [[String]]
 putStrLn ( show ( getStringMatrixAsListWithNull ) )
-callback "setStringMatrixAsListWithNull" [getStringMatrixAsListWithNull] :: IO ()
+callback "setStringMatrixAsListWithNull" [param getStringMatrixAsListWithNull] :: IO ()
