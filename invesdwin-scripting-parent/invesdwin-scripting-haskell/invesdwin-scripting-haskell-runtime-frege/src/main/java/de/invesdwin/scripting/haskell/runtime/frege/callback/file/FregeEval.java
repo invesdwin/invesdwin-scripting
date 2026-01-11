@@ -15,9 +15,6 @@ public class FregeEval {
     }
 
     public <T> T eval(final String expression) {
-        if ("()".equals(expression)) {
-            return (T) "";
-        }
         try {
             final Object result = engine.eval(expression);
             return (T) result;
