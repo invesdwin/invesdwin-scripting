@@ -5,9 +5,9 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.junit.jupiter.api.Test;
 
 import de.invesdwin.context.test.ATest;
+import de.invesdwin.scripting.haskell.runtime.callback.ParametersAndReturnsTests;
+import de.invesdwin.scripting.haskell.runtime.callback.SimpleCallbackTest;
 import de.invesdwin.scripting.haskell.runtime.contract.InputsAndResultsTests;
-import de.invesdwin.scripting.haskell.runtime.contract.callback.ParametersAndReturnsTests;
-import de.invesdwin.scripting.haskell.runtime.contract.callback.SimpleCallbackTest;
 import jakarta.inject.Inject;
 
 @NotThreadSafe

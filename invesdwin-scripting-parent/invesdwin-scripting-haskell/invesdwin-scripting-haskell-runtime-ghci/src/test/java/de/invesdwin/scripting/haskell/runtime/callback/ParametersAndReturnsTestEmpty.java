@@ -1,4 +1,4 @@
-package de.invesdwin.scripting.haskell.runtime.contract.callback;
+package de.invesdwin.scripting.haskell.runtime.callback;
 
 import java.util.List;
 
@@ -27,20 +27,20 @@ import de.invesdwin.util.math.decimal.Decimal;
 import de.invesdwin.util.math.decimal.scaled.Percent;
 
 @NotThreadSafe
-public class ParametersAndReturnsTestEmptyMatrixValue {
+public class ParametersAndReturnsTestEmpty {
 
     private final IScriptTaskRunnerHaskell runner;
 
-    public ParametersAndReturnsTestEmptyMatrixValue(final IScriptTaskRunnerHaskell runner) {
+    public ParametersAndReturnsTestEmpty(final IScriptTaskRunnerHaskell runner) {
         this.runner = runner;
     }
 
-    public void testEmptyMatrixValue() {
+    public void testEmpty() {
         new AScriptTaskHaskell<Void>() {
 
             @Override
             public IScriptTaskCallback getCallback() {
-                final ParametersAndReturnsTestEmptyMatrixValueCallback callback = new ParametersAndReturnsTestEmptyMatrixValueCallback();
+                final ParametersAndReturnsTestEmptyCallback callback = new ParametersAndReturnsTestEmptyCallback();
                 return new ReflectiveScriptTaskCallback(callback);
             }
 
@@ -49,9 +49,8 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
             @Override
             public void executeScript(final IScriptTaskEngine engine) {
-                engine.eval(
-                        new ClassPathResource(ParametersAndReturnsTestEmptyMatrixValue.class.getSimpleName() + ".hs",
-                                ParametersAndReturnsTestEmptyMatrixValue.class));
+                engine.eval(new ClassPathResource(ParametersAndReturnsTestEmpty.class.getSimpleName() + ".hs",
+                        ParametersAndReturnsTestEmpty.class));
             }
 
             @Override
@@ -61,109 +60,133 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
         }.run(runner);
     }
 
-    public static class ParametersAndReturnsTestEmptyMatrixValueCallback {
-
+    public static class ParametersAndReturnsTestEmptyCallback {
+        private final boolean[] putBooleanVector;
+        private final List<Boolean> putBooleanVectorAsList;
         private final boolean[][] putBooleanMatrix;
         private final List<List<Boolean>> putBooleanMatrixAsList;
 
+        private final byte[] putByteVector;
+        private final List<Byte> putByteVectorAsList;
         private final byte[][] putByteMatrix;
         private final List<List<Byte>> putByteMatrixAsList;
 
+        private final char[] putCharacterVector;
+        private final List<Character> putCharacterVectorAsList;
         private final char[][] putCharacterMatrix;
         private final List<List<Character>> putCharacterMatrixAsList;
 
+        private final Decimal[] putDecimalVector;
+        private final List<Decimal> putDecimalVectorAsList;
         private final Decimal[][] putDecimalMatrix;
         private final List<List<Decimal>> putDecimalMatrixAsList;
 
+        private final double[] putDoubleVector;
+        private final List<Double> putDoubleVectorAsList;
         private final double[][] putDoubleMatrix;
         private final List<List<Double>> putDoubleMatrixAsList;
 
+        private final float[] putFloatVector;
+        private final List<Float> putFloatVectorAsList;
         private final float[][] putFloatMatrix;
         private final List<List<Float>> putFloatMatrixAsList;
 
+        private final int[] putIntegerVector;
+        private final List<Integer> putIntegerVectorAsList;
         private final int[][] putIntegerMatrix;
         private final List<List<Integer>> putIntegerMatrixAsList;
 
+        private final long[] putLongVector;
+        private final List<Long> putLongVectorAsList;
         private final long[][] putLongMatrix;
         private final List<List<Long>> putLongMatrixAsList;
 
+        private final Percent[] putPercentVector;
+        private final List<Percent> putPercentVectorAsList;
         private final Percent[][] putPercentMatrix;
         private final List<List<Percent>> putPercentMatrixAsList;
 
+        private final short[] putShortVector;
+        private final List<Short> putShortVectorAsList;
         private final short[][] putShortMatrix;
         private final List<List<Short>> putShortMatrixAsList;
 
+        private final String[] putStringVector;
+        private final List<String> putStringVectorAsList;
         private final String[][] putStringMatrix;
         private final List<List<String>> putStringMatrixAsList;
 
-        //CHECKSTYLE:OFF
-        public ParametersAndReturnsTestEmptyMatrixValueCallback() {
-            //CHECKSTYLE:ON
-            this.putBooleanMatrix = new boolean[2][];
-            for (int i = 0; i < putBooleanMatrix.length; i++) {
-                putBooleanMatrix[i] = new boolean[0];
-            }
+        public ParametersAndReturnsTestEmptyCallback() {
+            this.putBooleanVector = new boolean[0];
+            this.putBooleanVectorAsList = Booleans.asListVector(putBooleanVector);
+            this.putBooleanMatrix = new boolean[0][];
             this.putBooleanMatrixAsList = Booleans.asListMatrix(putBooleanMatrix);
 
-            this.putByteMatrix = new byte[2][];
-            for (int i = 0; i < putByteMatrix.length; i++) {
-                putByteMatrix[i] = new byte[0];
-            }
+            this.putByteVector = new byte[0];
+            this.putByteVectorAsList = Bytes.asListVector(putByteVector);
+            this.putByteMatrix = new byte[0][];
             this.putByteMatrixAsList = Bytes.asListMatrix(putByteMatrix);
 
-            this.putCharacterMatrix = new char[2][];
-            for (int i = 0; i < putCharacterMatrix.length; i++) {
-                putCharacterMatrix[i] = new char[0];
-            }
+            this.putCharacterVector = new char[0];
+            this.putCharacterVectorAsList = Characters.asListVector(putCharacterVector);
+            this.putCharacterMatrix = new char[0][];
             this.putCharacterMatrixAsList = Characters.asListMatrix(putCharacterMatrix);
 
-            this.putDecimalMatrix = new Decimal[2][];
-            for (int i = 0; i < putDecimalMatrix.length; i++) {
-                putDecimalMatrix[i] = new Decimal[0];
-            }
+            this.putDecimalVector = new Decimal[0];
+            this.putDecimalVectorAsList = Decimal.asListVector(putDecimalVector);
+            this.putDecimalMatrix = new Decimal[0][];
             this.putDecimalMatrixAsList = Decimal.asListMatrix(putDecimalMatrix);
 
-            this.putDoubleMatrix = new double[2][];
-            for (int i = 0; i < putDoubleMatrix.length; i++) {
-                putDoubleMatrix[i] = new double[0];
-            }
+            this.putDoubleVector = new double[0];
+            this.putDoubleVectorAsList = Doubles.asListVector(putDoubleVector);
+            this.putDoubleMatrix = new double[0][];
             this.putDoubleMatrixAsList = Doubles.asListMatrix(putDoubleMatrix);
 
-            this.putFloatMatrix = new float[2][];
-            for (int i = 0; i < putFloatMatrix.length; i++) {
-                putFloatMatrix[i] = new float[0];
-            }
+            this.putFloatVector = new float[0];
+            this.putFloatVectorAsList = Floats.asListVector(putFloatVector);
+            this.putFloatMatrix = new float[0][];
             this.putFloatMatrixAsList = Floats.asListMatrix(putFloatMatrix);
 
-            this.putIntegerMatrix = new int[2][];
-            for (int i = 0; i < putIntegerMatrix.length; i++) {
-                putIntegerMatrix[i] = new int[0];
-            }
+            this.putIntegerVector = new int[0];
+            this.putIntegerVectorAsList = Integers.asListVector(putIntegerVector);
+            this.putIntegerMatrix = new int[0][];
             this.putIntegerMatrixAsList = Integers.asListMatrix(putIntegerMatrix);
 
-            this.putLongMatrix = new long[2][];
-            for (int i = 0; i < putLongMatrix.length; i++) {
-                putLongMatrix[i] = new long[0];
-            }
+            this.putLongVector = new long[0];
+            this.putLongVectorAsList = Longs.asListVector(putLongVector);
+            this.putLongMatrix = new long[0][];
             this.putLongMatrixAsList = Longs.asListMatrix(putLongMatrix);
 
-            this.putPercentMatrix = new Percent[2][];
-            for (int i = 0; i < putPercentMatrix.length; i++) {
-                putPercentMatrix[i] = new Percent[0];
-            }
+            this.putPercentVector = new Percent[0];
+            this.putPercentVectorAsList = Percent.asListVector(putPercentVector);
+            this.putPercentMatrix = new Percent[0][];
             this.putPercentMatrixAsList = Percent.asListMatrix(putPercentMatrix);
 
-            this.putShortMatrix = new short[2][];
-            for (int i = 0; i < putShortMatrix.length; i++) {
-                putShortMatrix[i] = new short[0];
-            }
+            this.putShortVector = new short[0];
+            this.putShortVectorAsList = Shorts.asListVector(putShortVector);
+            this.putShortMatrix = new short[0][];
             this.putShortMatrixAsList = Shorts.asListMatrix(putShortMatrix);
 
-            this.putStringMatrix = new String[2][];
-            for (int i = 0; i < putStringMatrix.length; i++) {
-                putStringMatrix[i] = new String[0];
-            }
+            this.putStringVector = new String[0];
+            this.putStringVectorAsList = Strings.asListVector(putStringVector);
+            this.putStringMatrix = new String[0][];
             this.putStringMatrixAsList = Strings.asListMatrix(putStringMatrix);
+        }
+
+        public boolean[] getBooleanVector() {
+            return putBooleanVector;
+        }
+
+        public void setBooleanVector(final boolean[] putBooleanVector) {
+            Assertions.checkEquals(this.putBooleanVector, putBooleanVector);
+        }
+
+        public List<Boolean> getBooleanVectorAsList() {
+            return putBooleanVectorAsList;
+        }
+
+        public void setBooleanVectorAsList(final List<Boolean> putBooleanVectorAsList) {
+            Assertions.checkEquals(this.putBooleanVectorAsList, putBooleanVectorAsList);
         }
 
         public boolean[][] getBooleanMatrix() {
@@ -182,6 +205,22 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
             Assertions.checkEquals(this.putBooleanMatrixAsList, putBooleanMatrixAsList);
         }
 
+        public byte[] getByteVector() {
+            return putByteVector;
+        }
+
+        public void setByteVector(final byte[] putByteVector) {
+            Assertions.checkEquals(this.putByteVector, putByteVector);
+        }
+
+        public List<Byte> getByteVectorAsList() {
+            return putByteVectorAsList;
+        }
+
+        public void setByteVectorAsList(final List<Byte> putByteVectorAsList) {
+            Assertions.checkEquals(this.putByteVectorAsList, putByteVectorAsList);
+        }
+
         public byte[][] getByteMatrix() {
             return putByteMatrix;
         }
@@ -196,6 +235,22 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setByteMatrixAsList(final List<List<Byte>> putByteMatrixAsList) {
             Assertions.checkEquals(this.putByteMatrixAsList, putByteMatrixAsList);
+        }
+
+        public char[] getCharacterVector() {
+            return putCharacterVector;
+        }
+
+        public void setCharacterVector(final char[] putCharacterVector) {
+            Assertions.checkEquals(this.putCharacterVector, putCharacterVector);
+        }
+
+        public List<Character> getCharacterVectorAsList() {
+            return putCharacterVectorAsList;
+        }
+
+        public void setCharacterVectorAsList(final List<Character> putCharacterVectorAsList) {
+            Assertions.checkEquals(this.putCharacterVectorAsList, putCharacterVectorAsList);
         }
 
         public char[][] getCharacterMatrix() {
@@ -214,6 +269,22 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
             Assertions.checkEquals(this.putCharacterMatrixAsList, putCharacterMatrixAsList);
         }
 
+        public Decimal[] getDecimalVector() {
+            return putDecimalVector;
+        }
+
+        public void setDecimalVector(final Decimal[] putDecimalVector) {
+            Assertions.checkEquals(this.putDecimalVector, putDecimalVector);
+        }
+
+        public List<Decimal> getDecimalVectorAsList() {
+            return putDecimalVectorAsList;
+        }
+
+        public void setDecimalVectorAsList(final List<Decimal> putDecimalVectorAsList) {
+            Assertions.checkEquals(this.putDecimalVectorAsList, putDecimalVectorAsList);
+        }
+
         public Decimal[][] getDecimalMatrix() {
             return putDecimalMatrix;
         }
@@ -228,6 +299,22 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setDecimalMatrixAsList(final List<List<Decimal>> putDecimalMatrixAsList) {
             Assertions.checkEquals(this.putDecimalMatrixAsList, putDecimalMatrixAsList);
+        }
+
+        public double[] getDoubleVector() {
+            return putDoubleVector;
+        }
+
+        public void setDoubleVector(final double[] putDoubleVector) {
+            Assertions.checkEquals(this.putDoubleVector, putDoubleVector);
+        }
+
+        public List<Double> getDoubleVectorAsList() {
+            return putDoubleVectorAsList;
+        }
+
+        public void setDoubleVectorAsList(final List<Double> putDoubleVectorAsList) {
+            Assertions.checkEquals(this.putDoubleVectorAsList, putDoubleVectorAsList);
         }
 
         public double[][] getDoubleMatrix() {
@@ -246,6 +333,22 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
             Assertions.checkEquals(this.putDoubleMatrixAsList, putDoubleMatrixAsList);
         }
 
+        public float[] getFloatVector() {
+            return putFloatVector;
+        }
+
+        public void setFloatVector(final float[] putFloatVector) {
+            Assertions.checkEquals(this.putFloatVector, putFloatVector);
+        }
+
+        public List<Float> getFloatVectorAsList() {
+            return putFloatVectorAsList;
+        }
+
+        public void setFloatVectorAsList(final List<Float> putFloatVectorAsList) {
+            Assertions.checkEquals(this.putFloatVectorAsList, putFloatVectorAsList);
+        }
+
         public float[][] getFloatMatrix() {
             return putFloatMatrix;
         }
@@ -260,6 +363,22 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setFloatMatrixAsList(final List<List<Float>> putFloatMatrixAsList) {
             Assertions.checkEquals(this.putFloatMatrixAsList, putFloatMatrixAsList);
+        }
+
+        public int[] getIntegerVector() {
+            return putIntegerVector;
+        }
+
+        public void setIntegerVector(final int[] putIntegerVector) {
+            Assertions.checkEquals(this.putIntegerVector, putIntegerVector);
+        }
+
+        public List<Integer> getIntegerVectorAsList() {
+            return putIntegerVectorAsList;
+        }
+
+        public void setIntegerVectorAsList(final List<Integer> putIntegerVectorAsList) {
+            Assertions.checkEquals(this.putIntegerVectorAsList, putIntegerVectorAsList);
         }
 
         public int[][] getIntegerMatrix() {
@@ -278,6 +397,22 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
             Assertions.checkEquals(this.putIntegerMatrixAsList, putIntegerMatrixAsList);
         }
 
+        public long[] getLongVector() {
+            return putLongVector;
+        }
+
+        public void setLongVector(final long[] putLongVector) {
+            Assertions.checkEquals(this.putLongVector, putLongVector);
+        }
+
+        public List<Long> getLongVectorAsList() {
+            return putLongVectorAsList;
+        }
+
+        public void setLongVectorAsList(final List<Long> putLongVectorAsList) {
+            Assertions.checkEquals(this.putLongVectorAsList, putLongVectorAsList);
+        }
+
         public long[][] getLongMatrix() {
             return putLongMatrix;
         }
@@ -292,6 +427,22 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setLongMatrixAsList(final List<List<Long>> putLongMatrixAsList) {
             Assertions.checkEquals(this.putLongMatrixAsList, putLongMatrixAsList);
+        }
+
+        public Percent[] getPercentVector() {
+            return putPercentVector;
+        }
+
+        public void setPercentVector(final Percent[] putPercentVector) {
+            Assertions.checkEquals(this.putPercentVector, putPercentVector);
+        }
+
+        public List<Percent> getPercentVectorAsList() {
+            return putPercentVectorAsList;
+        }
+
+        public void setPercentVectorAsList(final List<Percent> putPercentVectorAsList) {
+            Assertions.checkEquals(this.putPercentVectorAsList, putPercentVectorAsList);
         }
 
         public Percent[][] getPercentMatrix() {
@@ -310,6 +461,22 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
             Assertions.checkEquals(this.putPercentMatrixAsList, putPercentMatrixAsList);
         }
 
+        public short[] getShortVector() {
+            return putShortVector;
+        }
+
+        public void setShortVector(final short[] putShortVector) {
+            Assertions.checkEquals(this.putShortVector, putShortVector);
+        }
+
+        public List<Short> getShortVectorAsList() {
+            return putShortVectorAsList;
+        }
+
+        public void setShortVectorAsList(final List<Short> putShortVectorAsList) {
+            Assertions.checkEquals(this.putShortVectorAsList, putShortVectorAsList);
+        }
+
         public short[][] getShortMatrix() {
             return putShortMatrix;
         }
@@ -324,6 +491,22 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setShortMatrixAsList(final List<List<Short>> putShortMatrixAsList) {
             Assertions.checkEquals(this.putShortMatrixAsList, putShortMatrixAsList);
+        }
+
+        public String[] getStringVector() {
+            return putStringVector;
+        }
+
+        public void setStringVector(final String[] putStringVector) {
+            Assertions.checkEquals(this.putStringVector, putStringVector);
+        }
+
+        public List<String> getStringVectorAsList() {
+            return putStringVectorAsList;
+        }
+
+        public void setStringVectorAsList(final List<String> putStringVectorAsList) {
+            Assertions.checkEquals(this.putStringVectorAsList, putStringVectorAsList);
         }
 
         public String[][] getStringMatrix() {

@@ -1,4 +1,4 @@
-package de.invesdwin.scripting.haskell.runtime.contract.callback;
+package de.invesdwin.scripting.haskell.runtime.callback;
 
 import java.util.ArrayList;
 import java.util.List;
