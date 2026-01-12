@@ -13,4 +13,4 @@ getSecretExpressionCallback :: String <- callback "getSecretExpression" [param p
 putStrLn ( show ( "getSecretExpressionCallback" ) )
 putStrLn ( show ( getSecretExpressionCallback ) )
 
-callback "voidMethod" [] :: IO
+callback "voidMethod" [] :: IO ()
