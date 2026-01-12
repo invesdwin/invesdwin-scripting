@@ -1,51 +1,81 @@
+:{
+do
 putStrLn ( show ( "getString" ) )
-getString = callbackIO "getString" [] () :: String
+getString <- callback "getString" [] :: IO String
 putStrLn ( show ( getString ) )
 callback "setString" [param getString] :: IO ()
+:}
 
+:{
+do
 putStrLn ( show ( "getStringWithNull" ) )
-getStringWithNull = callbackIO "getStringWithNull" [] () :: Maybe String
+getStringWithNull <- callback "getStringWithNull" [] :: IO String
 putStrLn ( show ( getStringWithNull ) )
 callback "setStringWithNull" [param getStringWithNull] :: IO ()
+:}
 
+:{
+do
 putStrLn ( show ( "getStringVector" ) )
-getStringVector = callbackIO "getStringVector" [] () :: [String]
+getStringVector <- callback "getStringVector" [] :: IO [String]
 putStrLn ( show ( getStringVector ) )
 callback "setStringVector" [param getStringVector] :: IO ()
+:}
 
 
+:{
+do
 putStrLn ( show ( "getStringVectorWithNull" ) )
-getStringVectorWithNull = callbackIO "getStringVectorWithNull" [] () :: [String]
+getStringVectorWithNull <- callback "getStringVectorWithNull" [] :: IO [String]
 putStrLn ( show ( getStringVectorWithNull ) )
 callback "setStringVectorWithNull" [param getStringVectorWithNull] :: IO ()
+:}
 
+:{
+do
 putStrLn ( show ( "getStringVectorAsList" ) )
-getStringVectorAsList = callbackIO "getStringVectorAsList" [] () :: [String]
+getStringVectorAsList <- callback "getStringVectorAsList" [] :: IO [String]
 putStrLn ( show ( getStringVectorAsList ) )
 callback "setStringVectorAsList" [param getStringVectorAsList] :: IO ()
+:}
 
+:{
+do
 putStrLn ( show ( "getStringVectorAsListWithNull" ) )
-getStringVectorAsListWithNull = callbackIO "getStringVectorAsListWithNull" [] () :: [String]
+getStringVectorAsListWithNull <- callback "getStringVectorAsListWithNull" [] :: IO [String]
 putStrLn ( show ( getStringVectorAsListWithNull ) )
 callback "setStringVectorAsListWithNull" [param getStringVectorAsListWithNull] :: IO ()
+:}
 
+:{
+do
 putStrLn ( show ( "getStringMatrix" ) )
-getStringMatrix = callbackIO "getStringMatrix" [] () :: [[String]]
+getStringMatrix <- callback "getStringMatrix" [] :: IO [[String]]
 putStrLn ( show ( getStringMatrix ) )
 callback "setStringMatrix" [param getStringMatrix] :: IO ()
+:}
 
 
+:{
+do
 putStrLn ( show ( "getStringMatrixWithNull" ) )
-getStringMatrixWithNull = callbackIO "getStringMatrixWithNull" [] () :: [[String]]
+getStringMatrixWithNull <- callback "getStringMatrixWithNull" [] :: IO [[String]]
 putStrLn ( show ( getStringMatrixWithNull ) )
 callback "setStringMatrixWithNull" [param getStringMatrixWithNull] :: IO ()
+:}
 
+:{
+do
 putStrLn ( show ( "getStringMatrixAsList" ) )
-getStringMatrixAsList = callbackIO "getStringMatrixAsList" [] () :: [[String]]
+getStringMatrixAsList <- callback "getStringMatrixAsList" [] :: IO [[String]]
 putStrLn ( show ( getStringMatrixAsList ) )
 callback "setStringMatrixAsList" [param getStringMatrixAsList] :: IO ()
+:}
 
+:{
+do
 putStrLn ( show ( "getStringMatrixAsListWithNull" ) )
-getStringMatrixAsListWithNull = callbackIO "getStringMatrixAsListWithNull" [] () :: [[String]]
+getStringMatrixAsListWithNull <- callback "getStringMatrixAsListWithNull" [] :: IO [[String]]
 putStrLn ( show ( getStringMatrixAsListWithNull ) )
 callback "setStringMatrixAsListWithNull" [param getStringMatrixAsListWithNull] :: IO ()
+:}

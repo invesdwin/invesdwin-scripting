@@ -1,24 +1,39 @@
+:{
+do
 putStrLn ( show ( "getDouble" ) )
-getDouble = callbackIO "getDouble" [] () :: Double
+getDouble <- callback "getDouble" [] :: IO Double
 putStrLn ( show ( getDouble ) )
 callback "setDouble" [param getDouble] :: IO ()
+:}
 
+:{
+do
 putStrLn ( show ( "getDoubleVector" ) )
-getDoubleVector = callbackIO "getDoubleVector" [] () :: [Double]
+getDoubleVector <- callback "getDoubleVector" [] :: IO [Double]
 putStrLn ( show ( getDoubleVector ) )
 callback "setDoubleVector" [param getDoubleVector] :: IO ()
+:}
 
+:{
+do
 putStrLn ( show ( "getDoubleVectorAsList" ) )
-getDoubleVectorAsList = callbackIO "getDoubleVectorAsList" [] () :: [Double]
+getDoubleVectorAsList <- callback "getDoubleVectorAsList" [] :: IO [Double]
 putStrLn ( show ( getDoubleVectorAsList ) )
 callback "setDoubleVectorAsList" [param getDoubleVectorAsList] :: IO ()
+:}
 
+:{
+do
 putStrLn ( show ( "getDoubleMatrix" ) )
-getDoubleMatrix = callbackIO "getDoubleMatrix" [] () :: [[Double]]
+getDoubleMatrix <- callback "getDoubleMatrix" [] :: IO [[Double]]
 putStrLn ( show ( getDoubleMatrix ) )
 callback "setDoubleMatrix" [param getDoubleMatrix] :: IO ()
+:}
 
+:{
+do
 putStrLn ( show ( "getDoubleMatrixAsList" ) )
-getDoubleMatrixAsList = callbackIO "getDoubleMatrixAsList" [] () :: [[Double]]
+getDoubleMatrixAsList <- callback "getDoubleMatrixAsList" [] :: IO [[Double]]
 putStrLn ( show ( getDoubleMatrixAsList ) )
 callback "setDoubleMatrixAsList" [param getDoubleMatrixAsList] :: IO ()
+:}

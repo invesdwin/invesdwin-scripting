@@ -1,11 +1,15 @@
 putStrLn ( show ( "putUuid" ) )
 putStrLn ( show ( putUuid ) )
 
+-- in frege we have to rely fully on state to be communicated via get/set callbacks from frege side
+-- since callbackIO is evaluated too often and <- IO binding operator only works from do blocks
+
 :{
 do
 getSecretStaticCallback <- callback "getSecretStatic" [param putUuid] :: IO String
 putStrLn ( show ( "getSecretStaticCallback" ) )
 putStrLn ( show ( getSecretStaticCallback ) )
+callback "setSecretStatic" [param putUuid, param getSecretStaticCallback] :: IO ()
 :}
 
 :{
@@ -13,6 +17,7 @@ do
 getSecretCallback <- callback "getSecret" [param putUuid] :: IO String
 putStrLn ( show ( "getSecretCallback" ) )
 putStrLn ( show ( getSecretCallback ) )
+callback "setSecret" [param putUuid, param getSecretCallback] :: IO ()
 :}
 
 :{
@@ -20,6 +25,21 @@ do
 getSecretExpressionCallback <- callback "getSecretExpression" [param putUuid] :: IO String
 putStrLn ( show ( "getSecretExpressionCallback" ) )
 putStrLn ( show ( getSecretExpressionCallback ) )
+callback "setSecretExpression" [param putUuid, param getSecretExpressionCallback] :: IO ()
 :}
+
+-- there is no way in frege to export local variables from do blocks as global variables
+-- so __get__ does not work from Java without this workaround
+
+:{
+callbackIO :: forall r. String -> [Value] -> r
+callbackIO method args = IO.performUnsafe (callback method args)
+:}
+
+getSecretStaticCallback = callbackIO "getSecretStatic" [param putUuid] :: String
+
+getSecretCallback = callbackIO "getSecret" [param putUuid] :: String
+
+getSecretExpressionCallback = callbackIO "getSecretExpression" [param putUuid] :: String
 
 callback "voidMethod" [] :: IO ()

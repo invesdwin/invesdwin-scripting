@@ -1,98 +1,131 @@
-getBooleanVector :: [Bool] = callbackIO "getBooleanVector" [] ()
+:{
+do
+getBooleanVector <- callback "getBooleanVector" [] :: IO [Bool]
 callback "setBooleanVector" [param getBooleanVector] :: IO ()
-getBooleanVectorAsList :: [Bool] = callbackIO "getBooleanVectorAsList" [] ()
+getBooleanVectorAsList <- callback "getBooleanVectorAsList" [] :: IO [Bool]
 callback "setBooleanVectorAsList" [param getBooleanVectorAsList] :: IO ()
-getBooleanMatrix :: [[Bool]] = callbackIO "getBooleanMatrix" [] ()
+getBooleanMatrix <- callback "getBooleanMatrix" [] :: IO [[Bool]]
 callback "setBooleanMatrix" [param getBooleanMatrix] :: IO ()
-getBooleanMatrixAsList :: [[Bool]] = callbackIO "getBooleanMatrixAsList" [] ()
+getBooleanMatrixAsList <- callback "getBooleanMatrixAsList" [] :: IO [[Bool]]
 callback "setBooleanMatrixAsList" [param getBooleanMatrixAsList] :: IO ()
+:}
 
-getByteVector :: [Int] = callbackIO "getByteVector" [] ()
+:{
+do
+getByteVector <- callback "getByteVector" [] :: IO [Int]
 callback "setByteVector" [param getByteVector] :: IO ()
-getByteVectorAsList :: [Int] = callbackIO "getByteVectorAsList" [] ()
+getByteVectorAsList <- callback "getByteVectorAsList" [] :: IO [Int]
 callback "setByteVectorAsList" [param getByteVectorAsList] :: IO ()
-getByteMatrix :: [[Int]] = callbackIO "getByteMatrix" [] ()
+getByteMatrix <- callback "getByteMatrix" [] :: IO [[Int]]
 callback "setByteMatrix" [param getByteMatrix] :: IO ()
-getByteMatrixAsList :: [[Int]] = callbackIO "getByteMatrixAsList" [] ()
+getByteMatrixAsList <- callback "getByteMatrixAsList" [] :: IO [[Int]]
 callback "setByteMatrixAsList" [param getByteMatrixAsList] :: IO ()
+:}
 
-getCharacterVector :: [Char] = callbackIO "getCharacterVector" [] ()
+:{
+do
+getCharacterVector <- callback "getCharacterVector" [] :: IO [Char]
 callback "setCharacterVector" [param getCharacterVector] :: IO ()
-getCharacterVectorAsList :: [Char] = callbackIO "getCharacterVectorAsList" [] ()
+getCharacterVectorAsList <- callback "getCharacterVectorAsList" [] :: IO [Char]
 callback "setCharacterVectorAsList" [param getCharacterVectorAsList] :: IO ()
-getCharacterMatrix :: [[Char]] = callbackIO "getCharacterMatrix" [] ()
+getCharacterMatrix <- callback "getCharacterMatrix" [] :: IO [[Char]]
 callback "setCharacterMatrix" [param getCharacterMatrix] :: IO ()
-getCharacterMatrixAsList :: [[Char]] = callbackIO "getCharacterMatrixAsList" [] ()
+getCharacterMatrixAsList <- callback "getCharacterMatrixAsList" [] :: IO [[Char]]
 callback "setCharacterMatrixAsList" [param getCharacterMatrixAsList] :: IO ()
+:}
 
-getDecimalVector :: [Double] = callbackIO "getDecimalVector" [] ()
+:{
+do
+getDecimalVector <- callback "getDecimalVector" [] :: IO [Double]
 callback "setDecimalVector" [param getDecimalVector] :: IO ()
-getDecimalVectorAsList :: [Double] = callbackIO "getDecimalVectorAsList" [] ()
+getDecimalVectorAsList <- callback "getDecimalVectorAsList" [] :: IO [Double]
 callback "setDecimalVectorAsList" [param getDecimalVectorAsList] :: IO ()
-getDecimalMatrix :: [[Double]] = callbackIO "getDecimalMatrix" [] ()
+getDecimalMatrix <- callback "getDecimalMatrix" [] :: IO [[Double]]
 callback "setDecimalMatrix" [param getDecimalMatrix] :: IO ()
-getDecimalMatrixAsList :: [[Double]] = callbackIO "getDecimalMatrixAsList" [] ()
+getDecimalMatrixAsList <- callback "getDecimalMatrixAsList" [] :: IO [[Double]]
 callback "setDecimalMatrixAsList" [param getDecimalMatrixAsList] :: IO ()
+:}
 
-getDoubleVector :: [Double] = callbackIO "getDoubleVector" [] ()
+:{
+do
+getDoubleVector <- callback "getDoubleVector" [] :: IO [Double]
 callback "setDoubleVector" [param getDoubleVector] :: IO ()
-getDoubleVectorAsList :: [Double] = callbackIO "getDoubleVectorAsList" [] ()
+getDoubleVectorAsList <- callback "getDoubleVectorAsList" [] :: IO [Double]
 callback "setDoubleVectorAsList" [param getDoubleVectorAsList] :: IO ()
-getDoubleMatrix :: [[Double]] = callbackIO "getDoubleMatrix" [] ()
+getDoubleMatrix <- callback "getDoubleMatrix" [] :: IO [[Double]]
 callback "setDoubleMatrix" [param getDoubleMatrix] :: IO ()
-getDoubleMatrixAsList :: [[Double]] = callbackIO "getDoubleMatrixAsList" [] ()
+getDoubleMatrixAsList <- callback "getDoubleMatrixAsList" [] :: IO [[Double]]
 callback "setDoubleMatrixAsList" [param getDoubleMatrixAsList] :: IO ()
+:}
 
-getFloatVector :: [Float] = callbackIO "getFloatVector" [] ()
+:{
+do
+getFloatVector <- callback "getFloatVector" [] :: IO [Float]
 callback "setFloatVector" [param getFloatVector] :: IO ()
-getFloatVectorAsList :: [Float] = callbackIO "getFloatVectorAsList" [] ()
+getFloatVectorAsList <- callback "getFloatVectorAsList" [] :: IO [Float]
 callback "setFloatVectorAsList" [param getFloatVectorAsList] :: IO ()
-getFloatMatrix :: [[Float]] = callbackIO "getFloatMatrix" [] ()
+getFloatMatrix <- callback "getFloatMatrix" [] :: IO [[Float]]
 callback "setFloatMatrix" [param getFloatMatrix] :: IO ()
-getFloatMatrixAsList :: [[Float]] = callbackIO "getFloatMatrixAsList" [] ()
+getFloatMatrixAsList <- callback "getFloatMatrixAsList" [] :: IO [[Float]]
 callback "setFloatMatrixAsList" [param getFloatMatrixAsList] :: IO ()
+:}
 
-getIntegerVector :: [Int] = callbackIO "getIntegerVector" [] ()
+:{
+do
+getIntegerVector <- callback "getIntegerVector" [] :: IO [Int]
 callback "setIntegerVector" [param getIntegerVector] :: IO ()
-getIntegerVectorAsList = callbackIO "getIntegerVectorAsList" [] () :: [Int]
+getIntegerVectorAsList <- callback "getIntegerVectorAsList" [] :: IO [Int]
 callback "setIntegerVectorAsList" [param getIntegerVectorAsList] :: IO ()
-getIntegerMatrix = callbackIO "getIntegerMatrix" [] () :: [[Int]]
+getIntegerMatrix <- callback "getIntegerMatrix" [] :: IO [[Int]]
 callback "setIntegerMatrix" [param getIntegerMatrix] :: IO ()
-getIntegerMatrixAsList = callbackIO "getIntegerMatrixAsList" [] () :: [[Int]]
+getIntegerMatrixAsList <- callback "getIntegerMatrixAsList" [] :: IO [[Int]]
 callback "setIntegerMatrixAsList" [param getIntegerMatrixAsList] :: IO ()
+:}
 
-getLongVector = callbackIO "getLongVector" [] () :: [Integer]
+:{
+do
+getLongVector <- callback "getLongVector" [] :: IO [Integer]
 callback "setLongVector" [param getLongVector] :: IO ()
-getLongVectorAsList = callbackIO "getLongVectorAsList" [] () :: [Integer]
+getLongVectorAsList <- callback "getLongVectorAsList" [] :: IO [Integer]
 callback "setLongVectorAsList" [param getLongVectorAsList] :: IO ()
-getLongMatrix = callbackIO "getLongMatrix" [] () :: [[Integer]]
+getLongMatrix <- callback "getLongMatrix" [] :: IO [[Integer]]
 callback "setLongMatrix" [param getLongMatrix] :: IO ()
-getLongMatrixAsList = callbackIO "getLongMatrixAsList" [] () :: [[Integer]]
+getLongMatrixAsList <- callback "getLongMatrixAsList" [] :: IO [[Integer]]
 callback "setLongMatrixAsList" [param getLongMatrixAsList] :: IO ()
+:}
 
-getPercentVector = callbackIO "getPercentVector" [] () :: [Double]
+:{
+do
+getPercentVector <- callback "getPercentVector" [] :: IO [Double]
 callback "setPercentVector" [param getPercentVector] :: IO ()
-getPercentVectorAsList = callbackIO "getPercentVectorAsList" [] () :: [Double]
+getPercentVectorAsList <- callback "getPercentVectorAsList" [] :: IO [Double]
 callback "setPercentVectorAsList" [param getPercentVectorAsList] :: IO ()
-getPercentMatrix = callbackIO "getPercentMatrix" [] () :: [[Double]]
+getPercentMatrix <- callback "getPercentMatrix" [] :: IO [[Double]]
 callback "setPercentMatrix" [param getPercentMatrix] :: IO ()
-getPercentMatrixAsList = callbackIO "getPercentMatrixAsList" [] () :: [[Double]]
+getPercentMatrixAsList <- callback "getPercentMatrixAsList" [] :: IO [[Double]]
 callback "setPercentMatrixAsList" [param getPercentMatrixAsList] :: IO ()
+:}
 
-getShortVector = callbackIO "getShortVector" [] () :: [Int]
+:{
+do
+getShortVector <- callback "getShortVector" [] :: IO [Int]
 callback "setShortVector" [param getShortVector] :: IO ()
-getShortVectorAsList = callbackIO "getShortVectorAsList" [] () :: [Int]
+getShortVectorAsList <- callback "getShortVectorAsList" [] :: IO [Int]
 callback "setShortVectorAsList" [param getShortVectorAsList] :: IO ()
-getShortMatrix = callbackIO "getShortMatrix" [] () :: [[Int]]
+getShortMatrix <- callback "getShortMatrix" [] :: IO [[Int]]
 callback "setShortMatrix" [param getShortMatrix] :: IO ()
-getShortMatrixAsList = callbackIO "getShortMatrixAsList" [] () :: [[Int]]
+getShortMatrixAsList <- callback "getShortMatrixAsList" [] :: IO [[Int]]
 callback "setShortMatrixAsList" [param getShortMatrixAsList] :: IO ()
+:}
 
-getStringVector = callbackIO "getStringVector" [] () :: [String]
+:{
+do
+getStringVector <- callback "getStringVector" [] :: IO [String]
 callback "setStringVector" [param getStringVector] :: IO ()
-getStringVectorAsList = callbackIO "getStringVectorAsList" [] () :: [String]
+getStringVectorAsList <- callback "getStringVectorAsList" [] :: IO [String]
 callback "setStringVectorAsList" [param getStringVectorAsList] :: IO ()
-getStringMatrix = callbackIO "getStringMatrix" [] () :: [[String]]
+getStringMatrix <- callback "getStringMatrix" [] :: IO [[String]]
 callback "setStringMatrix" [param getStringMatrix] :: IO ()
-getStringMatrixAsList = callbackIO "getStringMatrixAsList" [] () :: [[String]]
+getStringMatrixAsList <- callback "getStringMatrixAsList" [] :: IO [[String]]
 callback "setStringMatrixAsList" [param getStringMatrixAsList] :: IO ()
+:}

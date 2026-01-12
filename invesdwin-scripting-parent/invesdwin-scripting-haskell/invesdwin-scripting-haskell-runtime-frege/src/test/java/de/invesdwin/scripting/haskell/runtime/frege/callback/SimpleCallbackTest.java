@@ -43,6 +43,19 @@ public class SimpleCallbackTest {
         return "\"secret\" ++ \"123\"";
     }
 
+    public static void setSecretStatic(final String uuid, final String secretStatic) {
+        Assertions.checkEquals(UUID_SECRET.get(uuid), secretStatic);
+    }
+
+    public void setSecret(final String uuid, final String secret) {
+        Assertions.checkEquals(UUID_SECRET.get(uuid), secret);
+    }
+
+    public void setSecretExpression(final String uuid, final String secretExpression) {
+        Assertions.checkNotNull(UUID_SECRET.get(uuid));
+        Assertions.checkEquals("secret123", secretExpression);
+    }
+
     public void voidMethod() {
         voidMethodCalled++;
     }
