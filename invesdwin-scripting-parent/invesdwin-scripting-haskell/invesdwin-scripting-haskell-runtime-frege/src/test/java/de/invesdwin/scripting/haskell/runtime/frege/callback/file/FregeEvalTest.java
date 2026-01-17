@@ -24,8 +24,9 @@ public class FregeEvalTest extends ATest {
         final int b = eval.eval("b");
         Assertions.checkEquals(2, b);
 
-        eval.eval("world = \"World\"");
-        eval.eval("helloWorld = \"Hello \" ++ world ++ \"!\"");
+        //multiline statements work with JSR-223 in frege (though :{ ... :} is not supported, but also not really needed)
+        eval.eval("world = \"World\"\n" //
+                + "helloWorld = \"Hello \" ++ world ++ \"!\"");
         //printing to console does not work with JSR-223 in Frege
         eval.eval("putStrLn ( show ( helloWorld ) )");
         eval.eval("println ( helloWorld )");
