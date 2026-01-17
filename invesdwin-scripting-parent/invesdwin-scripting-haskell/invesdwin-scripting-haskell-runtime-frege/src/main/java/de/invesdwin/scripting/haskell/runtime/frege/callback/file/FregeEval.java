@@ -14,6 +14,11 @@ public class FregeEval {
         this.engine = manager.getEngineByName("frege");
     }
 
+    public ScriptEngine getEngine() {
+        return engine;
+    }
+
+    @SuppressWarnings("unchecked")
     public <T> T eval(final String expression) {
         try {
             final Object result = engine.eval(expression);
