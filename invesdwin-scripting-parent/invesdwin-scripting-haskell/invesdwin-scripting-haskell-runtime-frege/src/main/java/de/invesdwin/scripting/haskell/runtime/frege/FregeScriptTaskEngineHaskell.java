@@ -3,7 +3,7 @@ package de.invesdwin.scripting.haskell.runtime.frege;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.scripting.IScriptTaskEngine;
-import de.invesdwin.scripting.haskell.runtime.frege.pool.ExtendedFregeBridge;
+import de.invesdwin.scripting.haskell.runtime.frege.pool.FregeBridge;
 import de.invesdwin.scripting.haskell.runtime.frege.pool.FregeObjectPool;
 import de.invesdwin.util.concurrent.WrappedExecutorService;
 import de.invesdwin.util.concurrent.lock.ILock;
@@ -12,11 +12,11 @@ import de.invesdwin.util.concurrent.lock.disabled.DisabledLock;
 @NotThreadSafe
 public class FregeScriptTaskEngineHaskell implements IScriptTaskEngine {
 
-    private ExtendedFregeBridge bridge;
+    private FregeBridge bridge;
     private final FregeScriptTaskInputsHaskell inputs;
     private final FregeScriptTaskResultsHaskell results;
 
-    public FregeScriptTaskEngineHaskell(final ExtendedFregeBridge bridge) {
+    public FregeScriptTaskEngineHaskell(final FregeBridge bridge) {
         this.bridge = bridge;
         this.inputs = new FregeScriptTaskInputsHaskell(this);
         this.results = new FregeScriptTaskResultsHaskell(this);
@@ -43,7 +43,7 @@ public class FregeScriptTaskEngineHaskell implements IScriptTaskEngine {
     }
 
     @Override
-    public ExtendedFregeBridge unwrap() {
+    public FregeBridge unwrap() {
         return bridge;
     }
 
@@ -67,7 +67,7 @@ public class FregeScriptTaskEngineHaskell implements IScriptTaskEngine {
         return new FregeScriptTaskEngineHaskell(FregeObjectPool.INSTANCE.borrowObject()) {
             @Override
             public void close() {
-                final ExtendedFregeBridge unwrap = unwrap();
+                final FregeBridge unwrap = unwrap();
                 if (unwrap != null) {
                     FregeObjectPool.INSTANCE.returnObject(unwrap);
                 }

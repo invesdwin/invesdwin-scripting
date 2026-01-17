@@ -27,9 +27,13 @@ public class FregeEvalTest extends ATest {
         //multiline statements work with JSR-223 in frege (though :{ ... :} is not supported, but also not really needed)
         eval.eval("world = \"World\"\n" //
                 + "helloWorld = \"Hello \" ++ world ++ \"!\"");
-        //printing to console does not work with JSR-223 in Frege
-        eval.eval("putStrLn ( show ( helloWorld ) )");
+        //plain printing to console does not work with JSR-223 in Frege
+        eval.eval("putStrLn ( helloWorld )");
         eval.eval("println ( helloWorld )");
+
+        //it only works with this workaround to force evaluation
+        eval.eval("IO.performUnsafe ( putStrLn ( helloWorld ) )");
+        eval.eval("IO.performUnsafe ( println ( helloWorld ) )");
         final String helloWorld = eval.eval("helloWorld");
         Assertions.checkEquals("Hello World!", helloWorld);
 
@@ -43,6 +47,10 @@ public class FregeEvalTest extends ATest {
         });
         Assertions.assertThat(divBy0Exception.getCause().getMessage()).contains("Cannot be zero!");
 
+        eval.eval("import Data.JSON");
+        final String aJson = eval.eval("show ( toJSON a )");
+        Assertions.checkEquals("1", aJson);
+
         //binding is not useable with JSR-223 in frege
         final WrappedCheckedException bindingNotUseableException = Assertions
                 .assertThrows(WrappedCheckedException.class, () -> {
@@ -52,6 +60,7 @@ public class FregeEvalTest extends ATest {
                     Assertions.checkEquals(3, c);
                 });
         Assertions.checkNotNull(Throwables.isCausedByType(bindingNotUseableException, NoSuchFieldError.class));
+
     }
 
 }

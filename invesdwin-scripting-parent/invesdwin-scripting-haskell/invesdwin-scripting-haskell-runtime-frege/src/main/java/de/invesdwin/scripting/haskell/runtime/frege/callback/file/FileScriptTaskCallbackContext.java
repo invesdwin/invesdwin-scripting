@@ -25,6 +25,7 @@ import de.invesdwin.scripting.haskell.runtime.contract.callback.ScriptTaskParame
 import de.invesdwin.scripting.haskell.runtime.contract.callback.ScriptTaskParametersHaskellFromJsonPool;
 import de.invesdwin.scripting.haskell.runtime.contract.callback.ScriptTaskReturnsHaskellToExpression;
 import de.invesdwin.scripting.haskell.runtime.contract.callback.ScriptTaskReturnsHaskellToExpressionPool;
+import de.invesdwin.scripting.haskell.runtime.frege.pool.repl.ReplFregeBridge;
 import de.invesdwin.util.concurrent.Executors;
 import de.invesdwin.util.concurrent.WrappedExecutorService;
 import de.invesdwin.util.error.Throwables;
@@ -67,7 +68,6 @@ public class FileScriptTaskCallbackContext implements Closeable {
         this.handlerExecutor = Executors
                 .newFixedThreadPool(FileScriptTaskCallbackContext.class.getSimpleName() + "_" + uuid, 1);
         this.handlerExecutor.execute(new FileScriptTaskCallbackServerHandler(this));
-
     }
 
     public void init(final IScriptTaskEngine engine) {
@@ -82,10 +82,15 @@ public class FileScriptTaskCallbackContext implements Closeable {
             script = script.replace("{SCRIPT_TASK_CALLBACK_CONTEXT_RESPONSE_FILE}",
                     "\"" + getResponseFile().getAbsolutePath() + "\"");
 
-            final File file = new File(DIRECTORY, uuid + "_" + resource.getFilename());
-            Files.writeStringToFileIfDifferent(file, script);
-            engine.eval(":l " + file.getAbsolutePath());
-            Files.delete(file);
+            if (engine.unwrap() instanceof ReplFregeBridge) {
+                final File file = new File(DIRECTORY, uuid + "_" + resource.getFilename());
+                Files.writeStringToFileIfDifferent(file,
+                        Strings.replaceEach(script, new String[] { ":{", ":}" }, new String[] { "", "" }));
+                engine.eval(":l " + file.getAbsolutePath());
+                Files.delete(file);
+            } else {
+                engine.eval(script);
+            }
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }

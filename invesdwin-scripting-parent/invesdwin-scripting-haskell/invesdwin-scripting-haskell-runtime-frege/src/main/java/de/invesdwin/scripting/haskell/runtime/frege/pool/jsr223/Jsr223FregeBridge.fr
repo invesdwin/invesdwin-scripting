@@ -1,0 +1,39 @@
+import Data.JSON
+
+data StrArg = Pure String | Effect (IO String)
+
+class ToStrArg a where
+  toStrArg :: a -> StrArg
+
+instance ToStrArg String where
+  toStrArg s = Pure (show s)
+
+instance ToStrArg (IO String) where
+  toStrArg io = Effect (fmap show io)
+
+instance ToStrArg Char where
+  toStrArg c = Pure (show (ctos c))
+
+instance ToStrArg Int where
+  toStrArg n = Pure (show n)
+
+instance ToStrArg Bool where
+  toStrArg b = Pure (show b)
+
+instance ToStrArg Double where
+  toStrArg d = Pure (show d)
+
+instance Show a => ToStrArg (Maybe a) where
+  toStrArg m = Pure (show m)
+
+instance Show a => ToStrArg [a] where
+  toStrArg xs = Pure (show xs)
+
+normalize :: StrArg -> IO String
+normalize (Pure s)   = pure s
+normalize (Effect a) = a
+
+showJSON :: ToStrArg a => a -> IO String
+showJSON x = do
+  s <- normalize (toStrArg x)
+  pure s

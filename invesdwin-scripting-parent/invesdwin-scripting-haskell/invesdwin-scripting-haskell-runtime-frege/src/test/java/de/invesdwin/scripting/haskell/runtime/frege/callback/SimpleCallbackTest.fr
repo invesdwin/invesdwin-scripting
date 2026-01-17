@@ -42,4 +42,5 @@ getSecretCallback = callbackIO "getSecret" [param putUuid] :: String
 
 getSecretExpressionCallback = callbackIO "getSecretExpression" [param putUuid] :: String
 
-callback "voidMethod" [] :: IO ()
+-- jsr223 binding requires IO.performUnsafe ( ... ) to force execution of void methods that are not used in assignments, while REPL does not need it
+callbackIO "voidMethod" [] :: IO ()

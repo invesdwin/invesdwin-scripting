@@ -1,4 +1,4 @@
-package de.invesdwin.scripting.haskell.runtime.frege.pool;
+package de.invesdwin.scripting.haskell.runtime.frege.pool.repl;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -14,7 +14,7 @@ import de.invesdwin.util.lang.string.Strings;
 import de.invesdwin.util.time.date.FTimeUnit;
 
 @ThreadSafe
-public class ModifiedFregeErrorConsoleWatcher implements Closeable {
+public class ReplFregeErrorConsoleWatcher implements Closeable {
 
     private final BufferedReader errorReader;
 
@@ -23,7 +23,7 @@ public class ModifiedFregeErrorConsoleWatcher implements Closeable {
     @GuardedBy("self")
     private final StringBuilder errorMessage = new StringBuilder();
 
-    public ModifiedFregeErrorConsoleWatcher(final Process process) {
+    public ReplFregeErrorConsoleWatcher(final Process process) {
         this.errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
     }
 

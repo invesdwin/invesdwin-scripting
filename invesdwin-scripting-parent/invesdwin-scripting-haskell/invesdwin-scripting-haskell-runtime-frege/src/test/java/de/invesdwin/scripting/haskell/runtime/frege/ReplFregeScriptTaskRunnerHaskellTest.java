@@ -12,10 +12,22 @@ import de.invesdwin.scripting.haskell.runtime.frege.callback.SimpleCallbackTest;
 import jakarta.inject.Inject;
 
 @NotThreadSafe
-public class FregeScriptTaskRunnerHaskellTest extends ATest {
+public class ReplFregeScriptTaskRunnerHaskellTest extends ATest {
 
     @Inject
     private FregeScriptTaskRunnerHaskell runner;
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        FregeProperties.setForkedReplProcess(true);
+    }
+
+    @Override
+    public void tearDown() throws Exception {
+        super.tearDown();
+        FregeProperties.setForkedReplProcess(null);
+    }
 
     @Test
     public void test() {

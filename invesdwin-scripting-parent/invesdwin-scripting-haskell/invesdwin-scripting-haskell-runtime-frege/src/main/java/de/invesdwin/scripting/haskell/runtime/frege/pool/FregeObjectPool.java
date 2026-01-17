@@ -1,67 +1,51 @@
 package de.invesdwin.scripting.haskell.runtime.frege.pool;
 
-import java.io.IOException;
-
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.springframework.beans.factory.FactoryBean;
-
-import de.invesdwin.util.concurrent.pool.timeout.ATimeoutObjectPool;
-import de.invesdwin.util.time.date.FTimeUnit;
-import de.invesdwin.util.time.duration.Duration;
-import jakarta.inject.Named;
+import de.invesdwin.scripting.haskell.runtime.frege.FregeProperties;
+import de.invesdwin.scripting.haskell.runtime.frege.pool.jsr223.Jsr223FregeObjectPool;
+import de.invesdwin.scripting.haskell.runtime.frege.pool.repl.ReplFregeObjectPool;
+import de.invesdwin.util.concurrent.pool.IObjectPool;
 
 @ThreadSafe
-@Named
-public final class FregeObjectPool extends ATimeoutObjectPool<ExtendedFregeBridge>
-        implements FactoryBean<FregeObjectPool> {
+public final class FregeObjectPool implements IObjectPool<FregeBridge> {
 
     public static final FregeObjectPool INSTANCE = new FregeObjectPool();
 
-    private FregeObjectPool() {
-        //julia compilation is a lot of overhead, thus keep instances open longer
-        super(new Duration(10, FTimeUnit.MINUTES), new Duration(10, FTimeUnit.SECONDS));
-    }
+    private FregeObjectPool() {}
 
     @Override
-    public void invalidateObject(final ExtendedFregeBridge element) {
-        element.close();
-    }
-
-    @Override
-    protected ExtendedFregeBridge newObject() {
-        final ExtendedFregeBridge session = new ExtendedFregeBridge();
-        try {
-            session.open();
-        } catch (final IOException e) {
-            throw new RuntimeException(e);
+    public FregeBridge borrowObject() {
+        final IObjectPool<? extends IFregeBridge> pool;
+        if (FregeProperties.isForkedReplProcess()) {
+            pool = ReplFregeObjectPool.INSTANCE;
+        } else {
+            pool = Jsr223FregeObjectPool.INSTANCE;
         }
-        return session;
+        return new FregeBridge(pool, pool.borrowObject());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void returnObject(final FregeBridge element) {
+        element.getPool().returnObject(element.getDelegate());
     }
 
     @Override
-    protected boolean passivateObject(final ExtendedFregeBridge element) {
-        try {
-            element.reset();
-            return true;
-        } catch (final IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void clear() {
+        ReplFregeObjectPool.INSTANCE.clear();
+        Jsr223FregeObjectPool.INSTANCE.clear();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void invalidateObject(final FregeBridge element) {
+        element.getPool().invalidateObject(element.getDelegate());
     }
 
     @Override
-    public FregeObjectPool getObject() throws Exception {
-        return INSTANCE;
-    }
-
-    @Override
-    public Class<?> getObjectType() {
-        return FregeObjectPool.class;
-    }
-
-    @Override
-    public boolean isSingleton() {
-        return true;
+    public int size() {
+        return ReplFregeObjectPool.INSTANCE.size() + Jsr223FregeObjectPool.INSTANCE.size();
     }
 
 }

@@ -33,11 +33,6 @@ normalize :: StrArg -> IO String
 normalize (Pure s)   = pure s
 normalize (Effect a) = a
 
-convertToJSON :: ToStrArg a => a -> IO Value
-convertToJSON x = do
-  s <- normalize (toStrArg x)
-  pure (toJSON s)
-
 showJSON :: ToStrArg a => a -> IO String
 showJSON x = do
   s <- normalize (toStrArg x)

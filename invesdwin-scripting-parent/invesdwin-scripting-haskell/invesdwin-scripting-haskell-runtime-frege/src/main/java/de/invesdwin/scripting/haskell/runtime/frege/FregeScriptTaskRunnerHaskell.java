@@ -9,7 +9,7 @@ import de.invesdwin.scripting.callback.LoggingDelegateScriptTaskCallback;
 import de.invesdwin.scripting.haskell.runtime.contract.AScriptTaskHaskell;
 import de.invesdwin.scripting.haskell.runtime.contract.IScriptTaskRunnerHaskell;
 import de.invesdwin.scripting.haskell.runtime.frege.callback.file.FileScriptTaskCallbackContext;
-import de.invesdwin.scripting.haskell.runtime.frege.pool.ExtendedFregeBridge;
+import de.invesdwin.scripting.haskell.runtime.frege.pool.FregeBridge;
 import de.invesdwin.scripting.haskell.runtime.frege.pool.FregeObjectPool;
 import de.invesdwin.util.error.Throwables;
 import jakarta.inject.Named;
@@ -29,7 +29,7 @@ public final class FregeScriptTaskRunnerHaskell
     @Override
     public <T> T run(final AScriptTaskHaskell<T> scriptTask) {
         //get session
-        final ExtendedFregeBridge bridge = FregeObjectPool.INSTANCE.borrowObject();
+        final FregeBridge bridge = FregeObjectPool.INSTANCE.borrowObject();
         final IScriptTaskCallback callback = scriptTask.getCallback();
         final FileScriptTaskCallbackContext context;
         if (callback != null) {

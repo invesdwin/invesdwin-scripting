@@ -1,4 +1,4 @@
-package de.invesdwin.scripting.haskell.runtime.frege.pool;
+package de.invesdwin.scripting.haskell.runtime.frege.pool.repl;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +24,7 @@ import de.invesdwin.context.integration.marshaller.MarshallerJsonJackson;
 import de.invesdwin.context.system.properties.SystemProperties;
 import de.invesdwin.instrument.DynamicInstrumentationReflections;
 import de.invesdwin.scripting.haskell.runtime.contract.IScriptTaskRunnerHaskell;
+import de.invesdwin.scripting.haskell.runtime.frege.pool.IFregeBridge;
 import de.invesdwin.util.concurrent.loop.ASpinWait;
 import de.invesdwin.util.concurrent.loop.LoopInterruptedCheck;
 import de.invesdwin.util.error.Throwables;
@@ -40,14 +41,14 @@ import de.invesdwin.util.time.duration.Duration;
  * Fork of: https://github.com/org-arl/jajub/issues/2
  */
 @NotThreadSafe
-public class ModifiedFregeBridge {
+public class ReplFregeBridge implements IFregeBridge {
 
     public static final String VALUE_START = "__##@VALUE@##__[";
     public static final String VALUE_END = "]__##@VALUE@##__";
     public static final String LENGTH_PREFIX = "__##@LENGTH@##__=";
 
     private static final File DIRECTORY = new File(ContextProperties.TEMP_DIRECTORY,
-            ModifiedFregeBridge.class.getSimpleName());
+            ReplFregeBridge.class.getSimpleName());
     private static final String PROMPT = "frege> ";
     private static final char NEW_LINE = '\n';
     private static final String TERMINATOR_RAW = "__##@@##__";
@@ -58,7 +59,7 @@ public class ModifiedFregeBridge {
     private final ProcessBuilder jbuilder;
     private Process frege = null;
     private InputStream inp = null;
-    private ModifiedFregeErrorConsoleWatcher errWatcher = null;
+    private ReplFregeErrorConsoleWatcher errWatcher = null;
     private OutputStream out = null;
     private String ver = null;
     private final LoopInterruptedCheck interruptedCheck = new LoopInterruptedCheck() {
@@ -79,7 +80,7 @@ public class ModifiedFregeBridge {
     /**
      * Creates a Java-Frege bridge with default settings.
      */
-    public ModifiedFregeBridge() {
+    public ReplFregeBridge() {
         final List<String> j = new ArrayList<String>();
 
         final String javaExecutable = new SystemProperties().getString("java.home") + File.separator + "bin"
@@ -113,7 +114,7 @@ public class ModifiedFregeBridge {
         return frege != null;
     }
 
-    public ModifiedFregeErrorConsoleWatcher getErrWatcher() {
+    public ReplFregeErrorConsoleWatcher getErrWatcher() {
         return errWatcher;
     }
 
@@ -129,7 +130,7 @@ public class ModifiedFregeBridge {
         }
         frege = jbuilder.start();
         inp = frege.getInputStream();
-        errWatcher = new ModifiedFregeErrorConsoleWatcher(frege);
+        errWatcher = new ReplFregeErrorConsoleWatcher(frege);
         errWatcher.startWatching();
         out = frege.getOutputStream();
 
@@ -163,8 +164,8 @@ public class ModifiedFregeBridge {
     }
 
     protected static File getStartupScript() {
-        final ClassPathResource resource = new ClassPathResource(ModifiedFregeBridge.class.getSimpleName() + ".fr",
-                ModifiedFregeBridge.class);
+        final ClassPathResource resource = new ClassPathResource(ReplFregeBridge.class.getSimpleName() + ".fr",
+                ReplFregeBridge.class);
         final File file;
         try (InputStream in = resource.getInputStream()) {
             final String script = IOUtils.toString(in, Charset.defaultCharset());
@@ -395,6 +396,13 @@ public class ModifiedFregeBridge {
             throw new RuntimeException(e);
         }
         checkError();
+    }
+
+    public void reset() throws IOException {
+        getErrWatcher().clearLog();
+        eval(":reset");
+        eval(":l " + getStartupScript().getAbsolutePath());
+        getErrWatcher().clearLog();
     }
 
 }
