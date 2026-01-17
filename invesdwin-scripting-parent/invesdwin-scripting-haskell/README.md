@@ -74,7 +74,7 @@ When measured on the existing test cases, the following rough relative performan
 | ------------------ | ------------- | --------------- |
 | GHCI               | 1.0x          | Native Integration (Pipes) |
 | Frege-Interpreter  | 11.0x slower  | In-Process JVM (JSR-223) |
-| Frege-REPL         | 29.5x slower  | 29.5x slower | Forked JVM (Pipes)
+| Frege-REPL         | 29.5x slower  | Forked JVM (Pipes) |
 
 ## More Documentation and Programming Languages
 
