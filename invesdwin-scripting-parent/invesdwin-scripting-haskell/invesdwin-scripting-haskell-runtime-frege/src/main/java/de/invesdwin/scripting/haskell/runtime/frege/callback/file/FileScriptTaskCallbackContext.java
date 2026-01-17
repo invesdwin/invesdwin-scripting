@@ -25,7 +25,7 @@ import de.invesdwin.scripting.haskell.runtime.contract.callback.ScriptTaskParame
 import de.invesdwin.scripting.haskell.runtime.contract.callback.ScriptTaskParametersHaskellFromJsonPool;
 import de.invesdwin.scripting.haskell.runtime.contract.callback.ScriptTaskReturnsHaskellToExpression;
 import de.invesdwin.scripting.haskell.runtime.contract.callback.ScriptTaskReturnsHaskellToExpressionPool;
-import de.invesdwin.scripting.haskell.runtime.frege.pool.repl.ReplFregeBridge;
+import de.invesdwin.scripting.haskell.runtime.frege.pool.IFregeBridge;
 import de.invesdwin.util.concurrent.Executors;
 import de.invesdwin.util.concurrent.WrappedExecutorService;
 import de.invesdwin.util.error.Throwables;
@@ -82,15 +82,8 @@ public class FileScriptTaskCallbackContext implements Closeable {
             script = script.replace("{SCRIPT_TASK_CALLBACK_CONTEXT_RESPONSE_FILE}",
                     "\"" + getResponseFile().getAbsolutePath() + "\"");
 
-            if (engine.unwrap() instanceof ReplFregeBridge) {
-                final File file = new File(DIRECTORY, uuid + "_" + resource.getFilename());
-                Files.writeStringToFileIfDifferent(file,
-                        Strings.replaceEach(script, new String[] { ":{", ":}" }, new String[] { "", "" }));
-                engine.eval(":l " + file.getAbsolutePath());
-                Files.delete(file);
-            } else {
-                engine.eval(script);
-            }
+            final IFregeBridge bridge = (IFregeBridge) engine.unwrap();
+            bridge.load(uuid + "_" + resource.getFilename(), script);
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }

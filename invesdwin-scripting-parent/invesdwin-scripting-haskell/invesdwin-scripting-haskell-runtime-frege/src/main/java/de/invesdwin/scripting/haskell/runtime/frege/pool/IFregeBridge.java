@@ -8,4 +8,6 @@ public interface IFregeBridge {
 
     JsonNode getAsJsonNode(String variable);
 
+    void load(String filename, String content);
+
 }

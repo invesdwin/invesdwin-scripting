@@ -37,15 +37,15 @@ import de.invesdwin.util.time.Instant;
 import de.invesdwin.util.time.date.FTimeUnit;
 import de.invesdwin.util.time.duration.Duration;
 
-/**
- * Fork of: https://github.com/org-arl/jajub/issues/2
- */
 @NotThreadSafe
 public class ReplFregeBridge implements IFregeBridge {
 
     public static final String VALUE_START = "__##@VALUE@##__[";
     public static final String VALUE_END = "]__##@VALUE@##__";
     public static final String LENGTH_PREFIX = "__##@LENGTH@##__=";
+
+    private static final String[] LOAD_SEARCH = new String[] { ":{", ":}" };
+    private static final String[] LOAD_REPLACE = new String[] { "", "" };
 
     private static final File DIRECTORY = new File(ContextProperties.TEMP_DIRECTORY,
             ReplFregeBridge.class.getSimpleName());
@@ -234,6 +234,7 @@ public class ReplFregeBridge implements IFregeBridge {
         }
     }
 
+    @Override
     public JsonNode getAsJsonNode(final String variable) {
         final StringBuilder message = new StringBuilder();
         message.append("__get__ ( ");
@@ -319,9 +320,22 @@ public class ReplFregeBridge implements IFregeBridge {
      *            expression to evaluate.
      * @return value of the expression.
      */
+    @Override
     public void eval(final String jcode) {
         exec(jcode, "> exec %s", jcode);
         checkError();
+    }
+
+    @Override
+    public void load(final String filename, final String content) {
+        final File file = new File(DIRECTORY, filename);
+        Files.writeStringToFileIfDifferent(file, Strings.replaceEach(content, LOAD_SEARCH, LOAD_REPLACE));
+        eval(":l " + file.getAbsolutePath());
+        try {
+            Files.delete(file);
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     ////// private stuff

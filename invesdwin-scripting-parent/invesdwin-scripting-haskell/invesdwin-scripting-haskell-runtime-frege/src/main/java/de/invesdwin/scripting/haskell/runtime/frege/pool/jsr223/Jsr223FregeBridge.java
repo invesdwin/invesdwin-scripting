@@ -21,9 +21,6 @@ import de.invesdwin.scripting.haskell.runtime.frege.pool.IFregeBridge;
 import de.invesdwin.util.error.Throwables;
 import de.invesdwin.util.lang.string.Strings;
 
-/**
- * Fork of: https://github.com/org-arl/jajub/issues/2
- */
 @NotThreadSafe
 public class Jsr223FregeBridge implements IFregeBridge {
 
@@ -110,6 +107,7 @@ public class Jsr223FregeBridge implements IFregeBridge {
         return (T) result;
     }
 
+    @Override
     public JsonNode getAsJsonNode(final String variable) {
         final StringBuilder message = new StringBuilder();
         message.append("IO.performUnsafe ( showJSON ( ");
@@ -136,17 +134,14 @@ public class Jsr223FregeBridge implements IFregeBridge {
         }
     }
 
-    /**
-     * Evaluates an expression in Frege.
-     *
-     * @param jcode
-     *            expression to evaluate.
-     * @return value of the expression.
-     */
+    @Override
     public void eval(final String jcode) {
         exec(jcode, "> exec %s", jcode);
     }
 
-    ////// private stuff
+    @Override
+    public void load(final String filename, final String content) {
+        eval(content);
+    }
 
 }

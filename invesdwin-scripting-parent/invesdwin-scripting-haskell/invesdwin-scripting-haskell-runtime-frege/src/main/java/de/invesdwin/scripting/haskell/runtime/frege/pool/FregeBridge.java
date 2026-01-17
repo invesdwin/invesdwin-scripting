@@ -32,6 +32,11 @@ public class FregeBridge implements IFregeBridge {
     }
 
     @Override
+    public void load(final String filename, final String content) {
+        delegate.load(filename, content);
+    }
+
+    @Override
     public JsonNode getAsJsonNode(final String variable) {
         return delegate.getAsJsonNode(variable);
     }
