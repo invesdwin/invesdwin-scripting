@@ -66,7 +66,7 @@ Assertions.assertThat(result).isEqualTo("Hello World!");
 
 For more elaborate examples of the Haskell script integration, have a look at the test cases in `invesdwin-scripting-haskell-runtime-contract` which are executed in each individual runtime module test suite.
 
-## Performance Comparison
+## Benchmark
 
 When measured on the existing test cases, the following rough relative performance comparison came up:
 
