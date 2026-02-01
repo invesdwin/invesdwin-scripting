@@ -1,5 +1,6 @@
 package de.invesdwin.scripting.graalvm.jsr223;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.concurrent.Immutable;
@@ -13,6 +14,8 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.Language;
 import org.graalvm.polyglot.Source;
+
+import com.google.common.collect.ImmutableList;
 
 import de.invesdwin.scripting.graalvm.jsr223.compiled.ParseAndExecutePolyglotCompiledScript;
 
@@ -53,7 +56,7 @@ public class PolyglotScriptEngineFactory implements ScriptEngineFactory {
 
     @Override
     public List<String> getMimeTypes() {
-        return List.copyOf(language.getMimeTypes());
+        return ImmutableList.copyOf(language.getMimeTypes());
     }
 
     @Override
