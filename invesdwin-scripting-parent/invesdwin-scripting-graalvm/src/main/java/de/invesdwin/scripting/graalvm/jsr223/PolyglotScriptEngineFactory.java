@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.graalvm.jsr223;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.concurrent.Immutable;
