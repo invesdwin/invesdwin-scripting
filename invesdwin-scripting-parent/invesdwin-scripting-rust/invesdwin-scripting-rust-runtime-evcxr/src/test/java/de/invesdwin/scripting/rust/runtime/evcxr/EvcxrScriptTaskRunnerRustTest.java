@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import de.invesdwin.context.test.ATest;
 import de.invesdwin.scripting.rust.runtime.contract.InputsAndResultsTests;
 import de.invesdwin.scripting.rust.runtime.contract.callback.ParametersAndReturnsTests;
-import de.invesdwin.scripting.rust.runtime.contract.callback.SimpleCallbackTest;
 import jakarta.inject.Inject;
 
 @NotThreadSafe

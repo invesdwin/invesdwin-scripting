@@ -1,14 +1,3 @@
-use std::fs::{self, File};
-use std::io::{self, Read, Write};
-use std::thread;
-use std::time::Duration;
-use rhai::{Engine, Scope, Dynamic};
-use serde_json;
-
-pub fn param<T: serde::Serialize>(value: T) -> serde_json::Value {
-    serde_json::to_value(value).unwrap()
-}
-
 pub fn callback(method_name: &str, parameters: &[serde_json::Value]) -> Dynamic {
 	let requestPartFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_PART_FILE};
 	let requestFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_FILE};

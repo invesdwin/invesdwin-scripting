@@ -76,9 +76,27 @@ public class FileScriptTaskCallbackContext implements Closeable {
         inputs.cargoAdd("rhai");
         inputs.cargoAdd("serde");
 
-        final ClassPathResource resource = new ClassPathResource(
-                FileScriptTaskCallbackContext.class.getSimpleName() + ".rs", FileScriptTaskCallbackContext.class);
-        try (InputStream in = resource.getInputStream()) {
+        final ClassPathResource resource1 = new ClassPathResource(
+                FileScriptTaskCallbackContext.class.getSimpleName() + "1.rs", FileScriptTaskCallbackContext.class);
+        try (InputStream in = resource1.getInputStream()) {
+            final String script = IOUtils.toString(in, Charset.defaultCharset());
+            engine.eval(script);
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        final ClassPathResource resource2 = new ClassPathResource(
+                FileScriptTaskCallbackContext.class.getSimpleName() + "2.rs", FileScriptTaskCallbackContext.class);
+        try (InputStream in = resource2.getInputStream()) {
+            final String script = IOUtils.toString(in, Charset.defaultCharset());
+            engine.eval(script);
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        final ClassPathResource resource3 = new ClassPathResource(
+                FileScriptTaskCallbackContext.class.getSimpleName() + "3.rs", FileScriptTaskCallbackContext.class);
+        try (InputStream in = resource3.getInputStream()) {
             String script = IOUtils.toString(in, Charset.defaultCharset());
             script = script.replace("{SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_PART_FILE}",
                     "\"" + getRequestPartFile().getAbsolutePath() + "\"");

@@ -1,4 +1,4 @@
-package de.invesdwin.scripting.rust.runtime.contract.callback;
+package de.invesdwin.scripting.rust.runtime.evcxr;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
