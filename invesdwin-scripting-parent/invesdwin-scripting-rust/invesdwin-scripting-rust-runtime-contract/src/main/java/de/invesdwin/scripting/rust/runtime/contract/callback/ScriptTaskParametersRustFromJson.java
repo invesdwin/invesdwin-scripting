@@ -12,24 +12,27 @@ import de.invesdwin.util.lang.string.Strings;
 public class ScriptTaskParametersRustFromJson extends AScriptTaskParametersRustFromJson implements Closeable {
 
     private JsonNode parameters;
+    private int offset;
 
-    public void setParameters(final JsonNode parameters) {
+    public void setParameters(final JsonNode parameters, final int offset) {
         this.parameters = parameters;
+        this.offset = offset;
     }
 
     @Override
     public int size() {
-        return parameters.size();
+        return parameters.size() - offset;
     }
 
     @Override
     protected JsonNode getAsJsonNode(final int index) {
-        return parameters.get(index);
+        return parameters.get(index + offset);
     }
 
     @Override
     public void close() {
         parameters = null;
+        offset = 0;
     }
 
     @Override

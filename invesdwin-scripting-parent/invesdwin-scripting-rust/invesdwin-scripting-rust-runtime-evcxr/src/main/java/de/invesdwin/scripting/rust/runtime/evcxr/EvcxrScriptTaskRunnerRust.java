@@ -8,16 +8,15 @@ import de.invesdwin.scripting.callback.IScriptTaskCallback;
 import de.invesdwin.scripting.callback.LoggingDelegateScriptTaskCallback;
 import de.invesdwin.scripting.rust.runtime.contract.AScriptTaskRust;
 import de.invesdwin.scripting.rust.runtime.contract.IScriptTaskRunnerRust;
-import de.invesdwin.scripting.rust.runtime.contract.callback.socket.SocketScriptTaskCallbackContext;
-import de.invesdwin.scripting.rust.runtime.evcxr.pool.ExtendedEvcxrBridge;
+import de.invesdwin.scripting.rust.runtime.contract.callback.file.FileScriptTaskCallbackContext;
 import de.invesdwin.scripting.rust.runtime.evcxr.pool.EvcxrObjectPool;
+import de.invesdwin.scripting.rust.runtime.evcxr.pool.ExtendedEvcxrBridge;
 import de.invesdwin.util.error.Throwables;
 import jakarta.inject.Named;
 
 @Immutable
 @Named
-public final class EvcxrScriptTaskRunnerRust
-        implements IScriptTaskRunnerRust, FactoryBean<EvcxrScriptTaskRunnerRust> {
+public final class EvcxrScriptTaskRunnerRust implements IScriptTaskRunnerRust, FactoryBean<EvcxrScriptTaskRunnerRust> {
 
     public static final EvcxrScriptTaskRunnerRust INSTANCE = new EvcxrScriptTaskRunnerRust();
 
@@ -31,9 +30,9 @@ public final class EvcxrScriptTaskRunnerRust
         //get session
         final ExtendedEvcxrBridge bridge = EvcxrObjectPool.INSTANCE.borrowObject();
         final IScriptTaskCallback callback = scriptTask.getCallback();
-        final SocketScriptTaskCallbackContext context;
+        final FileScriptTaskCallbackContext context;
         if (callback != null) {
-            context = new SocketScriptTaskCallbackContext(LoggingDelegateScriptTaskCallback.maybeWrap(LOG, callback));
+            context = new FileScriptTaskCallbackContext(LoggingDelegateScriptTaskCallback.maybeWrap(LOG, callback));
         } else {
             context = null;
         }
@@ -50,9 +49,6 @@ public final class EvcxrScriptTaskRunnerRust
 
             //results
             final T result = scriptTask.extractResults(engine.getResults());
-            if (context != null) {
-                context.deinit(engine);
-            }
             engine.close();
 
             //return
