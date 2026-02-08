@@ -3,8 +3,8 @@ package de.invesdwin.scripting.rust.runtime.evcxr;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.scripting.IScriptTaskEngine;
-import de.invesdwin.scripting.rust.runtime.evcxr.pool.ExtendedEvcxrBridge;
 import de.invesdwin.scripting.rust.runtime.evcxr.pool.EvcxrObjectPool;
+import de.invesdwin.scripting.rust.runtime.evcxr.pool.ExtendedEvcxrBridge;
 import de.invesdwin.util.concurrent.WrappedExecutorService;
 import de.invesdwin.util.concurrent.lock.ILock;
 import de.invesdwin.util.concurrent.lock.disabled.DisabledLock;
@@ -25,6 +25,10 @@ public class EvcxrScriptTaskEngineRust implements IScriptTaskEngine {
     @Override
     public void eval(final String expression) {
         bridge.eval(expression);
+    }
+
+    public void cargoAdd(final String expression) {
+        bridge.cargoAdd(expression);
     }
 
     @Override

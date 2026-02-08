@@ -39,7 +39,7 @@ public class IrustScriptTaskRunnerRustTest extends ATest {
         new ParametersAndReturnsTests(runner).testParallel();
     }
 
-    @Disabled("not yet implemented")
+    //@Disabled("not yet implemented")
     @Test
     public void testSimpleCallback() {
         new SimpleCallbackTest(runner).testSimpleCallback();

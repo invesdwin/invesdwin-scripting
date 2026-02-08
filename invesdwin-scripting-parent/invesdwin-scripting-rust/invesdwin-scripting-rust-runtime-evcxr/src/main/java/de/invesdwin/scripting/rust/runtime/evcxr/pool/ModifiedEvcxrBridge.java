@@ -72,6 +72,7 @@ public class ModifiedEvcxrBridge {
     private boolean usePromptBuf = false;
 
     private final List<String> rsp = new ArrayList<>();
+    private boolean ignoreError;
 
     ////// public API
 
@@ -320,6 +321,15 @@ public class ModifiedEvcxrBridge {
         checkError();
     }
 
+    public void cargoAdd(final String expression) {
+        ignoreError = true;
+        try {
+            eval(expression);
+        } finally {
+            ignoreError = false;
+        }
+    }
+
     ////// private stuff
 
     private void write(final String s) throws IOException {
@@ -445,7 +455,7 @@ public class ModifiedEvcxrBridge {
 
     protected void checkError() {
         final String error = getErrWatcher().getErrorMessage();
-        if (error != null) {
+        if (error != null && !ignoreError) {
             throw new IllegalStateException(error);
         }
     }

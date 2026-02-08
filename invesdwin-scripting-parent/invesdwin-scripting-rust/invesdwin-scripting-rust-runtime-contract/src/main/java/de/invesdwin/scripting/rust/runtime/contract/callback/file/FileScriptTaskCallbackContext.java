@@ -75,7 +75,6 @@ public class FileScriptTaskCallbackContext implements Closeable {
         final IScriptTaskInputsRust inputs = (IScriptTaskInputsRust) engine.getInputs();
         inputs.cargoAdd("rhai");
         inputs.cargoAdd("serde");
-        inputs.cargoAdd("serde_json");
 
         final ClassPathResource resource = new ClassPathResource(
                 FileScriptTaskCallbackContext.class.getSimpleName() + ".rs", FileScriptTaskCallbackContext.class);
@@ -87,11 +86,7 @@ public class FileScriptTaskCallbackContext implements Closeable {
                     "\"" + getRequestFile().getAbsolutePath() + "\"");
             script = script.replace("{SCRIPT_TASK_CALLBACK_CONTEXT_RESPONSE_FILE}",
                     "\"" + getResponseFile().getAbsolutePath() + "\"");
-
-            final File file = new File(DIRECTORY, uuid + "_" + resource.getFilename());
-            Files.writeStringToFileIfDifferent(file, script);
-            engine.eval(":l " + file.getAbsolutePath());
-            Files.delete(file);
+            engine.eval(script);
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }
