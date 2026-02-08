@@ -310,13 +310,46 @@ public class ModifiedEvcxrBridge {
     }
 
     /**
-     * Evaluates an expression in evcxr.
+     * Evaluates an expression in irust.
      *
      * @param jcode
      *            expression to evaluate.
      * @return value of the expression.
      */
     public void eval(final String jcode) {
+        final String[] lines = Strings.splitPreserveAllTokens(jcode, "\n");
+        StringBuilder multiLine = null;
+        for (int i = 0; i < lines.length; i++) {
+            final String line = lines[i];
+            final String lineTrim = line.trim();
+            if (":{".equals(lineTrim)) {
+                if (multiLine != null) {
+                    evalCommand(multiLine.toString());
+                    multiLine = null;
+                }
+                multiLine = new StringBuilder();
+                continue;
+            }
+            if (multiLine != null) {
+                if (":}".equals(lineTrim)) {
+                    evalCommand(multiLine.toString());
+                    multiLine = null;
+                } else {
+                    multiLine.append(line);
+                    multiLine.append("\n");
+                }
+            } else {
+                multiLine = new StringBuilder();
+                multiLine.append(line);
+            }
+        }
+        if (multiLine != null) {
+            evalCommand(multiLine.toString());
+            multiLine = null;
+        }
+    }
+
+    private void evalCommand(final String jcode) {
         exec(jcode, "> exec %s", jcode);
         checkError();
     }

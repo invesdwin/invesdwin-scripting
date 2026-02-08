@@ -87,6 +87,10 @@ public class Jsr223FregeBridge implements IFregeBridge {
             final String line = lines[i];
             final String lineTrim = line.trim();
             if (":{".equals(lineTrim)) {
+                if (multiLine != null) {
+                    result = frege.eval(multiLine.toString());
+                    multiLine = null;
+                }
                 multiLine = new StringBuilder();
                 continue;
             }
