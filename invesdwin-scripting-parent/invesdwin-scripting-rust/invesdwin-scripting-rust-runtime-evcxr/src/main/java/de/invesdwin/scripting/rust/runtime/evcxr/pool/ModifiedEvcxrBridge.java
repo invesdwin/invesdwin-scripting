@@ -185,8 +185,7 @@ public class ModifiedEvcxrBridge {
             if (IScriptTaskRunnerRust.LOG.isDebugEnabled()) {
                 IScriptTaskRunnerRust.LOG.debug(logMessage.replace("{", "\\{"), logArgs);
             }
-
-            writeCommands(jcode);
+            out.write(jcode.getBytes());
             out.write(TERMINATOR_SUFFIX_BYTES);
             out.write(NEW_LINE);
             out.flush();
@@ -220,36 +219,6 @@ public class ModifiedEvcxrBridge {
             }
         } catch (final IOException ex) {
             throw new RuntimeException("EvcxrBridge connection broken", ex);
-        }
-    }
-
-    private void writeCommands(final String jcode) throws IOException {
-        final String[] lines = Strings.splitPreserveAllTokens(jcode, "\n");
-        StringBuilder multiLine = null;
-        for (int i = 0; i < lines.length; i++) {
-            final String line = lines[i];
-            final String lineTrim = line.trim();
-            if (":{".equals(lineTrim)) {
-                multiLine = new StringBuilder();
-                continue;
-            }
-            if (multiLine != null) {
-                if (":}".equals(lineTrim)) {
-                    out.write(multiLine.toString().replace('\n', ' ').getBytes());
-                    out.write(NEW_LINE);
-                    out.flush();
-                    multiLine = null;
-                } else {
-                    multiLine.append(line);
-                    multiLine.append("\n");
-                }
-            } else {
-                if (Strings.isNotBlank(line)) {
-                    out.write(line.getBytes());
-                    out.write(NEW_LINE);
-                    out.flush();
-                }
-            }
         }
     }
 

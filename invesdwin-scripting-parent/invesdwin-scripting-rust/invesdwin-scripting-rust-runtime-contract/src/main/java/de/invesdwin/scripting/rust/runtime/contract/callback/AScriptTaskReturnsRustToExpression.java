@@ -534,7 +534,12 @@ public abstract class AScriptTaskReturnsRustToExpression implements IScriptTaskR
 
     @Override
     public void returnNull() {
-        returnExpression("None");
+        returnExpression(IScriptTaskInputsRust.NAN);
+    }
+
+    @Override
+    public void returnVoid() {
+        returnExpression("()");
     }
 
 }

@@ -41,16 +41,15 @@ fn evaluate_response(expression: &str) -> Dynamic {
         .unwrap_or_else(|e| panic!("Rhai evaluation error: {}", e))
 }
 
-/// Main callback function - accepts any serializable parameters via varargs, returns Dynamic for casting
-pub fn callback(method_name: &str, parameters: &[&dyn serde::Serialize]) -> Dynamic {
-    // Convert parameters to JSON
-    let json_params: Vec<serde_json::Value> = parameters
-        .iter()
-        .map(|&param| serde_json::to_value(param))
-        .unwrap_or_else(|e| panic!("JSON serialization error: {}", e));
-    
+/// Helper function to convert any serializable value to JSON Value
+pub fn param<T: serde::Serialize>(value: T) -> serde_json::Value {
+    serde_json::to_value(value).unwrap_or_else(|e| panic!("Failed to serialize parameter: {}", e))
+}
+
+/// Main callback function - accepts JSON values as parameters, returns Dynamic for casting
+pub fn callback(method_name: &str, parameters: &[serde_json::Value]) -> Dynamic {
     // Write the request to a temporary file first (atomic operation)
-    let request = write_request(method_name, &json_params);
+    let request = write_request(method_name, parameters);
     fs::write(SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_PART_FILE, &request)
         .unwrap_or_else(|e| panic!("Failed to write request file: {}", e));
     
@@ -73,15 +72,4 @@ pub fn callback(method_name: &str, parameters: &[&dyn serde::Serialize]) -> Dyna
     
     // Evaluate and return the response using Rhai
     evaluate_response(&response)
-}
-
-/// Macro for convenient varargs callback usage
-#[macro_export]
-macro_rules! callback {
-    ($method:expr) => {
-        $crate::callback($method, &[])
-    };
-    ($method:expr, $($param:expr),+ $(,)?) => {
-        $crate::callback($method, &[$(&$param),+])
-    };
 }

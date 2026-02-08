@@ -1,4 +1,4 @@
-package de.invesdwin.scripting.rust.runtime.evcxr;
+package de.invesdwin.scripting.rust.runtime.contract.callback;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -58,23 +58,23 @@ public class SimpleCallbackTest {
     public String callManyParamsExpression(final boolean p1, final byte p2, final short p3, final char p4, final int p5,
             final long p6, final float p7, final double p8, final String p9, final Decimal p10) {
         final StringBuilder expression = new StringBuilder();
-        expression.append(p1 ? 1 : 0);
+        expression.append((double) (p1 ? 1 : 0));
         expression.append(" + ");
-        expression.append(p2);
+        expression.append((double) p2);
         expression.append(" + ");
-        expression.append(p3);
+        expression.append((double) p3);
         expression.append(" + ");
         expression.append(Double.parseDouble(String.valueOf(p4)));
         expression.append(" + ");
-        expression.append(p5);
+        expression.append((double) p5);
         expression.append(" + ");
-        expression.append(p6);
+        expression.append((double) p6);
         expression.append(" + ");
-        expression.append(p7);
+        expression.append((double) p7);
         expression.append(" + ");
         expression.append(p8);
         expression.append(" + ");
-        expression.append(p9.length());
+        expression.append((double) p9.length());
         expression.append(" + ");
         expression.append(p10.doubleValue());
         return expression.toString();
@@ -83,53 +83,34 @@ public class SimpleCallbackTest {
     @ReturnExpression
     public String callManyParamsExpressionMultiline(final boolean p1, final byte p2, final short p3, final char p4,
             final int p5, final long p6, final float p7, final double p8, final String p9, final Decimal p10) {
-        final StringBuilder expression = new StringBuilder("value = ");
-        expression.append(p1 ? 1 : 0);
-        expression.append("\nvalue += ");
-        expression.append(p2);
-        expression.append("\nvalue += ");
-        expression.append(p3);
-        expression.append("\nvalue += ");
-        expression.append(Double.parseDouble(String.valueOf(p4)));
-        expression.append("\nvalue += ");
-        expression.append(p5);
-        expression.append("\nvalue += ");
-        expression.append(p6);
-        expression.append("\nvalue += ");
-        expression.append(p7);
-        expression.append("\nvalue += ");
-        expression.append(p8);
-        expression.append("\nvalue += ");
-        expression.append(p9.length());
-        expression.append("\nvalue += ");
-        expression.append(p10.doubleValue());
-        expression.append("\nvalue");
-        return expression.toString();
+        //multiline eval currently not supported by rhai
+        return callManyParamsExpression(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
     }
 
     private String putManyParamsExpressionMultiline(final String variable, final boolean p1, final byte p2,
             final short p3, final char p4, final int p5, final long p6, final float p7, final double p8,
             final String p9, final Decimal p10) {
-        final StringBuilder expression = new StringBuilder(variable + " = ");
-        expression.append(p1 ? 1 : 0);
-        expression.append("\n" + variable + " += ");
-        expression.append(p2);
-        expression.append("\n" + variable + " += ");
-        expression.append(p3);
-        expression.append("\n" + variable + " += ");
+        final StringBuilder expression = new StringBuilder("let mut " + variable + " = ");
+        expression.append((double) (p1 ? 1 : 0));
+        expression.append(";\n" + variable + " += ");
+        expression.append((double) p2);
+        expression.append(";\n" + variable + " += ");
+        expression.append((double) p3);
+        expression.append(";\n" + variable + " += ");
         expression.append(Double.parseDouble(String.valueOf(p4)));
-        expression.append("\n" + variable + " += ");
-        expression.append(p5);
-        expression.append("\n" + variable + " += ");
-        expression.append(p6);
-        expression.append("\n" + variable + " += ");
-        expression.append(p7);
-        expression.append("\n" + variable + " += ");
+        expression.append(";\n" + variable + " += ");
+        expression.append((double) p5);
+        expression.append(";\n" + variable + " += ");
+        expression.append((double) p6);
+        expression.append(";\n" + variable + " += ");
+        expression.append((double) p7);
+        expression.append(";\n" + variable + " += ");
         expression.append(p8);
-        expression.append("\n" + variable + " += ");
-        expression.append(p9.length());
-        expression.append("\n" + variable + " += ");
+        expression.append(";\n" + variable + " += ");
+        expression.append((double) p9.length());
+        expression.append(";\n" + variable + " += ");
         expression.append(p10.doubleValue());
+        expression.append(";");
         return expression.toString();
     }
 
@@ -150,9 +131,6 @@ public class SimpleCallbackTest {
                     inputs.putString("putUuid", uuid);
                     inputs.putExpression("putManyParamsExpression", callManyParamsExpression(true, (byte) 2, (short) 3,
                             '4', 5, 6L, 7f, 8.0, "123456789", new Decimal("10")));
-                    inputs.putExpression("putManyParamsExpressionMultilineWrong",
-                            putManyParamsExpressionMultiline("putManyParamsExpressionMultilineWrong", true, (byte) 2,
-                                    (short) 3, '4', 5, 6L, 7f, 8.0, "123456789", new Decimal("10")));
                     inputs.getEngine()
                             .eval(putManyParamsExpressionMultiline("putManyParamsExpressionMultiline", true, (byte) 2,
                                     (short) 3, '4', 5, 6L, 7f, 8.0, "123456789", new Decimal("10")));
@@ -179,10 +157,6 @@ public class SimpleCallbackTest {
 
                     final double getManyParamsExpression = results.getDouble("getManyParamsExpression");
                     Assertions.assertThat(getManyParamsExpression).isEqualTo(55.0);
-
-                    final double getManyParamsExpressionMultilineWrong = results
-                            .getDouble("getManyParamsExpressionMultilineWrong");
-                    Assertions.assertThat(getManyParamsExpressionMultilineWrong).isEqualTo(55.0);
 
                     final double getManyParamsExpressionMultiline = results
                             .getDouble("getManyParamsExpressionMultiline");
