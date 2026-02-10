@@ -1,7 +1,6 @@
 package de.invesdwin.scripting.haskell.runtime.frege.callback;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -16,12 +15,13 @@ import de.invesdwin.scripting.callback.ReturnExpression;
 import de.invesdwin.scripting.haskell.runtime.contract.AScriptTaskHaskell;
 import de.invesdwin.scripting.haskell.runtime.contract.IScriptTaskRunnerHaskell;
 import de.invesdwin.util.assertions.Assertions;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.UUIDs;
 
 @NotThreadSafe
 public class SimpleCallbackTest {
 
-    private static final Map<String, String> UUID_SECRET = new ConcurrentHashMap<>();
+    private static final Map<String, String> UUID_SECRET = ILockCollectionFactory.getInstance(true).newConcurrentMap();
 
     private final IScriptTaskRunnerHaskell runner;
     private int voidMethodCalled;

@@ -3,7 +3,6 @@ package de.invesdwin.scripting.runtime.mvel.callback;
 import java.io.Closeable;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -18,13 +17,16 @@ import de.invesdwin.scripting.callback.ObjectScriptTaskReturnsPool;
 import de.invesdwin.scripting.runtime.mvel.MvelProperties;
 import de.invesdwin.scripting.runtime.mvel.ScriptTaskEngineMvel;
 import de.invesdwin.scripting.runtime.mvel.pool.WrappedMvelScriptEngine;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.Objects;
 import de.invesdwin.util.lang.UUIDs;
 
 @ThreadSafe
 public class MvelScriptTaskCallbackContext implements Closeable {
 
-    private static final Map<String, MvelScriptTaskCallbackContext> UUID_CONTEXT = new ConcurrentHashMap<>();
+    private static final Map<String, MvelScriptTaskCallbackContext> UUID_CONTEXT = ILockCollectionFactory
+            .getInstance(true)
+            .newConcurrentMap();
 
     private final String uuid;
     private final IScriptTaskCallback callback;

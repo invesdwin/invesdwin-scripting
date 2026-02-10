@@ -2,7 +2,6 @@ package de.invesdwin.scripting.r.runtime.contract.callback.socket;
 
 import java.io.Closeable;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -21,6 +20,7 @@ import de.invesdwin.scripting.r.runtime.contract.callback.ScriptTaskParametersRF
 import de.invesdwin.scripting.r.runtime.contract.callback.ScriptTaskParametersRFromJsonPool;
 import de.invesdwin.scripting.r.runtime.contract.callback.ScriptTaskReturnsRToExpression;
 import de.invesdwin.scripting.r.runtime.contract.callback.ScriptTaskReturnsRToExpressionPool;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.error.Throwables;
 import de.invesdwin.util.lang.UUIDs;
 import de.invesdwin.util.lang.string.Strings;
@@ -28,7 +28,9 @@ import de.invesdwin.util.lang.string.Strings;
 @ThreadSafe
 public class SocketScriptTaskCallbackContext implements Closeable {
 
-    private static final Map<String, SocketScriptTaskCallbackContext> UUID_CONTEXT = new ConcurrentHashMap<>();
+    private static final Map<String, SocketScriptTaskCallbackContext> UUID_CONTEXT = ILockCollectionFactory
+            .getInstance(true)
+            .newConcurrentMap();
 
     private final String uuid;
     private final IScriptTaskCallback callback;

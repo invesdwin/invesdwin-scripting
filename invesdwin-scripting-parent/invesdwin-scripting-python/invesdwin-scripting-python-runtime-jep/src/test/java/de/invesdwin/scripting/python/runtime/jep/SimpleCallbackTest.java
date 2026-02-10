@@ -1,7 +1,6 @@
 package de.invesdwin.scripting.python.runtime.jep;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -16,13 +15,14 @@ import de.invesdwin.scripting.callback.ReturnExpression;
 import de.invesdwin.scripting.python.runtime.contract.AScriptTaskPython;
 import de.invesdwin.scripting.python.runtime.contract.IScriptTaskRunnerPython;
 import de.invesdwin.util.assertions.Assertions;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.UUIDs;
 import de.invesdwin.util.math.decimal.Decimal;
 
 @NotThreadSafe
 public class SimpleCallbackTest {
 
-    private static final Map<String, String> UUID_SECRET = new ConcurrentHashMap<>();
+    private static final Map<String, String> UUID_SECRET = ILockCollectionFactory.getInstance(true).newConcurrentMap();
 
     private final IScriptTaskRunnerPython runner;
     private int voidMethodCalled;

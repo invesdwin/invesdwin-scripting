@@ -2,7 +2,6 @@ package de.invesdwin.scripting.r.runtime.renjin.callback;
 
 import java.io.Closeable;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -11,12 +10,15 @@ import org.springframework.core.io.ClassPathResource;
 
 import de.invesdwin.scripting.IScriptTaskEngine;
 import de.invesdwin.scripting.callback.IScriptTaskCallback;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.UUIDs;
 
 @ThreadSafe
 public class RenjinScriptTaskCallbackContext implements Closeable {
 
-    private static final Map<String, RenjinScriptTaskCallbackContext> UUID_CONTEXT = new ConcurrentHashMap<>();
+    private static final Map<String, RenjinScriptTaskCallbackContext> UUID_CONTEXT = ILockCollectionFactory
+            .getInstance(true)
+            .newConcurrentMap();
 
     private final String uuid;
     private final IScriptTaskCallback callback;

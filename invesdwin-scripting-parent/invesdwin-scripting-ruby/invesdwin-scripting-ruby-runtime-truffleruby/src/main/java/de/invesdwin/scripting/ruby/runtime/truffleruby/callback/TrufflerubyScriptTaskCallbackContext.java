@@ -2,7 +2,6 @@ package de.invesdwin.scripting.ruby.runtime.truffleruby.callback;
 
 import java.io.Closeable;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -13,12 +12,15 @@ import de.invesdwin.scripting.callback.IScriptTaskCallback;
 import de.invesdwin.scripting.callback.ObjectScriptTaskParameters;
 import de.invesdwin.scripting.callback.ObjectScriptTaskParametersPool;
 import de.invesdwin.scripting.callback.ObjectScriptTaskReturnValue;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.UUIDs;
 
 @ThreadSafe
 public class TrufflerubyScriptTaskCallbackContext implements Closeable {
 
-    private static final Map<String, TrufflerubyScriptTaskCallbackContext> UUID_CONTEXT = new ConcurrentHashMap<>();
+    private static final Map<String, TrufflerubyScriptTaskCallbackContext> UUID_CONTEXT = ILockCollectionFactory
+            .getInstance(true)
+            .newConcurrentMap();
 
     private final String uuid;
     private final IScriptTaskCallback callback;

@@ -2,7 +2,6 @@ package de.invesdwin.scripting.python.runtime.py4j;
 
 import java.io.Closeable;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -16,13 +15,16 @@ import de.invesdwin.scripting.python.runtime.contract.callback.ScriptTaskParamet
 import de.invesdwin.scripting.python.runtime.contract.callback.ScriptTaskParametersPythonFromJsonPool;
 import de.invesdwin.scripting.python.runtime.contract.callback.ScriptTaskReturnsPythonToExpression;
 import de.invesdwin.scripting.python.runtime.contract.callback.ScriptTaskReturnsPythonToExpressionPool;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.error.Throwables;
 import de.invesdwin.util.lang.UUIDs;
 
 @ThreadSafe
 public class Py4jScriptTaskCallbackContext implements Closeable {
 
-    private static final Map<String, Py4jScriptTaskCallbackContext> UUID_CONTEXT = new ConcurrentHashMap<>();
+    private static final Map<String, Py4jScriptTaskCallbackContext> UUID_CONTEXT = ILockCollectionFactory
+            .getInstance(true)
+            .newConcurrentMap();
 
     private final String uuid;
     private final IScriptTaskCallback callback;

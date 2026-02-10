@@ -2,7 +2,6 @@ package de.invesdwin.scripting.matlab.runtime.javaoctave.callback.socket;
 
 import java.io.Closeable;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -21,6 +20,7 @@ import de.invesdwin.scripting.matlab.runtime.contract.callback.ScriptTaskParamet
 import de.invesdwin.scripting.matlab.runtime.contract.callback.ScriptTaskParametersMatlabFromJsonPool;
 import de.invesdwin.scripting.matlab.runtime.contract.callback.ScriptTaskReturnsMatlabToExpression;
 import de.invesdwin.scripting.matlab.runtime.contract.callback.ScriptTaskReturnsMatlabToExpressionPool;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.error.Throwables;
 import de.invesdwin.util.lang.UUIDs;
 import de.invesdwin.util.lang.string.Strings;
@@ -28,7 +28,9 @@ import de.invesdwin.util.lang.string.Strings;
 @ThreadSafe
 public class SocketScriptTaskCallbackContext implements Closeable {
 
-    private static final Map<String, SocketScriptTaskCallbackContext> UUID_CONTEXT = new ConcurrentHashMap<>();
+    private static final Map<String, SocketScriptTaskCallbackContext> UUID_CONTEXT = ILockCollectionFactory
+            .getInstance(true)
+            .newConcurrentMap();
 
     private final String uuid;
     private final IScriptTaskCallback callback;

@@ -34,8 +34,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -48,6 +46,7 @@ import org.nd4j.python4j.PythonObject;
 import org.nd4j.python4j.PythonType;
 
 import de.invesdwin.util.collections.Arrays;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @NotThreadSafe
@@ -411,11 +410,12 @@ public final class ModifiedPythonTypes {
     private static final List<PythonType> COLLECTION_TYPES = Arrays.<PythonType> asList(LIST, DICT);
     private static final List<PythonType> EXTERNAL_TYPES = newExternalTypes();
     private static final List<PythonType> TYPES = newTypes();
-    private static final ConcurrentMap<Class<?>, PythonType> JAVACLASS_TYPE = new ConcurrentHashMap<>();
-    private static final ConcurrentMap<String, PythonType> PYTHONNAME_TYPE = new ConcurrentHashMap<>();
+    private static final Map<Class<?>, PythonType> JAVACLASS_TYPE = ILockCollectionFactory.getInstance(true)
+            .newConcurrentMap();
+    private static final Map<String, PythonType> PYTHONNAME_TYPE = ILockCollectionFactory.getInstance(true)
+            .newConcurrentMap();
 
-    private ModifiedPythonTypes() {
-    }
+    private ModifiedPythonTypes() {}
 
     private static List<PythonType> newExternalTypes() {
         final List<PythonType> ret = new ArrayList<>();

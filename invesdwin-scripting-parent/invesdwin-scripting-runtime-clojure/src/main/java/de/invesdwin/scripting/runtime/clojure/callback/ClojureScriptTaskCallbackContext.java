@@ -2,7 +2,6 @@ package de.invesdwin.scripting.runtime.clojure.callback;
 
 import java.io.Closeable;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -15,12 +14,15 @@ import de.invesdwin.scripting.callback.ObjectScriptTaskReturns;
 import de.invesdwin.scripting.callback.ObjectScriptTaskReturnsPool;
 import de.invesdwin.scripting.runtime.clojure.ScriptTaskEngineClojure;
 import de.invesdwin.scripting.runtime.clojure.pool.WrappedClojureEngine;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.UUIDs;
 
 @ThreadSafe
 public class ClojureScriptTaskCallbackContext implements Closeable {
 
-    private static final Map<String, ClojureScriptTaskCallbackContext> UUID_CONTEXT = new ConcurrentHashMap<>();
+    private static final Map<String, ClojureScriptTaskCallbackContext> UUID_CONTEXT = ILockCollectionFactory
+            .getInstance(true)
+            .newConcurrentMap();
 
     private final String uuid;
     private final IScriptTaskCallback callback;
