@@ -21,10 +21,10 @@ import de.invesdwin.util.collections.Arrays;
 import de.invesdwin.util.concurrent.loop.ASpinWait;
 import de.invesdwin.util.concurrent.loop.LoopInterruptedCheck;
 import de.invesdwin.util.error.Throwables;
-import de.invesdwin.util.lang.Closeables;
 import de.invesdwin.util.lang.string.Strings;
 import de.invesdwin.util.streams.buffer.bytes.ByteBuffers;
 import de.invesdwin.util.streams.buffer.bytes.IByteBuffer;
+import de.invesdwin.util.streams.closeable.Closeables;
 import de.invesdwin.util.time.date.FTimeUnit;
 
 /**

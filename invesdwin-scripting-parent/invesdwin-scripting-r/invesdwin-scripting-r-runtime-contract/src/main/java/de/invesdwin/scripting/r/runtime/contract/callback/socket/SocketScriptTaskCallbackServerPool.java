@@ -3,7 +3,7 @@ package de.invesdwin.scripting.r.runtime.contract.callback.socket;
 import javax.annotation.concurrent.Immutable;
 
 import de.invesdwin.util.concurrent.pool.timeout.ASingletonTimeoutObjectPool;
-import de.invesdwin.util.lang.Closeables;
+import de.invesdwin.util.streams.closeable.Closeables;
 import de.invesdwin.util.time.date.FTimeUnit;
 import de.invesdwin.util.time.duration.Duration;
 

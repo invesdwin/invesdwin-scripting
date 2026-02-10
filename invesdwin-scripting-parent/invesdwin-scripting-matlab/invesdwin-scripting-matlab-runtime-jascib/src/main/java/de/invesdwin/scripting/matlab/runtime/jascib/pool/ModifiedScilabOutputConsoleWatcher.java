@@ -9,8 +9,8 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import de.invesdwin.util.collections.circular.CircularByteBuffer;
 import de.invesdwin.util.concurrent.Threads;
-import de.invesdwin.util.lang.Closeables;
 import de.invesdwin.util.lang.OperatingSystem;
+import de.invesdwin.util.streams.closeable.Closeables;
 import de.invesdwin.util.time.date.FTimeUnit;
 
 /**
