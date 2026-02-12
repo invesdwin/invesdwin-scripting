@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.runtime.clojure;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
@@ -10,6 +9,7 @@ import javax.annotation.concurrent.Immutable;
 import org.springframework.beans.factory.FactoryBean;
 
 import de.invesdwin.context.system.properties.SystemProperties;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.reflection.Reflections;
 import de.invesdwin.util.lang.string.Strings;
 import jakarta.inject.Named;
@@ -30,8 +30,7 @@ public final class ProvidedScriptTaskRunnerClojure
     @GuardedBy("this.class")
     private static IScriptTaskRunnerClojure providedInstance;
 
-    private ProvidedScriptTaskRunnerClojure() {
-    }
+    private ProvidedScriptTaskRunnerClojure() {}
 
     public static synchronized IScriptTaskRunnerClojure getProvidedInstance() {
         if (providedInstance == null) {
@@ -44,7 +43,8 @@ public final class ProvidedScriptTaskRunnerClojure
                     throw new RuntimeException(e);
                 }
             } else {
-                final Map<String, IScriptTaskRunnerClojure> runners = new LinkedHashMap<String, IScriptTaskRunnerClojure>();
+                final Map<String, IScriptTaskRunnerClojure> runners = ILockCollectionFactory.getInstance(false)
+                        .newLinkedMap();
                 for (final IScriptTaskRunnerClojure runner : ServiceLoader.load(IScriptTaskRunnerClojure.class)) {
                     final IScriptTaskRunnerClojure existing = runners.put(runner.getClass().getName(), runner);
                     if (existing != null) {

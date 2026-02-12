@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.matlab.runtime.contract;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
@@ -10,6 +9,7 @@ import javax.annotation.concurrent.Immutable;
 import org.springframework.beans.factory.FactoryBean;
 
 import de.invesdwin.context.system.properties.SystemProperties;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.reflection.Reflections;
 import de.invesdwin.util.lang.string.Strings;
 import jakarta.inject.Named;
@@ -20,7 +20,8 @@ import jakarta.inject.Named;
  */
 @Immutable
 @Named
-public final class ProvidedScriptTaskRunnerMatlab implements IScriptTaskRunnerMatlab, FactoryBean<ProvidedScriptTaskRunnerMatlab> {
+public final class ProvidedScriptTaskRunnerMatlab
+        implements IScriptTaskRunnerMatlab, FactoryBean<ProvidedScriptTaskRunnerMatlab> {
 
     public static final String PROVIDED_INSTANCE_KEY = IScriptTaskRunnerMatlab.class.getName();
 
@@ -42,7 +43,8 @@ public final class ProvidedScriptTaskRunnerMatlab implements IScriptTaskRunnerMa
                     throw new RuntimeException(e);
                 }
             } else {
-                final Map<String, IScriptTaskRunnerMatlab> runners = new LinkedHashMap<String, IScriptTaskRunnerMatlab>();
+                final Map<String, IScriptTaskRunnerMatlab> runners = ILockCollectionFactory.getInstance(false)
+                        .newLinkedMap();
                 for (final IScriptTaskRunnerMatlab runner : ServiceLoader.load(IScriptTaskRunnerMatlab.class)) {
                     final IScriptTaskRunnerMatlab existing = runners.put(runner.getClass().getName(), runner);
                     if (existing != null) {
@@ -63,11 +65,11 @@ public final class ProvidedScriptTaskRunnerMatlab implements IScriptTaskRunnerMa
                     }
                     Strings.removeEnd(runnersStr, "|");
                     runnersStr.append(")");
-                    throw new IllegalStateException(
-                            "More than one service provider found for [" + PROVIDED_INSTANCE_KEY + "=" + runnersStr
-                                    + "] to choose from. Please remove unwanted ones from the classpath or choose a "
-                                    + "specific one by defining a system property for the preferred one. E.g. on the command line with -D"
-                                    + PROVIDED_INSTANCE_KEY + "=" + runners.keySet().iterator().next());
+                    throw new IllegalStateException("More than one service provider found for [" + PROVIDED_INSTANCE_KEY
+                            + "=" + runnersStr
+                            + "] to choose from. Please remove unwanted ones from the classpath or choose a "
+                            + "specific one by defining a system property for the preferred one. E.g. on the command line with -D"
+                            + PROVIDED_INSTANCE_KEY + "=" + runners.keySet().iterator().next());
                 }
                 setProvidedInstance(runners.values().iterator().next());
             }

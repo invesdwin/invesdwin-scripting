@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.r.runtime.renjin;
 
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.annotation.concurrent.Immutable;
@@ -8,12 +7,13 @@ import javax.annotation.concurrent.Immutable;
 import org.renjin.primitives.packaging.FqPackageName;
 
 import de.invesdwin.util.collections.Collections;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 
 @Immutable
 public final class RenjinProperties {
 
-    private static final Set<String> EXTENDED_PACKAGE_SEARCH_GROUP_IDS = Collections
-            .synchronizedSet(new LinkedHashSet<String>());
+    private static final Set<String> EXTENDED_PACKAGE_SEARCH_GROUP_IDS = ILockCollectionFactory.getInstance(true)
+            .newLinkedSet();
 
     static {
         EXTENDED_PACKAGE_SEARCH_GROUP_IDS.add("de.invesdwin.context.r.runtime.renjin.packages");

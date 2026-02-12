@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.runtime.groovy;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
@@ -10,6 +9,7 @@ import javax.annotation.concurrent.Immutable;
 import org.springframework.beans.factory.FactoryBean;
 
 import de.invesdwin.context.system.properties.SystemProperties;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.reflection.Reflections;
 import de.invesdwin.util.lang.string.Strings;
 import jakarta.inject.Named;
@@ -30,8 +30,7 @@ public final class ProvidedScriptTaskRunnerGroovy
     @GuardedBy("this.class")
     private static IScriptTaskRunnerGroovy providedInstance;
 
-    private ProvidedScriptTaskRunnerGroovy() {
-    }
+    private ProvidedScriptTaskRunnerGroovy() {}
 
     public static synchronized IScriptTaskRunnerGroovy getProvidedInstance() {
         if (providedInstance == null) {
@@ -44,7 +43,8 @@ public final class ProvidedScriptTaskRunnerGroovy
                     throw new RuntimeException(e);
                 }
             } else {
-                final Map<String, IScriptTaskRunnerGroovy> runners = new LinkedHashMap<String, IScriptTaskRunnerGroovy>();
+                final Map<String, IScriptTaskRunnerGroovy> runners = ILockCollectionFactory.getInstance(false)
+                        .newLinkedMap();
                 for (final IScriptTaskRunnerGroovy runner : ServiceLoader.load(IScriptTaskRunnerGroovy.class)) {
                     final IScriptTaskRunnerGroovy existing = runners.put(runner.getClass().getName(), runner);
                     if (existing != null) {

@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.r.runtime.contract;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
@@ -10,6 +9,7 @@ import javax.annotation.concurrent.Immutable;
 import org.springframework.beans.factory.FactoryBean;
 
 import de.invesdwin.context.system.properties.SystemProperties;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.reflection.Reflections;
 import de.invesdwin.util.lang.string.Strings;
 import jakarta.inject.Named;
@@ -42,7 +42,8 @@ public final class ProvidedScriptTaskRunnerR implements IScriptTaskRunnerR, Fact
                     throw new RuntimeException(e);
                 }
             } else {
-                final Map<String, IScriptTaskRunnerR> runners = new LinkedHashMap<String, IScriptTaskRunnerR>();
+                final Map<String, IScriptTaskRunnerR> runners = ILockCollectionFactory.getInstance(false)
+                        .newLinkedMap();
                 for (final IScriptTaskRunnerR runner : ServiceLoader.load(IScriptTaskRunnerR.class)) {
                     final IScriptTaskRunnerR existing = runners.put(runner.getClass().getName(), runner);
                     if (existing != null) {
@@ -63,11 +64,11 @@ public final class ProvidedScriptTaskRunnerR implements IScriptTaskRunnerR, Fact
                     }
                     Strings.removeEnd(runnersStr, "|");
                     runnersStr.append(")");
-                    throw new IllegalStateException(
-                            "More than one service provider found for [" + PROVIDED_INSTANCE_KEY + "=" + runnersStr
-                                    + "] to choose from. Please remove unwanted ones from the classpath or choose a "
-                                    + "specific one by defining a system property for the preferred one. E.g. on the command line with -D"
-                                    + PROVIDED_INSTANCE_KEY + "=" + runners.keySet().iterator().next());
+                    throw new IllegalStateException("More than one service provider found for [" + PROVIDED_INSTANCE_KEY
+                            + "=" + runnersStr
+                            + "] to choose from. Please remove unwanted ones from the classpath or choose a "
+                            + "specific one by defining a system property for the preferred one. E.g. on the command line with -D"
+                            + PROVIDED_INSTANCE_KEY + "=" + runners.keySet().iterator().next());
                 }
                 setProvidedInstance(runners.values().iterator().next());
             }

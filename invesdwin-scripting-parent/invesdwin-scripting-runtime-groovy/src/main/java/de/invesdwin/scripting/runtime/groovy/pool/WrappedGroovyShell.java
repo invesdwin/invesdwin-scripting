@@ -1,7 +1,6 @@
 package de.invesdwin.scripting.runtime.groovy.pool;
 
 import java.io.Closeable;
-import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -13,6 +12,7 @@ import org.codehaus.groovy.control.customizers.ASTTransformationCustomizer;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import groovy.lang.Script;
@@ -38,7 +38,7 @@ public class WrappedGroovyShell implements Closeable {
             config.addCompilationCustomizers(new ASTTransformationCustomizer(TypeChecked.class));
         }
         config.setScriptBaseClass(AGroovyScriptBaseClass.class.getName());
-        this.binding = new Binding(new LinkedHashMap<>());
+        this.binding = new Binding(ILockCollectionFactory.getInstance(false).newLinkedMap());
         this.engine = new GroovyShell(binding, config);
         scriptCache = Caffeine.newBuilder()
                 .maximumSize(100)

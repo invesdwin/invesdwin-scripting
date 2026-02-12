@@ -29,7 +29,6 @@ import static org.bytedeco.cpython.global.python.Py_DecRef;
 import static org.bytedeco.cpython.global.python.Py_IncRef;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -297,7 +296,7 @@ public final class ModifiedPythonTypes {
         @Override
         public Map toJava(final PythonObject pythonObject) {
             PythonGIL.assertThreadSafe();
-            final HashMap ret = new HashMap();
+            final Map ret = ILockCollectionFactory.getInstance(false).newMap();
             final PyObject dictType = new PyObject(PyDict_Type());
             if (PyObject_IsInstance(pythonObject.getNativePythonObject(), dictType) != 1) {
                 throw new PythonException("Expected dict, received: " + pythonObject.toString());

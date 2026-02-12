@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.rust.runtime.contract;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
@@ -10,6 +9,7 @@ import javax.annotation.concurrent.Immutable;
 import org.springframework.beans.factory.FactoryBean;
 
 import de.invesdwin.context.system.properties.SystemProperties;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.reflection.Reflections;
 import de.invesdwin.util.lang.string.Strings;
 import jakarta.inject.Named;
@@ -43,7 +43,8 @@ public final class ProvidedScriptTaskRunnerRust
                     throw new RuntimeException(e);
                 }
             } else {
-                final Map<String, IScriptTaskRunnerRust> runners = new LinkedHashMap<String, IScriptTaskRunnerRust>();
+                final Map<String, IScriptTaskRunnerRust> runners = ILockCollectionFactory.getInstance(false)
+                        .newLinkedMap();
                 for (final IScriptTaskRunnerRust runner : ServiceLoader.load(IScriptTaskRunnerRust.class)) {
                     final IScriptTaskRunnerRust existing = runners.put(runner.getClass().getName(), runner);
                     if (existing != null) {

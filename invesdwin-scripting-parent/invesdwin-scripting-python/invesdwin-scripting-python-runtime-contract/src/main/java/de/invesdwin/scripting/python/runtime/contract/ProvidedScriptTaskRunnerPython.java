@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.python.runtime.contract;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
@@ -10,6 +9,7 @@ import javax.annotation.concurrent.Immutable;
 import org.springframework.beans.factory.FactoryBean;
 
 import de.invesdwin.context.system.properties.SystemProperties;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.reflection.Reflections;
 import de.invesdwin.util.lang.string.Strings;
 import jakarta.inject.Named;
@@ -43,7 +43,8 @@ public final class ProvidedScriptTaskRunnerPython
                     throw new RuntimeException(e);
                 }
             } else {
-                final Map<String, IScriptTaskRunnerPython> runners = new LinkedHashMap<String, IScriptTaskRunnerPython>();
+                final Map<String, IScriptTaskRunnerPython> runners = ILockCollectionFactory.getInstance(false)
+                        .newLinkedMap();
                 for (final IScriptTaskRunnerPython runner : ServiceLoader.load(IScriptTaskRunnerPython.class)) {
                     final IScriptTaskRunnerPython existing = runners.put(runner.getClass().getName(), runner);
                     if (existing != null) {

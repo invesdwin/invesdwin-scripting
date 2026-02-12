@@ -1,7 +1,6 @@
 package de.invesdwin.scripting.runtime.clojure.pool;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,6 +12,7 @@ import clojure.lang.Namespace;
 import clojure.lang.RT;
 import clojure.lang.Symbol;
 import clojure.lang.Var;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.string.UniqueNameGenerator;
 
 /**
@@ -188,7 +188,7 @@ public final class ClojureBindings implements Bindings {
     }
 
     private Map<String, Object> map() {
-        final Map<String, Object> map = new HashMap<String, Object>();
+        final Map<String, Object> map = ILockCollectionFactory.getInstance(false).newMap();
 
         final Namespace ns = Namespace.find(namespaceIntern);
         for (final Object el : ns.getMappings()) {

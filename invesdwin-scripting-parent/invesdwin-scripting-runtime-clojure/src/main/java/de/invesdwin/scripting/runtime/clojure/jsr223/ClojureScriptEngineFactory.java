@@ -1,13 +1,14 @@
 package de.invesdwin.scripting.runtime.clojure.jsr223;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.concurrent.Immutable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
+
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 
 @Immutable
 public class ClojureScriptEngineFactory implements ScriptEngineFactory {
@@ -24,7 +25,7 @@ public class ClojureScriptEngineFactory implements ScriptEngineFactory {
     };
     private static final List<String> MIME_TYPES = new ArrayList<String>();
     private static final List<String> NICK_NAMES = new ArrayList<String>();
-    private static final Map<String, String> PARAMETERS = new HashMap<String, String>();
+    private static final Map<String, String> PARAMETERS = ILockCollectionFactory.getInstance(false).newMap();
 
     public static ClojureScriptEngineFactory getInstance() {
         return INSTANCE;

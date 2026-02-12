@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.julia.runtime.libjuliaclj.internal;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -17,6 +16,7 @@ import de.invesdwin.scripting.julia.runtime.contract.JuliaResetContext;
 import de.invesdwin.scripting.julia.runtime.libjuliaclj.LibjuliacljProperties;
 import de.invesdwin.scripting.julia.runtime.libjuliaclj.LibjuliacljScriptTaskEngineJulia;
 import de.invesdwin.util.assertions.Assertions;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.collections.list.Lists;
 import de.invesdwin.util.concurrent.Executors;
 import de.invesdwin.util.concurrent.WrappedExecutorService;
@@ -59,7 +59,7 @@ public final class UncheckedJuliaEngineWrapper implements IJuliaEngineWrapper {
     }
 
     public void init() {
-        final Map<String, Object> initParams = new HashMap<String, Object>();
+        final Map<String, Object> initParams = ILockCollectionFactory.getInstance(false).newMap();
         //        initParams.put("n-threads", 8);
         //        initParams.put("signals-enabled?", false);
         initParams.put("julia-home", LibjuliacljProperties.JULIA_HOME.getAbsolutePath());

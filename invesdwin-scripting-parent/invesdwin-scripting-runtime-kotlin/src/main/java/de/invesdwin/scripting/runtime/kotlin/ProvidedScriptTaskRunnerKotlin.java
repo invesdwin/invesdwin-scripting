@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.runtime.kotlin;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
@@ -10,6 +9,7 @@ import javax.annotation.concurrent.Immutable;
 import org.springframework.beans.factory.FactoryBean;
 
 import de.invesdwin.context.system.properties.SystemProperties;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.reflection.Reflections;
 import de.invesdwin.util.lang.string.Strings;
 import jakarta.inject.Named;
@@ -30,8 +30,7 @@ public final class ProvidedScriptTaskRunnerKotlin
     @GuardedBy("this.class")
     private static IScriptTaskRunnerKotlin providedInstance;
 
-    private ProvidedScriptTaskRunnerKotlin() {
-    }
+    private ProvidedScriptTaskRunnerKotlin() {}
 
     public static synchronized IScriptTaskRunnerKotlin getProvidedInstance() {
         if (providedInstance == null) {
@@ -44,7 +43,8 @@ public final class ProvidedScriptTaskRunnerKotlin
                     throw new RuntimeException(e);
                 }
             } else {
-                final Map<String, IScriptTaskRunnerKotlin> runners = new LinkedHashMap<String, IScriptTaskRunnerKotlin>();
+                final Map<String, IScriptTaskRunnerKotlin> runners = ILockCollectionFactory.getInstance(false)
+                        .newLinkedMap();
                 for (final IScriptTaskRunnerKotlin runner : ServiceLoader.load(IScriptTaskRunnerKotlin.class)) {
                     final IScriptTaskRunnerKotlin existing = runners.put(runner.getClass().getName(), runner);
                     if (existing != null) {

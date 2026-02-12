@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.python.runtime.libpythonclj.internal;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -10,6 +9,7 @@ import org.springframework.core.io.ClassPathResource;
 import de.invesdwin.scripting.python.runtime.contract.IScriptTaskRunnerPython;
 import de.invesdwin.scripting.python.runtime.libpythonclj.LibpythoncljProperties;
 import de.invesdwin.scripting.python.runtime.libpythonclj.LibpythoncljScriptTaskEnginePython;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.concurrent.lock.ILock;
 import io.netty.util.concurrent.FastThreadLocal;
 
@@ -29,12 +29,11 @@ public final class UncheckedPythonEngineWrapper implements IPythonEngineWrapper 
 
     private final GilLock gilLock = new GilLock();;
 
-    private UncheckedPythonEngineWrapper() {
-    }
+    private UncheckedPythonEngineWrapper() {}
 
     public void init() {
         synchronized (UncheckedPythonEngineWrapper.class) {
-            final Map<String, Object> initParams = new HashMap<>();
+            final Map<String, Object> initParams = ILockCollectionFactory.getInstance(false).newMap();
             initParams.put("python-executable", LibpythoncljProperties.PYTHON_COMMAND);
             libpython_clj2.java_api.initialize(initParams);
 

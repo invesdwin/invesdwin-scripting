@@ -1,7 +1,5 @@
 package de.invesdwin.scripting.julia.runtime.contract;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,6 +11,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.invesdwin.context.integration.marshaller.MarshallerJsonJackson;
 import de.invesdwin.scripting.IScriptTaskEngine;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
+import de.invesdwin.util.collections.factory.pool.set.ICloseableSet;
+import de.invesdwin.util.collections.factory.pool.set.PooledSet;
 import de.invesdwin.util.lang.Objects;
 import de.invesdwin.util.lang.string.Strings;
 
@@ -21,8 +22,8 @@ public class JuliaResetContext {
 
     private final IScriptTaskEngine engine;
 
-    private final Set<String> protectedVariables = new HashSet<>();
-    private final Map<String, String> variable_size = new HashMap<>();
+    private final Set<String> protectedVariables = ILockCollectionFactory.getInstance(false).newSet();
+    private final Map<String, String> variable_size = ILockCollectionFactory.getInstance(false).newMap();
 
     private final ObjectMapper mapper;
 
@@ -41,7 +42,7 @@ public class JuliaResetContext {
 
     public void reset() {
         final JsonNode varinfo = varinfo();
-        Set<String> changed = null;
+        ICloseableSet<String> changed = null;
         for (int i = 0; i < varinfo.size(); i++) {
             final JsonNode row = varinfo.get(i);
             final String name = row.get(0).asText();
@@ -81,12 +82,13 @@ public class JuliaResetContext {
                 }
             }
             if (changed == null) {
-                changed = new HashSet<>();
+                changed = PooledSet.getInstance();
             }
             changed.add(name);
         }
         if (changed != null) {
             updateSizeMap(changed);
+            changed.close();
         }
     }
 

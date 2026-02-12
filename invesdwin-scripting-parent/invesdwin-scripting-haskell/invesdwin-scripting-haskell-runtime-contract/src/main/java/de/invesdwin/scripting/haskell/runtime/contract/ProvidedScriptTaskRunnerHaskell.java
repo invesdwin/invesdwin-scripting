@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.haskell.runtime.contract;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
@@ -10,6 +9,7 @@ import javax.annotation.concurrent.Immutable;
 import org.springframework.beans.factory.FactoryBean;
 
 import de.invesdwin.context.system.properties.SystemProperties;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.reflection.Reflections;
 import de.invesdwin.util.lang.string.Strings;
 import jakarta.inject.Named;
@@ -30,8 +30,7 @@ public final class ProvidedScriptTaskRunnerHaskell
     @GuardedBy("this.class")
     private static IScriptTaskRunnerHaskell providedInstance;
 
-    private ProvidedScriptTaskRunnerHaskell() {
-    }
+    private ProvidedScriptTaskRunnerHaskell() {}
 
     public static synchronized IScriptTaskRunnerHaskell getProvidedInstance() {
         if (providedInstance == null) {
@@ -44,7 +43,8 @@ public final class ProvidedScriptTaskRunnerHaskell
                     throw new RuntimeException(e);
                 }
             } else {
-                final Map<String, IScriptTaskRunnerHaskell> runners = new LinkedHashMap<String, IScriptTaskRunnerHaskell>();
+                final Map<String, IScriptTaskRunnerHaskell> runners = ILockCollectionFactory.getInstance(false)
+                        .newLinkedMap();
                 for (final IScriptTaskRunnerHaskell runner : ServiceLoader.load(IScriptTaskRunnerHaskell.class)) {
                     final IScriptTaskRunnerHaskell existing = runners.put(runner.getClass().getName(), runner);
                     if (existing != null) {

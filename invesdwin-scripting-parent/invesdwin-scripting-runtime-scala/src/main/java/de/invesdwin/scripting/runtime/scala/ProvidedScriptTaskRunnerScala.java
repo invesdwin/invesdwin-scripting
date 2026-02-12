@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.runtime.scala;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
@@ -10,6 +9,7 @@ import javax.annotation.concurrent.Immutable;
 import org.springframework.beans.factory.FactoryBean;
 
 import de.invesdwin.context.system.properties.SystemProperties;
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.reflection.Reflections;
 import de.invesdwin.util.lang.string.Strings;
 import jakarta.inject.Named;
@@ -30,8 +30,7 @@ public final class ProvidedScriptTaskRunnerScala
     @GuardedBy("this.class")
     private static IScriptTaskRunnerScala providedInstance;
 
-    private ProvidedScriptTaskRunnerScala() {
-    }
+    private ProvidedScriptTaskRunnerScala() {}
 
     public static synchronized IScriptTaskRunnerScala getProvidedInstance() {
         if (providedInstance == null) {
@@ -44,7 +43,8 @@ public final class ProvidedScriptTaskRunnerScala
                     throw new RuntimeException(e);
                 }
             } else {
-                final Map<String, IScriptTaskRunnerScala> runners = new LinkedHashMap<String, IScriptTaskRunnerScala>();
+                final Map<String, IScriptTaskRunnerScala> runners = ILockCollectionFactory.getInstance(false)
+                        .newLinkedMap();
                 for (final IScriptTaskRunnerScala runner : ServiceLoader.load(IScriptTaskRunnerScala.class)) {
                     final IScriptTaskRunnerScala existing = runners.put(runner.getClass().getName(), runner);
                     if (existing != null) {

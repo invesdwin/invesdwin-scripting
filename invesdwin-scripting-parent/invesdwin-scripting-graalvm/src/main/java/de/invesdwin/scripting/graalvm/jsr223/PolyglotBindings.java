@@ -2,7 +2,6 @@ package de.invesdwin.scripting.graalvm.jsr223;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +10,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import javax.script.Bindings;
 
 import org.graalvm.polyglot.Value;
+
+import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 
 @NotThreadSafe
 public class PolyglotBindings implements Bindings {
@@ -63,7 +64,7 @@ public class PolyglotBindings implements Bindings {
 
     @Override
     public Set<Entry<String, Object>> entrySet() {
-        final Set<Entry<String, Object>> values = new HashSet<>();
+        final Set<Entry<String, Object>> values = ILockCollectionFactory.getInstance(false).newSet();
         for (final String s : keySet()) {
             values.add(new Entry<String, Object>() {
                 @Override
