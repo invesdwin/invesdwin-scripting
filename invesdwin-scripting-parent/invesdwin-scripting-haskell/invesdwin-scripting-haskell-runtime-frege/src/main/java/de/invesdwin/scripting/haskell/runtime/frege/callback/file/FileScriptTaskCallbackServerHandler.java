@@ -5,7 +5,7 @@ import java.nio.charset.Charset;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-import de.invesdwin.util.concurrent.loop.ASpinWait;
+import de.invesdwin.util.concurrent.loop.spinwait.ASpinWait;
 import de.invesdwin.util.error.Throwables;
 import de.invesdwin.util.lang.Files;
 import de.invesdwin.util.lang.string.Strings;

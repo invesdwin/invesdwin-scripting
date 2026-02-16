@@ -17,8 +17,8 @@ import com.fasterxml.jackson.databind.node.NullNode;
 
 import de.invesdwin.context.integration.marshaller.MarshallerJsonJackson;
 import de.invesdwin.scripting.julia.runtime.contract.IScriptTaskRunnerJulia;
-import de.invesdwin.util.concurrent.loop.ASpinWait;
 import de.invesdwin.util.concurrent.loop.LoopInterruptedCheck;
+import de.invesdwin.util.concurrent.loop.spinwait.ASpinWait;
 import de.invesdwin.util.lang.string.Strings;
 import de.invesdwin.util.time.date.FTimeUnit;
 
