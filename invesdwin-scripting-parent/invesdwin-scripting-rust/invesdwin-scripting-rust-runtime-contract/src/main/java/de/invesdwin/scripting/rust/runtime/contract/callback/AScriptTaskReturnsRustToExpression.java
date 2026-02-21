@@ -14,7 +14,8 @@ public abstract class AScriptTaskReturnsRustToExpression implements IScriptTaskR
 
     @Override
     public void returnCharacter(final char value) {
-        returnExpression("'" + value + "'");
+        //serde_json and serde_json5 do not support char, so we return it as a string
+        returnExpression("\"" + value + "\"");
     }
 
     @Override
@@ -27,9 +28,9 @@ public abstract class AScriptTaskReturnsRustToExpression implements IScriptTaskR
                 if (i > 0) {
                     sb.append(",");
                 }
-                sb.append("'");
+                sb.append("\"");
                 sb.append(value[i]);
-                sb.append("'");
+                sb.append("\"");
             }
             sb.append("]");
             returnExpression(sb.toString());
@@ -57,9 +58,9 @@ public abstract class AScriptTaskReturnsRustToExpression implements IScriptTaskR
                     if (col > 0) {
                         sb.append(",");
                     }
-                    sb.append("'");
+                    sb.append("\"");
                     sb.append(valueRow[col]);
-                    sb.append("'");
+                    sb.append("\"");
                 }
                 sb.append("]");
             }
@@ -534,6 +535,11 @@ public abstract class AScriptTaskReturnsRustToExpression implements IScriptTaskR
 
     @Override
     public void returnNull() {
+        /*
+         * rhai does not support NaN for arbitrary types, so instead we return unit which gets converted to null for
+         * serde_json5 which again turns it into a None Option or () void response depending on the caller. This
+         * solution works with any type.
+         */
         returnExpression("()");
     }
 

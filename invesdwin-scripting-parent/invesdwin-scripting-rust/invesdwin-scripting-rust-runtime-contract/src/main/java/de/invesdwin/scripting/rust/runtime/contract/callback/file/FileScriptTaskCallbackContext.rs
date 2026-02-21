@@ -53,18 +53,6 @@ pub fn callback_void(method_name: &str, parameters: &[serde_json::Value]) {
 :}
 
 :{
-fn callback_is_first_element_char(d: &Dynamic) -> bool {
-    if let Some(arr) = d.read_lock::<Array>() {
-        if let Some(first) = arr.first() {
-            return callback_is_first_element_char(first);
-        }
-        return false;
-    }
-    d.is_char()
-}
-:}
-
-:{
 pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &[serde_json::Value]) -> T {
     let dynamic = callback_dynamic(method_name, parameters);
     
@@ -80,22 +68,6 @@ pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &
         // For string type, convert directly to String using JSON for safety
         let string_val = dynamic.into_string().unwrap();
         serde_json5::from_str(&format!("\"{}\"", string_val)).unwrap()
-	} else if dynamic.is_char() {
-        // For char type, return directly
-		let char_val = dynamic.as_char().unwrap();
-		unsafe { std::mem::transmute_copy(&char_val) }
-    } else if dynamic.is_array() {
-        // For array types, need to handle character arrays specially since JSON doesn't support chars
-        // Check if the first element is a character to determine if this is a character array/matrix
-        if callback_is_first_element_char(&dynamic) {
-            // This is a character array or matrix, convert by replacing ' with "
-            let dynamic_str = dynamic.to_string();
-            let json_str = dynamic_str.replace('\'', "\"");
-            serde_json5::from_str(&json_str).unwrap()
-        } else {
-            // For other types, parse from JSON
-            serde_json5::from_str(&dynamic.to_string()).unwrap()
-        }
     } else {
         // For other types, parse from JSON
         serde_json5::from_str(&dynamic.to_string()).unwrap()
