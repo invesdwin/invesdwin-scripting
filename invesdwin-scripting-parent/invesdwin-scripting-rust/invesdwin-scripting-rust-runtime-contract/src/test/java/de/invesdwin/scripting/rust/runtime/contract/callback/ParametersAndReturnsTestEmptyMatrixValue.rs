@@ -1,119 +1,131 @@
-getBooleanMatrix = callback("getBooleanMatrix")
-if len(getBooleanMatrix) != 2:
-	panic!("getBooleanMatrix empty!")
-callback("setBooleanMatrix", getBooleanMatrix)
+let getBooleanMatrix: Vec<Vec<bool>> = callback("getBooleanMatrix", &[]);
+if getBooleanMatrix.len() != 2 {
+    panic!("getBooleanMatrix empty!");
+}
+callback_void("setBooleanMatrix", &[param(getBooleanMatrix)]);
 
-getBooleanMatrixAsList = callback("getBooleanMatrixAsList")
-if len(getBooleanMatrixAsList) != 2:
-	panic!("getBooleanMatrixAsList empty!")
-callback("setBooleanMatrixAsList", getBooleanMatrixAsList)
+let getBooleanMatrixAsList: Vec<Vec<bool>> = callback("getBooleanMatrixAsList", &[]);
+if getBooleanMatrixAsList.len() != 2 {
+    panic!("getBooleanMatrixAsList empty!");
+}
+callback_void("setBooleanMatrixAsList", &[param(getBooleanMatrixAsList)]);
 
+let getByteMatrix: Vec<Vec<i32>> = callback("getByteMatrix", &[]);
+if getByteMatrix.len() != 2 {
+    panic!("getByteMatrix empty!");
+}
+callback_void("setByteMatrix", &[param(getByteMatrix)]);
 
-getByteMatrix = callback("getByteMatrix")
-if len(getByteMatrix) != 2:
-	panic!("getByteMatrix empty!")
-callback("setByteMatrix", getByteMatrix)
+let getByteMatrixAsList: Vec<Vec<i32>> = callback("getByteMatrixAsList", &[]);
+if getByteMatrixAsList.len() != 2 {
+    panic!("getByteMatrixAsList empty!");
+}
+callback_void("setByteMatrixAsList", &[param(getByteMatrixAsList)]);
 
-getByteMatrixAsList = callback("getByteMatrixAsList")
-if len(getByteMatrixAsList) != 2:
-	panic!("getByteMatrixAsList empty!")
-callback("setByteMatrixAsList", getByteMatrixAsList)
+let getCharacterMatrix: Vec<Vec<String>> = callback("getCharacterMatrix", &[]);
+if getCharacterMatrix.len() != 2 {
+    panic!("getCharacterMatrix empty!");
+}
+callback_void("setCharacterMatrix", &[param(getCharacterMatrix)]);
 
+let getCharacterMatrixAsList: Vec<Vec<String>> = callback("getCharacterMatrixAsList", &[]);
+if getCharacterMatrixAsList.len() != 2 {
+    panic!("getCharacterMatrixAsList empty!");
+}
+callback_void("setCharacterMatrixAsList", &[param(getCharacterMatrixAsList)]);
 
-getCharacterMatrix = callback("getCharacterMatrix")
-if len(getCharacterMatrix) != 2:
-	panic!("getCharacterMatrix empty!")
-callback("setCharacterMatrix", getCharacterMatrix)
+let getDecimalMatrix: Vec<Vec<f64>> = callback("getDecimalMatrix", &[]);
+if getDecimalMatrix.len() != 2 {
+    panic!("getDecimalMatrix empty!");
+}
+callback_void("setDecimalMatrix", &[param(getDecimalMatrix)]);
 
-getCharacterMatrixAsList = callback("getCharacterMatrixAsList")
-if len(getCharacterMatrixAsList) != 2:
-	panic!("getCharacterMatrixAsList empty!")
-callback("setCharacterMatrixAsList", getCharacterMatrixAsList)
+let getDecimalMatrixAsList: Vec<Vec<f64>> = callback("getDecimalMatrixAsList", &[]);
+if getDecimalMatrixAsList.len() != 2 {
+    panic!("getDecimalMatrixAsList empty!");
+}
+callback_void("setDecimalMatrixAsList", &[param(getDecimalMatrixAsList)]);
 
+let getDoubleMatrix: Vec<Vec<f64>> = callback("getDoubleMatrix", &[]);
+if getDoubleMatrix.len() != 2 {
+    panic!("getDoubleMatrix empty!");
+}
+callback_void("setDoubleMatrix", &[param(getDoubleMatrix)]);
 
-getDecimalMatrix = callback("getDecimalMatrix")
-if len(getDecimalMatrix) != 2:
-	panic!("getDecimalMatrix empty!")
-callback("setDecimalMatrix", getDecimalMatrix)
+let getDoubleMatrixAsList: Vec<Vec<f64>> = callback("getDoubleMatrixAsList", &[]);
+if getDoubleMatrixAsList.len() != 2 {
+    panic!("getDoubleMatrixAsList empty!");
+}
+callback_void("setDoubleMatrixAsList", &[param(getDoubleMatrixAsList)]);
 
-getDecimalMatrixAsList = callback("getDecimalMatrixAsList")
-if len(getDecimalMatrixAsList) != 2:
-	panic!("getDecimalMatrixAsList empty!")
-callback("setDecimalMatrixAsList", getDecimalMatrixAsList)
+let getFloatMatrix: Vec<Vec<f64>> = callback("getFloatMatrix", &[]);
+if getFloatMatrix.len() != 2 {
+    panic!("getFloatMatrix empty!");
+}
+callback_void("setFloatMatrix", &[param(getFloatMatrix)]);
 
+let getFloatMatrixAsList: Vec<Vec<f64>> = callback("getFloatMatrixAsList", &[]);
+if getFloatMatrixAsList.len() != 2 {
+    panic!("getFloatMatrixAsList empty!");
+}
+callback_void("setFloatMatrixAsList", &[param(getFloatMatrixAsList)]);
 
-getDoubleMatrix = callback("getDoubleMatrix")
-if len(getDoubleMatrix) != 2:
-	panic!("getDoubleMatrix empty!")
-callback("setDoubleMatrix", getDoubleMatrix)
+let getIntegerMatrix: Vec<Vec<i32>> = callback("getIntegerMatrix", &[]);
+if getIntegerMatrix.len() != 2 {
+    panic!("getIntegerMatrix empty!");
+}
+callback_void("setIntegerMatrix", &[param(getIntegerMatrix)]);
 
-getDoubleMatrixAsList = callback("getDoubleMatrixAsList")
-if len(getDoubleMatrixAsList) != 2:
-	panic!("getDoubleMatrixAsList empty!")
-callback("setDoubleMatrixAsList", getDoubleMatrixAsList)
+let getIntegerMatrixAsList: Vec<Vec<i32>> = callback("getIntegerMatrixAsList", &[]);
+if getIntegerMatrixAsList.len() != 2 {
+    panic!("getIntegerMatrixAsList empty!");
+}
+callback_void("setIntegerMatrixAsList", &[param(getIntegerMatrixAsList)]);
 
+let getLongMatrix: Vec<Vec<i64>> = callback("getLongMatrix", &[]);
+if getLongMatrix.len() != 2 {
+    panic!("getLongMatrix empty!");
+}
+callback_void("setLongMatrix", &[param(getLongMatrix)]);
 
-getFloatMatrix = callback("getFloatMatrix")
-if len(getFloatMatrix) != 2:
-	panic!("getFloatMatrix empty!")
-callback("setFloatMatrix", getFloatMatrix)
+let getLongMatrixAsList: Vec<Vec<i64>> = callback("getLongMatrixAsList", &[]);
+if getLongMatrixAsList.len() != 2 {
+    panic!("getLongMatrixAsList empty!");
+}
+callback_void("setLongMatrixAsList", &[param(getLongMatrixAsList)]);
 
-getFloatMatrixAsList = callback("getFloatMatrixAsList")
-if len(getFloatMatrixAsList) != 2:
-	panic!("getFloatMatrixAsList empty!")
-callback("setFloatMatrixAsList", getFloatMatrixAsList)
+let getPercentMatrix: Vec<Vec<f64>> = callback("getPercentMatrix", &[]);
+if getPercentMatrix.len() != 2 {
+    panic!("getPercentMatrix empty!");
+}
+callback_void("setPercentMatrix", &[param(getPercentMatrix)]);
 
+let getPercentMatrixAsList: Vec<Vec<f64>> = callback("getPercentMatrixAsList", &[]);
+if getPercentMatrixAsList.len() != 2 {
+    panic!("getPercentMatrixAsList empty!");
+}
+callback_void("setPercentMatrixAsList", &[param(getPercentMatrixAsList)]);
 
-getIntegerMatrix = callback("getIntegerMatrix")
-if len(getIntegerMatrix) != 2:
-	panic!("getIntegerMatrix empty!")
-callback("setIntegerMatrix", getIntegerMatrix)
+let getShortMatrix: Vec<Vec<i16>> = callback("getShortMatrix", &[]);
+if getShortMatrix.len() != 2 {
+    panic!("getShortMatrix empty!");
+}
+callback_void("setShortMatrix", &[param(getShortMatrix)]);
 
-getIntegerMatrixAsList = callback("getIntegerMatrixAsList")
-if len(getIntegerMatrixAsList) != 2:
-	panic!("getIntegerMatrixAsList empty!")
-callback("setIntegerMatrixAsList", getIntegerMatrixAsList)
+let getShortMatrixAsList: Vec<Vec<i16>> = callback("getShortMatrixAsList", &[]);
+if getShortMatrixAsList.len() != 2 {
+    panic!("getShortMatrixAsList empty!");
+}
+callback_void("setShortMatrixAsList", &[param(getShortMatrixAsList)]);
 
+let getStringMatrix: Vec<Vec<String>> = callback("getStringMatrix", &[]);
+if getStringMatrix.len() != 2 {
+    panic!("getStringMatrix empty!");
+}
+callback_void("setStringMatrix", &[param(getStringMatrix)]);
 
-getLongMatrix = callback("getLongMatrix")
-if len(getLongMatrix) != 2:
-	panic!("getLongMatrix empty!")
-callback("setLongMatrix", getLongMatrix)
-
-getLongMatrixAsList = callback("getLongMatrixAsList")
-if len(getLongMatrixAsList) != 2:
-	panic!("getLongMatrixAsList empty!")
-callback("setLongMatrixAsList", getLongMatrixAsList)
-
-
-getPercentMatrix = callback("getPercentMatrix")
-if len(getPercentMatrix) != 2:
-	panic!("getPercentMatrix empty!")
-callback("setPercentMatrix", getPercentMatrix)
-
-getPercentMatrixAsList = callback("getPercentMatrixAsList")
-if len(getPercentMatrixAsList) != 2:
-	panic!("getPercentMatrixAsList empty!")
-callback("setPercentMatrixAsList", getPercentMatrixAsList)
-
-
-getShortMatrix = callback("getShortMatrix")
-if len(getShortMatrix) != 2:
-	panic!("getShortMatrix empty!")
-callback("setShortMatrix", getShortMatrix)
-
-getShortMatrixAsList = callback("getShortMatrixAsList")
-if len(getShortMatrixAsList) != 2:
-	panic!("getShortMatrixAsList empty!")
-callback("setShortMatrixAsList", getShortMatrixAsList)
-
-
-getStringMatrix = callback("getStringMatrix")
-if len(getStringMatrix) != 2:
-	panic!("getStringMatrix empty!")
-callback("setStringMatrix", getStringMatrix)
-
-getStringMatrixAsList = callback("getStringMatrixAsList")
-if len(getStringMatrixAsList) != 2:
-	panic!("getStringMatrixAsList empty!")
-callback("setStringMatrixAsList", getStringMatrixAsList)
+let getStringMatrixAsList: Vec<Vec<String>> = callback("getStringMatrixAsList", &[]);
+if getStringMatrixAsList.len() != 2 {
+    panic!("getStringMatrixAsList empty!");
+}
+callback_void("setStringMatrixAsList", &[param(getStringMatrixAsList)]);

@@ -9,6 +9,7 @@ println!("getSecretCallback: {}", getSecretCallback);
 let getSecretExpressionCallback: String = callback("getSecretExpression", &[param(putUuid)]);
 println!("getSecretExpressionCallback: {}", getSecretExpressionCallback);
 
+// callback_void or callback_dynamic would be slightly more efficient for void methods, but callback with unit type also works fine
 callback::<()>("voidMethod", &[]);
 
 let callManyParams: f64 = callback("callManyParams", &[

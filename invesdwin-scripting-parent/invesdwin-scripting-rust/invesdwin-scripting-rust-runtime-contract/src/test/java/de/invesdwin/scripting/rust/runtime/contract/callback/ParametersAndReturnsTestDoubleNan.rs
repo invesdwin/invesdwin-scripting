@@ -1,74 +1,51 @@
-import math
+println!("getDouble");
+let getDouble: f64 = callback("getDouble", &[]);
+println!("getDouble: {}", getDouble);
+if !getDouble.is_nan() {
+    panic!("getDouble not NaN!");
+}
+callback_void("setDouble", &[param(getDouble)]);
 
-println!("getDouble")
-if 'getDouble' in locals():
-	panic!("getDouble already defined!")
-getDouble = callback("getDouble")
-getDoubleType = type(getDouble)
-println!(getDoubleType)
-println!(getDouble)
-if(getDoubleType is not float):
-	panic!("getDouble not float!")
-if(not math.isnan(getDouble)):
-	panic!("getDouble not NaN!")
-callback("setDouble", getDouble)
+println!("getDoubleVector");
+let getDoubleVector: Vec<f64> = callback("getDoubleVector", &[]);
+println!("getDoubleVector: {:?}", getDoubleVector);
+if !getDoubleVector[1].is_nan() {
+    panic!("getDoubleVector[1] not NaN!");
+}
+callback_void("setDoubleVector", &[param(getDoubleVector)]);
 
-println!("getDoubleVector")
-if 'getDoubleVector' in locals():
-	panic!("getDoubleVector already defined!")
-getDoubleVector = callback("getDoubleVector")
-getDoubleVectorType = type(getDoubleVector[0])
-println!(getDoubleVectorType)
-println!(getDoubleVector)
-if(getDoubleVectorType is not float):
-	panic!("getDoubleVector not float!")
-if(not math.isnan(getDoubleVector[1])):
-	panic!("getDoubleVector[1] not NaN!")
-callback("setDoubleVector", getDoubleVector)
+println!("getDoubleVectorAsList");
+let getDoubleVectorAsList: Vec<f64> = callback("getDoubleVectorAsList", &[]);
+println!("getDoubleVectorAsList: {:?}", getDoubleVectorAsList);
+if !getDoubleVectorAsList[1].is_nan() {
+    panic!("getDoubleVectorAsList[1] not NaN!");
+}
+callback_void("setDoubleVectorAsList", &[param(getDoubleVectorAsList)]);
 
-println!("getDoubleVectorAsList")
-if 'getDoubleVectorAsList' in locals():
-	panic!("getDoubleVectorAsList already defined!")
-getDoubleVectorAsList = callback("getDoubleVectorAsList")
-getDoubleVectorAsListType = type(getDoubleVectorAsList[0])
-println!(getDoubleVectorAsListType)
-println!(getDoubleVectorAsList)
-if(getDoubleVectorAsListType is not float):
-	panic!("getDoubleVectorAsList not float!")
-if(not math.isnan(getDoubleVectorAsList[1])):
-	panic!("getDoubleVectorAsList[1] not NaN!")
-callback("setDoubleVectorAsList", getDoubleVectorAsList)
+println!("getDoubleMatrix");
+let getDoubleMatrix: Vec<Vec<f64>> = callback("getDoubleMatrix", &[]);
+println!("getDoubleMatrix: {:?}", getDoubleMatrix);
+if !getDoubleMatrix[0][0].is_nan() {
+    panic!("getDoubleMatrix[0][0] not NaN!");
+}
+if !getDoubleMatrix[1][1].is_nan() {
+    panic!("getDoubleMatrix[1][1] not NaN!");
+}
+if !getDoubleMatrix[2][2].is_nan() {
+    panic!("getDoubleMatrix[2][2] not NaN!");
+}
+callback_void("setDoubleMatrix", &[param(getDoubleMatrix)]);
 
-println!("getDoubleMatrix")
-if 'getDoubleMatrix' in locals():
-	panic!("getDoubleMatrix already defined!")
-getDoubleMatrix = callback("getDoubleMatrix")
-getDoubleMatrixType = type(getDoubleMatrix[0][0])
-println!(getDoubleMatrixType)
-println!(getDoubleMatrix)
-if(getDoubleMatrixType is not float):
-	panic!("getDoubleMatrix not float!")
-if(not math.isnan(getDoubleMatrix[0][0])):
-	panic!("getDoubleMatrix[0][0] not NaN!")
-if(not math.isnan(getDoubleMatrix[1][1])):
-	panic!("getDoubleMatrix[1][1] not NaN!")
-if(not math.isnan(getDoubleMatrix[2][2])):
-	panic!("getDoubleMatrix[2][2] not NaN!")
-callback("setDoubleMatrix", getDoubleMatrix)
-
-println!("getDoubleMatrixAsList")
-if 'getDoubleMatrixAsList' in locals():
-	panic!("getDoubleMatrixAsList already defined!")
-getDoubleMatrixAsList = callback("getDoubleMatrixAsList")
-getDoubleMatrixAsListType = type(getDoubleMatrixAsList[0][0])
-println!(getDoubleMatrixAsListType)
-println!(getDoubleMatrixAsList)
-if(getDoubleMatrixAsListType is not float):
-	panic!("getDoubleMatrixAsList not float!")
-if(not math.isnan(getDoubleMatrixAsList[0][0])):
-	panic!("getDoubleMatrixAsList[0][0] not NaN!")
-if(not math.isnan(getDoubleMatrixAsList[1][1])):
-	panic!("getDoubleMatrixAsList[1][1] not NaN!")
-if(not math.isnan(getDoubleMatrixAsList[2][2])):
-	panic!("getDoubleMatrixAsList[2][2] not NaN!")
-callback("setDoubleMatrixAsList", getDoubleMatrixAsList)
+println!("getDoubleMatrixAsList");
+let getDoubleMatrixAsList: Vec<Vec<f64>> = callback("getDoubleMatrixAsList", &[]);
+println!("getDoubleMatrixAsList: {:?}", getDoubleMatrixAsList);
+if !getDoubleMatrixAsList[0][0].is_nan() {
+    panic!("getDoubleMatrixAsList[0][0] not NaN!");
+}
+if !getDoubleMatrixAsList[1][1].is_nan() {
+    panic!("getDoubleMatrixAsList[1][1] not NaN!");
+}
+if !getDoubleMatrixAsList[2][2].is_nan() {
+    panic!("getDoubleMatrixAsList[2][2] not NaN!");
+}
+callback_void("setDoubleMatrixAsList", &[param(getDoubleMatrixAsList)]);

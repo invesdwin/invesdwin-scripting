@@ -1,186 +1,230 @@
-getBooleanVector = callback("getBooleanVector")
-if getBooleanVector is not None:
-	panic!("getBooleanVector not None!")
-callback("setBooleanVector", getBooleanVector)
-getBooleanVectorAsList = callback("getBooleanVectorAsList")
-if getBooleanVectorAsList is not None:
-	panic!("getBooleanVectorAsList not None!")
-callback("setBooleanVectorAsList", getBooleanVectorAsList)
-getBooleanMatrix = callback("getBooleanMatrix")
-if getBooleanMatrix is not None:
-	panic!("getBooleanMatrix not None!")
-callback("setBooleanMatrix", getBooleanMatrix)
-getBooleanMatrixAsList = callback("getBooleanMatrixAsList")
-if getBooleanMatrixAsList is not None:
-	panic!("getBooleanMatrixAsList not None!")
-callback("setBooleanMatrixAsList", getBooleanMatrixAsList)
+let getBooleanVector: Option<Vec<bool>> = callback("getBooleanVector", &[]);
+if getBooleanVector.is_some() {
+    panic!("getBooleanVector not None!");
+}
+callback_void("setBooleanVector", &[param(getBooleanVector)]);
+let getBooleanVectorAsList: Option<Vec<bool>> = callback("getBooleanVectorAsList", &[]);
+if getBooleanVectorAsList.is_some() {
+    panic!("getBooleanVectorAsList not None!");
+}
+callback_void("setBooleanVectorAsList", &[param(getBooleanVectorAsList)]);
+let getBooleanMatrix: Option<Vec<Vec<bool>>> = callback("getBooleanMatrix", &[]);
+if getBooleanMatrix.is_some() {
+    panic!("getBooleanMatrix not None!");
+}
+callback_void("setBooleanMatrix", &[param(getBooleanMatrix)]);
+let getBooleanMatrixAsList: Option<Vec<Vec<bool>>> = callback("getBooleanMatrixAsList", &[]);
+if getBooleanMatrixAsList.is_some() {
+    panic!("getBooleanMatrixAsList not None!");
+}
+callback_void("setBooleanMatrixAsList", &[param(getBooleanMatrixAsList)]);
 
-getByteVector = callback("getByteVector")
-if getByteVector is not None:
-	panic!("getByteVector not None!")
-callback("setByteVector", getByteVector)
-getByteVectorAsList = callback("getByteVectorAsList")
-if getByteVectorAsList is not None:
-	panic!("getByteVectorAsList not None!")
-callback("setByteVectorAsList", getByteVectorAsList)
-getByteMatrix = callback("getByteMatrix")
-if getByteMatrix is not None:
-	panic!("getByteMatrix not None!")
-callback("setByteMatrix", getByteMatrix)
-getByteMatrixAsList = callback("getByteMatrixAsList")
-if getByteMatrixAsList is not None:
-	panic!("getByteMatrixAsList not None!")
-callback("setByteMatrixAsList", getByteMatrixAsList)
+let getByteVector: Option<Vec<i32>> = callback("getByteVector", &[]);
+if getByteVector.is_some() {
+    panic!("getByteVector not None!");
+}
+callback_void("setByteVector", &[param(getByteVector)]);
+let getByteVectorAsList: Option<Vec<i32>> = callback("getByteVectorAsList", &[]);
+if getByteVectorAsList.is_some() {
+    panic!("getByteVectorAsList not None!");
+}
+callback_void("setByteVectorAsList", &[param(getByteVectorAsList)]);
+let getByteMatrix: Option<Vec<Vec<i32>>> = callback("getByteMatrix", &[]);
+if getByteMatrix.is_some() {
+    panic!("getByteMatrix not None!");
+}
+callback_void("setByteMatrix", &[param(getByteMatrix)]);
+let getByteMatrixAsList: Option<Vec<Vec<i32>>> = callback("getByteMatrixAsList", &[]);
+if getByteMatrixAsList.is_some() {
+    panic!("getByteMatrixAsList not None!");
+}
+callback_void("setByteMatrixAsList", &[param(getByteMatrixAsList)]);
 
-getCharacterVector = callback("getCharacterVector")
-if getCharacterVector is not None:
-	panic!("getCharacterVector not None!")
-callback("setCharacterVector", getCharacterVector)
-getCharacterVectorAsList = callback("getCharacterVectorAsList")
-if getCharacterVectorAsList is not None:
-	panic!("getCharacterVectorAsList not None!")
-callback("setCharacterVectorAsList", getCharacterVectorAsList)
-getCharacterMatrix = callback("getCharacterMatrix")
-if getCharacterMatrix is not None:
-	panic!("getCharacterMatrix not None!")
-callback("setCharacterMatrix", getCharacterMatrix)
-getCharacterMatrixAsList = callback("getCharacterMatrixAsList")
-if getCharacterMatrixAsList is not None:
-	panic!("getCharacterMatrixAsList not None!")
-callback("setCharacterMatrixAsList", getCharacterMatrixAsList)
+let getCharacterVector: Option<Vec<String>> = callback("getCharacterVector", &[]);
+if getCharacterVector.is_some() {
+    panic!("getCharacterVector not None!");
+}
+callback_void("setCharacterVector", &[param(getCharacterVector)]);
+let getCharacterVectorAsList: Option<Vec<String>> = callback("getCharacterVectorAsList", &[]);
+if getCharacterVectorAsList.is_some() {
+    panic!("getCharacterVectorAsList not None!");
+}
+callback_void("setCharacterVectorAsList", &[param(getCharacterVectorAsList)]);
+let getCharacterMatrix: Option<Vec<Vec<String>>> = callback("getCharacterMatrix", &[]);
+if getCharacterMatrix.is_some() {
+    panic!("getCharacterMatrix not None!");
+}
+callback_void("setCharacterMatrix", &[param(getCharacterMatrix)]);
+let getCharacterMatrixAsList: Option<Vec<Vec<String>>> = callback("getCharacterMatrixAsList", &[]);
+if getCharacterMatrixAsList.is_some() {
+    panic!("getCharacterMatrixAsList not None!");
+}
+callback_void("setCharacterMatrixAsList", &[param(getCharacterMatrixAsList)]);
 
-getDecimalVector = callback("getDecimalVector")
-if getDecimalVector is not None:
-	panic!("getDecimalVector not None!")
-callback("setDecimalVector", getDecimalVector)
-getDecimalVectorAsList = callback("getDecimalVectorAsList")
-if getDecimalVectorAsList is not None:
-	panic!("getDecimalVectorAsList not None!")
-callback("setDecimalVectorAsList", getDecimalVectorAsList)
-getDecimalMatrix = callback("getDecimalMatrix")
-if getDecimalMatrix is not None:
-	panic!("getDecimalMatrix not None!")
-callback("setDecimalMatrix", getDecimalMatrix)
-getDecimalMatrixAsList = callback("getDecimalMatrixAsList")
-if getDecimalMatrixAsList is not None:
-	panic!("getDecimalMatrixAsList not None!")
-callback("setDecimalMatrixAsList", getDecimalMatrixAsList)
+let getDecimalVector: Option<Vec<f64>> = callback("getDecimalVector", &[]);
+if getDecimalVector.is_some() {
+    panic!("getDecimalVector not None!");
+}
+callback_void("setDecimalVector", &[param(getDecimalVector)]);
+let getDecimalVectorAsList: Option<Vec<f64>> = callback("getDecimalVectorAsList", &[]);
+if getDecimalVectorAsList.is_some() {
+    panic!("getDecimalVectorAsList not None!");
+}
+callback_void("setDecimalVectorAsList", &[param(getDecimalVectorAsList)]);
+let getDecimalMatrix: Option<Vec<Vec<f64>>> = callback("getDecimalMatrix", &[]);
+if getDecimalMatrix.is_some() {
+    panic!("getDecimalMatrix not None!");
+}
+callback_void("setDecimalMatrix", &[param(getDecimalMatrix)]);
+let getDecimalMatrixAsList: Option<Vec<Vec<f64>>> = callback("getDecimalMatrixAsList", &[]);
+if getDecimalMatrixAsList.is_some() {
+    panic!("getDecimalMatrixAsList not None!");
+}
+callback_void("setDecimalMatrixAsList", &[param(getDecimalMatrixAsList)]);
 
-getDoubleVector = callback("getDoubleVector")
-if getDoubleVector is not None:
-	panic!("getDoubleVector not None!")
-callback("setDoubleVector", getDoubleVector)
-getDoubleVectorAsList = callback("getDoubleVectorAsList")
-if getDoubleVectorAsList is not None:
-	panic!("getDoubleVectorAsList not None!")
-callback("setDoubleVectorAsList", getDoubleVectorAsList)
-getDoubleMatrix = callback("getDoubleMatrix")
-if getDoubleMatrix is not None:
-	panic!("getDoubleMatrix not None!")
-callback("setDoubleMatrix", getDoubleMatrix)
-getDoubleMatrixAsList = callback("getDoubleMatrixAsList")
-if getDoubleMatrixAsList is not None:
-	panic!("getDoubleMatrixAsList not None!")
-callback("setDoubleMatrixAsList", getDoubleMatrixAsList)
+let getDoubleVector: Option<Vec<f64>> = callback("getDoubleVector", &[]);
+if getDoubleVector.is_some() {
+    panic!("getDoubleVector not None!");
+}
+callback_void("setDoubleVector", &[param(getDoubleVector)]);
+let getDoubleVectorAsList: Option<Vec<f64>> = callback("getDoubleVectorAsList", &[]);
+if getDoubleVectorAsList.is_some() {
+    panic!("getDoubleVectorAsList not None!");
+}
+callback_void("setDoubleVectorAsList", &[param(getDoubleVectorAsList)]);
+let getDoubleMatrix: Option<Vec<Vec<f64>>> = callback("getDoubleMatrix", &[]);
+if getDoubleMatrix.is_some() {
+    panic!("getDoubleMatrix not None!");
+}
+callback_void("setDoubleMatrix", &[param(getDoubleMatrix)]);
+let getDoubleMatrixAsList: Option<Vec<Vec<f64>>> = callback("getDoubleMatrixAsList", &[]);
+if getDoubleMatrixAsList.is_some() {
+    panic!("getDoubleMatrixAsList not None!");
+}
+callback_void("setDoubleMatrixAsList", &[param(getDoubleMatrixAsList)]);
 
-getFloatVector = callback("getFloatVector")
-if getFloatVector is not None:
-	panic!("getFloatVector not None!")
-callback("setFloatVector", getFloatVector)
-getFloatVectorAsList = callback("getFloatVectorAsList")
-if getFloatVectorAsList is not None:
-	panic!("getFloatVectorAsList not None!")
-callback("setFloatVectorAsList", getFloatVectorAsList)
-getFloatMatrix = callback("getFloatMatrix")
-if getFloatMatrix is not None:
-	panic!("getFloatMatrix not None!")
-callback("setFloatMatrix", getFloatMatrix)
-getFloatMatrixAsList = callback("getFloatMatrixAsList")
-if getFloatMatrixAsList is not None:
-	panic!("getFloatMatrixAsList not None!")
-callback("setFloatMatrixAsList", getFloatMatrixAsList)
+let getFloatVector: Option<Vec<f64>> = callback("getFloatVector", &[]);
+if getFloatVector.is_some() {
+    panic!("getFloatVector not None!");
+}
+callback_void("setFloatVector", &[param(getFloatVector)]);
+let getFloatVectorAsList: Option<Vec<f64>> = callback("getFloatVectorAsList", &[]);
+if getFloatVectorAsList.is_some() {
+    panic!("getFloatVectorAsList not None!");
+}
+callback_void("setFloatVectorAsList", &[param(getFloatVectorAsList)]);
+let getFloatMatrix: Option<Vec<Vec<f64>>> = callback("getFloatMatrix", &[]);
+if getFloatMatrix.is_some() {
+    panic!("getFloatMatrix not None!");
+}
+callback_void("setFloatMatrix", &[param(getFloatMatrix)]);
+let getFloatMatrixAsList: Option<Vec<Vec<f64>>> = callback("getFloatMatrixAsList", &[]);
+if getFloatMatrixAsList.is_some() {
+    panic!("getFloatMatrixAsList not None!");
+}
+callback_void("setFloatMatrixAsList", &[param(getFloatMatrixAsList)]);
 
-getIntegerVector = callback("getIntegerVector")
-if getIntegerVector is not None:
-	panic!("getIntegerVector not None!")
-callback("setIntegerVector", getIntegerVector)
-getIntegerVectorAsList = callback("getIntegerVectorAsList")
-if getIntegerVectorAsList is not None:
-	panic!("getIntegerVectorAsList not None!")
-callback("setIntegerVectorAsList", getIntegerVectorAsList)
-getIntegerMatrix = callback("getIntegerMatrix")
-if getIntegerMatrix is not None:
-	panic!("getIntegerMatrix not None!")
-callback("setIntegerMatrix", getIntegerMatrix)
-getIntegerMatrixAsList = callback("getIntegerMatrixAsList")
-if getIntegerMatrixAsList is not None:
-	panic!("getIntegerMatrixAsList not None!")
-callback("setIntegerMatrixAsList", getIntegerMatrixAsList)
+let getIntegerVector: Option<Vec<i32>> = callback("getIntegerVector", &[]);
+if getIntegerVector.is_some() {
+    panic!("getIntegerVector not None!");
+}
+callback_void("setIntegerVector", &[param(getIntegerVector)]);
+let getIntegerVectorAsList: Option<Vec<i32>> = callback("getIntegerVectorAsList", &[]);
+if getIntegerVectorAsList.is_some() {
+    panic!("getIntegerVectorAsList not None!");
+}
+callback_void("setIntegerVectorAsList", &[param(getIntegerVectorAsList)]);
+let getIntegerMatrix: Option<Vec<Vec<i32>>> = callback("getIntegerMatrix", &[]);
+if getIntegerMatrix.is_some() {
+    panic!("getIntegerMatrix not None!");
+}
+callback_void("setIntegerMatrix", &[param(getIntegerMatrix)]);
+let getIntegerMatrixAsList: Option<Vec<Vec<i32>>> = callback("getIntegerMatrixAsList", &[]);
+if getIntegerMatrixAsList.is_some() {
+    panic!("getIntegerMatrixAsList not None!");
+}
+callback_void("setIntegerMatrixAsList", &[param(getIntegerMatrixAsList)]);
 
-getLongVector = callback("getLongVector")
-if getLongVector is not None:
-	panic!("getLongVector not None!")
-callback("setLongVector", getLongVector)
-getLongVectorAsList = callback("getLongVectorAsList")
-if getLongVectorAsList is not None:
-	panic!("getLongVectorAsList not None!")
-callback("setLongVectorAsList", getLongVectorAsList)
-getLongMatrix = callback("getLongMatrix")
-if getLongMatrix is not None:
-	panic!("getLongMatrix not None!")
-callback("setLongMatrix", getLongMatrix)
-getLongMatrixAsList = callback("getLongMatrixAsList")
-if getLongMatrixAsList is not None:
-	panic!("getLongMatrixAsList not None!")
-callback("setLongMatrixAsList", getLongMatrixAsList)
+let getLongVector: Option<Vec<i64>> = callback("getLongVector", &[]);
+if getLongVector.is_some() {
+    panic!("getLongVector not None!");
+}
+callback_void("setLongVector", &[param(getLongVector)]);
+let getLongVectorAsList: Option<Vec<i64>> = callback("getLongVectorAsList", &[]);
+if getLongVectorAsList.is_some() {
+    panic!("getLongVectorAsList not None!");
+}
+callback_void("setLongVectorAsList", &[param(getLongVectorAsList)]);
+let getLongMatrix: Option<Vec<Vec<i64>>> = callback("getLongMatrix", &[]);
+if getLongMatrix.is_some() {
+    panic!("getLongMatrix not None!");
+}
+callback_void("setLongMatrix", &[param(getLongMatrix)]);
+let getLongMatrixAsList: Option<Vec<Vec<i64>>> = callback("getLongMatrixAsList", &[]);
+if getLongMatrixAsList.is_some() {
+    panic!("getLongMatrixAsList not None!");
+}
+callback_void("setLongMatrixAsList", &[param(getLongMatrixAsList)]);
 
-getPercentVector = callback("getPercentVector")
-if getPercentVector is not None:
-	panic!("getPercentVector not None!")
-callback("setPercentVector", getPercentVector)
-getPercentVectorAsList = callback("getPercentVectorAsList")
-if getPercentVectorAsList is not None:
-	panic!("getPercentVectorAsList not None!")
-callback("setPercentVectorAsList", getPercentVectorAsList)
-getPercentMatrix = callback("getPercentMatrix")
-if getPercentMatrix is not None:
-	panic!("getPercentMatrix not None!")
-callback("setPercentMatrix", getPercentMatrix)
-getPercentMatrixAsList = callback("getPercentMatrixAsList")
-if getPercentMatrixAsList is not None:
-	panic!("getPercentMatrixAsList not None!")
-callback("setPercentMatrixAsList", getPercentMatrixAsList)
+let getPercentVector: Option<Vec<f64>> = callback("getPercentVector", &[]);
+if getPercentVector.is_some() {
+    panic!("getPercentVector not None!");
+}
+callback_void("setPercentVector", &[param(getPercentVector)]);
+let getPercentVectorAsList: Option<Vec<f64>> = callback("getPercentVectorAsList", &[]);
+if getPercentVectorAsList.is_some() {
+    panic!("getPercentVectorAsList not None!");
+}
+callback_void("setPercentVectorAsList", &[param(getPercentVectorAsList)]);
+let getPercentMatrix: Option<Vec<Vec<f64>>> = callback("getPercentMatrix", &[]);
+if getPercentMatrix.is_some() {
+    panic!("getPercentMatrix not None!");
+}
+callback_void("setPercentMatrix", &[param(getPercentMatrix)]);
+let getPercentMatrixAsList: Option<Vec<Vec<f64>>> = callback("getPercentMatrixAsList", &[]);
+if getPercentMatrixAsList.is_some() {
+    panic!("getPercentMatrixAsList not None!");
+}
+callback_void("setPercentMatrixAsList", &[param(getPercentMatrixAsList)]);
 
-getShortVector = callback("getShortVector")
-if getShortVector is not None:
-	panic!("getShortVector not None!")
-callback("setShortVector", getShortVector)
-getShortVectorAsList = callback("getShortVectorAsList")
-if getShortVectorAsList is not None:
-	panic!("getShortVectorAsList not None!")
-callback("setShortVectorAsList", getShortVectorAsList)
-getShortMatrix = callback("getShortMatrix")
-if getShortMatrix is not None:
-	panic!("getShortMatrix not None!")
-callback("setShortMatrix", getShortMatrix)
-getShortMatrixAsList = callback("getShortMatrixAsList")
-if getShortMatrixAsList is not None:
-	panic!("getShortMatrixAsList not None!")
-callback("setShortMatrixAsList", getShortMatrixAsList)
+let getShortVector: Option<Vec<i16>> = callback("getShortVector", &[]);
+if getShortVector.is_some() {
+    panic!("getShortVector not None!");
+}
+callback_void("setShortVector", &[param(getShortVector)]);
+let getShortVectorAsList: Option<Vec<i16>> = callback("getShortVectorAsList", &[]);
+if getShortVectorAsList.is_some() {
+    panic!("getShortVectorAsList not None!");
+}
+callback_void("setShortVectorAsList", &[param(getShortVectorAsList)]);
+let getShortMatrix: Option<Vec<Vec<i16>>> = callback("getShortMatrix", &[]);
+if getShortMatrix.is_some() {
+    panic!("getShortMatrix not None!");
+}
+callback_void("setShortMatrix", &[param(getShortMatrix)]);
+let getShortMatrixAsList: Option<Vec<Vec<i16>>> = callback("getShortMatrixAsList", &[]);
+if getShortMatrixAsList.is_some() {
+    panic!("getShortMatrixAsList not None!");
+}
+callback_void("setShortMatrixAsList", &[param(getShortMatrixAsList)]);
 
-getStringVector = callback("getStringVector")
-if getStringVector is not None:
-	panic!("getStringVector not None!")
-callback("setStringVector", getStringVector)
-getStringVectorAsList = callback("getStringVectorAsList")
-if getStringVectorAsList is not None:
-	panic!("getStringVectorAsList not None!")
-callback("setStringVectorAsList", getStringVectorAsList)
-getStringMatrix = callback("getStringMatrix")
-if getStringMatrix is not None:
-	panic!("getStringMatrix not None!")
-callback("setStringMatrix", getStringMatrix)
-getStringMatrixAsList = callback("getStringMatrixAsList")
-if getStringMatrixAsList is not None:
-	panic!("getStringMatrixAsList not None!")
-callback("setStringMatrixAsList", getStringMatrixAsList)
+let getStringVector: Option<Vec<String>> = callback("getStringVector", &[]);
+if getStringVector.is_some() {
+    panic!("getStringVector not None!");
+}
+callback_void("setStringVector", &[param(getStringVector)]);
+let getStringVectorAsList: Option<Vec<String>> = callback("getStringVectorAsList", &[]);
+if getStringVectorAsList.is_some() {
+    panic!("getStringVectorAsList not None!");
+}
+callback_void("setStringVectorAsList", &[param(getStringVectorAsList)]);
+let getStringMatrix: Option<Vec<Vec<String>>> = callback("getStringMatrix", &[]);
+if getStringMatrix.is_some() {
+    panic!("getStringMatrix not None!");
+}
+callback_void("setStringMatrix", &[param(getStringMatrix)]);
+let getStringMatrixAsList: Option<Vec<Vec<String>>> = callback("getStringMatrixAsList", &[]);
+if getStringMatrixAsList.is_some() {
+    panic!("getStringMatrixAsList not None!");
+}
+callback_void("setStringMatrixAsList", &[param(getStringMatrixAsList)]);

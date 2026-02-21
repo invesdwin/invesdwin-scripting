@@ -1,54 +1,24 @@
-println!("getFloat")
-if 'getFloat' in locals():
-	panic!("getFloat already defined!")
-getFloat = callback("getFloat")
-getFloatType = type(getFloat)
-println!(getFloatType)
-println!(getFloat)
-if(getFloatType is not float):
-	panic!("getFloat not float!")
-callback("setFloat", getFloat)
+println!("getFloat");
+let getFloat: f64 = callback("getFloat", &[]);
+println!("getFloat: {}", getFloat);
+callback_void("setFloat", &[param(getFloat)]);
 
-println!("getFloatVector")
-if 'getFloatVector' in locals():
-	panic!("getFloatVector already defined!")
-getFloatVector = callback("getFloatVector")
-getFloatVectorType = type(getFloatVector[0])
-println!(getFloatVectorType)
-println!(getFloatVector)
-if(getFloatVectorType is not float):
-	panic!("getFloatVector not float!")
-callback("setFloatVector", getFloatVector)
+println!("getFloatVector");
+let getFloatVector: Vec<f64> = callback("getFloatVector", &[]);
+println!("getFloatVector: {:?}", getFloatVector);
+callback_void("setFloatVector", &[param(getFloatVector)]);
 
-println!("getFloatVectorAsList")
-if 'getFloatVectorAsList' in locals():
-	panic!("getFloatVectorAsList already defined!")
-getFloatVectorAsList = callback("getFloatVectorAsList")
-getFloatVectorAsListType = type(getFloatVectorAsList[0])
-println!(getFloatVectorAsListType)
-println!(getFloatVectorAsList)
-if(getFloatVectorAsListType is not float):
-	panic!("getFloatVectorAsList not float!")
-callback("setFloatVectorAsList", getFloatVectorAsList)
+println!("getFloatVectorAsList");
+let getFloatVectorAsList: Vec<f64> = callback("getFloatVectorAsList", &[]);
+println!("getFloatVectorAsList: {:?}", getFloatVectorAsList);
+callback_void("setFloatVectorAsList", &[param(getFloatVectorAsList)]);
 
-println!("getFloatMatrix")
-if 'getFloatMatrix' in locals():
-	panic!("getFloatMatrix already defined!")
-getFloatMatrix = callback("getFloatMatrix")
-getFloatMatrixType = type(getFloatMatrix[0][0])
-println!(getFloatMatrixType)
-println!(getFloatMatrix)
-if(getFloatMatrixType is not float):
-	panic!("getFloatMatrix not float!")
-callback("setFloatMatrix", getFloatMatrix)
+println!("getFloatMatrix");
+let getFloatMatrix: Vec<Vec<f64>> = callback("getFloatMatrix", &[]);
+println!("getFloatMatrix: {:?}", getFloatMatrix);
+callback_void("setFloatMatrix", &[param(getFloatMatrix)]);
 
-println!("getFloatMatrixAsList")
-if 'getFloatMatrixAsList' in locals():
-	panic!("getFloatMatrixAsList already defined!")
-getFloatMatrixAsList = callback("getFloatMatrixAsList")
-getFloatMatrixAsListType = type(getFloatMatrixAsList[0][0])
-println!(getFloatMatrixAsListType)
-println!(getFloatMatrixAsList)
-if(getFloatMatrixAsListType is not float):
-	panic!("getFloatMatrixAsList not float!")
-callback("setFloatMatrixAsList", getFloatMatrixAsList)
+println!("getFloatMatrixAsList");
+let getFloatMatrixAsList: Vec<Vec<f64>> = callback("getFloatMatrixAsList", &[]);
+println!("getFloatMatrixAsList: {:?}", getFloatMatrixAsList);
+callback_void("setFloatMatrixAsList", &[param(getFloatMatrixAsList)]);

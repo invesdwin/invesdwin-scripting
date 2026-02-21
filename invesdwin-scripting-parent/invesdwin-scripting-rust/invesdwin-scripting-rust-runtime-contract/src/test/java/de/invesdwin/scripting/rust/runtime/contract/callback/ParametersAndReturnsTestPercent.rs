@@ -1,54 +1,24 @@
-println!("getPercent")
-if 'getPercent' in locals():
-	panic!("getPercent already defined!")
-getPercent = callback("getPercent")
-getPercentType = type(getPercent)
-println!(getPercentType)
-println!(getPercent)
-if(getPercentType is not float):
-	panic!("getPercent not float!")
-callback("setPercent", getPercent)
+println!("getPercent");
+let getPercent: f64 = callback("getPercent", &[]);
+println!("getPercent: {}", getPercent);
+callback_void("setPercent", &[param(getPercent)]);
 
-println!("getPercentVector")
-if 'getPercentVector' in locals():
-	panic!("getPercentVector already defined!")
-getPercentVector = callback("getPercentVector")
-getPercentVectorType = type(getPercentVector[0])
-println!(getPercentVectorType)
-println!(getPercentVector)
-if(getPercentVectorType is not float):
-	panic!("getPercentVector not float!")
-callback("setPercentVector", getPercentVector)
+println!("getPercentVector");
+let getPercentVector: Vec<f64> = callback("getPercentVector", &[]);
+println!("getPercentVector: {:?}", getPercentVector);
+callback_void("setPercentVector", &[param(getPercentVector)]);
 
-println!("getPercentVectorAsList")
-if 'getPercentVectorAsList' in locals():
-	panic!("getPercentVectorAsList already defined!")
-getPercentVectorAsList = callback("getPercentVectorAsList")
-getPercentVectorAsListType = type(getPercentVectorAsList[0])
-println!(getPercentVectorAsListType)
-println!(getPercentVectorAsList)
-if(getPercentVectorAsListType is not float):
-	panic!("getPercentVectorAsList not float!")
-callback("setPercentVectorAsList", getPercentVectorAsList)
+println!("getPercentVectorAsList");
+let getPercentVectorAsList: Vec<f64> = callback("getPercentVectorAsList", &[]);
+println!("getPercentVectorAsList: {:?}", getPercentVectorAsList);
+callback_void("setPercentVectorAsList", &[param(getPercentVectorAsList)]);
 
-println!("getPercentMatrix")
-if 'getPercentMatrix' in locals():
-	panic!("getPercentMatrix already defined!")
-getPercentMatrix = callback("getPercentMatrix")
-getPercentMatrixType = type(getPercentMatrix[0][0])
-println!(getPercentMatrixType)
-println!(getPercentMatrix)
-if(getPercentMatrixType is not float):
-	panic!("getPercentMatrix not float!")
-callback("setPercentMatrix", getPercentMatrix)
+println!("getPercentMatrix");
+let getPercentMatrix: Vec<Vec<f64>> = callback("getPercentMatrix", &[]);
+println!("getPercentMatrix: {:?}", getPercentMatrix);
+callback_void("setPercentMatrix", &[param(getPercentMatrix)]);
 
-println!("getPercentMatrixAsList")
-if 'getPercentMatrixAsList' in locals():
-	panic!("getPercentMatrixAsList already defined!")
-getPercentMatrixAsList = callback("getPercentMatrixAsList")
-getPercentMatrixAsListType = type(getPercentMatrixAsList[0][0])
-println!(getPercentMatrixAsListType)
-println!(getPercentMatrixAsList)
-if(getPercentMatrixAsListType is not float):
-	panic!("getPercentMatrixAsList not float!")
-callback("setPercentMatrixAsList", getPercentMatrixAsList)
+println!("getPercentMatrixAsList");
+let getPercentMatrixAsList: Vec<Vec<f64>> = callback("getPercentMatrixAsList", &[]);
+println!("getPercentMatrixAsList: {:?}", getPercentMatrixAsList);
+callback_void("setPercentMatrixAsList", &[param(getPercentMatrixAsList)]);

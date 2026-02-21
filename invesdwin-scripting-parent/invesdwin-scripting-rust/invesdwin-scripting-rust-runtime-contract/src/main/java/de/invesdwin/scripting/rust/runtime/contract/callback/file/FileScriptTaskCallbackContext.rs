@@ -37,6 +37,8 @@ pub fn callback_dynamic(method_name: &str, parameters: &[serde_json::Value]) -> 
     let response = fs::read_to_string(responseFile).unwrap();
     fs::remove_file(responseFile).unwrap();
 	
+	println!("response: {:?}", response);
+	
 	//evaluate response
     let engine = Engine::new();
     let mut scope = Scope::new();
@@ -54,6 +56,10 @@ pub fn callback_void(method_name: &str, parameters: &[serde_json::Value]) {
 pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &[serde_json::Value]) -> T {
     let dynamic = callback_dynamic(method_name, parameters);
     
+	println!("dynamic: {:?}", dynamic);
+	
+	println!("dynamic type: {:?}", dynamic.type_name());
+	
     // Handle unit type () specially for void methods
     if dynamic.is_unit() {
         // For unit type, just return () without parsing
@@ -62,6 +68,21 @@ pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &
         // For string type, convert directly to String using JSON for safety
         let string_val = dynamic.into_string().unwrap();
         serde_json::from_str(&format!("\"{}\"", string_val)).unwrap()
+	} else if dynamic.is_char() {
+        // For char type, return directly
+		let char_val = dynamic.as_char().unwrap();
+		unsafe { std::mem::transmute_copy(&char_val) }
+    } else if dynamic.is_array() {
+        // For array types, need to handle character arrays specially since JSON doesn't support chars
+        let dynamic_str = dynamic.to_string();
+        if dynamic_str.contains('\'') {
+            // Convert character array ['A','B','C'] to string array ["A","B","C"] by replacing ' with "
+            let json_str = dynamic_str.replace('\'', "\"");
+            serde_json::from_str(&json_str).unwrap()
+        } else {
+            // For other arrays, parse normally
+            serde_json::from_str(&dynamic_str).unwrap()
+        }
     } else {
         // For other types, parse from JSON
         serde_json::from_str(&dynamic.to_string()).unwrap()
