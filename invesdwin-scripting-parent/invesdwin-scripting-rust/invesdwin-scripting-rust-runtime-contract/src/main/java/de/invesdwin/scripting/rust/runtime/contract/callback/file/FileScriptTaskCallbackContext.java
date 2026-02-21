@@ -68,12 +68,12 @@ public class FileScriptTaskCallbackContext implements Closeable {
         this.handlerExecutor = Executors
                 .newFixedThreadPool(FileScriptTaskCallbackContext.class.getSimpleName() + "_" + uuid, 1);
         this.handlerExecutor.execute(new FileScriptTaskCallbackServerHandler(this));
-
     }
 
     public void init(final IScriptTaskEngine engine) {
         final IScriptTaskInputsRust inputs = (IScriptTaskInputsRust) engine.getInputs();
         inputs.cargoAdd("rhai");
+        //System.out.println("TODO: check if this dep can be removed");
         inputs.cargoAdd("serde");
 
         final ClassPathResource resource = new ClassPathResource(

@@ -31,11 +31,13 @@ pub fn callback_dynamic(method_name: &str, parameters: &[serde_json::Value]) -> 
     fs::rename(requestPartFile, requestFile).unwrap();
 	
 	//wait for response
-	while (!fs::metadata(responseFile).is_ok()) {
+	while !fs::metadata(responseFile).is_ok() {
 	    thread::sleep(Duration::from_millis(1));
 	}
     let response = fs::read_to_string(responseFile).unwrap();
     fs::remove_file(responseFile).unwrap();
+	
+	println!("response: {:?}", response);
 	
 	//evaluate response
     let engine = Engine::new();

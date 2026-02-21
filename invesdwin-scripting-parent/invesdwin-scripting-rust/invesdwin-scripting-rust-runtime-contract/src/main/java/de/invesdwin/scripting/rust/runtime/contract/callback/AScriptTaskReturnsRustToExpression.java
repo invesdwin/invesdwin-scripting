@@ -3,14 +3,13 @@ package de.invesdwin.scripting.rust.runtime.contract.callback;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.scripting.callback.IScriptTaskReturns;
-import de.invesdwin.scripting.rust.runtime.contract.IScriptTaskInputsRust;
 import de.invesdwin.util.assertions.Assertions;
 import de.invesdwin.util.math.Doubles;
 
 @NotThreadSafe
 public abstract class AScriptTaskReturnsRustToExpression implements IScriptTaskReturns {
 
-    public static final String NAN = IScriptTaskInputsRust.NAN;
+    public static final String NAN = "0.0/0.0";
 
     @Override
     public void returnCharacter(final char value) {
@@ -477,7 +476,7 @@ public abstract class AScriptTaskReturnsRustToExpression implements IScriptTaskR
 
     private String doubleToString(final double value) {
         if (Doubles.isNaN(value)) {
-            return "float('nan')";
+            return NAN;
         } else {
             return String.valueOf(value);
         }
