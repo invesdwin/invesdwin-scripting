@@ -29,12 +29,12 @@ public class ParametersAndReturnsTests {
         new ParametersAndReturnsTestInteger(runner).testInteger();
         new ParametersAndReturnsTestLong(runner).testLong();
         new ParametersAndReturnsTestCharacter(runner).testCharacter();
-        //        new ParametersAndReturnsTestString(runner).testString();
-        //        new ParametersAndReturnsTestBoolean(runner).testBoolean();
-        //        new ParametersAndReturnsTestNullPutGet(runner).testNullPutGet();
-        //        new ParametersAndReturnsTestEmpty(runner).testEmpty();
-        //        new ParametersAndReturnsTestEmptyMatrixValue(runner).testEmptyMatrixValue();
-        //        new ParametersAndReturnsTestDoubleNan(runner).testDoubleNan();
+        new ParametersAndReturnsTestString(runner).testString();
+        new ParametersAndReturnsTestBoolean(runner).testBoolean();
+        new ParametersAndReturnsTestNullPutGet(runner).testNullPutGet();
+        new ParametersAndReturnsTestEmpty(runner).testEmpty();
+        new ParametersAndReturnsTestEmptyMatrixValue(runner).testEmptyMatrixValue();
+        //     TODO   new ParametersAndReturnsTestDoubleNan(runner).testDoubleNan();
     }
 
     public void testParallel() {

@@ -37,8 +37,6 @@ pub fn callback_dynamic(method_name: &str, parameters: &[serde_json::Value]) -> 
     let response = fs::read_to_string(responseFile).unwrap();
     fs::remove_file(responseFile).unwrap();
 	
-	println!("response: {:?}", response);
-	
 	//evaluate response
     let engine = Engine::new();
     let mut scope = Scope::new();
@@ -74,8 +72,8 @@ pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &
 	
     // Handle unit type () specially for void methods
     if dynamic.is_unit() {
-        // For unit type, just return () without parsing
-        unsafe { std::mem::transmute_copy(&()) }
+        // For unit type, use JSON null to properly deserialize as Option::None
+        serde_json::from_str("null").unwrap()
     } else if dynamic.is_string() {
         // For string type, convert directly to String using JSON for safety
         let string_val = dynamic.into_string().unwrap();
