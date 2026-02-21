@@ -53,21 +53,18 @@ pub fn callback_void(method_name: &str, parameters: &[serde_json::Value]) {
 :}
 
 :{
-fn is_first_element_char(d: &Dynamic) -> bool {
-    // 1. Try to cast current Dynamic to an Array
+fn callback_is_first_element_char(d: &Dynamic) -> bool {
     if let Some(arr) = d.read_lock::<Array>() {
-        // 2. Check if array is empty
         if let Some(first) = arr.first() {
-            // 3. Recurse: if the first element is another array, keep going
-            return is_first_element_char(first);
+            return callback_is_first_element_char(first);
         }
-        return false; // Empty array has no first element
+        return false;
     }
-
-    // 4. Base Case: It's not an array, so check if it's a char
     d.is_char()
 }
+:}
 
+:{
 pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &[serde_json::Value]) -> T {
     let dynamic = callback_dynamic(method_name, parameters);
     
@@ -90,7 +87,7 @@ pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &
     } else if dynamic.is_array() {
         // For array types, need to handle character arrays specially since JSON doesn't support chars
         // Check if the first element is a character to determine if this is a character array/matrix
-        if is_first_element_char(&dynamic) {
+        if callback_is_first_element_char(&dynamic) {
             // This is a character array or matrix, convert by replacing ' with "
             let dynamic_str = dynamic.to_string();
             let json_str = dynamic_str.replace('\'', "\"");

@@ -20,14 +20,14 @@ public class ParametersAndReturnsTests {
     }
 
     public void test() {
-        //        new ParametersAndReturnsTestByte(runner).testByte();
-        //        new ParametersAndReturnsTestFloat(runner).testFloat();
-        //        new ParametersAndReturnsTestDouble(runner).testDouble();
-        //        new ParametersAndReturnsTestDecimal(runner).testDecimal();
-        //        new ParametersAndReturnsTestPercent(runner).testPercent();
-        //        new ParametersAndReturnsTestShort(runner).testShort();
-        //        new ParametersAndReturnsTestInteger(runner).testInteger();
-        //        new ParametersAndReturnsTestLong(runner).testLong();
+        new ParametersAndReturnsTestByte(runner).testByte();
+        new ParametersAndReturnsTestFloat(runner).testFloat();
+        new ParametersAndReturnsTestDouble(runner).testDouble();
+        new ParametersAndReturnsTestDecimal(runner).testDecimal();
+        new ParametersAndReturnsTestPercent(runner).testPercent();
+        new ParametersAndReturnsTestShort(runner).testShort();
+        new ParametersAndReturnsTestInteger(runner).testInteger();
+        new ParametersAndReturnsTestLong(runner).testLong();
         new ParametersAndReturnsTestCharacter(runner).testCharacter();
         //        new ParametersAndReturnsTestString(runner).testString();
         //        new ParametersAndReturnsTestBoolean(runner).testBoolean();
