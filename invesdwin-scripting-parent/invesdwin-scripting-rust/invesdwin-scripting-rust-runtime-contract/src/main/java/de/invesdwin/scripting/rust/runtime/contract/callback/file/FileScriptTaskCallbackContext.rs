@@ -37,8 +37,6 @@ pub fn callback_rhai(method_name: &str, parameters: &[serde_json::Value]) -> Dyn
     let response = fs::read_to_string(responseFile).unwrap();
     fs::remove_file(responseFile).unwrap();
 	
-	println!("response: {:?}", response);
-	
 	//evaluate response
     let engine = Engine::new();
     let mut scope = Scope::new();
@@ -56,10 +54,6 @@ pub fn callback_void(method_name: &str, parameters: &[serde_json::Value]) {
 pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &[serde_json::Value]) -> T {
     let dynamic = callback_rhai(method_name, parameters);
     
-	println!("dynamic: {:?}", dynamic);
-	
-	println!("dynamic type: {:?}", dynamic.type_name());
-	
     // Handle unit type () specially for void methods
     if dynamic.is_unit() {
         // For unit type, use JSON null to properly deserialize as Option::None
