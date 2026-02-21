@@ -32,7 +32,7 @@ public class EvcxrScriptTaskRunnerRustTest extends ATest {
         new ParametersAndReturnsTests(runner).test();
     }
 
-    @Disabled("not yet implemented")
+    @Disabled("very slow, thus disabled per default")
     @Test
     public void testCallbackParallel() {
         new ParametersAndReturnsTests(runner).testParallel();
