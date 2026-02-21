@@ -3,7 +3,7 @@ use std::fs::{self, File};
 use std::io::{self, Read, Write};
 use std::thread;
 use std::time::Duration;
-use rhai::{Engine, Scope, Dynamic};
+use rhai::{Engine, Scope, Dynamic, Array};
 use serde_json;
 :}
 
@@ -53,6 +53,21 @@ pub fn callback_void(method_name: &str, parameters: &[serde_json::Value]) {
 :}
 
 :{
+fn is_first_element_char(d: &Dynamic) -> bool {
+    // 1. Try to cast current Dynamic to an Array
+    if let Some(arr) = d.read_lock::<Array>() {
+        // 2. Check if array is empty
+        if let Some(first) = arr.first() {
+            // 3. Recurse: if the first element is another array, keep going
+            return is_first_element_char(first);
+        }
+        return false; // Empty array has no first element
+    }
+
+    // 4. Base Case: It's not an array, so check if it's a char
+    d.is_char()
+}
+
 pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &[serde_json::Value]) -> T {
     let dynamic = callback_dynamic(method_name, parameters);
     
@@ -74,13 +89,15 @@ pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &
 		unsafe { std::mem::transmute_copy(&char_val) }
     } else if dynamic.is_array() {
         // For array types, need to handle character arrays specially since JSON doesn't support chars
-        let dynamic_str = dynamic.to_string();
-        if dynamic_str.contains('\'') {
-            // Convert character array ['A','B','C'] to string array ["A","B","C"] by replacing ' with "
+        // Check if the first element is a character to determine if this is a character array/matrix
+        if is_first_element_char(&dynamic) {
+            // This is a character array or matrix, convert by replacing ' with "
+            let dynamic_str = dynamic.to_string();
             let json_str = dynamic_str.replace('\'', "\"");
             serde_json::from_str(&json_str).unwrap()
         } else {
             // For other arrays, parse normally
+            let dynamic_str = dynamic.to_string();
             serde_json::from_str(&dynamic_str).unwrap()
         }
     } else {
