@@ -14,7 +14,7 @@ pub fn param<T: serde::Serialize>(value: T) -> serde_json::Value {
 :}
 
 :{
-pub fn callback(method_name: &str, parameters: &[serde_json::Value]) -> Dynamic {
+pub fn callback_dynamic(method_name: &str, parameters: &[serde_json::Value]) -> Dynamic {
 	let requestPartFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_PART_FILE};
 	let requestFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_FILE};
 	let responseFile = {SCRIPT_TASK_CALLBACK_CONTEXT_RESPONSE_FILE};
@@ -41,5 +41,30 @@ pub fn callback(method_name: &str, parameters: &[serde_json::Value]) -> Dynamic 
     let engine = Engine::new();
     let mut scope = Scope::new();
     engine.eval_with_scope::<Dynamic>(&mut scope, &response).unwrap()
+}
+:}
+
+:{
+pub fn callback_void(method_name: &str, parameters: &[serde_json::Value]) {
+    callback_dynamic(method_name, parameters);
+}
+:}
+
+:{
+pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &[serde_json::Value]) -> T {
+    let dynamic = callback_dynamic(method_name, parameters);
+    
+    // Handle unit type () specially for void methods
+    if dynamic.is_unit() {
+        // For unit type, just return () without parsing
+        unsafe { std::mem::transmute_copy(&()) }
+    } else if dynamic.is_string() {
+        // For string type, convert directly to String using JSON for safety
+        let string_val = dynamic.into_string().unwrap();
+        serde_json::from_str(&format!("\"{}\"", string_val)).unwrap()
+    } else {
+        // For other types, parse from JSON
+        serde_json::from_str(&dynamic.to_string()).unwrap()
+    }
 }
 :}

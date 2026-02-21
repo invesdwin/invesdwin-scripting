@@ -27,7 +27,6 @@ public class EvcxrScriptTaskRunnerRustTest extends ATest {
         new InputsAndResultsTests(runner).testParallel();
     }
 
-    @Disabled("not yet implemented")
     @Test
     public void testCallback() {
         new ParametersAndReturnsTests(runner).test();
@@ -39,7 +38,6 @@ public class EvcxrScriptTaskRunnerRustTest extends ATest {
         new ParametersAndReturnsTests(runner).testParallel();
     }
 
-    //    @Disabled("not yet implemented")
     @Test
     public void testSimpleCallback() {
         new SimpleCallbackTest(runner).testSimpleCallback();

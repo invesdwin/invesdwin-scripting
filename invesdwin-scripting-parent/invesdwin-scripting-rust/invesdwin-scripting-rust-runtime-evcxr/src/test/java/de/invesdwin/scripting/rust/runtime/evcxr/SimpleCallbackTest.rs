@@ -1,17 +1,17 @@
 println!("putUuid: {}", putUuid);
 
-let getSecretStaticCallback = callback("getSecretStatic", &[param(putUuid)]).as_string().unwrap();
+let getSecretStaticCallback: String = callback("getSecretStatic", &[param(putUuid)]);
 println!("getSecretStaticCallback: {}", getSecretStaticCallback);
 
-let getSecretCallback = callback("getSecret", &[param(putUuid)]).as_string().unwrap();
+let getSecretCallback: String = callback("getSecret", &[param(putUuid)]);
 println!("getSecretCallback: {}", getSecretCallback);
 
-let getSecretExpressionCallback = callback("getSecretExpression", &[param(putUuid)]).as_string().unwrap();
+let getSecretExpressionCallback: String = callback("getSecretExpression", &[param(putUuid)]);
 println!("getSecretExpressionCallback: {}", getSecretExpressionCallback);
 
-callback("voidMethod", &[]);
+callback::<()>("voidMethod", &[]);
 
-let callManyParams = callback("callManyParams", &[
+let callManyParams: f64 = callback("callManyParams", &[
     param(true),
     param(2),
     param(3),
@@ -22,13 +22,13 @@ let callManyParams = callback("callManyParams", &[
     param(8.0),
     param("123456789"),
     param(10.0)
-]).as_float().unwrap();
+]);
 println!("callManyParams: {}", callManyParams);
 if (callManyParams != 55.0) {
     panic!("callManyParams unexpected result: {}", callManyParams);
 }
 
-let callManyParamsExpression = callback("callManyParamsExpression", &[
+let callManyParamsExpression: f64 = callback("callManyParamsExpression", &[
     param(true),
     param(2),
     param(3),
@@ -39,13 +39,13 @@ let callManyParamsExpression = callback("callManyParamsExpression", &[
     param(8.0),
     param("123456789"),
     param(10.0)
-]).as_float().unwrap();
+]);
 println!("callManyParamsExpression: {}", callManyParamsExpression);
 if (callManyParamsExpression != 55.0) {
     panic!("callManyParamsExpression unexpected result: {}", callManyParamsExpression);
 }
 
-let callManyParamsExpressionMultiline = callback("callManyParamsExpressionMultiline", &[
+let callManyParamsExpressionMultiline: f64 = callback("callManyParamsExpressionMultiline", &[
     param(true),
     param(2),
     param(3),
@@ -56,7 +56,7 @@ let callManyParamsExpressionMultiline = callback("callManyParamsExpressionMultil
     param(8.0),
     param("123456789"),
     param(10.0)
-]).as_float().unwrap();
+]);
 println!("callManyParamsExpressionMultiline: {}", callManyParamsExpressionMultiline);
 if (callManyParamsExpressionMultiline != 55.0) {
     panic!("callManyParamsExpressionMultiline unexpected result: {}", callManyParamsExpressionMultiline);
