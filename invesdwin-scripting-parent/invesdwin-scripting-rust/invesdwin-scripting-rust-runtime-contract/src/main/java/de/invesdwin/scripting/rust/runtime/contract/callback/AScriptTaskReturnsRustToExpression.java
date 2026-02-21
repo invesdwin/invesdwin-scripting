@@ -9,6 +9,7 @@ import de.invesdwin.util.math.Doubles;
 @NotThreadSafe
 public abstract class AScriptTaskReturnsRustToExpression implements IScriptTaskReturns {
 
+    //rhai does not like f64::NAN
     public static final String NAN = "0.0/0.0";
 
     @Override

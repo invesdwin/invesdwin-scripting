@@ -73,8 +73,11 @@ public class FileScriptTaskCallbackContext implements Closeable {
     public void init(final IScriptTaskEngine engine) {
         final IScriptTaskInputsRust inputs = (IScriptTaskInputsRust) engine.getInputs();
         inputs.cargoAdd("rhai");
-        //System.out.println("TODO: check if this dep can be removed");
         inputs.cargoAdd("serde");
+        /*
+         * serde_json5 supports NaN for responses while serde_json does not, but serde_json is required for requests
+         * since serde_json5 does not support Value as it seems
+         */
         inputs.cargoAdd("serde_json5");
 
         final ClassPathResource resource = new ClassPathResource(
