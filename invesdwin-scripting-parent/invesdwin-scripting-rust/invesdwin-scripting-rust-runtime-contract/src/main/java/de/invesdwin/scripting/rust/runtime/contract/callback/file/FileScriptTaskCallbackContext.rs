@@ -14,7 +14,7 @@ pub fn param<T: serde::Serialize>(value: T) -> serde_json::Value {
 :}
 
 :{
-pub fn callback_dynamic(method_name: &str, parameters: &[serde_json::Value]) -> Dynamic {
+pub fn callback_rhai(method_name: &str, parameters: &[serde_json::Value]) -> Dynamic {
 	let requestPartFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_PART_FILE};
 	let requestFile = {SCRIPT_TASK_CALLBACK_CONTEXT_REQUEST_FILE};
 	let responseFile = {SCRIPT_TASK_CALLBACK_CONTEXT_RESPONSE_FILE};
@@ -48,13 +48,13 @@ pub fn callback_dynamic(method_name: &str, parameters: &[serde_json::Value]) -> 
 
 :{
 pub fn callback_void(method_name: &str, parameters: &[serde_json::Value]) {
-    callback_dynamic(method_name, parameters);
+    callback_rhai(method_name, parameters);
 }
 :}
 
 :{
 pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &[serde_json::Value]) -> T {
-    let dynamic = callback_dynamic(method_name, parameters);
+    let dynamic = callback_rhai(method_name, parameters);
     
 	println!("dynamic: {:?}", dynamic);
 	
