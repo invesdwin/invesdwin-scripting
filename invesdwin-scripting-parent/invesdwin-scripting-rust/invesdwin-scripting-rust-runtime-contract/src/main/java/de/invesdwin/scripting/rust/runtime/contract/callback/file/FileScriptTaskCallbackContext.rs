@@ -4,7 +4,7 @@ use std::io::{self, Read, Write};
 use std::thread;
 use std::time::Duration;
 use rhai::{Engine, Scope, Dynamic, Array};
-use serde_json;
+use serde_json5;
 :}
 
 :{
@@ -75,11 +75,11 @@ pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &
     // Handle unit type () specially for void methods
     if dynamic.is_unit() {
         // For unit type, use JSON null to properly deserialize as Option::None
-        serde_json::from_str("null").unwrap()
+        serde_json5::from_str("null").unwrap()
     } else if dynamic.is_string() {
         // For string type, convert directly to String using JSON for safety
         let string_val = dynamic.into_string().unwrap();
-        serde_json::from_str(&format!("\"{}\"", string_val)).unwrap()
+        serde_json5::from_str(&format!("\"{}\"", string_val)).unwrap()
 	} else if dynamic.is_char() {
         // For char type, return directly
 		let char_val = dynamic.as_char().unwrap();
@@ -91,15 +91,14 @@ pub fn callback<T: serde::de::DeserializeOwned>(method_name: &str, parameters: &
             // This is a character array or matrix, convert by replacing ' with "
             let dynamic_str = dynamic.to_string();
             let json_str = dynamic_str.replace('\'', "\"");
-            serde_json::from_str(&json_str).unwrap()
+            serde_json5::from_str(&json_str).unwrap()
         } else {
-            // For other arrays, parse normally
-            let dynamic_str = dynamic.to_string();
-            serde_json::from_str(&dynamic_str).unwrap()
+            // For other types, parse from JSON
+            serde_json5::from_str(&dynamic.to_string()).unwrap()
         }
     } else {
         // For other types, parse from JSON
-        serde_json::from_str(&dynamic.to_string()).unwrap()
+        serde_json5::from_str(&dynamic.to_string()).unwrap()
     }
 }
 :}

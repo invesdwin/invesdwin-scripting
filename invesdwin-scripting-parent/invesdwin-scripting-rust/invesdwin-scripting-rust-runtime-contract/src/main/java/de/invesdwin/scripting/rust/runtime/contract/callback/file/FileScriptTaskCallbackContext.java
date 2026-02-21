@@ -75,6 +75,7 @@ public class FileScriptTaskCallbackContext implements Closeable {
         inputs.cargoAdd("rhai");
         //System.out.println("TODO: check if this dep can be removed");
         inputs.cargoAdd("serde");
+        inputs.cargoAdd("serde_json5");
 
         final ClassPathResource resource = new ClassPathResource(
                 FileScriptTaskCallbackContext.class.getSimpleName() + ".rs", FileScriptTaskCallbackContext.class);
