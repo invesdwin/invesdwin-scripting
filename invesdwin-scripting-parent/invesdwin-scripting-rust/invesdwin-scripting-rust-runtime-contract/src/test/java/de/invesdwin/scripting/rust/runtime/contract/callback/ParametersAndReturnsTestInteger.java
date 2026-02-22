@@ -2,6 +2,7 @@ package de.invesdwin.scripting.rust.runtime.contract.callback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -28,10 +29,10 @@ public class ParametersAndReturnsTestInteger {
 
     public void testInteger() {
         new AScriptTaskRust<Void>() {
+            private final ParametersAndReturnsTestIntegerCallback callback = new ParametersAndReturnsTestIntegerCallback();
 
             @Override
             public IScriptTaskCallback getCallback() {
-                final ParametersAndReturnsTestIntegerCallback callback = new ParametersAndReturnsTestIntegerCallback();
                 return new ReflectiveScriptTaskCallback(callback);
             }
 
@@ -46,12 +47,17 @@ public class ParametersAndReturnsTestInteger {
 
             @Override
             public Void extractResults(final IScriptTaskResults results) {
+                //force evaluation in irust
+                Assertions.checkTrue(results.getBoolean("true"));
+                Assertions.assertThat(callback.setterMethodsCalled.get()).isEqualTo(5);
                 return null;
             }
         }.run(runner);
     }
 
     public static class ParametersAndReturnsTestIntegerCallback {
+
+        private final AtomicInteger setterMethodsCalled = new AtomicInteger();
 
         //putInteger
         private final int putInteger;
@@ -105,6 +111,7 @@ public class ParametersAndReturnsTestInteger {
 
         public void setInteger(final int putInteger) {
             Assertions.assertThat(this.putInteger).isEqualTo(putInteger);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public int[] getIntegerVector() {
@@ -113,6 +120,7 @@ public class ParametersAndReturnsTestInteger {
 
         public void setIntegerVector(final int[] putIntegerVector) {
             Assertions.assertThat(this.putIntegerVector).isEqualTo(putIntegerVector);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<Integer> getIntegerVectorAsList() {
@@ -121,6 +129,7 @@ public class ParametersAndReturnsTestInteger {
 
         public void setIntegerVectorAsList(final List<Integer> putIntegerVectorAsList) {
             Assertions.assertThat(this.putIntegerVectorAsList).isEqualTo(putIntegerVectorAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public int[][] getIntegerMatrix() {
@@ -129,6 +138,7 @@ public class ParametersAndReturnsTestInteger {
 
         public void setIntegerMatrix(final int[][] putIntegerMatrix) {
             Assertions.assertThat(this.putIntegerMatrix).isEqualTo(putIntegerMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Integer>> getIntegerMatrixAsList() {
@@ -137,6 +147,7 @@ public class ParametersAndReturnsTestInteger {
 
         public void setIntegerMatrixAsList(final List<List<Integer>> putIntegerMatrixAsList) {
             Assertions.assertThat(this.putIntegerMatrixAsList).isEqualTo(putIntegerMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
     }

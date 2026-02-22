@@ -2,6 +2,7 @@ package de.invesdwin.scripting.rust.runtime.contract.callback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -31,10 +32,10 @@ public class ParametersAndReturnsTestPercent {
 
     public void testPercent() {
         new AScriptTaskRust<Void>() {
+            private final ParametersAndReturnsTestPercentCallback callback = new ParametersAndReturnsTestPercentCallback();
 
             @Override
             public IScriptTaskCallback getCallback() {
-                final ParametersAndReturnsTestPercentCallback callback = new ParametersAndReturnsTestPercentCallback();
                 return new ReflectiveScriptTaskCallback(callback);
             }
 
@@ -49,12 +50,17 @@ public class ParametersAndReturnsTestPercent {
 
             @Override
             public Void extractResults(final IScriptTaskResults results) {
+                //force evaluation in irust
+                Assertions.checkTrue(results.getBoolean("true"));
+                Assertions.assertThat(callback.setterMethodsCalled.get()).isEqualTo(5);
                 return null;
             }
         }.run(runner);
     }
 
     public static class ParametersAndReturnsTestPercentCallback {
+
+        private final AtomicInteger setterMethodsCalled = new AtomicInteger();
 
         //putPercent
         private final Percent putPercent;
@@ -107,6 +113,7 @@ public class ParametersAndReturnsTestPercent {
 
         public void setPercent(final Percent putPercent) {
             Assertions.assertThat(this.putPercent).isEqualTo(putPercent);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public Percent[] getPercentVector() {
@@ -115,6 +122,7 @@ public class ParametersAndReturnsTestPercent {
 
         public void setPercentVector(final Percent[] putPercentVector) {
             Assertions.assertThat(this.putPercentVector).isEqualTo(putPercentVector);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<Percent> getPercentVectorAsList() {
@@ -123,6 +131,7 @@ public class ParametersAndReturnsTestPercent {
 
         public void setPercentVectorAsList(final List<Percent> putPercentVectorAsList) {
             Assertions.assertThat(this.putPercentVectorAsList).isEqualTo(putPercentVectorAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public Percent[][] getPercentMatrix() {
@@ -131,6 +140,7 @@ public class ParametersAndReturnsTestPercent {
 
         public void setPercentMatrix(final Percent[][] putPercentMatrix) {
             Assertions.assertThat(this.putPercentMatrix).isEqualTo(putPercentMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Percent>> getPercentMatrixAsList() {
@@ -139,6 +149,7 @@ public class ParametersAndReturnsTestPercent {
 
         public void setPercentMatrixAsList(final List<List<Percent>> putPercentMatrixAsList) {
             Assertions.assertThat(this.putPercentMatrixAsList).isEqualTo(putPercentMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
     }

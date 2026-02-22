@@ -1,6 +1,7 @@
 package de.invesdwin.scripting.rust.runtime.contract.callback;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -37,10 +38,10 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
     public void testEmptyMatrixValue() {
         new AScriptTaskRust<Void>() {
+            private final ParametersAndReturnsTestEmptyMatrixValueCallback callback = new ParametersAndReturnsTestEmptyMatrixValueCallback();
 
             @Override
             public IScriptTaskCallback getCallback() {
-                final ParametersAndReturnsTestEmptyMatrixValueCallback callback = new ParametersAndReturnsTestEmptyMatrixValueCallback();
                 return new ReflectiveScriptTaskCallback(callback);
             }
 
@@ -56,12 +57,17 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
             @Override
             public Void extractResults(final IScriptTaskResults results) {
+                //force evaluation in irust
+                Assertions.checkTrue(results.getBoolean("true"));
+                Assertions.assertThat(callback.setterMethodsCalled.get()).isEqualTo(22);
                 return null;
             }
         }.run(runner);
     }
 
     public static class ParametersAndReturnsTestEmptyMatrixValueCallback {
+
+        private final AtomicInteger setterMethodsCalled = new AtomicInteger();
 
         private final boolean[][] putBooleanMatrix;
         private final List<List<Boolean>> putBooleanMatrixAsList;
@@ -172,6 +178,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setBooleanMatrix(final boolean[][] putBooleanMatrix) {
             Assertions.checkEquals(this.putBooleanMatrix, putBooleanMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Boolean>> getBooleanMatrixAsList() {
@@ -180,6 +187,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setBooleanMatrixAsList(final List<List<Boolean>> putBooleanMatrixAsList) {
             Assertions.checkEquals(this.putBooleanMatrixAsList, putBooleanMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public byte[][] getByteMatrix() {
@@ -188,6 +196,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setByteMatrix(final byte[][] putByteMatrix) {
             Assertions.checkEquals(this.putByteMatrix, putByteMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Byte>> getByteMatrixAsList() {
@@ -196,6 +205,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setByteMatrixAsList(final List<List<Byte>> putByteMatrixAsList) {
             Assertions.checkEquals(this.putByteMatrixAsList, putByteMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public char[][] getCharacterMatrix() {
@@ -204,6 +214,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setCharacterMatrix(final char[][] putCharacterMatrix) {
             Assertions.checkEquals(this.putCharacterMatrix, putCharacterMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Character>> getCharacterMatrixAsList() {
@@ -212,6 +223,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setCharacterMatrixAsList(final List<List<Character>> putCharacterMatrixAsList) {
             Assertions.checkEquals(this.putCharacterMatrixAsList, putCharacterMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public Decimal[][] getDecimalMatrix() {
@@ -220,6 +232,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setDecimalMatrix(final Decimal[][] putDecimalMatrix) {
             Assertions.checkEquals(this.putDecimalMatrix, putDecimalMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Decimal>> getDecimalMatrixAsList() {
@@ -228,6 +241,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setDecimalMatrixAsList(final List<List<Decimal>> putDecimalMatrixAsList) {
             Assertions.checkEquals(this.putDecimalMatrixAsList, putDecimalMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public double[][] getDoubleMatrix() {
@@ -236,6 +250,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setDoubleMatrix(final double[][] putDoubleMatrix) {
             Assertions.checkEquals(this.putDoubleMatrix, putDoubleMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Double>> getDoubleMatrixAsList() {
@@ -244,6 +259,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setDoubleMatrixAsList(final List<List<Double>> putDoubleMatrixAsList) {
             Assertions.checkEquals(this.putDoubleMatrixAsList, putDoubleMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public float[][] getFloatMatrix() {
@@ -252,6 +268,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setFloatMatrix(final float[][] putFloatMatrix) {
             Assertions.checkEquals(this.putFloatMatrix, putFloatMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Float>> getFloatMatrixAsList() {
@@ -260,6 +277,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setFloatMatrixAsList(final List<List<Float>> putFloatMatrixAsList) {
             Assertions.checkEquals(this.putFloatMatrixAsList, putFloatMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public int[][] getIntegerMatrix() {
@@ -268,6 +286,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setIntegerMatrix(final int[][] putIntegerMatrix) {
             Assertions.checkEquals(this.putIntegerMatrix, putIntegerMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Integer>> getIntegerMatrixAsList() {
@@ -276,6 +295,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setIntegerMatrixAsList(final List<List<Integer>> putIntegerMatrixAsList) {
             Assertions.checkEquals(this.putIntegerMatrixAsList, putIntegerMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public long[][] getLongMatrix() {
@@ -284,6 +304,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setLongMatrix(final long[][] putLongMatrix) {
             Assertions.checkEquals(this.putLongMatrix, putLongMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Long>> getLongMatrixAsList() {
@@ -292,6 +313,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setLongMatrixAsList(final List<List<Long>> putLongMatrixAsList) {
             Assertions.checkEquals(this.putLongMatrixAsList, putLongMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public Percent[][] getPercentMatrix() {
@@ -300,6 +322,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setPercentMatrix(final Percent[][] putPercentMatrix) {
             Assertions.checkEquals(this.putPercentMatrix, putPercentMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Percent>> getPercentMatrixAsList() {
@@ -308,6 +331,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setPercentMatrixAsList(final List<List<Percent>> putPercentMatrixAsList) {
             Assertions.checkEquals(this.putPercentMatrixAsList, putPercentMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public short[][] getShortMatrix() {
@@ -316,6 +340,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setShortMatrix(final short[][] putShortMatrix) {
             Assertions.checkEquals(this.putShortMatrix, putShortMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Short>> getShortMatrixAsList() {
@@ -324,6 +349,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setShortMatrixAsList(final List<List<Short>> putShortMatrixAsList) {
             Assertions.checkEquals(this.putShortMatrixAsList, putShortMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public String[][] getStringMatrix() {
@@ -332,6 +358,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setStringMatrix(final String[][] putStringMatrix) {
             Assertions.checkEquals(this.putStringMatrix, putStringMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<String>> getStringMatrixAsList() {
@@ -340,6 +367,7 @@ public class ParametersAndReturnsTestEmptyMatrixValue {
 
         public void setStringMatrixAsList(final List<List<String>> putStringMatrixAsList) {
             Assertions.checkEquals(this.putStringMatrixAsList, putStringMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
     }

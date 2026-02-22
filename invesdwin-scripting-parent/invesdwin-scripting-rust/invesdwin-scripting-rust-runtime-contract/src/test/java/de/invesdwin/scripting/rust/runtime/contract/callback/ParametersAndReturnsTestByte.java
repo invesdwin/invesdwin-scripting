@@ -2,6 +2,7 @@ package de.invesdwin.scripting.rust.runtime.contract.callback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -28,10 +29,10 @@ public class ParametersAndReturnsTestByte {
 
     public void testByte() {
         new AScriptTaskRust<Void>() {
+            private final ParametersAndReturnsTestByteCallback callback = new ParametersAndReturnsTestByteCallback();
 
             @Override
             public IScriptTaskCallback getCallback() {
-                final ParametersAndReturnsTestByteCallback callback = new ParametersAndReturnsTestByteCallback();
                 return new ReflectiveScriptTaskCallback(callback);
             }
 
@@ -46,12 +47,17 @@ public class ParametersAndReturnsTestByte {
 
             @Override
             public Void extractResults(final IScriptTaskResults results) {
+                //force evaluation in irust
+                Assertions.checkTrue(results.getBoolean("true"));
+                Assertions.assertThat(callback.setterMethodsCalled.get()).isEqualTo(5);
                 return null;
             }
         }.run(runner);
     }
 
     public static class ParametersAndReturnsTestByteCallback {
+
+        private final AtomicInteger setterMethodsCalled = new AtomicInteger();
 
         //putByte
         private final byte putByte;
@@ -104,6 +110,7 @@ public class ParametersAndReturnsTestByte {
 
         public void setByte(final byte putByte) {
             Assertions.assertThat(this.putByte).isEqualTo(putByte);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public byte[] getByteVector() {
@@ -112,6 +119,7 @@ public class ParametersAndReturnsTestByte {
 
         public void setByteVector(final byte[] putByteVector) {
             Assertions.assertThat(this.putByteVector).isEqualTo(putByteVector);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<Byte> getByteVectorAsList() {
@@ -120,6 +128,7 @@ public class ParametersAndReturnsTestByte {
 
         public void setByteVectorAsList(final List<Byte> putByteVectorAsList) {
             Assertions.assertThat(this.putByteVectorAsList).isEqualTo(putByteVectorAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public byte[][] getByteMatrix() {
@@ -128,6 +137,7 @@ public class ParametersAndReturnsTestByte {
 
         public void setByteMatrix(final byte[][] putByteMatrix) {
             Assertions.assertThat(this.putByteMatrix).isEqualTo(putByteMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Byte>> getByteMatrixAsList() {
@@ -136,6 +146,7 @@ public class ParametersAndReturnsTestByte {
 
         public void setByteMatrixAsList(final List<List<Byte>> putByteMatrixAsList) {
             Assertions.assertThat(this.putByteMatrixAsList).isEqualTo(putByteMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
     }

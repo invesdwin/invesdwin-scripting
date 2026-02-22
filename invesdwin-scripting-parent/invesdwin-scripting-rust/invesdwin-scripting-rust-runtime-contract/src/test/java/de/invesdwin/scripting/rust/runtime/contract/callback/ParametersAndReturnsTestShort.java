@@ -2,6 +2,7 @@ package de.invesdwin.scripting.rust.runtime.contract.callback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -28,10 +29,10 @@ public class ParametersAndReturnsTestShort {
 
     public void testShort() {
         new AScriptTaskRust<Void>() {
+            private final ParametersAndReturnsTestShortCallback callback = new ParametersAndReturnsTestShortCallback();
 
             @Override
             public IScriptTaskCallback getCallback() {
-                final ParametersAndReturnsTestShortCallback callback = new ParametersAndReturnsTestShortCallback();
                 return new ReflectiveScriptTaskCallback(callback);
             }
 
@@ -46,12 +47,17 @@ public class ParametersAndReturnsTestShort {
 
             @Override
             public Void extractResults(final IScriptTaskResults results) {
+                //force evaluation in irust
+                Assertions.checkTrue(results.getBoolean("true"));
+                Assertions.assertThat(callback.setterMethodsCalled.get()).isEqualTo(5);
                 return null;
             }
         }.run(runner);
     }
 
     public static class ParametersAndReturnsTestShortCallback {
+
+        private final AtomicInteger setterMethodsCalled = new AtomicInteger();
 
         //putShort
         private final short putShort;
@@ -104,6 +110,7 @@ public class ParametersAndReturnsTestShort {
 
         public void setShort(final short putShort) {
             Assertions.assertThat(this.putShort).isEqualTo(putShort);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public short[] getShortVector() {
@@ -112,6 +119,7 @@ public class ParametersAndReturnsTestShort {
 
         public void setShortVector(final short[] putShortVector) {
             Assertions.assertThat(this.putShortVector).isEqualTo(putShortVector);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<Short> getShortVectorAsList() {
@@ -120,6 +128,7 @@ public class ParametersAndReturnsTestShort {
 
         public void setShortVectorAsList(final List<Short> putShortVectorAsList) {
             Assertions.assertThat(this.putShortVectorAsList).isEqualTo(putShortVectorAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public short[][] getShortMatrix() {
@@ -128,6 +137,7 @@ public class ParametersAndReturnsTestShort {
 
         public void setShortMatrix(final short[][] putShortMatrix) {
             Assertions.assertThat(this.putShortMatrix).isEqualTo(putShortMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Short>> getShortMatrixAsList() {
@@ -136,6 +146,7 @@ public class ParametersAndReturnsTestShort {
 
         public void setShortMatrixAsList(final List<List<Short>> putShortMatrixAsList) {
             Assertions.assertThat(this.putShortMatrixAsList).isEqualTo(putShortMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
     }

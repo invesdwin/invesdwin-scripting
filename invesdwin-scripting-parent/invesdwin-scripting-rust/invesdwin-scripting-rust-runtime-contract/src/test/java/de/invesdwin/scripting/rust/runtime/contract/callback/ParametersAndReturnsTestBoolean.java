@@ -2,6 +2,7 @@ package de.invesdwin.scripting.rust.runtime.contract.callback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -28,10 +29,10 @@ public class ParametersAndReturnsTestBoolean {
 
     public void testBoolean() {
         new AScriptTaskRust<Void>() {
+            private final ParametersAndReturnsTestBooleanCallback callback = new ParametersAndReturnsTestBooleanCallback();
 
             @Override
             public IScriptTaskCallback getCallback() {
-                final ParametersAndReturnsTestBooleanCallback callback = new ParametersAndReturnsTestBooleanCallback();
                 return new ReflectiveScriptTaskCallback(callback);
             }
 
@@ -46,12 +47,17 @@ public class ParametersAndReturnsTestBoolean {
 
             @Override
             public Void extractResults(final IScriptTaskResults results) {
+                //force evaluation in irust
+                Assertions.checkTrue(results.getBoolean("true"));
+                Assertions.assertThat(callback.setterMethodsCalled.get()).isEqualTo(5);
                 return null;
             }
         }.run(runner);
     }
 
     public static class ParametersAndReturnsTestBooleanCallback {
+
+        private final AtomicInteger setterMethodsCalled = new AtomicInteger();
 
         //putBoolean
         private final boolean putBoolean;
@@ -104,6 +110,7 @@ public class ParametersAndReturnsTestBoolean {
 
         public void setBoolean(final boolean putBoolean) {
             Assertions.assertThat(this.putBoolean).isEqualTo(putBoolean);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public boolean[] getBooleanVector() {
@@ -112,6 +119,7 @@ public class ParametersAndReturnsTestBoolean {
 
         public void setBooleanVector(final boolean[] putBooleanVector) {
             Assertions.assertThat(this.putBooleanVector).isEqualTo(putBooleanVector);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<Boolean> getBooleanVectorAsList() {
@@ -120,6 +128,7 @@ public class ParametersAndReturnsTestBoolean {
 
         public void setBooleanVectorAsList(final List<Boolean> putBooleanVectorAsList) {
             Assertions.assertThat(this.putBooleanVectorAsList).isEqualTo(putBooleanVectorAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public boolean[][] getBooleanMatrix() {
@@ -128,6 +137,7 @@ public class ParametersAndReturnsTestBoolean {
 
         public void setBooleanMatrix(final boolean[][] putBooleanMatrix) {
             Assertions.assertThat(this.putBooleanMatrix).isEqualTo(putBooleanMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Boolean>> getBooleanMatrixAsList() {
@@ -136,6 +146,7 @@ public class ParametersAndReturnsTestBoolean {
 
         public void setBooleanMatrixAsList(final List<List<Boolean>> putBooleanMatrixAsList) {
             Assertions.assertThat(this.putBooleanMatrixAsList).isEqualTo(putBooleanMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
     }

@@ -2,6 +2,7 @@ package de.invesdwin.scripting.rust.runtime.contract.callback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -28,10 +29,10 @@ public class ParametersAndReturnsTestCharacter {
 
     public void testCharacter() {
         new AScriptTaskRust<Void>() {
+            private final ParametersAndReturnsTestCharacterCallback callback = new ParametersAndReturnsTestCharacterCallback();
 
             @Override
             public IScriptTaskCallback getCallback() {
-                final ParametersAndReturnsTestCharacterCallback callback = new ParametersAndReturnsTestCharacterCallback();
                 return new ReflectiveScriptTaskCallback(callback);
             }
 
@@ -46,12 +47,17 @@ public class ParametersAndReturnsTestCharacter {
 
             @Override
             public Void extractResults(final IScriptTaskResults results) {
+                //force evaluation in irust
+                Assertions.checkTrue(results.getBoolean("true"));
+                Assertions.assertThat(callback.setterMethodsCalled.get()).isEqualTo(5);
                 return null;
             }
         }.run(runner);
     }
 
     public static class ParametersAndReturnsTestCharacterCallback {
+
+        private final AtomicInteger setterMethodsCalled = new AtomicInteger();
 
         //putCharacter
         private final char putCharacter;
@@ -104,6 +110,7 @@ public class ParametersAndReturnsTestCharacter {
 
         public void setCharacter(final char putCharacter) {
             Assertions.assertThat(this.putCharacter).isEqualTo(putCharacter);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public char[] getCharacterVector() {
@@ -112,6 +119,7 @@ public class ParametersAndReturnsTestCharacter {
 
         public void setCharacterVector(final char[] putCharacterVector) {
             Assertions.assertThat(this.putCharacterVector).isEqualTo(putCharacterVector);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<Character> getCharacterVectorAsList() {
@@ -120,6 +128,7 @@ public class ParametersAndReturnsTestCharacter {
 
         public void setCharacterVectorAsList(final List<Character> putCharacterVectorAsList) {
             Assertions.assertThat(this.putCharacterVectorAsList).isEqualTo(putCharacterVectorAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public char[][] getCharacterMatrix() {
@@ -128,6 +137,7 @@ public class ParametersAndReturnsTestCharacter {
 
         public void setCharacterMatrix(final char[][] putCharacterMatrix) {
             Assertions.assertThat(this.putCharacterMatrix).isEqualTo(putCharacterMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Character>> getCharacterMatrixAsList() {
@@ -136,6 +146,7 @@ public class ParametersAndReturnsTestCharacter {
 
         public void setCharacterMatrixAsList(final List<List<Character>> putCharacterMatrixAsList) {
             Assertions.assertThat(this.putCharacterMatrixAsList).isEqualTo(putCharacterMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
     }

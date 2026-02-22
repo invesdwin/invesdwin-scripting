@@ -2,6 +2,7 @@ package de.invesdwin.scripting.rust.runtime.contract.callback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -28,10 +29,10 @@ public class ParametersAndReturnsTestLong {
 
     public void testLong() {
         new AScriptTaskRust<Void>() {
+            private final ParametersAndReturnsTestLongCallback callback = new ParametersAndReturnsTestLongCallback();
 
             @Override
             public IScriptTaskCallback getCallback() {
-                final ParametersAndReturnsTestLongCallback callback = new ParametersAndReturnsTestLongCallback();
                 return new ReflectiveScriptTaskCallback(callback);
             }
 
@@ -46,12 +47,17 @@ public class ParametersAndReturnsTestLong {
 
             @Override
             public Void extractResults(final IScriptTaskResults results) {
+                //force evaluation in irust
+                Assertions.checkTrue(results.getBoolean("true"));
+                Assertions.assertThat(callback.setterMethodsCalled.get()).isEqualTo(5);
                 return null;
             }
         }.run(runner);
     }
 
     public static class ParametersAndReturnsTestLongCallback {
+
+        private final AtomicInteger setterMethodsCalled = new AtomicInteger();
 
         //putLong
         private final long putLong;
@@ -104,6 +110,7 @@ public class ParametersAndReturnsTestLong {
 
         public void setLong(final long putLong) {
             Assertions.assertThat(this.putLong).isEqualTo(putLong);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public long[] getLongVector() {
@@ -112,6 +119,7 @@ public class ParametersAndReturnsTestLong {
 
         public void setLongVector(final long[] putLongVector) {
             Assertions.assertThat(this.putLongVector).isEqualTo(putLongVector);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<Long> getLongVectorAsList() {
@@ -120,6 +128,7 @@ public class ParametersAndReturnsTestLong {
 
         public void setLongVectorAsList(final List<Long> putLongVectorAsList) {
             Assertions.assertThat(this.putLongVectorAsList).isEqualTo(putLongVectorAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public long[][] getLongMatrix() {
@@ -128,6 +137,7 @@ public class ParametersAndReturnsTestLong {
 
         public void setLongMatrix(final long[][] putLongMatrix) {
             Assertions.assertThat(this.putLongMatrix).isEqualTo(putLongMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Long>> getLongMatrixAsList() {
@@ -136,6 +146,7 @@ public class ParametersAndReturnsTestLong {
 
         public void setLongMatrixAsList(final List<List<Long>> putLongMatrixAsList) {
             Assertions.assertThat(this.putLongMatrixAsList).isEqualTo(putLongMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
     }

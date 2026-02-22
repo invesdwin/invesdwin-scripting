@@ -2,6 +2,7 @@ package de.invesdwin.scripting.rust.runtime.contract.callback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -29,10 +30,10 @@ public class ParametersAndReturnsTestString {
 
     public void testString() {
         new AScriptTaskRust<Void>() {
+            private final ParametersAndReturnsTestStringCallback callback = new ParametersAndReturnsTestStringCallback();
 
             @Override
             public IScriptTaskCallback getCallback() {
-                final ParametersAndReturnsTestStringCallback callback = new ParametersAndReturnsTestStringCallback();
                 return new ReflectiveScriptTaskCallback(callback);
             }
 
@@ -47,12 +48,17 @@ public class ParametersAndReturnsTestString {
 
             @Override
             public Void extractResults(final IScriptTaskResults results) {
+                //force evaluation in irust
+                Assertions.checkTrue(results.getBoolean("true"));
+                Assertions.assertThat(callback.setterMethodsCalled.get()).isEqualTo(10);
                 return null;
             }
         }.run(runner);
     }
 
     public static class ParametersAndReturnsTestStringCallback {
+
+        private final AtomicInteger setterMethodsCalled = new AtomicInteger();
 
         //putString
         private final String putString;
@@ -123,6 +129,7 @@ public class ParametersAndReturnsTestString {
 
         public void setString(final String putString) {
             Assertions.assertThat(this.putString).isEqualTo(putString);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public String getStringWithNull() {
@@ -131,6 +138,7 @@ public class ParametersAndReturnsTestString {
 
         public void setStringWithNull(final String putStringWithNull) {
             Assertions.assertThat(this.putStringWithNull).isEqualTo(putStringWithNull);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public String[] getStringVector() {
@@ -139,6 +147,7 @@ public class ParametersAndReturnsTestString {
 
         public void setStringVector(final String[] putStringVector) {
             Assertions.assertThat(this.putStringVector).isEqualTo(putStringVector);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public String[] getStringVectorWithNull() {
@@ -147,6 +156,7 @@ public class ParametersAndReturnsTestString {
 
         public void setStringVectorWithNull(final String[] putStringVectorWithNull) {
             Assertions.assertThat(this.putStringVectorWithNull).isEqualTo(putStringVectorWithNull);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<String> getStringVectorAsList() {
@@ -155,6 +165,7 @@ public class ParametersAndReturnsTestString {
 
         public void setStringVectorAsList(final List<String> putStringVectorAsList) {
             Assertions.assertThat(this.putStringVectorAsList).isEqualTo(putStringVectorAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<String> getStringVectorAsListWithNull() {
@@ -163,6 +174,7 @@ public class ParametersAndReturnsTestString {
 
         public void setStringVectorAsListWithNull(final List<String> putStringVectorAsListWithNull) {
             Assertions.assertThat(this.putStringVectorAsListWithNull).isEqualTo(putStringVectorAsListWithNull);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public String[][] getStringMatrix() {
@@ -171,6 +183,7 @@ public class ParametersAndReturnsTestString {
 
         public void setStringMatrix(final String[][] putStringMatrix) {
             Assertions.assertThat(this.putStringMatrix).isEqualTo(putStringMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public String[][] getStringMatrixWithNull() {
@@ -179,6 +192,7 @@ public class ParametersAndReturnsTestString {
 
         public void setStringMatrixWithNull(final String[][] putStringMatrixWithNull) {
             Assertions.assertThat(this.putStringMatrixWithNull).isEqualTo(putStringMatrixWithNull);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<String>> getStringMatrixAsList() {
@@ -187,6 +201,7 @@ public class ParametersAndReturnsTestString {
 
         public void setStringMatrixAsList(final List<List<String>> putStringMatrixAsList) {
             Assertions.assertThat(this.putStringMatrixAsList).isEqualTo(putStringMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<String>> getStringMatrixAsListWithNull() {
@@ -195,6 +210,7 @@ public class ParametersAndReturnsTestString {
 
         public void setStringMatrixAsListWithNull(final List<List<String>> putStringMatrixAsListWithNull) {
             Assertions.assertThat(this.putStringMatrixAsListWithNull).isEqualTo(putStringMatrixAsListWithNull);
+            setterMethodsCalled.incrementAndGet();
         }
 
     }

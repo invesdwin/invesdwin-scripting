@@ -2,6 +2,7 @@ package de.invesdwin.scripting.rust.runtime.contract.callback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -29,10 +30,10 @@ public class ParametersAndReturnsTestDecimal {
 
     public void testDecimal() {
         new AScriptTaskRust<Void>() {
+            private final ParametersAndReturnsTestDecimalCallback callback = new ParametersAndReturnsTestDecimalCallback();
 
             @Override
             public IScriptTaskCallback getCallback() {
-                final ParametersAndReturnsTestDecimalCallback callback = new ParametersAndReturnsTestDecimalCallback();
                 return new ReflectiveScriptTaskCallback(callback);
             }
 
@@ -47,12 +48,17 @@ public class ParametersAndReturnsTestDecimal {
 
             @Override
             public Void extractResults(final IScriptTaskResults results) {
+                //force evaluation in irust
+                Assertions.checkTrue(results.getBoolean("true"));
+                Assertions.assertThat(callback.setterMethodsCalled.get()).isEqualTo(5);
                 return null;
             }
         }.run(runner);
     }
 
     public static class ParametersAndReturnsTestDecimalCallback {
+
+        private final AtomicInteger setterMethodsCalled = new AtomicInteger();
 
         //putDecimal
         private final Decimal putDecimal;
@@ -105,6 +111,7 @@ public class ParametersAndReturnsTestDecimal {
 
         public void setDecimal(final Decimal putDecimal) {
             Assertions.assertThat(this.putDecimal).isEqualTo(putDecimal);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public Decimal[] getDecimalVector() {
@@ -113,6 +120,7 @@ public class ParametersAndReturnsTestDecimal {
 
         public void setDecimalVector(final Decimal[] putDecimalVector) {
             Assertions.assertThat(this.putDecimalVector).isEqualTo(putDecimalVector);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<Decimal> getDecimalVectorAsList() {
@@ -121,6 +129,7 @@ public class ParametersAndReturnsTestDecimal {
 
         public void setDecimalVectorAsList(final List<Decimal> putDecimalVectorAsList) {
             Assertions.assertThat(this.putDecimalVectorAsList).isEqualTo(putDecimalVectorAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public Decimal[][] getDecimalMatrix() {
@@ -129,6 +138,7 @@ public class ParametersAndReturnsTestDecimal {
 
         public void setDecimalMatrix(final Decimal[][] putDecimalMatrix) {
             Assertions.assertThat(this.putDecimalMatrix).isEqualTo(putDecimalMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Decimal>> getDecimalMatrixAsList() {
@@ -137,6 +147,7 @@ public class ParametersAndReturnsTestDecimal {
 
         public void setDecimalMatrixAsList(final List<List<Decimal>> putDecimalMatrixAsList) {
             Assertions.assertThat(this.putDecimalMatrixAsList).isEqualTo(putDecimalMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
     }

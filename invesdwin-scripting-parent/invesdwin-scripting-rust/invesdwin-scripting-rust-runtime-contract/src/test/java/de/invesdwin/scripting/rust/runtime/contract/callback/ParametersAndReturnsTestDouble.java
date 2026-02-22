@@ -2,6 +2,7 @@ package de.invesdwin.scripting.rust.runtime.contract.callback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -28,10 +29,10 @@ public class ParametersAndReturnsTestDouble {
 
     public void testDouble() {
         new AScriptTaskRust<Void>() {
+            private final ParametersAndReturnsTestDoubleCallback callback = new ParametersAndReturnsTestDoubleCallback();
 
             @Override
             public IScriptTaskCallback getCallback() {
-                final ParametersAndReturnsTestDoubleCallback callback = new ParametersAndReturnsTestDoubleCallback();
                 return new ReflectiveScriptTaskCallback(callback);
             }
 
@@ -46,12 +47,17 @@ public class ParametersAndReturnsTestDouble {
 
             @Override
             public Void extractResults(final IScriptTaskResults results) {
+                //force evaluation in irust
+                Assertions.checkTrue(results.getBoolean("true"));
+                Assertions.assertThat(callback.setterMethodsCalled.get()).isEqualTo(5);
                 return null;
             }
         }.run(runner);
     }
 
     public static class ParametersAndReturnsTestDoubleCallback {
+
+        private final AtomicInteger setterMethodsCalled = new AtomicInteger();
 
         //putDouble
         private final double putDouble;
@@ -104,6 +110,7 @@ public class ParametersAndReturnsTestDouble {
 
         public void setDouble(final double putDouble) {
             Assertions.assertThat(this.putDouble).isEqualTo(putDouble);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public double[] getDoubleVector() {
@@ -112,6 +119,7 @@ public class ParametersAndReturnsTestDouble {
 
         public void setDoubleVector(final double[] putDoubleVector) {
             Assertions.assertThat(this.putDoubleVector).isEqualTo(putDoubleVector);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<Double> getDoubleVectorAsList() {
@@ -120,6 +128,7 @@ public class ParametersAndReturnsTestDouble {
 
         public void setDoubleVectorAsList(final List<Double> putDoubleVectorAsList) {
             Assertions.assertThat(this.putDoubleVectorAsList).isEqualTo(putDoubleVectorAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public double[][] getDoubleMatrix() {
@@ -128,6 +137,7 @@ public class ParametersAndReturnsTestDouble {
 
         public void setDoubleMatrix(final double[][] putDoubleMatrix) {
             Assertions.assertThat(this.putDoubleMatrix).isEqualTo(putDoubleMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Double>> getDoubleMatrixAsList() {
@@ -136,6 +146,7 @@ public class ParametersAndReturnsTestDouble {
 
         public void setDoubleMatrixAsList(final List<List<Double>> putDoubleMatrixAsList) {
             Assertions.assertThat(this.putDoubleMatrixAsList).isEqualTo(putDoubleMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
     }

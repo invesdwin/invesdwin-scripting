@@ -2,6 +2,7 @@ package de.invesdwin.scripting.rust.runtime.contract.callback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -28,10 +29,10 @@ public class ParametersAndReturnsTestFloat {
 
     public void testFloat() {
         new AScriptTaskRust<Void>() {
+            private final ParametersAndReturnsTestFloatCallback callback = new ParametersAndReturnsTestFloatCallback();
 
             @Override
             public IScriptTaskCallback getCallback() {
-                final ParametersAndReturnsTestFloatCallback callback = new ParametersAndReturnsTestFloatCallback();
                 return new ReflectiveScriptTaskCallback(callback);
             }
 
@@ -46,12 +47,17 @@ public class ParametersAndReturnsTestFloat {
 
             @Override
             public Void extractResults(final IScriptTaskResults results) {
+                //force evaluation in irust
+                Assertions.checkTrue(results.getBoolean("true"));
+                Assertions.assertThat(callback.setterMethodsCalled.get()).isEqualTo(5);
                 return null;
             }
         }.run(runner);
     }
 
     public static class ParametersAndReturnsTestFloatCallback {
+
+        private final AtomicInteger setterMethodsCalled = new AtomicInteger();
 
         //putFloat
         private final float putFloat;
@@ -104,6 +110,7 @@ public class ParametersAndReturnsTestFloat {
 
         public void setFloat(final float putFloat) {
             Assertions.assertThat(this.putFloat).isEqualTo(putFloat);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public float[] getFloatVector() {
@@ -112,6 +119,7 @@ public class ParametersAndReturnsTestFloat {
 
         public void setFloatVector(final float[] putFloatVector) {
             Assertions.assertThat(this.putFloatVector).isEqualTo(putFloatVector);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<Float> getFloatVectorAsList() {
@@ -120,6 +128,7 @@ public class ParametersAndReturnsTestFloat {
 
         public void setFloatVectorAsList(final List<Float> putFloatVectorAsList) {
             Assertions.assertThat(this.putFloatVectorAsList).isEqualTo(putFloatVectorAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public float[][] getFloatMatrix() {
@@ -128,6 +137,7 @@ public class ParametersAndReturnsTestFloat {
 
         public void setFloatMatrix(final float[][] putFloatMatrix) {
             Assertions.assertThat(this.putFloatMatrix).isEqualTo(putFloatMatrix);
+            setterMethodsCalled.incrementAndGet();
         }
 
         public List<List<Float>> getFloatMatrixAsList() {
@@ -136,6 +146,7 @@ public class ParametersAndReturnsTestFloat {
 
         public void setFloatMatrixAsList(final List<List<Float>> putFloatMatrixAsList) {
             Assertions.assertThat(this.putFloatMatrixAsList).isEqualTo(putFloatMatrixAsList);
+            setterMethodsCalled.incrementAndGet();
         }
 
     }
