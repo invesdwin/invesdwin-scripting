@@ -20,8 +20,16 @@ Dependency declaration:
 ## Runtime Integration Modules
 
 We have a few options available for integrating Rust:
-- **invesdwin-scripting-rust-runtime-evcxr**: 
-- **invesdwin-scripting-rust-runtime-irust**: 
+- **invesdwin-scripting-rust-runtime-evcxr**: This integrates [evcxr](https://github.com/evcxr/evcxr) via a forked version of [jajub](https://github.com/org-arl/jajub/issues/2) to make it significantly faster, make error handling better, improve robustness and make it compatible with rust. It talks to the evcxr process via pipes. Errors are detected by checking for specific protocol messages and by parsing stderr for messages. Evcxr instances are pooled which works well for parallelization. Evcxr works like the usual REPL by compiling each line individually and executing it immediately. Though, this compilation step makes it a bit slow to run long scripts but it has the benefit of not causing sideffects by parts of the script being run multiple times due to batching. This module provides the following configuration options as system properties:
+```properties
+# you can specify here where the "evcxr" command can be found
+de.invesdwin.scripting.rust.runtime.evcxr.EvcxrProperties.EVCXR_COMMAND=evcxr
+```
+- **invesdwin-scripting-rust-runtime-irust**: This integrates [IRust](https://github.com/sigmaSd/IRust) in a similar way. Though IRust collects lines and runs them in batches once an output is requested. If multiple outputs get requested, the batched script runs multiple times. So make sure to export all relevant results in a single request. If no results are needed, you still have to request something to at least force execution of the batched script. This batching approach makes IRust significantly faster than evcxr for long scripts, but you have to be careful about long running tasks being execution multiple times within the batch. Maybe reset the script buffer more often than necessary in other integrations or make sure that the buffered scripts are idempotent upon multiple executions. This module provides the following configuration options as system properties:
+```properties
+# you can specify here where the "irust" command can be found
+de.invesdwin.scripting.rust.runtime.irust.IrustProperties.IRUST_COMMAND=irust
+```
 
 You are free to choose which integration method you prefer by selecting the appropriate runtime module as a dependency for your application. The `invesdwin-scripting-rust-runtime-contract` module defines interfaces for integrating your Rust scripts in a way that works with all of the above runtime modules. So you have the benefit of being able to write your Rust scripts once and easily test against different runtimes in order to: 
 - measure the performance impact of the different runtime solutions
