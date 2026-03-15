@@ -39,6 +39,7 @@
 		<module>invesdwin-scripting-runtime-kotlin</module>
 		<module>invesdwin-scripting-runtime-mvel</module>
 		<module>invesdwin-scripting-runtime-scala</module>
+		<module>invesdwin-scripting-runtime-lua</module>
 	</modules>
 
 	<properties>
@@ -52,6 +53,7 @@
 		<version.bsh>2.1.1</version.bsh>
 		<version.mvel>2.5.0.Final</version.mvel>
 		<version.pty4j>0.13.10-1</version.pty4j>
+		<version.luajava>4.1.0</version.luajava>
 
 		<!-- haskell -->
 		<version.frege>3.25.115-inv</version.frege>
@@ -151,6 +153,11 @@
 				<artifactId>invesdwin-scripting-runtime-mvel</artifactId>
 				<version>${project.version.invesdwin-scripting}</version>
 			</dependency>
+			<dependency>
+				<groupId>de.invesdwin</groupId>
+				<artifactId>invesdwin-scripting-runtime-lua</artifactId>
+				<version>${project.version.invesdwin-scripting}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>com.github.rjolly</groupId>
@@ -168,9 +175,41 @@
 				<version>${version.mvel}</version>
 			</dependency>
 			<dependency>
-			    <groupId>org.jetbrains.pty4j</groupId>
-			    <artifactId>pty4j</artifactId>
-			    <version>${version.pty4j}</version>
+				<groupId>org.jetbrains.pty4j</groupId>
+				<artifactId>pty4j</artifactId>
+				<version>${version.pty4j}</version>
+			</dependency>
+			<dependency>
+				<groupId>party.iroiro.luajava</groupId>
+				<artifactId>jsr223</artifactId>
+				<version>${version.luajava}</version>
+			</dependency>
+			<dependency>
+				<groupId>party.iroiro.luajava</groupId>
+				<artifactId>luaj</artifactId>
+				<version>${version.luajava}</version>
+			</dependency>
+			<dependency>
+				<groupId>party.iroiro.luajava</groupId>
+				<artifactId>luajit</artifactId>
+				<version>${version.luajava}</version>
+			</dependency>
+			<dependency>
+				<groupId>party.iroiro.luajava</groupId>
+				<artifactId>luajit-platform</artifactId>
+				<version>${version.luajava}</version>
+				<classifier>natives-desktop</classifier>
+			</dependency>
+			<dependency>
+				<groupId>party.iroiro.luajava</groupId>
+				<artifactId>lua55</artifactId>
+				<version>${version.luajava}</version>
+			</dependency>
+			<dependency>
+				<groupId>party.iroiro.luajava</groupId>
+				<artifactId>lua55-platform</artifactId>
+				<version>${version.luajava}</version>
+				<classifier>natives-desktop</classifier>
 			</dependency>
 
 			<!-- haskell -->
