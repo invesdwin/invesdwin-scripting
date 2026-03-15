@@ -32,7 +32,7 @@ public class WrappedLuaScriptEngine implements Closeable {
 
     public WrappedLuaScriptEngine() {
         final ScriptEngineManager manager = new ScriptEngineManager();
-        this.engine = manager.getEngineByName("lua");
+        this.engine = manager.getEngineByExtension("lua");
         this.binding = engine.getBindings(ScriptContext.ENGINE_SCOPE);
         this.binding.put("binding", binding);
         if (engine instanceof Compilable) {

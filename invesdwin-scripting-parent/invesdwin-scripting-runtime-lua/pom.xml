@@ -20,10 +20,10 @@
 			<groupId>party.iroiro.luajava</groupId>
 			<artifactId>jsr223</artifactId>
 		</dependency>
-		<dependency>
+	<!--<dependency>
 			<groupId>party.iroiro.luajava</groupId>
 			<artifactId>luaj</artifactId>
-		</dependency>
+		</dependency>-->
 		<!--<dependency>
 		    <groupId>party.iroiro.luajava</groupId>
 		    <artifactId>luajit</artifactId>
@@ -33,7 +33,7 @@
 		    <artifactId>luajit-platform</artifactId>
 		    <classifier>natives-desktop</classifier>
 		</dependency>-->
-		<!--<dependency>
+		<dependency>
 		    <groupId>party.iroiro.luajava</groupId>
 		    <artifactId>lua55</artifactId>
 		</dependency>
@@ -41,7 +41,7 @@
 		    <groupId>party.iroiro.luajava</groupId>
 		    <artifactId>lua55-platform</artifactId>
 		    <classifier>natives-desktop</classifier>
-		</dependency>-->
+		</dependency>
 	</dependencies>
 
 </project>
