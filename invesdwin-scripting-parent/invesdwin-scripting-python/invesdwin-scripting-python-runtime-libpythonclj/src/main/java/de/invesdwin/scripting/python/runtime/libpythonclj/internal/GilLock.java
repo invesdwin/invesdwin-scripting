@@ -29,7 +29,7 @@ public final class GilLock extends ASimpleLock {
     }
 
     @Override
-    public boolean isLockedByCurrentThread() {
+    public boolean isHeldByCurrentThread() {
         //we don't share this lock instance between threads anyhow
         return isLocked();
     }
