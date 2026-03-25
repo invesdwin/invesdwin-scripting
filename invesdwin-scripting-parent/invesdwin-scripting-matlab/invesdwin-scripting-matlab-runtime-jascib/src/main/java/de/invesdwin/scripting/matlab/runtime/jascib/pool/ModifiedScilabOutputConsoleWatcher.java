@@ -7,7 +7,7 @@ import java.io.InputStream;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
-import de.invesdwin.util.collections.circular.CircularByteBuffer;
+import de.invesdwin.util.collections.array.primitive.circular.CircularByteBuffer;
 import de.invesdwin.util.concurrent.Threads;
 import de.invesdwin.util.lang.OperatingSystem;
 import de.invesdwin.util.streams.closeable.Closeables;
