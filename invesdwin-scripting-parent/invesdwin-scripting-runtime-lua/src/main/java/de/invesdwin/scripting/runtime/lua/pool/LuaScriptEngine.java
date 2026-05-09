@@ -165,7 +165,7 @@ public final class LuaScriptEngine extends AbstractScriptEngine implements Scrip
 
     @Override
     public LuaValue[] get(final String key) {
-        final String script = addReturnToScript(key);
+        final String script = maybeAddReturnToScript(key);
         try {
             return eval(script);
         } catch (final ScriptException e) {
@@ -173,7 +173,7 @@ public final class LuaScriptEngine extends AbstractScriptEngine implements Scrip
         }
     }
 
-    private String addReturnToScript(final String key) {
+    public static String maybeAddReturnToScript(final String key) {
         final String[] lines = Strings.splitPreserveAllTokens(key, '\n');
         final int lastLineIndex = lines.length - 1;
         lines[lastLineIndex] = Strings.putPrefix(lines[lastLineIndex], "return ");
