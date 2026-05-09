@@ -36,9 +36,6 @@ end
 getManyParamsExpression = putManyParamsExpression
 print("getManyParamsExpression")
 print(getManyParamsExpression)
-getManyParamsExpressionMultilineWrong = putManyParamsExpressionMultilineWrong
-print("getManyParamsExpressionMultilineWrong")
-print(getManyParamsExpressionMultilineWrong)
 getManyParamsExpressionMultiline = putManyParamsExpressionMultiline
 print("getManyParamsExpressionMultiline")
 print(getManyParamsExpressionMultiline)

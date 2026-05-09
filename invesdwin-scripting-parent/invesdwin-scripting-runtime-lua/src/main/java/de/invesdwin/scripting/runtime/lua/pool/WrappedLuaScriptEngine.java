@@ -148,4 +148,12 @@ public class WrappedLuaScriptEngine implements Closeable {
         return engine.getSingleJava(variable);
     }
 
+    public LuaValue evalSingle(final String variable) {
+        return engine.evalSingle(variable);
+    }
+
+    public Object evalSingleJava(final String variable) {
+        return engine.evalSingleJava(variable);
+    }
+
 }

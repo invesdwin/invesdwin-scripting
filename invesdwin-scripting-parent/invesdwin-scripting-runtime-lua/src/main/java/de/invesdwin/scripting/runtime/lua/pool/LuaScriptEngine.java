@@ -22,6 +22,7 @@ import javax.script.ScriptException;
 
 import de.invesdwin.util.collections.Collections;
 import de.invesdwin.util.lang.finalizer.AFinalizer;
+import de.invesdwin.util.lang.string.Strings;
 import party.iroiro.luajava.ClassPathLoader;
 import party.iroiro.luajava.Consts;
 import party.iroiro.luajava.Lua;
@@ -164,11 +165,26 @@ public final class LuaScriptEngine extends AbstractScriptEngine implements Scrip
 
     @Override
     public LuaValue[] get(final String key) {
+        final String script = addReturnToScript(key);
         try {
-            return eval("return " + key);
+            return eval(script);
         } catch (final ScriptException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String addReturnToScript(final String key) {
+        final String[] lines = Strings.splitPreserveAllTokens(key, '\n');
+        final int lastLineIndex = lines.length - 1;
+        lines[lastLineIndex] = Strings.putPrefix(lines[lastLineIndex], "return ");
+        final StringBuilder expressionBuilder = new StringBuilder();
+        for (int i = 0; i < lines.length; i++) {
+            final String line = lines[i];
+            expressionBuilder.append(line);
+            expressionBuilder.append('\n');
+        }
+        final String script = expressionBuilder.toString();
+        return script;
     }
 
     public LuaValue getSingle(final String variable) {
@@ -191,6 +207,36 @@ public final class LuaScriptEngine extends AbstractScriptEngine implements Scrip
             return null;
         }
         return values[0].toJavaObject();
+    }
+
+    public LuaValue evalSingle(final String variable) {
+        try {
+            final LuaValue[] values = eval(variable);
+            if (values == null) {
+                return null;
+            }
+            if (values.length == 0) {
+                return null;
+            }
+            return values[0];
+        } catch (final ScriptException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Object evalSingleJava(final String variable) {
+        try {
+            final LuaValue[] values = eval(variable);
+            if (values == null) {
+                return null;
+            }
+            if (values.length == 0) {
+                return null;
+            }
+            return values[0].toJavaObject();
+        } catch (final ScriptException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
