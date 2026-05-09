@@ -21,6 +21,7 @@
 			<artifactId>jsr223</artifactId>
 		</dependency>-->
 		<dependency>
+			<!-- not the fastest alternative, but does not require native libs -->
 			<groupId>party.iroiro.luajava</groupId>
 			<artifactId>luaj</artifactId>
 		</dependency>
