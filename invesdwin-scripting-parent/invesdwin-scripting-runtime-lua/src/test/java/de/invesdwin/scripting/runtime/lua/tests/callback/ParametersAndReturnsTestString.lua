@@ -1,125 +1,162 @@
-println("getString")
-if(binding.hasVariable('getString'))
-	throw new Exception("getString already defined!")
+arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
+
+print("getString")
+if(getString ~= nil) then
+	error("getString already defined!")
+end
 getString = callback("getString")
-getStringType = getString.getClass()
-println(getStringType)
-println(getString)
-if(getStringType != String.class)
-	throw new Exception("getString not String!")
-callback("setString",getString)
+getStringType = type(getString)
+print(getStringType)
+print(getString)
+if(getStringType ~= "string") then
+	error("getString not String!")
+end
+callback("setString", getString)
 
-println("getStringWithNull")
-if(binding.hasVariable('getStringWithNull'))
-	throw new Exception("getStringWithNull already defined!")
+print("getStringWithNull")
+if(getStringWithNull ~= nil) then
+	error("getStringWithNull already defined!")
+end
 getStringWithNull = callback("getStringWithNull")
-getStringWithNullType = getStringWithNull.getClass()
-println(getStringWithNullType)
-println(getStringWithNull)
-if(getStringWithNull != null)
-	throw new Exception("getStringWithNull not null!")
-callback("setStringWithNull",getStringWithNull)
+getStringWithNullType = type(getStringWithNull)
+print(getStringWithNullType)
+print(getStringWithNull)
+if(getStringWithNull ~= nil) then
+	error("getStringWithNull not null!")
+end
+callback("setStringWithNull", getStringWithNull)
 
-println("getStringVector")
-if(binding.hasVariable('getStringVector'))
-	throw new Exception("getStringVector already defined!")
+print("getStringVector")
+if(getStringVector ~= nil) then
+	error("getStringVector already defined!")
+end
 getStringVector = callback("getStringVector")
-getStringVectorType = getStringVector[0].getClass()
-println(getStringVectorType)
-println(getStringVector)
-if(getStringVectorType != String.class)
-	throw new Exception("getStringVector not String!")
-callback("setStringVector",new Object[]{getStringVector})
+getStringVectorType = type(getStringVector[1])
+print(getStringVectorType)
+print(arraysToString(getStringVector))
+if(getStringVectorType ~= "string") then
+	error("getStringVector not String!")
+end
+callback("setStringVector", getStringVector)
 
-println("getStringVectorWithNull")
-if(binding.hasVariable('getStringVectorWithNull'))
-	throw new Exception("getStringVectorWithNull already defined!")
+print("getStringVectorWithNull")
+if(getStringVectorWithNull ~= nil) then
+	error("getStringVectorWithNull already defined!")
+end
 getStringVectorWithNull = callback("getStringVectorWithNull")
-getStringVectorWithNullType = getStringVectorWithNull[0].getClass()
-println(getStringVectorWithNullType)
-println(getStringVectorWithNull)
-if(getStringVectorWithNullType != String.class)
-	throw new Exception("getStringVectorWithNull not String!")
-if(getStringVectorWithNull[1] != null)
-	throw new Exception("getStringVectorWithNull[1] not null!")
-callback("setStringVectorWithNull",new Object[]{getStringVectorWithNull})
+getStringVectorWithNullType = type(getStringVectorWithNull[1])
+print(getStringVectorWithNullType)
+print(arraysToString(getStringVectorWithNull))
+if(getStringVectorWithNullType ~= "string") then
+	error("getStringVectorWithNull not String!")
+end
+if(getStringVectorWithNull[2] ~= nil) then
+	error("getStringVectorWithNull[2] not null!")
+end
+callback("setStringVectorWithNull", getStringVectorWithNull)
 
-println("getStringVectorAsList")
-if(binding.hasVariable('getStringVectorAsList'))
-	throw new Exception("getStringVectorAsList already defined!")
+print("getStringVectorAsList")
+if(getStringVectorAsList ~= nil) then
+	error("getStringVectorAsList already defined!")
+end
 getStringVectorAsList = callback("getStringVectorAsList")
-getStringVectorAsListType = getStringVectorAsList[0].getClass()
-println(getStringVectorAsListType)
-println(getStringVectorAsList)
-if(getStringVectorAsListType != String.class)
-	throw new Exception("getStringVectorAsList not String!")
-callback("setStringVectorAsList",new Object[]{getStringVectorAsList})
+getStringVectorAsListType = type(getStringVectorAsList[1])
+print(getStringVectorAsListType)
+print(arraysToString(getStringVectorAsList))
+if(getStringVectorAsListType ~= "string") then
+	error("getStringVectorAsList not String!")
+end
+callback("setStringVectorAsList", getStringVectorAsList)
 
-println("getStringVectorAsListWithNull")
-if(binding.hasVariable('getStringVectorAsListWithNull'))
-	throw new Exception("getStringVectorAsListWithNull already defined!")
+print("getStringVectorAsListWithNull")
+if(getStringVectorAsListWithNull ~= nil) then
+	error("getStringVectorAsListWithNull already defined!")
+end
 getStringVectorAsListWithNull = callback("getStringVectorAsListWithNull")
-getStringVectorAsListWithNullType = getStringVectorAsListWithNull[0].getClass()
+getStringVectorAsListWithNullType = type(getStringVectorAsListWithNull[1])
+print(getStringVectorAsListWithNullType)
+print(arraysToString(getStringVectorAsListWithNull))
+if(getStringVectorAsListWithNullType ~= "string") then
+	error("getStringVectorAsListWithNull not String!")
+end
+if(getStringVectorAsListWithNull[1] ~= nil) then
+	error("getStringVectorAsListWithNull[1] not null!")
+end
+callback("setStringVectorAsListWithNull", getStringVectorAsListWithNull)
 println(getStringVectorAsListWithNullType)
 println(getStringVectorAsListWithNull)
 if(getStringVectorAsListWithNullType != String.class)
 	throw new Exception("getStringVectorAsListWithNull not String!")
 if(getStringVectorAsListWithNull[1] != null)
 	throw new Exception("getStringVectorAsListWithNull[1] not null!")
-callback("setStringVectorAsListWithNull",new Object[]{getStringVectorAsListWithNull})
+callback("setStringVectorAsListWithNull", getStringVectorAsListWithNull)
 
-println("getStringMatrix")
-if(binding.hasVariable('getStringMatrix'))
-	throw new Exception("getStringMatrix already defined!")
+print("getStringMatrix")
+if(getStringMatrix ~= nil) then
+	error("getStringMatrix already defined!")
+end
 getStringMatrix = callback("getStringMatrix")
-getStringMatrixType = getStringMatrix[0][0].getClass()
-println(getStringMatrixType)
-println(getStringMatrix)
-if(getStringMatrixType != String.class)
-	throw new Exception("getStringMatrix not String!")
-callback("setStringMatrix",new Object[]{getStringMatrix})
+getStringMatrixType = type(getStringMatrix[1][1])
+print(getStringMatrixType)
+print(arraysToString(getStringMatrix))
+if(getStringMatrixType ~= "string") then
+	error("getStringMatrix not String!")
+end
+callback("setStringMatrix", getStringMatrix)
 
-println("getStringMatrixWithNull")
-if(binding.hasVariable('getStringMatrixWithNull'))
-	throw new Exception("getStringMatrixWithNull already defined!")
+print("getStringMatrixWithNull")
+if(getStringMatrixWithNull ~= nil) then
+	error("getStringMatrixWithNull already defined!")
+end
 getStringMatrixWithNull = callback("getStringMatrixWithNull")
-getStringMatrixWithNullType = getStringMatrixWithNull[0][1].getClass()
-println(getStringMatrixWithNullType)
-println(getStringMatrixWithNull)
-if(getStringMatrixWithNullType != String.class)
-	throw new Exception("getStringMatrixWithNull not String!")
-if(getStringMatrixWithNull[0][0] != null)
-	throw new Exception("getStringMatrixWithNull[0][0] not null!")
-if(getStringMatrixWithNull[1][1] != null)
-	throw new Exception("getStringMatrixWithNull[1][1] not null!")
-if(getStringMatrixWithNull[2][2] != null)
-	throw new Exception("getStringMatrixWithNull[2][2] not null!")
-callback("setStringMatrixWithNull",new Object[]{getStringMatrixWithNull})
+getStringMatrixWithNullType = type(getStringMatrixWithNull[1][1])
+print(getStringMatrixWithNullType)
+print(arraysToString(getStringMatrixWithNull))
+if(getStringMatrixWithNullType ~= "string") then
+	error("getStringMatrixWithNull not String!")
+end
+if(getStringMatrixWithNull[1][1] ~= nil) then
+	error("getStringMatrixWithNull[1][1] not null!")
+end
+if(getStringMatrixWithNull[2][3] ~= nil) then
+	error("getStringMatrixWithNull[2][2] not null!")
+end
+if(getStringMatrixWithNull[3][3] ~= nil) then
+	error("getStringMatrixWithNull[3][3] not null!")
+end
+callback("setStringMatrixWithNull", getStringMatrixWithNull)
 
-println("getStringMatrixAsList")
-if(binding.hasVariable('getStringMatrixAsList'))
-	throw new Exception("getStringMatrixAsList already defined!")
+print("getStringMatrixAsList")
+if(getStringMatrixAsList ~= nil) then
+	error("getStringMatrixAsList already defined!")
+end
 getStringMatrixAsList = callback("getStringMatrixAsList")
-getStringMatrixAsListType = getStringMatrixAsList[0][0].getClass()
-println(getStringMatrixAsListType)
-println(getStringMatrixAsList)
-if(getStringMatrixAsListType != String.class)
-	throw new Exception("getStringMatrixAsList not String!")
-callback("setStringMatrixAsList",new Object[]{getStringMatrixAsList})
+getStringMatrixAsListType = type(getStringMatrixAsList[1][1])
+print(getStringMatrixAsListType)
+print(arraysToString(getStringMatrixAsList))
+if(getStringMatrixAsListType ~= "string") then
+	error("getStringMatrixAsList not String!")
+end
+callback("setStringMatrixAsList", getStringMatrixAsList)
 
-println("getStringMatrixAsListWithNull")
-if(binding.hasVariable('getStringMatrixAsListWithNull'))
-	throw new Exception("getStringMatrixAsListWithNull already defined!")
+print("getStringMatrixAsListWithNull")
+if(getStringMatrixAsListWithNull ~= nil) then
+	error("getStringMatrixAsListWithNull already defined!")
+end
 getStringMatrixAsListWithNull = callback("getStringMatrixAsListWithNull")
-getStringMatrixAsListWithNullType = getStringMatrixAsListWithNull[0][1].getClass()
-println(getStringMatrixAsListWithNullType)
-println(getStringMatrixAsListWithNull)
-if(getStringMatrixAsListWithNullType != String.class)
-	throw new Exception("getStringMatrixAsListWithNull not String!")
-if(getStringMatrixAsListWithNull[0][0] != null)
-	throw new Exception("getStringMatrixAsListWithNull[0][0] not null!")
-if(getStringMatrixAsListWithNull[1][1] != null)
-	throw new Exception("getStringMatrixAsListWithNull[1][1] not null!")
-if(getStringMatrixAsListWithNull[2][2] != null)
-	throw new Exception("getStringMatrixAsListWithNull[2][2] not null!")
-callback("setStringMatrixAsListWithNull",new Object[]{getStringMatrixAsListWithNull})
+getStringMatrixAsListWithNullType = type(getStringMatrixAsListWithNull[1][1])
+print(getStringMatrixAsListWithNullType)
+print(arraysToString(getStringMatrixAsListWithNull))
+if(getStringMatrixAsListWithNullType ~= "string") then
+	error("getStringMatrixAsListWithNull not String!")
+end
+if(getStringMatrixAsListWithNull[1][1] ~= nil) then
+	error("getStringMatrixAsListWithNull[1][1] not null!")
+end
+if(getStringMatrixAsListWithNull[2][2] ~= nil) then
+	error("getStringMatrixAsListWithNull[2][2] not null!")
+end
+if(getStringMatrixAsListWithNull[3][3] ~= nil) then
+	error("getStringMatrixAsListWithNull[3][3] not null!")
+end
+callback("setStringMatrixAsListWithNull", getStringMatrixAsListWithNull)

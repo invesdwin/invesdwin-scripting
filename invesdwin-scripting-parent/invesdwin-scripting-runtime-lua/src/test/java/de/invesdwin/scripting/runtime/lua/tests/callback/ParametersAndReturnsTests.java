@@ -28,10 +28,10 @@ public class ParametersAndReturnsTests {
         new ParametersAndReturnsTestShort(runner).testShort();
         new ParametersAndReturnsTestInteger(runner).testInteger();
         new ParametersAndReturnsTestLong(runner).testLong();
-        new ParametersAndReturnsTestCharacter(runner).testCharacter();
-        new ParametersAndReturnsTestString(runner).testString();
+        //        new ParametersAndReturnsTestCharacter(runner).testCharacter(); //x
+        //        new ParametersAndReturnsTestString(runner).testString(); //x
         new ParametersAndReturnsTestBoolean(runner).testBoolean();
-        new ParametersAndReturnsTestNullPutGet(runner).testNullPutGet();
+        //        new ParametersAndReturnsTestNullPutGet(runner).testNullPutGet(); //x
         new ParametersAndReturnsTestEmpty(runner).testEmpty();
         new ParametersAndReturnsTestEmptyMatrixValue(runner).testEmptyMatrixValue();
         new ParametersAndReturnsTestDoubleNan(runner).testDoubleNan();

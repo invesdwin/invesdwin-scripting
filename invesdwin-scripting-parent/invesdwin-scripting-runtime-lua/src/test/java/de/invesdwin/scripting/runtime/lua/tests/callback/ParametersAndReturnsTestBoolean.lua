@@ -1,54 +1,66 @@
-println("getBoolean")
-if(binding.hasVariable('getBoolean'))
-	throw new Exception("getBoolean already defined!")
+arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
+
+print("getBoolean")
+if(getBoolean ~= nil) then
+	error("getBoolean already defined!")
+end
 getBoolean = callback("getBoolean")
-getBooleanType = getBoolean.getClass()
-println(getBooleanType)
-println(getBoolean)
-if(getBooleanType != Boolean.class)
-	throw new Exception("getBoolean not Boolean!")
-callback("setBoolean",getBoolean)
+getBooleanType = type(getBoolean)
+print(getBooleanType)
+print(getBoolean)
+if(getBooleanType ~= "boolean") then
+	error("getBoolean not Boolean!")
+end
+callback("setBoolean", getBoolean)
 
-println("getBooleanVector")
-if(binding.hasVariable('getBooleanVector'))
-	throw new Exception("getBooleanVector already defined!")
+print("getBooleanVector")
+if(getBooleanVector ~= nil) then
+	error("getBooleanVector already defined!")
+end
 getBooleanVector = callback("getBooleanVector")
-getBooleanVectorType = getBooleanVector[0].getClass()
-println(getBooleanVectorType)
-println(getBooleanVector)
-if(getBooleanVectorType != Boolean.class)
-	throw new Exception("getBooleanVector not Boolean!")
-callback("setBooleanVector",getBooleanVector)
+getBooleanVectorType = type(getBooleanVector[1])
+print(getBooleanVectorType)
+print(arraysToString(getBooleanVector))
+if(getBooleanVectorType ~= "boolean") then
+	error("getBooleanVector not Boolean!")
+end
+callback("setBooleanVector", getBooleanVector)
 
-println("getBooleanVectorAsList")
-if(binding.hasVariable('getBooleanVectorAsList'))
-	throw new Exception("getBooleanVectorAsList already defined!")
+print("getBooleanVectorAsList")
+if(getBooleanVectorAsList ~= nil) then
+	error("getBooleanVectorAsList already defined!")
+end
 getBooleanVectorAsList = callback("getBooleanVectorAsList")
-getBooleanVectorAsListType = getBooleanVectorAsList[0].getClass()
-println(getBooleanVectorAsListType)
-println(getBooleanVectorAsList)
-if(getBooleanVectorAsListType != Boolean.class)
-	throw new Exception("getBooleanVectorAsList not Boolean!")
-callback("setBooleanVectorAsList",getBooleanVectorAsList)
+getBooleanVectorAsListType = type(getBooleanVectorAsList[1])
+print(getBooleanVectorAsListType)
+print(arraysToString(getBooleanVectorAsList))
+if(getBooleanVectorAsListType ~= "boolean") then
+	error("getBooleanVectorAsList not Boolean!")
+end
+callback("setBooleanVectorAsList", getBooleanVectorAsList)
 
-println("getBooleanMatrix")
-if(binding.hasVariable('getBooleanMatrix'))
-	throw new Exception("getBooleanMatrix already defined!")
+print("getBooleanMatrix")
+if(getBooleanMatrix ~= nil) then
+	error("getBooleanMatrix already defined!")
+end
 getBooleanMatrix = callback("getBooleanMatrix")
-getBooleanMatrixType = getBooleanMatrix[0][0].getClass()
-println(getBooleanMatrixType)
-println(getBooleanMatrix)
-if(getBooleanMatrixType != Boolean.class)
-	throw new Exception("getBooleanMatrix not Boolean!")
-callback("setBooleanMatrix",new Object[]{getBooleanMatrix})
+getBooleanMatrixType = type(getBooleanMatrix[1][1])
+print(getBooleanMatrixType)
+print(arraysToString(getBooleanMatrix))
+if(getBooleanMatrixType ~= "boolean") then
+	error("getBooleanMatrix not Boolean!")
+end
+callback("setBooleanMatrix", getBooleanMatrix)
 
-println("getBooleanMatrixAsList")
-if(binding.hasVariable('getBooleanMatrixAsList'))
-	throw new Exception("getBooleanMatrixAsList already defined!")
+print("getBooleanMatrixAsList")
+if(getBooleanMatrixAsList ~= nil) then
+	error("getBooleanMatrixAsList already defined!")
+end
 getBooleanMatrixAsList = callback("getBooleanMatrixAsList")
-getBooleanMatrixAsListType = getBooleanMatrixAsList[0][0].getClass()
-println(getBooleanMatrixAsListType)
-println(getBooleanMatrixAsList)
-if(getBooleanMatrixAsListType != Boolean.class)
-	throw new Exception("getBooleanMatrixAsList not Boolean!")
-callback("setBooleanMatrixAsList",new Object[]{getBooleanMatrixAsList})
+getBooleanMatrixAsListType = type(getBooleanMatrixAsList[1][1])
+print(getBooleanMatrixAsListType)
+print(arraysToString(getBooleanMatrixAsList))
+if(getBooleanMatrixAsListType ~= "boolean") then
+	error("getBooleanMatrixAsList not Boolean!")
+end
+callback("setBooleanMatrixAsList", getBooleanMatrixAsList)

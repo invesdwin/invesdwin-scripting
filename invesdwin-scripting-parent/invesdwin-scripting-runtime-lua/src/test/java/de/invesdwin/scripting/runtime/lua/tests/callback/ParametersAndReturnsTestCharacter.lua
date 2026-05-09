@@ -1,55 +1,66 @@
-println("getCharacter")
-if(binding.hasVariable('getCharacter'))
-	throw new Exception("getCharacter already defined!")
+arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
+
+print("getCharacter")
+if(getCharacter ~= nil) then
+	error("getCharacter already defined!")
+end
 getCharacter = callback("getCharacter")
-getCharacterType = getCharacter.getClass()
-println(getCharacterType)
-println(getCharacter)
-if(getCharacterType != Character.class)
-	throw new Exception("getCharacter not Character!")
-callback("setCharacter",getCharacter)
+getCharacterType = type(getCharacter)
+print(getCharacterType)
+print(getCharacter)
+if(getCharacterType ~= "string") then
+	error("getCharacter not Character!")
+end
+callback("setCharacter", getCharacter)
 
-println("getCharacterVector")
-if(binding.hasVariable('getCharacterVector'))
-	throw new Exception("getCharacterVector already defined!")
+print("getCharacterVector")
+if(getCharacterVector ~= nil) then
+	error("getCharacterVector already defined!")
+end
 getCharacterVector = callback("getCharacterVector")
-getCharacterVectorType = getCharacterVector[0].getClass()
-println(getCharacterVectorType)
-println(getCharacterVector)
-if(getCharacterVectorType != Character.class)
-	throw new Exception("getCharacterVector not Character!")
-callback("setCharacterVector",getCharacterVector)
+getCharacterVectorType = type(getCharacterVector[1])
+print(getCharacterVectorType)
+print(arraysToString(getCharacterVector))
+if(getCharacterVectorType ~= "string") then
+	error("getCharacterVector not Character!")
+end
+callback("setCharacterVector", getCharacterVector)
 
-println("getCharacterVectorAsList")
-if(binding.hasVariable('getCharacterVectorAsList'))
-	throw new Exception("getCharacterVectorAsList already defined!")
+print("getCharacterVectorAsList")
+if(getCharacterVectorAsList ~= nil) then
+	error("getCharacterVectorAsList already defined!")
+end
 getCharacterVectorAsList = callback("getCharacterVectorAsList")
-getCharacterVectorAsListType = getCharacterVectorAsList[0].getClass()
-println(getCharacterVectorAsListType)
-println(getCharacterVectorAsList)
-if(getCharacterVectorAsListType != Character.class)
-	throw new Exception("getCharacterVectorAsList not Character!")
-callback("setCharacterVectorAsList",getCharacterVectorAsList)
+getCharacterVectorAsListType = type(getCharacterVectorAsList[1])
+print(getCharacterVectorAsListType)
+print(arraysToString(getCharacterVectorAsList))
+if(getCharacterVectorAsListType ~= "string") then
+	error("getCharacterVectorAsList not Character!")
+end
+callback("setCharacterVectorAsList", getCharacterVectorAsList)
 
-println("getCharacterMatrix")
-if(binding.hasVariable('getCharacterMatrix'))
-	throw new Exception("getCharacterMatrix already defined!")
+print("getCharacterMatrix")
+if(getCharacterMatrix ~= nil) then
+	error("getCharacterMatrix already defined!")
+end
 getCharacterMatrix = callback("getCharacterMatrix")
-getCharacterMatrixType = getCharacterMatrix[0][0].getClass()
-println(getCharacterMatrixType)
-println(getCharacterMatrix)
-if(getCharacterMatrixType != Character.class)
-	throw new Exception("getCharacterMatrix not Character!")
-callback("setCharacterMatrix",new Object[]{getCharacterMatrix})
+getCharacterMatrixType = type(getCharacterMatrix[1][1])
+print(getCharacterMatrixType)
+print(arraysToString(getCharacterMatrix))
+if(getCharacterMatrixType ~= "string") then
+	error("getCharacterMatrix not Character!")
+end
+callback("setCharacterMatrix", getCharacterMatrix)
 
-println("getCharacterMatrixAsList")
-if(binding.hasVariable('getCharacterMatrixAsList'))
-	throw new Exception("getCharacterMatrixAsList already defined!")
+print("getCharacterMatrixAsList")
+if(getCharacterMatrixAsList ~= nil) then
+	error("getCharacterMatrixAsList already defined!")
+end
 getCharacterMatrixAsList = callback("getCharacterMatrixAsList")
-getCharacterMatrixAsListType = getCharacterMatrixAsList[0][0].getClass()
-println(getCharacterMatrixAsListType)
-println(getCharacterMatrixAsList)
-if(getCharacterMatrixAsListType != Character.class)
-	throw new Exception("getCharacterMatrixAsList not Character!")
-callback("setCharacterMatrixAsList",new Object[]{getCharacterMatrixAsList})
-	
+getCharacterMatrixAsListType = type(getCharacterMatrixAsList[1][1])
+print(getCharacterMatrixAsListType)
+print(arraysToString(getCharacterMatrixAsList))
+if(getCharacterMatrixAsListType ~= "string") then
+	error("getCharacterMatrixAsList not Character!")
+end
+callback("setCharacterMatrixAsList", getCharacterMatrixAsList)

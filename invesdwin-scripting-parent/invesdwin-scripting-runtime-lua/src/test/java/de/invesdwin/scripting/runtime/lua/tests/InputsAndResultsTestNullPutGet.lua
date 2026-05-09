@@ -1,186 +1,142 @@
 getBooleanVector = putBooleanVector
-if(getBooleanVector ~= nil) then
-	error("getBooleanVector not null!")
-end
+if(getBooleanVector != null)
+	throw new Exception("getBooleanVector not null!")
 getBooleanVectorAsList = putBooleanVectorAsList
-if(getBooleanVectorAsList ~= nil) then
-	error("getBooleanVectorAsList not null!")
-end
+if(getBooleanVectorAsList != null)
+	throw new Exception("getBooleanVectorAsList not null!")
 getBooleanMatrix = putBooleanMatrix
-if(getBooleanMatrix ~= nil) then
-	error("getBooleanMatrix not null!")
-end
+if(getBooleanMatrix != null)
+	throw new Exception("getBooleanMatrix not null!")
 getBooleanMatrixAsList = putBooleanMatrixAsList
-if(getBooleanMatrixAsList ~= nil) then
-	error("getBooleanMatrixAsList not null!")
-end
+if(getBooleanMatrixAsList != null)
+	throw new Exception("getBooleanMatrixAsList not null!")
 
 getByteVector = putByteVector
-if(getByteVector ~= nil) then
-	error("getByteVector not null!")
-end
+if(getByteVector != null)
+	throw new Exception("getByteVector not null!")
 getByteVectorAsList = putByteVectorAsList
-if(getByteVectorAsList ~= nil) then
-	error("getByteVectorAsList not null!")
-end
+if(getByteVectorAsList != null)
+	throw new Exception("getByteVectorAsList not null!")
 getByteMatrix = putByteMatrix
-if(getByteMatrix ~= nil) then
-	error("getByteMatrix not null!")
-end
+if(getByteMatrix != null)
+	throw new Exception("getByteMatrix not null!")
 getByteMatrixAsList = putByteMatrixAsList
-if(getByteMatrixAsList ~= nil) then
-	error("getByteMatrixAsList not null!")
-end
+if(getByteMatrixAsList != null)
+	throw new Exception("getByteMatrixAsList not null!")
 
 getCharacterVector = putCharacterVector
-if(getCharacterVector ~= nil) then
-	error("getCharacterVector not null!")
-end
+if(getCharacterVector != null)
+	throw new Exception("getCharacterVector not null!")
 getCharacterVectorAsList = putCharacterVectorAsList
-if(getCharacterVectorAsList ~= nil) then
-	error("getCharacterVectorAsList not null!")
-end
+if(getCharacterVectorAsList != null)
+	throw new Exception("getCharacterVectorAsList not null!")
 getCharacterMatrix = putCharacterMatrix
-if(getCharacterMatrix ~= nil) then
-	error("getCharacterMatrix not null!")
-end
+if(getCharacterMatrix != null)
+	throw new Exception("getCharacterMatrix not null!")
 getCharacterMatrixAsList = putCharacterMatrixAsList
-if(getCharacterMatrixAsList ~= nil) then
-	error("getCharacterMatrixAsList not null!")
-end
+if(getCharacterMatrixAsList != null)
+	throw new Exception("getCharacterMatrixAsList not null!")
 
 getDecimalVector = putDecimalVector
-if(getDecimalVector ~= nil) then
-	error("getDecimalVector not null!")
-end
+if(getDecimalVector != null)
+	throw new Exception("getDecimalVector not null!")
 getDecimalVectorAsList = putDecimalVectorAsList
-if(getDecimalVectorAsList ~= nil) then
-	error("getDecimalVectorAsList not null!")
-end
+if(getDecimalVectorAsList != null)
+	throw new Exception("getDecimalVectorAsList not null!")
 getDecimalMatrix = putDecimalMatrix
-if(getDecimalMatrix ~= nil) then
-	error("getDecimalMatrix not null!")
-end
+if(getDecimalMatrix != null)
+	throw new Exception("getDecimalMatrix not null!")
 getDecimalMatrixAsList = putDecimalMatrixAsList
-if(getDecimalMatrixAsList ~= nil) then
-	error("getDecimalMatrixAsList not null!")
-end
+if(getDecimalMatrixAsList != null)
+	throw new Exception("getDecimalMatrixAsList not null!")
 
 getDoubleVector = putDoubleVector
-if(getDoubleVector ~= nil) then
-	error("getDoubleVector not null!")
-end
+if(getDoubleVector != null)
+	throw new Exception("getDoubleVector not null!")
 getDoubleVectorAsList = putDoubleVectorAsList
-if(getDoubleVectorAsList ~= nil) then
-	error("getDoubleVectorAsList not null!")
-end
+if(getDoubleVectorAsList != null)
+	throw new Exception("getDoubleVectorAsList not null!")
 getDoubleMatrix = putDoubleMatrix
-if(getDoubleMatrix ~= nil) then
-	error("getDoubleMatrix not null!")
-end
+if(getDoubleMatrix != null)
+	throw new Exception("getDoubleMatrix not null!")
 getDoubleMatrixAsList = putDoubleMatrixAsList
-if(getDoubleMatrixAsList ~= nil) then
-	error("getDoubleMatrixAsList not null!")
-end
+if(getDoubleMatrixAsList != null)
+	throw new Exception("getDoubleMatrixAsList not null!")
 
 getFloatVector = putFloatVector
-if(getFloatVector ~= nil) then
-	error("getFloatVector not null!")
-end
+if(getFloatVector != null)
+	throw new Exception("getFloatVector not null!")
 getFloatVectorAsList = putFloatVectorAsList
-if(getFloatVectorAsList ~= nil) then
-	error("getFloatVectorAsList not null!")
-end
+if(getFloatVectorAsList != null)
+	throw new Exception("getFloatVectorAsList not null!")
 getFloatMatrix = putFloatMatrix
-if(getFloatMatrix ~= nil) then
-	error("getFloatMatrix not null!")
-end
+if(getFloatMatrix != null)
+	throw new Exception("getFloatMatrix not null!")
 getFloatMatrixAsList = putFloatMatrixAsList
-if(getFloatMatrixAsList ~= nil) then
-	error("getFloatMatrixAsList not null!")
-end
+if(getFloatMatrixAsList != null)
+	throw new Exception("getFloatMatrixAsList not null!")
 
 getIntegerVector = putIntegerVector
-if(getIntegerVector ~= nil) then
-	error("getIntegerVector not null!")
-end
+if(getIntegerVector != null)
+	throw new Exception("getIntegerVector not null!")
 getIntegerVectorAsList = putIntegerVectorAsList
-if(getIntegerVectorAsList ~= nil) then
-	error("getIntegerVectorAsList not null!")
-end
+if(getIntegerVectorAsList != null)
+	throw new Exception("getIntegerVectorAsList not null!")
 getIntegerMatrix = putIntegerMatrix
-if(getIntegerMatrix ~= nil) then
-	error("getIntegerMatrix not null!")
-end
+if(getIntegerMatrix != null)
+	throw new Exception("getIntegerMatrix not null!")
 getIntegerMatrixAsList = putIntegerMatrixAsList
-if(getIntegerMatrixAsList ~= nil) then
-	error("getIntegerMatrixAsList not null!")
-end
+if(getIntegerMatrixAsList != null)
+	throw new Exception("getIntegerMatrixAsList not null!")
 
 getLongVector = putLongVector
-if(getLongVector ~= nil) then
-	error("getLongVector not null!")
-end
+if(getLongVector != null)
+	throw new Exception("getLongVector not null!")
 getLongVectorAsList = putLongVectorAsList
-if(getLongVectorAsList ~= nil) then
-	error("getLongVectorAsList not null!")
-end
+if(getLongVectorAsList != null)
+	throw new Exception("getLongVectorAsList not null!")
 getLongMatrix = putLongMatrix
-if(getLongMatrix ~= nil) then
-	error("getLongMatrix not null!")
-end
+if(getLongMatrix != null)
+	throw new Exception("getLongMatrix not null!")
 getLongMatrixAsList = putLongMatrixAsList
-if(getLongMatrixAsList ~= nil) then
-	error("getLongMatrixAsList not null!")
-end
+if(getLongMatrixAsList != null)
+	throw new Exception("getLongMatrixAsList not null!")
 
 getPercentVector = putPercentVector
-if(getPercentVector ~= nil) then
-	error("getPercentVector not null!")
-end
+if(getPercentVector != null)
+	throw new Exception("getPercentVector not null!")
 getPercentVectorAsList = putPercentVectorAsList
-if(getPercentVectorAsList ~= nil) then
-	error("getPercentVectorAsList not null!")
-end
+if(getPercentVectorAsList != null)
+	throw new Exception("getPercentVectorAsList not null!")
 getPercentMatrix = putPercentMatrix
-if(getPercentMatrix ~= nil) then
-	error("getPercentMatrix not null!")
-end
+if(getPercentMatrix != null)
+	throw new Exception("getPercentMatrix not null!")
 getPercentMatrixAsList = putPercentMatrixAsList
-if(getPercentMatrixAsList ~= nil) then
-	error("getPercentMatrixAsList not null!")
-end
+if(getPercentMatrixAsList != null)
+	throw new Exception("getPercentMatrixAsList not null!")
 
 getShortVector = putShortVector
-if(getShortVector ~= nil) then
-	error("getShortVector not null!")
-end
+if(getShortVector != null)
+	throw new Exception("getShortVector not null!")
 getShortVectorAsList = putShortVectorAsList
-if(getShortVectorAsList ~= nil) then
-	error("getShortVectorAsList not null!")
-end
+if(getShortVectorAsList != null)
+	throw new Exception("getShortVectorAsList not null!")
 getShortMatrix = putShortMatrix
-if(getShortMatrix ~= nil) then
-	error("getShortMatrix not null!")
-end
+if(getShortMatrix != null)
+	throw new Exception("getShortMatrix not null!")
 getShortMatrixAsList = putShortMatrixAsList
-if(getShortMatrixAsList ~= nil) then
-	error("getShortMatrixAsList not null!")
-end
+if(getShortMatrixAsList != null)
+	throw new Exception("getShortMatrixAsList not null!")
 
 getStringVector = putStringVector
-if(getStringVector ~= nil) then
-	error("getStringVector not null!")
-end
+if(getStringVector != null)
+	throw new Exception("getStringVector not null!")
 getStringVectorAsList = putStringVectorAsList
-if(getStringVectorAsList ~= nil) then
-	error("getStringVectorAsList not null!")
-end
+if(getStringVectorAsList != null)
+	throw new Exception("getStringVectorAsList not null!")
 getStringMatrix = putStringMatrix
-if(getStringMatrix ~= nil) then
-	error("getStringMatrix not null!")
-end
+if(getStringMatrix != null)
+	throw new Exception("getStringMatrix not null!")
 getStringMatrixAsList = putStringMatrixAsList
-if(getStringMatrixAsList ~= nil) then
-	error("getStringMatrixAsList not null!")
-end
+if(getStringMatrixAsList != null)
+	throw new Exception("getStringMatrixAsList not null!")

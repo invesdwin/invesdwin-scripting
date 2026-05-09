@@ -1,186 +1,230 @@
 getBooleanVector = callback("getBooleanVector")
-if(getBooleanVector != null)
-	throw new Exception("getBooleanVector not null!")
-callback("setBooleanVector",getBooleanVector)
+if(getBooleanVector ~= nil) then
+	error("getBooleanVector not null!")
+end
+callback("setBooleanVector", getBooleanVector)
 getBooleanVectorAsList = callback("getBooleanVectorAsList")
-if(getBooleanVectorAsList != null)
-	throw new Exception("getBooleanVectorAsList not null!")
-callback("setBooleanVectorAsList",getBooleanVectorAsList)
+if(getBooleanVectorAsList ~= nil) then
+	error("getBooleanVectorAsList not null!")
+end
+callback("setBooleanVectorAsList", getBooleanVectorAsList)
 getBooleanMatrix = callback("getBooleanMatrix")
-if(getBooleanMatrix != null)
-	throw new Exception("getBooleanMatrix not null!")
-callback("setBooleanMatrix",getBooleanMatrix)
+if(getBooleanMatrix ~= nil) then
+	error("getBooleanMatrix not null!")
+end
+callback("setBooleanMatrix", getBooleanMatrix)
 getBooleanMatrixAsList = callback("getBooleanMatrixAsList")
-if(getBooleanMatrixAsList != null)
-	throw new Exception("getBooleanMatrixAsList not null!")
-callback("setBooleanMatrixAsList",getBooleanMatrixAsList)
+if(getBooleanMatrixAsList ~= nil) then
+	error("getBooleanMatrixAsList not null!")
+end
+callback("setBooleanMatrixAsList", getBooleanMatrixAsList)
 
 getByteVector = callback("getByteVector")
-if(getByteVector != null)
-	throw new Exception("getByteVector not null!")
-callback("setByteVector",getByteVector)
+if(getByteVector ~= nil) then
+	error("getByteVector not null!")
+end
+callback("setByteVector", getByteVector)
 getByteVectorAsList = callback("getByteVectorAsList")
-if(getByteVectorAsList != null)
-	throw new Exception("getByteVectorAsList not null!")
-callback("setByteVectorAsList",getByteVectorAsList)
+if(getByteVectorAsList ~= nil) then
+	error("getByteVectorAsList not null!")
+end
+callback("setByteVectorAsList", getByteVectorAsList)
 getByteMatrix = callback("getByteMatrix")
-if(getByteMatrix != null)
-	throw new Exception("getByteMatrix not null!")
-callback("setByteMatrix",getByteMatrix)
+if(getByteMatrix ~= nil) then
+	error("getByteMatrix not null!")
+end
+callback("setByteMatrix", getByteMatrix)
 getByteMatrixAsList = callback("getByteMatrixAsList")
-if(getByteMatrixAsList != null)
-	throw new Exception("getByteMatrixAsList not null!")
-callback("setByteMatrixAsList",getByteMatrixAsList)
+if(getByteMatrixAsList ~= nil) then
+	error("getByteMatrixAsList not null!")
+end
+callback("setByteMatrixAsList", getByteMatrixAsList)
 
 getCharacterVector = callback("getCharacterVector")
-if(getCharacterVector != null)
-	throw new Exception("getCharacterVector not null!")
-callback("setCharacterVector",getCharacterVector)
+if(getCharacterVector ~= nil) then
+	error("getCharacterVector not null!")
+end
+callback("setCharacterVector", getCharacterVector)
 getCharacterVectorAsList = callback("getCharacterVectorAsList")
-if(getCharacterVectorAsList != null)
-	throw new Exception("getCharacterVectorAsList not null!")
-callback("setCharacterVectorAsList",getCharacterVectorAsList)
+if(getCharacterVectorAsList ~= nil) then
+	error("getCharacterVectorAsList not null!")
+end
+callback("setCharacterVectorAsList", getCharacterVectorAsList)
 getCharacterMatrix = callback("getCharacterMatrix")
-if(getCharacterMatrix != null)
-	throw new Exception("getCharacterMatrix not null!")
-callback("setCharacterMatrix",getCharacterMatrix)
+if(getCharacterMatrix ~= nil) then
+	error("getCharacterMatrix not null!")
+end
+callback("setCharacterMatrix", getCharacterMatrix)
 getCharacterMatrixAsList = callback("getCharacterMatrixAsList")
-if(getCharacterMatrixAsList != null)
-	throw new Exception("getCharacterMatrixAsList not null!")
-callback("setCharacterMatrixAsList",getCharacterMatrixAsList)
+if(getCharacterMatrixAsList ~= nil) then
+	error("getCharacterMatrixAsList not null!")
+end
+callback("setCharacterMatrixAsList", getCharacterMatrixAsList)
 
 getDecimalVector = callback("getDecimalVector")
-if(getDecimalVector != null)
-	throw new Exception("getDecimalVector not null!")
-callback("setDecimalVector",getDecimalVector)
+if(getDecimalVector ~= nil) then
+	error("getDecimalVector not null!")
+end
+callback("setDecimalVector", getDecimalVector)
 getDecimalVectorAsList = callback("getDecimalVectorAsList")
-if(getDecimalVectorAsList != null)
-	throw new Exception("getDecimalVectorAsList not null!")
-callback("setDecimalVectorAsList",getDecimalVectorAsList)
+if(getDecimalVectorAsList ~= nil) then
+	error("getDecimalVectorAsList not null!")
+end
+callback("setDecimalVectorAsList", getDecimalVectorAsList)
 getDecimalMatrix = callback("getDecimalMatrix")
-if(getDecimalMatrix != null)
-	throw new Exception("getDecimalMatrix not null!")
-callback("setDecimalMatrix",getDecimalMatrix)
+if(getDecimalMatrix ~= nil) then
+	error("getDecimalMatrix not null!")
+end
+callback("setDecimalMatrix", getDecimalMatrix)
 getDecimalMatrixAsList = callback("getDecimalMatrixAsList")
-if(getDecimalMatrixAsList != null)
-	throw new Exception("getDecimalMatrixAsList not null!")
-callback("setDecimalMatrixAsList",getDecimalMatrixAsList)
+if(getDecimalMatrixAsList ~= nil) then
+	error("getDecimalMatrixAsList not null!")
+end
+callback("setDecimalMatrixAsList", getDecimalMatrixAsList)
 
 getDoubleVector = callback("getDoubleVector")
-if(getDoubleVector != null)
-	throw new Exception("getDoubleVector not null!")
-callback("setDoubleVector",getDoubleVector)
+if(getDoubleVector ~= nil) then
+	error("getDoubleVector not null!")
+end
+callback("setDoubleVector", getDoubleVector)
 getDoubleVectorAsList = callback("getDoubleVectorAsList")
-if(getDoubleVectorAsList != null)
-	throw new Exception("getDoubleVectorAsList not null!")
-callback("setDoubleVectorAsList",getDoubleVectorAsList)
+if(getDoubleVectorAsList ~= nil) then
+	error("getDoubleVectorAsList not null!")
+end
+callback("setDoubleVectorAsList", getDoubleVectorAsList)
 getDoubleMatrix = callback("getDoubleMatrix")
-if(getDoubleMatrix != null)
-	throw new Exception("getDoubleMatrix not null!")
-callback("setDoubleMatrix",getDoubleMatrix)
+if(getDoubleMatrix ~= nil) then
+	error("getDoubleMatrix not null!")
+end
+callback("setDoubleMatrix", getDoubleMatrix)
 getDoubleMatrixAsList = callback("getDoubleMatrixAsList")
-if(getDoubleMatrixAsList != null)
-	throw new Exception("getDoubleMatrixAsList not null!")
-callback("setDoubleMatrixAsList",getDoubleMatrixAsList)
+if(getDoubleMatrixAsList ~= nil) then
+	error("getDoubleMatrixAsList not null!")
+end
+callback("setDoubleMatrixAsList", getDoubleMatrixAsList)
 
 getFloatVector = callback("getFloatVector")
-if(getFloatVector != null)
-	throw new Exception("getFloatVector not null!")
-callback("setFloatVector",getFloatVector)
+if(getFloatVector ~= nil) then
+	error("getFloatVector not null!")
+end
+callback("setFloatVector", getFloatVector)
 getFloatVectorAsList = callback("getFloatVectorAsList")
-if(getFloatVectorAsList != null)
-	throw new Exception("getFloatVectorAsList not null!")
-callback("setFloatVectorAsList",getFloatVectorAsList)
+if(getFloatVectorAsList ~= nil) then
+	error("getFloatVectorAsList not null!")
+end
+callback("setFloatVectorAsList", getFloatVectorAsList)
 getFloatMatrix = callback("getFloatMatrix")
-if(getFloatMatrix != null)
-	throw new Exception("getFloatMatrix not null!")
-callback("setFloatMatrix",getFloatMatrix)
+if(getFloatMatrix ~= nil) then
+	error("getFloatMatrix not null!")
+end
+callback("setFloatMatrix", getFloatMatrix)
 getFloatMatrixAsList = callback("getFloatMatrixAsList")
-if(getFloatMatrixAsList != null)
-	throw new Exception("getFloatMatrixAsList not null!")
-callback("setFloatMatrixAsList",getFloatMatrixAsList)
+if(getFloatMatrixAsList ~= nil) then
+	error("getFloatMatrixAsList not null!")
+end
+callback("setFloatMatrixAsList", getFloatMatrixAsList)
 
 getIntegerVector = callback("getIntegerVector")
-if(getIntegerVector != null)
-	throw new Exception("getIntegerVector not null!")
-callback("setIntegerVector",getIntegerVector)
+if(getIntegerVector ~= nil) then
+	error("getIntegerVector not null!")
+end
+callback("setIntegerVector", getIntegerVector)
 getIntegerVectorAsList = callback("getIntegerVectorAsList")
-if(getIntegerVectorAsList != null)
-	throw new Exception("getIntegerVectorAsList not null!")
-callback("setIntegerVectorAsList",getIntegerVectorAsList)
+if(getIntegerVectorAsList ~= nil) then
+	error("getIntegerVectorAsList not null!")
+end
+callback("setIntegerVectorAsList", getIntegerVectorAsList)
 getIntegerMatrix = callback("getIntegerMatrix")
-if(getIntegerMatrix != null)
-	throw new Exception("getIntegerMatrix not null!")
-callback("setIntegerMatrix",getIntegerMatrix)
+if(getIntegerMatrix ~= nil) then
+	error("getIntegerMatrix not null!")
+end
+callback("setIntegerMatrix", getIntegerMatrix)
 getIntegerMatrixAsList = callback("getIntegerMatrixAsList")
-if(getIntegerMatrixAsList != null)
-	throw new Exception("getIntegerMatrixAsList not null!")
-callback("setIntegerMatrixAsList",getIntegerMatrixAsList)
+if(getIntegerMatrixAsList ~= nil) then
+	error("getIntegerMatrixAsList not null!")
+end
+callback("setIntegerMatrixAsList", getIntegerMatrixAsList)
 
 getLongVector = callback("getLongVector")
-if(getLongVector != null)
-	throw new Exception("getLongVector not null!")
-callback("setLongVector",getLongVector)
+if(getLongVector ~= nil) then
+	error("getLongVector not null!")
+end
+callback("setLongVector", getLongVector)
 getLongVectorAsList = callback("getLongVectorAsList")
-if(getLongVectorAsList != null)
-	throw new Exception("getLongVectorAsList not null!")
-callback("setLongVectorAsList",getLongVectorAsList)
+if(getLongVectorAsList ~= nil) then
+	error("getLongVectorAsList not null!")
+end
+callback("setLongVectorAsList", getLongVectorAsList)
 getLongMatrix = callback("getLongMatrix")
-if(getLongMatrix != null)
-	throw new Exception("getLongMatrix not null!")
-callback("setLongMatrix",getLongMatrix)
+if(getLongMatrix ~= nil) then
+	error("getLongMatrix not null!")
+end
+callback("setLongMatrix", getLongMatrix)
 getLongMatrixAsList = callback("getLongMatrixAsList")
-if(getLongMatrixAsList != null)
-	throw new Exception("getLongMatrixAsList not null!")
-callback("setLongMatrixAsList",getLongMatrixAsList)
+if(getLongMatrixAsList ~= nil) then
+	error("getLongMatrixAsList not null!")
+end
+callback("setLongMatrixAsList", getLongMatrixAsList)
 
 getPercentVector = callback("getPercentVector")
-if(getPercentVector != null)
-	throw new Exception("getPercentVector not null!")
-callback("setPercentVector",getPercentVector)
+if(getPercentVector ~= nil) then
+	error("getPercentVector not null!")
+end
+callback("setPercentVector", getPercentVector)
 getPercentVectorAsList = callback("getPercentVectorAsList")
-if(getPercentVectorAsList != null)
-	throw new Exception("getPercentVectorAsList not null!")
-callback("setPercentVectorAsList",getPercentVectorAsList)
+if(getPercentVectorAsList ~= nil) then
+	error("getPercentVectorAsList not null!")
+end
+callback("setPercentVectorAsList", getPercentVectorAsList)
 getPercentMatrix = callback("getPercentMatrix")
-if(getPercentMatrix != null)
-	throw new Exception("getPercentMatrix not null!")
-callback("setPercentMatrix",getPercentMatrix)
+if(getPercentMatrix ~= nil) then
+	error("getPercentMatrix not null!")
+end
+callback("setPercentMatrix", getPercentMatrix)
 getPercentMatrixAsList = callback("getPercentMatrixAsList")
-if(getPercentMatrixAsList != null)
-	throw new Exception("getPercentMatrixAsList not null!")
-callback("setPercentMatrixAsList",getPercentMatrixAsList)
+if(getPercentMatrixAsList ~= nil) then
+	error("getPercentMatrixAsList not null!")
+end
+callback("setPercentMatrixAsList", getPercentMatrixAsList)
 
 getShortVector = callback("getShortVector")
-if(getShortVector != null)
-	throw new Exception("getShortVector not null!")
-callback("setShortVector",getShortVector)
+if(getShortVector ~= nil) then
+	error("getShortVector not null!")
+end
+callback("setShortVector", getShortVector)
 getShortVectorAsList = callback("getShortVectorAsList")
-if(getShortVectorAsList != null)
-	throw new Exception("getShortVectorAsList not null!")
-callback("setShortVectorAsList",getShortVectorAsList)
+if(getShortVectorAsList ~= nil) then
+	error("getShortVectorAsList not null!")
+end
+callback("setShortVectorAsList", getShortVectorAsList)
 getShortMatrix = callback("getShortMatrix")
-if(getShortMatrix != null)
-	throw new Exception("getShortMatrix not null!")
-callback("setShortMatrix",getShortMatrix)
+if(getShortMatrix ~= nil) then
+	error("getShortMatrix not null!")
+end
+callback("setShortMatrix", getShortMatrix)
 getShortMatrixAsList = callback("getShortMatrixAsList")
-if(getShortMatrixAsList != null)
-	throw new Exception("getShortMatrixAsList not null!")
-callback("setShortMatrixAsList",getShortMatrixAsList)
+if(getShortMatrixAsList ~= nil) then
+	error("getShortMatrixAsList not null!")
+end
+callback("setShortMatrixAsList", getShortMatrixAsList)
 
 getStringVector = callback("getStringVector")
-if(getStringVector != null)
-	throw new Exception("getStringVector not null!")
-callback("setStringVector",getStringVector)
+if(getStringVector ~= nil) then
+	error("getStringVector not null!")
+end
+callback("setStringVector", getStringVector)
 getStringVectorAsList = callback("getStringVectorAsList")
-if(getStringVectorAsList != null)
-	throw new Exception("getStringVectorAsList not null!")
-callback("setStringVectorAsList",getStringVectorAsList)
+if(getStringVectorAsList ~= nil) then
+	error("getStringVectorAsList not null!")
+end
+callback("setStringVectorAsList", getStringVectorAsList)
 getStringMatrix = callback("getStringMatrix")
-if(getStringMatrix != null)
-	throw new Exception("getStringMatrix not null!")
-callback("setStringMatrix",getStringMatrix)
+if(getStringMatrix ~= nil) then
+	error("getStringMatrix not null!")
+end
+callback("setStringMatrix", getStringMatrix)
 getStringMatrixAsList = callback("getStringMatrixAsList")
-if(getStringMatrixAsList != null)
-	throw new Exception("getStringMatrixAsList not null!")
-callback("setStringMatrixAsList",getStringMatrixAsList)
+if(getStringMatrixAsList ~= nil) then
+	error("getStringMatrixAsList not null!")
+end
+callback("setStringMatrixAsList", getStringMatrixAsList)

@@ -12,8 +12,6 @@ import de.invesdwin.scripting.callback.IScriptTaskCallback;
 import de.invesdwin.scripting.callback.ObjectScriptTaskParameters;
 import de.invesdwin.scripting.callback.ObjectScriptTaskParametersPool;
 import de.invesdwin.scripting.callback.ObjectScriptTaskReturnValue;
-import de.invesdwin.scripting.callback.ObjectScriptTaskReturns;
-import de.invesdwin.scripting.callback.ObjectScriptTaskReturnsPool;
 import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.lang.UUIDs;
 
@@ -49,13 +47,13 @@ public class LuaScriptTaskCallbackContext implements Closeable {
 
     public ObjectScriptTaskReturnValue invoke(final String methodName, final Object... args) {
         final ObjectScriptTaskParameters parameters = ObjectScriptTaskParametersPool.INSTANCE.borrowObject();
-        final ObjectScriptTaskReturns returns = ObjectScriptTaskReturnsPool.INSTANCE.borrowObject();
+        final LuaObjectScriptTaskReturns returns = LuaObjectScriptTaskReturnsPool.INSTANCE.borrowObject();
         try {
             parameters.setParameters(args);
             callback.invoke(methodName, parameters, returns);
             return returns.newReturn();
         } finally {
-            ObjectScriptTaskReturnsPool.INSTANCE.returnObject(returns);
+            LuaObjectScriptTaskReturnsPool.INSTANCE.returnObject(returns);
             ObjectScriptTaskParametersPool.INSTANCE.returnObject(parameters);
         }
     }

@@ -1,54 +1,66 @@
-println("getFloat")
-if(binding.hasVariable('getFloat'))
-	throw new Exception("getFloat already defined!")
+arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
+
+print("getFloat")
+if(getFloat ~= nil) then
+	error("getFloat already defined!")
+end
 getFloat = callback("getFloat")
-getFloatType = getFloat.getClass()
-println(getFloatType)
-println(getFloat)
-if(getFloatType != Float.class)
-	throw new Exception("getFloat not Float!")
-callback("setFloat",getFloat)
+getFloatType = type(getFloat)
+print(getFloatType)
+print(getFloat)
+if(getFloatType ~= "number") then
+	error("getFloat not Float!")
+end
+callback("setFloat", getFloat)
 
-println("getFloatVector")
-if(binding.hasVariable('getFloatVector'))
-	throw new Exception("getFloatVector already defined!")
+print("getFloatVector")
+if(getFloatVector ~= nil) then
+	error("getFloatVector already defined!")
+end
 getFloatVector = callback("getFloatVector")
-getFloatVectorType = getFloatVector[0].getClass()
-println(getFloatVectorType)
-println(getFloatVector)
-if(getFloatVectorType != Float.class)
-	throw new Exception("getFloatVector not Float!")
-callback("setFloatVector",getFloatVector)
+getFloatVectorType = type(getFloatVector[1])
+print(getFloatVectorType)
+print(arraysToString(getFloatVector))
+if(getFloatVectorType ~= "number") then
+	error("getFloatVector not Float!")
+end
+callback("setFloatVector", getFloatVector)
 
-println("getFloatVectorAsList")
-if(binding.hasVariable('getFloatVectorAsList'))
-	throw new Exception("getFloatVectorAsList already defined!")
+print("getFloatVectorAsList")
+if(getFloatVectorAsList ~= nil) then
+	error("getFloatVectorAsList already defined!")
+end
 getFloatVectorAsList = callback("getFloatVectorAsList")
-getFloatVectorAsListType = getFloatVectorAsList[0].getClass()
-println(getFloatVectorAsListType)
-println(getFloatVectorAsList)
-if(getFloatVectorAsListType != Float.class)
-	throw new Exception("getFloatVectorAsList not Float!")
-callback("setFloatVectorAsList",getFloatVectorAsList)
+getFloatVectorAsListType = type(getFloatVectorAsList[1])
+print(getFloatVectorAsListType)
+print(arraysToString(getFloatVectorAsList))
+if(getFloatVectorAsListType ~= "number") then
+	error("getFloatVectorAsList not Float!")
+end
+callback("setFloatVectorAsList", getFloatVectorAsList)
 
-println("getFloatMatrix")
-if(binding.hasVariable('getFloatMatrix'))
-	throw new Exception("getFloatMatrix already defined!")
+print("getFloatMatrix")
+if(getFloatMatrix ~= nil) then
+	error("getFloatMatrix already defined!")
+end
 getFloatMatrix = callback("getFloatMatrix")
-getFloatMatrixType = getFloatMatrix[0][0].getClass()
-println(getFloatMatrixType)
-println(getFloatMatrix)
-if(getFloatMatrixType != Float.class)
-	throw new Exception("getFloatMatrix not Float!")
-callback("setFloatMatrix",new Object[]{getFloatMatrix})
+getFloatMatrixType = type(getFloatMatrix[1][1])
+print(getFloatMatrixType)
+print(arraysToString(getFloatMatrix))
+if(getFloatMatrixType ~= "number") then
+	error("getFloatMatrix not Float!")
+end
+callback("setFloatMatrix", getFloatMatrix)
 
-println("getFloatMatrixAsList")
-if(binding.hasVariable('getFloatMatrixAsList'))
-	throw new Exception("getFloatMatrixAsList already defined!")
+print("getFloatMatrixAsList")
+if(getFloatMatrixAsList ~= nil) then
+	error("getFloatMatrixAsList already defined!")
+end
 getFloatMatrixAsList = callback("getFloatMatrixAsList")
-getFloatMatrixAsListType = getFloatMatrixAsList[0][0].getClass()
-println(getFloatMatrixAsListType)
-println(getFloatMatrixAsList)
-if(getFloatMatrixAsListType != Float.class)
-	throw new Exception("getFloatMatrixAsList not Float!")
-callback("setFloatMatrixAsList",new Object[]{getFloatMatrixAsList})
+getFloatMatrixAsListType = type(getFloatMatrixAsList[1][1])
+print(getFloatMatrixAsListType)
+print(arraysToString(getFloatMatrixAsList))
+if(getFloatMatrixAsListType ~= "number") then
+	error("getFloatMatrixAsList not Float!")
+end
+callback("setFloatMatrixAsList", getFloatMatrixAsList)

@@ -1,54 +1,66 @@
-println("getDecimal")
-if(binding.hasVariable('getDecimal'))
-	throw new Exception("getDecimal already defined!")
+arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
+
+print("getDecimal")
+if(getDecimal ~= nil) then
+	error("getDecimal already defined!")
+end
 getDecimal = callback("getDecimal")
-getDecimalType = getDecimal.getClass()
-println(getDecimalType)
-println(getDecimal)
-if(getDecimalType != Double.class)
-	throw new Exception("getDecimal not Double!")
-callback("setDecimal",getDecimal)
+getDecimalType = type(getDecimal)
+print(getDecimalType)
+print(getDecimal)
+if(getDecimalType ~= "number") then
+	error("getDecimal not Double!")
+end
+callback("setDecimal", getDecimal)
 
-println("getDecimalVector")
-if(binding.hasVariable('getDecimalVector'))
-	throw new Exception("getDecimalVector already defined!")
+print("getDecimalVector")
+if(getDecimalVector ~= nil) then
+	error("getDecimalVector already defined!")
+end
 getDecimalVector = callback("getDecimalVector")
-getDecimalVectorType = getDecimalVector[0].getClass()
-println(getDecimalVectorType)
-println(getDecimalVector)
-if(getDecimalVectorType != Double.class)
-	throw new Exception("getDecimalVector not Double!")
-callback("setDecimalVector",getDecimalVector)
+getDecimalVectorType = type(getDecimalVector[1])
+print(getDecimalVectorType)
+print(arraysToString(getDecimalVector))
+if(getDecimalVectorType ~= "number") then
+	error("getDecimalVector not Double!")
+end
+callback("setDecimalVector", getDecimalVector)
 
-println("getDecimalVectorAsList")
-if(binding.hasVariable('getDecimalVectorAsList'))
-	throw new Exception("getDecimalVectorAsList already defined!")
+print("getDecimalVectorAsList")
+if(getDecimalVectorAsList ~= nil) then
+	error("getDecimalVectorAsList already defined!")
+end
 getDecimalVectorAsList = callback("getDecimalVectorAsList")
-getDecimalVectorAsListType = getDecimalVectorAsList[0].getClass()
-println(getDecimalVectorAsListType)
-println(getDecimalVectorAsList)
-if(getDecimalVectorAsListType != Double.class)
-	throw new Exception("getDecimalVectorAsList not Double!")
-callback("setDecimalVectorAsList",getDecimalVectorAsList)
+getDecimalVectorAsListType = type(getDecimalVectorAsList[1])
+print(getDecimalVectorAsListType)
+print(arraysToString(getDecimalVectorAsList))
+if(getDecimalVectorAsListType ~= "number") then
+	error("getDecimalVectorAsList not Double!")
+end
+callback("setDecimalVectorAsList", getDecimalVectorAsList)
 
-println("getDecimalMatrix")
-if(binding.hasVariable('getDecimalMatrix'))
-	throw new Exception("getDecimalMatrix already defined!")
+print("getDecimalMatrix")
+if(getDecimalMatrix ~= nil) then
+	error("getDecimalMatrix already defined!")
+end
 getDecimalMatrix = callback("getDecimalMatrix")
-getDecimalMatrixType = getDecimalMatrix[0][0].getClass()
-println(getDecimalMatrixType)
-println(getDecimalMatrix)
-if(getDecimalMatrixType != Double.class)
-	throw new Exception("getDecimalMatrix not Double!")
-callback("setDecimalMatrix",new Object[]{getDecimalMatrix})
+getDecimalMatrixType = type(getDecimalMatrix[1][1])
+print(getDecimalMatrixType)
+print(arraysToString(getDecimalMatrix))
+if(getDecimalMatrixType ~= "number") then
+	error("getDecimalMatrix not Double!")
+end
+callback("setDecimalMatrix", getDecimalMatrix)
 
-println("getDecimalMatrixAsList")
-if(binding.hasVariable('getDecimalMatrixAsList'))
-	throw new Exception("getDecimalMatrixAsList already defined!")
+print("getDecimalMatrixAsList")
+if(getDecimalMatrixAsList ~= nil) then
+	error("getDecimalMatrixAsList already defined!")
+end
 getDecimalMatrixAsList = callback("getDecimalMatrixAsList")
-getDecimalMatrixAsListType = getDecimalMatrixAsList[0][0].getClass()
-println(getDecimalMatrixAsListType)
-println(getDecimalMatrixAsList)
-if(getDecimalMatrixAsListType != Double.class)
-	throw new Exception("getDecimalMatrixAsList not Double!")
-callback("setDecimalMatrixAsList",new Object[]{getDecimalMatrixAsList})
+getDecimalMatrixAsListType = type(getDecimalMatrixAsList[1][1])
+print(getDecimalMatrixAsListType)
+print(arraysToString(getDecimalMatrixAsList))
+if(getDecimalMatrixAsListType ~= "number") then
+	error("getDecimalMatrixAsList not Double!")
+end
+callback("setDecimalMatrixAsList", getDecimalMatrixAsList)

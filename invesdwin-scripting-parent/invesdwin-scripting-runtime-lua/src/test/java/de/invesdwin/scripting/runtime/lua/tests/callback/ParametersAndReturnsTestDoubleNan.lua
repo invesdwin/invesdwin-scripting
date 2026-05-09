@@ -1,72 +1,93 @@
-println("getDouble")
-if(binding.hasVariable('getDouble'))
-	throw new Exception("getDouble already defined!")
+arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
+
+print("getDouble")
+if(getDouble ~= nil) then
+	error("getDouble already defined!")
+end
 getDouble = callback("getDouble")
-getDoubleType = getDouble.getClass()
-println(getDoubleType)
-println(getDouble)
-if(getDoubleType != Double.class)
-	throw new Exception("getDouble not Double!")
-if(!Double.isNaN(getDouble))
-	throw new Exception("getDouble not NaN!")
-callback("setDouble",getDouble)
+getDoubleType = type(getDouble)
+print(getDoubleType)
+print(getDouble)
+if(getDoubleType ~= "number") then
+	error("getDouble not Double!")
+end
+if(not (getDouble ~= getDouble)) then
+	error("getDouble not NaN!")
+end
+callback("setDouble", getDouble)
 
-println("getDoubleVector")
-if(binding.hasVariable('getDoubleVector'))
-	throw new Exception("getDoubleVector already defined!")
+print("getDoubleVector")
+if(getDoubleVector ~= nil) then
+	error("getDoubleVector already defined!")
+end
 getDoubleVector = callback("getDoubleVector")
-getDoubleVectorType = getDoubleVector[0].getClass()
-println(getDoubleVectorType)
-println(getDoubleVector)
-if(getDoubleVectorType != Double.class)
-	throw new Exception("getDoubleVector not Double!")
-if(!Double.isNaN(getDoubleVector[1]))
-	throw new Exception("getDoubleVector[1] not NaN!")
-callback("setDoubleVector",getDoubleVector)
+getDoubleVectorType = type(getDoubleVector[1])
+print(getDoubleVectorType)
+print(arraysToString(getDoubleVector))
+if(getDoubleVectorType ~= "number") then
+	error("getDoubleVector not Double!")
+end
+if(not (getDoubleVector[2] ~= getDoubleVector[2])) then
+	error("getDoubleVector[2] not NaN!")
+end
+callback("setDoubleVector", getDoubleVector)
 
-println("getDoubleVectorAsList")
-if(binding.hasVariable('getDoubleVectorAsList'))
-	throw new Exception("getDoubleVectorAsList already defined!")
+print("getDoubleVectorAsList")
+if(getDoubleVectorAsList ~= nil) then
+	error("getDoubleVectorAsList already defined!")
+end
 getDoubleVectorAsList = callback("getDoubleVectorAsList")
-getDoubleVectorAsListType = getDoubleVectorAsList[0].getClass()
-println(getDoubleVectorAsListType)
-println(getDoubleVectorAsList)
-if(getDoubleVectorAsListType != Double.class)
-	throw new Exception("getDoubleVectorAsList not Double!")
-if(!Double.isNaN(getDoubleVectorAsList[1]))
-	throw new Exception("getDoubleVectorAsList[1] not NaN!")
-callback("setDoubleVectorAsList",getDoubleVectorAsList)
+getDoubleVectorAsListType = type(getDoubleVectorAsList[1])
+print(getDoubleVectorAsListType)
+print(arraysToString(getDoubleVectorAsList))
+if(getDoubleVectorAsListType ~= "number") then
+	error("getDoubleVectorAsList not Double!")
+end
+if(not (getDoubleVectorAsList[2] ~= getDoubleVectorAsList[2])) then
+	error("getDoubleVectorAsList[2] not NaN!")
+end
+callback("setDoubleVectorAsList", getDoubleVectorAsList)
 
-println("getDoubleMatrix")
-if(binding.hasVariable('getDoubleMatrix'))
-	throw new Exception("getDoubleMatrix already defined!")
+print("getDoubleMatrix")
+if(getDoubleMatrix ~= nil) then
+	error("getDoubleMatrix already defined!")
+end
 getDoubleMatrix = callback("getDoubleMatrix")
-getDoubleMatrixType = getDoubleMatrix[0][0].getClass()
-println(getDoubleMatrixType)
-println(getDoubleMatrix)
-if(getDoubleMatrixType != Double.class)
-	throw new Exception("getDoubleMatrix not Double!")
-if(!Double.isNaN(getDoubleMatrix[0][0]))
-	throw new Exception("getDoubleMatrix[0][0] not NaN!")
-if(!Double.isNaN(getDoubleMatrix[1][1]))
-	throw new Exception("getDoubleMatrix[1][1] not NaN!")
-if(!Double.isNaN(getDoubleMatrix[2][2]))
-	throw new Exception("getDoubleMatrix[2][2] not NaN!")
-callback("setDoubleMatrix",new Object[]{getDoubleMatrix})
+getDoubleMatrixType = type(getDoubleMatrix[1][1])
+print(getDoubleMatrixType)
+print(arraysToString(getDoubleMatrix))
+if(getDoubleMatrixType ~= "number") then
+	error("getDoubleMatrix not Double!")
+end
+if(not (getDoubleMatrix[1][1] ~= getDoubleMatrix[1][1])) then
+	error("getDoubleMatrix[1][1] not NaN!")
+end
+if(not (getDoubleMatrix[2][2] ~= getDoubleMatrix[2][2])) then
+	error("getDoubleMatrix[2][2] not NaN!")
+end
+if(not (getDoubleMatrix[3][3] ~= getDoubleMatrix[3][3])) then
+	error("getDoubleMatrix[3][3] not NaN!")
+end
+callback("setDoubleMatrix", getDoubleMatrix)
 
-println("getDoubleMatrixAsList")
-if(binding.hasVariable('getDoubleMatrixAsList'))
-	throw new Exception("getDoubleMatrixAsList already defined!")
+print("getDoubleMatrixAsList")
+if(getDoubleMatrixAsList ~= nil) then
+	error("getDoubleMatrixAsList already defined!")
+end
 getDoubleMatrixAsList = callback("getDoubleMatrixAsList")
-getDoubleMatrixAsListType = getDoubleMatrixAsList[0][0].getClass()
-println(getDoubleMatrixAsListType)
-println(getDoubleMatrixAsList)
-if(getDoubleMatrixAsListType != Double.class)
-	throw new Exception("getDoubleMatrixAsList not Double!")
-if(!Double.isNaN(getDoubleMatrixAsList[0][0]))
-	throw new Exception("getDoubleMatrixAsList[0][0] not NaN!")
-if(!Double.isNaN(getDoubleMatrixAsList[1][1]))
-	throw new Exception("getDoubleMatrixAsList[1][1] not NaN!")
-if(!Double.isNaN(getDoubleMatrixAsList[2][2]))
-	throw new Exception("getDoubleMatrixAsList[2][2] not NaN!")
-callback("setDoubleMatrixAsList",new Object[]{getDoubleMatrixAsList})
+getDoubleMatrixAsListType = type(getDoubleMatrixAsList[1][1])
+print(getDoubleMatrixAsListType)
+print(arraysToString(getDoubleMatrixAsList))
+if(getDoubleMatrixAsListType ~= "number") then
+	error("getDoubleMatrixAsList not Double!")
+end
+if(not (getDoubleMatrixAsList[1][1] ~= getDoubleMatrixAsList[1][1])) then
+	error("getDoubleMatrixAsList[1][1] not NaN!")
+end
+if(not (getDoubleMatrixAsList[2][2] ~= getDoubleMatrixAsList[2][2])) then
+	error("getDoubleMatrixAsList[2][2] not NaN!")
+end
+if(not (getDoubleMatrixAsList[3][3] ~= getDoubleMatrixAsList[3][3])) then
+	error("getDoubleMatrixAsList[3][3] not NaN!")
+end
+callback("setDoubleMatrixAsList", getDoubleMatrixAsList)

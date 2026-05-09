@@ -1,119 +1,141 @@
 getBooleanMatrix = callback("getBooleanMatrix")
-if(getBooleanMatrix.size() != 2)
-	throw new Exception("getBooleanMatrix empty!")
-callback("setBooleanMatrix",new Object[]{getBooleanMatrix})
+if(#getBooleanMatrix ~= 2) then
+	error("getBooleanMatrix empty!")
+end
+callback("setBooleanMatrix", getBooleanMatrix)
 
 getBooleanMatrixAsList = callback("getBooleanMatrixAsList")
-if(getBooleanMatrixAsList.size() != 2)
-	throw new Exception("getBooleanMatrixAsList empty!")
-callback("setBooleanMatrixAsList",new Object[]{getBooleanMatrixAsList})
+if(#getBooleanMatrixAsList ~= 2) then
+	error("getBooleanMatrixAsList empty!")
+end
+callback("setBooleanMatrixAsList", getBooleanMatrixAsList)
 
 
 getByteMatrix = callback("getByteMatrix")
-if(getByteMatrix.size() != 2)
-	throw new Exception("getByteMatrix empty!")
-callback("setByteMatrix",new Object[]{getByteMatrix})
+if(#getByteMatrix ~= 2) then
+	error("getByteMatrix empty!")
+end
+callback("setByteMatrix", getByteMatrix)
 
 getByteMatrixAsList = callback("getByteMatrixAsList")
-if(getByteMatrixAsList.size() != 2)
-	throw new Exception("getByteMatrixAsList empty!")
-callback("setByteMatrixAsList",new Object[]{getByteMatrixAsList})
+if(#getByteMatrixAsList ~= 2) then
+	error("getByteMatrixAsList empty!")
+end
+callback("setByteMatrixAsList", getByteMatrixAsList)
 
 
 getCharacterMatrix = callback("getCharacterMatrix")
-if(getCharacterMatrix.size() != 2)
-	throw new Exception("getCharacterMatrix empty!")
-callback("setCharacterMatrix",new Object[]{getCharacterMatrix})
+if(#getCharacterMatrix ~= 2) then
+	error("getCharacterMatrix empty!")
+end
+callback("setCharacterMatrix", getCharacterMatrix)
 
 getCharacterMatrixAsList = callback("getCharacterMatrixAsList")
-if(getCharacterMatrixAsList.size() != 2)
-	throw new Exception("getCharacterMatrixAsList empty!")
-callback("setCharacterMatrixAsList",new Object[]{getCharacterMatrixAsList})
+if(#getCharacterMatrixAsList ~= 2) then
+	error("getCharacterMatrixAsList empty!")
+end
+callback("setCharacterMatrixAsList", getCharacterMatrixAsList)
 
 
 getDecimalMatrix = callback("getDecimalMatrix")
-if(getDecimalMatrix.size() != 2)
-	throw new Exception("getDecimalMatrix empty!")
-callback("setDecimalMatrix",new Object[]{getDecimalMatrix})
+if(#getDecimalMatrix ~= 2) then
+	error("getDecimalMatrix empty!")
+end
+callback("setDecimalMatrix", getDecimalMatrix)
 
 getDecimalMatrixAsList = callback("getDecimalMatrixAsList")
-if(getDecimalMatrixAsList.size() != 2)
-	throw new Exception("getDecimalMatrixAsList empty!")
-callback("setDecimalMatrixAsList",new Object[]{getDecimalMatrixAsList})
+if(#getDecimalMatrixAsList ~= 2) then
+	error("getDecimalMatrixAsList empty!")
+end
+callback("setDecimalMatrixAsList", getDecimalMatrixAsList)
 
 
 getDoubleMatrix = callback("getDoubleMatrix")
-if(getDoubleMatrix.size() != 2)
-	throw new Exception("getDoubleMatrix empty!")
-callback("setDoubleMatrix",new Object[]{getDoubleMatrix})
+if(#getDoubleMatrix ~= 2) then
+	error("getDoubleMatrix empty!")
+end
+callback("setDoubleMatrix", getDoubleMatrix)
 
 getDoubleMatrixAsList = callback("getDoubleMatrixAsList")
-if(getDoubleMatrixAsList.size() != 2)
-	throw new Exception("getDoubleMatrixAsList empty!")
-callback("setDoubleMatrixAsList",new Object[]{getDoubleMatrixAsList})
+if(#getDoubleMatrixAsList ~= 2) then
+	error("getDoubleMatrixAsList empty!")
+end
+callback("setDoubleMatrixAsList", getDoubleMatrixAsList)
 
 
 getFloatMatrix = callback("getFloatMatrix")
-if(getFloatMatrix.size() != 2)
-	throw new Exception("getFloatMatrix empty!")
-callback("setFloatMatrix",new Object[]{getFloatMatrix})
+if(#getFloatMatrix ~= 2) then
+	error("getFloatMatrix empty!")
+end
+callback("setFloatMatrix", getFloatMatrix)
 
 getFloatMatrixAsList = callback("getFloatMatrixAsList")
-if(getFloatMatrixAsList.size() != 2)
-	throw new Exception("getFloatMatrixAsList empty!")
-callback("setFloatMatrixAsList",new Object[]{getFloatMatrixAsList})
+if(#getFloatMatrixAsList ~= 2) then
+	error("getFloatMatrixAsList empty!")
+end
+callback("setFloatMatrixAsList", getFloatMatrixAsList)
 
 
 getIntegerMatrix = callback("getIntegerMatrix")
-if(getIntegerMatrix.size() != 2)
-	throw new Exception("getIntegerMatrix empty!")
-callback("setIntegerMatrix",new Object[]{getIntegerMatrix})
+if(#getIntegerMatrix ~= 2) then
+	error("getIntegerMatrix empty!")
+end
+callback("setIntegerMatrix", getIntegerMatrix)
 
 getIntegerMatrixAsList = callback("getIntegerMatrixAsList")
-if(getIntegerMatrixAsList.size() != 2)
-	throw new Exception("getIntegerMatrixAsList empty!")
-callback("setIntegerMatrixAsList",new Object[]{getIntegerMatrixAsList})
+if(#getIntegerMatrixAsList ~= 2) then
+	error("getIntegerMatrixAsList empty!")
+end
+callback("setIntegerMatrixAsList", getIntegerMatrixAsList)
 
 
 getLongMatrix = callback("getLongMatrix")
-if(getLongMatrix.size() != 2)
-	throw new Exception("getLongMatrix empty!")
-callback("setLongMatrix",new Object[]{getLongMatrix})
+if(#getLongMatrix ~= 2) then
+	error("getLongMatrix empty!")
+end
+callback("setLongMatrix", getLongMatrix)
 
 getLongMatrixAsList = callback("getLongMatrixAsList")
-if(getLongMatrixAsList.size() != 2)
-	throw new Exception("getLongMatrixAsList empty!")
-callback("setLongMatrixAsList",new Object[]{getLongMatrixAsList})
+if(#getLongMatrixAsList ~= 2) then
+	error("getLongMatrixAsList empty!")
+end
+callback("setLongMatrixAsList", getLongMatrixAsList)
 
 
 getPercentMatrix = callback("getPercentMatrix")
-if(getPercentMatrix.size() != 2)
-	throw new Exception("getPercentMatrix empty!")
-callback("setPercentMatrix",new Object[]{getPercentMatrix})
+if(#getPercentMatrix ~= 2) then
+	error("getPercentMatrix empty!")
+end
+callback("setPercentMatrix", getPercentMatrix)
 
 getPercentMatrixAsList = callback("getPercentMatrixAsList")
-if(getPercentMatrixAsList.size() != 2)
-	throw new Exception("getPercentMatrixAsList empty!")
-callback("setPercentMatrixAsList",new Object[]{getPercentMatrixAsList})
+if(#getPercentMatrixAsList ~= 2) then
+	error("getPercentMatrixAsList empty!")
+end
+callback("setPercentMatrixAsList", getPercentMatrixAsList)
 
 
 getShortMatrix = callback("getShortMatrix")
-if(getShortMatrix.size() != 2)
-	throw new Exception("getShortMatrix empty!")
-callback("setShortMatrix",new Object[]{getShortMatrix})
+if(#getShortMatrix ~= 2) then
+	error("getShortMatrix empty!")
+end
+callback("setShortMatrix", getShortMatrix)
 
 getShortMatrixAsList = callback("getShortMatrixAsList")
-if(getShortMatrixAsList.size() != 2)
-	throw new Exception("getShortMatrixAsList empty!")
-callback("setShortMatrixAsList",new Object[]{getShortMatrixAsList})
+if(#getShortMatrixAsList ~= 2) then
+	error("getShortMatrixAsList empty!")
+end
+callback("setShortMatrixAsList", getShortMatrixAsList)
 
 
 getStringMatrix = callback("getStringMatrix")
-if(getStringMatrix.size() != 2)
-	throw new Exception("getStringMatrix empty!")
-callback("setStringMatrix",new Object[]{getStringMatrix})
+if(#getStringMatrix ~= 2) then
+	error("getStringMatrix empty!")
+end
+callback("setStringMatrix", getStringMatrix)
 
 getStringMatrixAsList = callback("getStringMatrixAsList")
-if(getStringMatrixAsList.size() != 2)
-	throw new Exception("getStringMatrixAsList empty!")
-callback("setStringMatrixAsList",new Object[]{getStringMatrixAsList})
+if(#getStringMatrixAsList ~= 2) then
+	error("getStringMatrixAsList empty!")
+end
+callback("setStringMatrixAsList", getStringMatrixAsList)
