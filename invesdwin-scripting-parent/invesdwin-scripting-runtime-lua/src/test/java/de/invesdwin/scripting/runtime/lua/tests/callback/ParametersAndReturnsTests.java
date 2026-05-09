@@ -31,7 +31,7 @@ public class ParametersAndReturnsTests {
         //        new ParametersAndReturnsTestCharacter(runner).testCharacter(); //x
         //        new ParametersAndReturnsTestString(runner).testString(); //x
         new ParametersAndReturnsTestBoolean(runner).testBoolean();
-        //        new ParametersAndReturnsTestNullPutGet(runner).testNullPutGet(); //x
+        new ParametersAndReturnsTestNullPutGet(runner).testNullPutGet(); //x
         new ParametersAndReturnsTestEmpty(runner).testEmpty();
         new ParametersAndReturnsTestEmptyMatrixValue(runner).testEmptyMatrixValue();
         new ParametersAndReturnsTestDoubleNan(runner).testDoubleNan();

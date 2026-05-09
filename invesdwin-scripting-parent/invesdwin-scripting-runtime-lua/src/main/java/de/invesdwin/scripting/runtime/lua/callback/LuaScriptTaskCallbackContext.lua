@@ -5,10 +5,6 @@ callback_JavaObject = java.import("java.lang.Object")
 function callback(methodName, ...)
 	-- Debug: Log method name and arguments
 	print("DEBUG: callback called with method:", methodName)
-	print("DEBUG: arguments count:", #({...}))
-	for i, v in ipairs({...}) do
-	    print("DEBUG: arg[" .. i .. "] =", v, "(type:", type(v), ")")
-	end
 	
     if _G.luaScriptTaskCallbackContext == nil then
         if _G.luaScriptTaskCallbackContextUuid ~= nil then
@@ -20,12 +16,19 @@ function callback(methodName, ...)
     local context = _G.luaScriptTaskCallbackContext
     
     -- Wrap varargs into Java array for LuaJava compatibility
-	local args = {...}
-    -- Create the Java Object[] array
-    local argsArray = java.array(callback_JavaObject, #args)
-    for i, v in ipairs(args) do
-        argsArray[i] = v
-    end
+	-- Use select to get the actual count of arguments including nil
+	local argCount = select('#', ...)
+	print("DEBUG: arguments count:", argCount)
+	
+	-- Create the Java Object[] array with the actual count
+	local argsArray = java.array(callback_JavaObject, argCount)
+	
+	-- Use select to get each argument individually to preserve nil values
+	for i = 1, argCount do
+		local v = select(i, ...)
+		print("DEBUG: arg[" .. i .. "] =", v, "(type:", type(v), ")")
+		argsArray[i] = v
+	end
 	print("DEBUG: Invoking method on context with methodName:", methodName)
     local returnValue = context:invoke(methodName, argsArray)
     if returnValue:isReturnExpression() then
