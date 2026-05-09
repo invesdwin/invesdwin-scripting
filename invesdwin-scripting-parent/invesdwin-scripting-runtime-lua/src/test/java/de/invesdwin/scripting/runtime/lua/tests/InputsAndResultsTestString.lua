@@ -1,7 +1,7 @@
 arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
 
 print("getString")
-if(type(getString) ~= "nil") then
+if(getString ~= nil) then
 	error("getString already defined!")
 end
 getString = putString
@@ -13,7 +13,7 @@ if(getStringType ~= "string") then
 end
 
 print("getStringWithNull")
-if(type(getStringWithNull) ~= "nil") then
+if(getStringWithNull ~= nil) then
 	error("getStringWithNull already defined!")
 end
 getStringWithNull = putStringWithNull
@@ -25,7 +25,7 @@ if(getStringWithNull ~= nil) then
 end
 
 print("getStringVector")
-if(type(getStringVector) ~= "nil") then
+if(getStringVector ~= nil) then
 	error("getStringVector already defined!")
 end
 getStringVector = putStringVector
@@ -37,7 +37,7 @@ if(getStringVectorType ~= "string") then
 end
 
 print("getStringVectorWithNull")
-if(type(getStringVectorWithNull) ~= "nil") then
+if(getStringVectorWithNull ~= nil) then
 	error("getStringVectorWithNull already defined!")
 end
 getStringVectorWithNull = putStringVectorWithNull
@@ -52,7 +52,7 @@ if(getStringVectorWithNull[2] ~= nil) then
 end
 
 print("getStringVectorAsList")
-if(type(getStringVectorAsList) ~= "nil") then
+if(getStringVectorAsList ~= nil) then
 	error("getStringVectorAsList already defined!")
 end
 getStringVectorAsList = putStringVectorAsList
@@ -64,7 +64,7 @@ if(getStringVectorAsListType ~= "string") then
 end
 
 print("getStringVectorAsListWithNull")
-if(type(getStringVectorAsListWithNull) ~= "nil") then
+if(getStringVectorAsListWithNull ~= nil) then
 	error("getStringVectorAsListWithNull already defined!")
 end
 getStringVectorAsListWithNull = putStringVectorAsListWithNull
@@ -79,7 +79,7 @@ if(getStringVectorAsListWithNull[2] ~= nil) then
 end
 
 print("getStringMatrix")
-if(type(getStringMatrix) ~= "nil") then
+if(getStringMatrix ~= nil) then
 	error("getStringMatrix already defined!")
 end
 getStringMatrix = putStringMatrix
@@ -91,7 +91,7 @@ if(getStringMatrixType ~= "string") then
 end
 
 print("getStringMatrixWithNull")
-if(type(getStringMatrixWithNull) ~= "nil") then
+if(getStringMatrixWithNull ~= nil) then
 	error("getStringMatrixWithNull already defined!")
 end
 getStringMatrixWithNull = putStringMatrixWithNull
@@ -112,7 +112,7 @@ if(getStringMatrixWithNull[3][3] ~= nil) then
 end
 
 print("getStringMatrixAsList")
-if(type(getStringMatrixAsList) ~= "nil") then
+if(getStringMatrixAsList ~= nil) then
 	error("getStringMatrixAsList already defined!")
 end
 getStringMatrixAsList = putStringMatrixAsList
@@ -124,7 +124,7 @@ if(getStringMatrixAsListType ~= "string") then
 end
 
 print("getStringMatrixAsListWithNull")
-if(type(getStringMatrixAsListWithNull) ~= "nil") then
+if(getStringMatrixAsListWithNull ~= nil) then
 	error("getStringMatrixAsListWithNull already defined!")
 end
 getStringMatrixAsListWithNull = putStringMatrixAsListWithNull

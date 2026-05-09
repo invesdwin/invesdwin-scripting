@@ -1,7 +1,7 @@
 arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
 
 print("getFloat")
-if(type(getFloat) ~= "nil") then
+if(getFloat ~= nil) then
 	error("getFloat already defined!")
 end
 getFloat = putFloat
@@ -13,7 +13,7 @@ if(getFloatType ~= "number") then
 end
 
 print("getFloatVector")
-if(type(getFloatVector) ~= "nil") then
+if(getFloatVector ~= nil) then
 	error("getFloatVector already defined!")
 end
 getFloatVector = putFloatVector
@@ -25,7 +25,7 @@ if(getFloatVectorType ~= "number") then
 end
 
 print("getFloatVectorAsList")
-if(type(getFloatVectorAsList) ~= "nil") then
+if(getFloatVectorAsList ~= nil) then
 	error("getFloatVectorAsList already defined!")
 end
 getFloatVectorAsList = putFloatVectorAsList
@@ -37,7 +37,7 @@ if(getFloatVectorAsListType ~= "number") then
 end
 
 print("getFloatMatrix")
-if(type(getFloatMatrix) ~= "nil") then
+if(getFloatMatrix ~= nil) then
 	error("getFloatMatrix already defined!")
 end
 getFloatMatrix = putFloatMatrix
@@ -49,7 +49,7 @@ if(getFloatMatrixType ~= "number") then
 end
 
 print("getFloatMatrixAsList")
-if(type(getFloatMatrixAsList) ~= "nil") then
+if(getFloatMatrixAsList ~= nil) then
 	error("getFloatMatrixAsList already defined!")
 end
 getFloatMatrixAsList = putFloatMatrixAsList

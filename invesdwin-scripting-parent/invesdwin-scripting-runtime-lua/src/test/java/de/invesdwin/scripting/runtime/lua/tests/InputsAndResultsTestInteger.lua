@@ -1,7 +1,7 @@
 arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
 
 print("getInteger")
-if(type(getInteger) ~= "nil") then
+if(getInteger ~= nil) then
 	error("getInteger already defined!")
 end
 getInteger = putInteger
@@ -13,7 +13,7 @@ if(getIntegerType ~= "number") then
 end
 
 print("getIntegerVector")
-if(type(getIntegerVector) ~= "nil") then
+if(getIntegerVector ~= nil) then
 	error("getIntegerVector already defined!")
 end
 getIntegerVector = putIntegerVector
@@ -25,7 +25,7 @@ if(getIntegerVectorType ~= "number") then
 end
 
 print("getIntegerVectorAsList")
-if(type(getIntegerVectorAsList) ~= "nil") then
+if(getIntegerVectorAsList ~= nil) then
 	error("getIntegerVectorAsList already defined!")
 end
 getIntegerVectorAsList = putIntegerVectorAsList
@@ -37,7 +37,7 @@ if(getIntegerVectorAsListType ~= "number") then
 end
 
 print("getIntegerMatrix")
-if(type(getIntegerMatrix) ~= "nil") then
+if(getIntegerMatrix ~= nil) then
 	error("getIntegerMatrix already defined!")
 end
 getIntegerMatrix = putIntegerMatrix
@@ -49,7 +49,7 @@ if(getIntegerMatrixType ~= "number") then
 end
 
 print("getIntegerMatrixAsList")
-if(type(getIntegerMatrixAsList) ~= "nil") then
+if(getIntegerMatrixAsList ~= nil) then
 	error("getIntegerMatrixAsList already defined!")
 end
 getIntegerMatrixAsList = putIntegerMatrixAsList

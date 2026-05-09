@@ -1,7 +1,7 @@
 arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
 
 print("getLong")
-if(type(getLong) ~= "nil") then
+if(getLong ~= nil) then
 	error("getLong already defined!")
 end
 getLong = putLong
@@ -13,7 +13,7 @@ if(getLongType ~= "number") then
 end
 
 print("getLongVector")
-if(type(getLongVector) ~= "nil") then
+if(getLongVector ~= nil) then
 	error("getLongVector already defined!")
 end
 getLongVector = putLongVector
@@ -25,7 +25,7 @@ if(getLongVectorType ~= "number") then
 end
 
 print("getLongVectorAsList")
-if(type(getLongVectorAsList) ~= "nil") then
+if(getLongVectorAsList ~= nil) then
 	error("getLongVectorAsList already defined!")
 end
 getLongVectorAsList = putLongVectorAsList
@@ -37,7 +37,7 @@ if(getLongVectorAsListType ~= "number") then
 end
 
 print("getLongMatrix")
-if(type(getLongMatrix) ~= "nil") then
+if(getLongMatrix ~= nil) then
 	error("getLongMatrix already defined!")
 end
 getLongMatrix = putLongMatrix
@@ -49,7 +49,7 @@ if(getLongMatrixType ~= "number") then
 end
 
 print("getLongMatrixAsList")
-if(type(getLongMatrixAsList) ~= "nil") then
+if(getLongMatrixAsList ~= nil) then
 	error("getLongMatrixAsList already defined!")
 end
 getLongMatrixAsList = putLongMatrixAsList

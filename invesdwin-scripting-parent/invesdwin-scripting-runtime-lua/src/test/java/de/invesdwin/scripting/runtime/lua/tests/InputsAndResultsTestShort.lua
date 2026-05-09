@@ -1,7 +1,7 @@
 arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
 
 print("getShort")
-if(type(getShort) ~= "nil") then
+if(getShort ~= nil) then
 	error("getShort already defined!")
 end
 getShort = putShort
@@ -13,7 +13,7 @@ if(getShortType ~= "number") then
 end
 
 print("getShortVector")
-if(type(getShortVector) ~= "nil") then
+if(getShortVector ~= nil) then
 	error("getShortVector already defined!")
 end
 getShortVector = putShortVector
@@ -25,7 +25,7 @@ if(getShortVectorType ~= "number") then
 end
 
 print("getShortVectorAsList")
-if(type(getShortVectorAsList) ~= "nil") then
+if(getShortVectorAsList ~= nil) then
 	error("getShortVectorAsList already defined!")
 end
 getShortVectorAsList = putShortVectorAsList
@@ -37,7 +37,7 @@ if(getShortVectorAsListType ~= "number") then
 end
 
 print("getShortMatrix")
-if(type(getShortMatrix) ~= "nil") then
+if(getShortMatrix ~= nil) then
 	error("getShortMatrix already defined!")
 end
 getShortMatrix = putShortMatrix
@@ -49,7 +49,7 @@ if(getShortMatrixType ~= "number") then
 end
 
 print("getShortMatrixAsList")
-if(type(getShortMatrixAsList) ~= "nil") then
+if(getShortMatrixAsList ~= nil) then
 	error("getShortMatrixAsList already defined!")
 end
 getShortMatrixAsList = putShortMatrixAsList

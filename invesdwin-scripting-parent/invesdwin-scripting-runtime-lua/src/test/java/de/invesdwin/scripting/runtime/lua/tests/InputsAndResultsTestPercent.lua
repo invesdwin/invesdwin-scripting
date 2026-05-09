@@ -1,7 +1,7 @@
 arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
 
 print("getPercent")
-if(type(getPercent) ~= "nil") then
+if(getPercent ~= nil) then
 	error("getPercent already defined!")
 end
 getPercent = putPercent
@@ -13,7 +13,7 @@ if(getPercentType ~= "number") then
 end
 
 print("getPercentVector")
-if(type(getPercentVector) ~= "nil") then
+if(getPercentVector ~= nil) then
 	error("getPercentVector already defined!")
 end
 getPercentVector = putPercentVector
@@ -25,7 +25,7 @@ if(getPercentVectorType ~= "number") then
 end
 
 print("getPercentVectorAsList")
-if(type(getPercentVectorAsList) ~= "nil") then
+if(getPercentVectorAsList ~= nil) then
 	error("getPercentVectorAsList already defined!")
 end
 getPercentVectorAsList = putPercentVectorAsList
@@ -37,7 +37,7 @@ if(getPercentVectorAsListType ~= "number") then
 end
 
 print("getPercentMatrix")
-if(type(getPercentMatrix) ~= "nil") then
+if(getPercentMatrix ~= nil) then
 	error("getPercentMatrix already defined!")
 end
 getPercentMatrix = putPercentMatrix
@@ -49,7 +49,7 @@ if(getPercentMatrixType ~= "number") then
 end
 
 print("getPercentMatrixAsList")
-if(type(getPercentMatrixAsList) ~= "nil") then
+if(getPercentMatrixAsList ~= nil) then
 	error("getPercentMatrixAsList already defined!")
 end
 getPercentMatrixAsList = putPercentMatrixAsList

@@ -1,7 +1,7 @@
 arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
 
 print("getByte")
-if(type(getByte) ~= "nil") then
+if(getByte ~= nil) then
 	error("getByte already defined!")
 end
 getByte = putByte
@@ -13,7 +13,7 @@ if(getByteType ~= "number") then
 end
 
 print("getByteVector")
-if(type(getByteVector) ~= "nil") then
+if(getByteVector ~= nil) then
 	error("getByteVector already defined!")
 end
 getByteVector = putByteVector
@@ -25,7 +25,7 @@ if(getByteVectorType ~= "number") then
 end
 
 print("getByteVectorAsList")
-if(type(getByteVectorAsList) ~= "nil") then
+if(getByteVectorAsList ~= nil) then
 	error("getByteVectorAsList already defined!")
 end
 getByteVectorAsList = putByteVectorAsList
@@ -37,7 +37,7 @@ if(getByteVectorAsListType ~= "number") then
 end
 
 print("getByteMatrix")
-if(type(getByteMatrix) ~= "nil") then
+if(getByteMatrix ~= nil) then
 	error("getByteMatrix already defined!")
 end
 getByteMatrix = putByteMatrix
@@ -49,7 +49,7 @@ if(getByteMatrixType ~= "number") then
 end
 
 print("getByteMatrixAsList")
-if(type(getByteMatrixAsList) ~= "nil") then
+if(getByteMatrixAsList ~= nil) then
 	error("getByteMatrixAsList already defined!")
 end
 getByteMatrixAsList = putByteMatrixAsList

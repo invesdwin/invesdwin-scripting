@@ -1,21 +1,37 @@
-<T> T callback(String methodName, Object... parameters) {
-    if(!binding.containsKey("luaScriptTaskCallbackContext")) {
-        if(binding.containsKey("luaScriptTaskCallbackContextUuid")) {
-            binding.put("luaScriptTaskCallbackContext", de.invesdwin.scripting.runtime.lua.callback.LuaScriptTaskCallbackContext.getContext(luaScriptTaskCallbackContextUuid));
-        } else {
-            throw new RuntimeException("IScriptTaskCallback not available");
-        }
-    }
-    de.invesdwin.scripting.runtime.lua.callback.LuaScriptTaskCallbackContext context = (de.invesdwin.scripting.runtime.lua.callback.LuaScriptTaskCallbackContext) binding.get("luaScriptTaskCallbackContext");
-    de.invesdwin.scripting.callback.ObjectScriptTaskReturnValue returnValue = context.invoke(methodName, parameters);
-    if(returnValue.isReturnExpression()) {
-    	de.invesdwin.scripting.runtime.lua.pool.WrappedLuaScriptEngine engine = de.invesdwin.scripting.runtime.lua.pool.LuaScriptEngineObjectPool.INSTANCE.borrowObject();
-    	try {
-        	return (T) engine.eval((String) returnValue.getReturnValue(), binding);
-        } finally {
-        	de.invesdwin.scripting.runtime.lua.pool.LuaScriptEngineObjectPool.INSTANCE.returnObject(engine);
-        }
-    } else {
-        return (T) returnValue.getReturnValue();
-    }
-}
+LuaScriptTaskCallbackContext = java.import("de.invesdwin.scripting.runtime.lua.callback.LuaScriptTaskCallbackContext")
+LuaScriptEngineObjectPool = java.import("de.invesdwin.scripting.runtime.lua.pool.LuaScriptEngineObjectPool")
+
+function callback(methodName, ...)
+    if _G.luaScriptTaskCallbackContext == nil then
+        if _G.luaScriptTaskCallbackContextUuid ~= nil then
+            _G.luaScriptTaskCallbackContext = LuaScriptTaskCallbackContext:getContext(_G.luaScriptTaskCallbackContextUuid)
+        else
+            error("IScriptTaskCallback not available")
+        end
+    end
+
+    local context = _G.luaScriptTaskCallbackContext
+    -- Passing '...' (varargs) to Java works natively in this library
+    local returnValue = context:invoke(methodName, ...)
+
+    if returnValue:isReturnExpression() then
+        -- Accessing static INSTANCE field and borrowing object
+        local pool = LuaScriptEngineObjectPool.INSTANCE
+        local engine = pool:borrowObject()
+        
+        -- Use pcall (protected call) to handle potential Java ScriptExceptions
+        local success, result = pcall(function()
+            return engine:eval(returnValue:getReturnValue())
+        end)
+        
+        -- Ensure the object is returned to the pool even if eval fails
+        pool:returnObject(engine)
+        
+        if not success then
+            error(result)
+        end
+        return result
+    else
+        return returnValue:getReturnValue()
+    end
+end

@@ -1,7 +1,7 @@
 arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
 
 print("getDecimal")
-if(type(getDecimal) ~= "nil") then
+if(getDecimal ~= nil) then
 	error("getDecimal already defined!")
 end
 getDecimal = putDecimal
@@ -13,7 +13,7 @@ if(getDecimalType ~= "number") then
 end
 
 print("getDecimalVector")
-if(type(getDecimalVector) ~= "nil") then
+if(getDecimalVector ~= nil) then
 	error("getDecimalVector already defined!")
 end
 getDecimalVector = putDecimalVector
@@ -25,7 +25,7 @@ if(getDecimalVectorType ~= "number") then
 end
 
 print("getDecimalVectorAsList")
-if(type(getDecimalVectorAsList) ~= "nil") then
+if(getDecimalVectorAsList ~= nil) then
 	error("getDecimalVectorAsList already defined!")
 end
 getDecimalVectorAsList = putDecimalVectorAsList
@@ -37,7 +37,7 @@ if(getDecimalVectorAsListType ~= "number") then
 end
 
 print("getDecimalMatrix")
-if(type(getDecimalMatrix) ~= "nil") then
+if(getDecimalMatrix ~= nil) then
 	error("getDecimalMatrix already defined!")
 end
 getDecimalMatrix = putDecimalMatrix
@@ -49,7 +49,7 @@ if(getDecimalMatrixType ~= "number") then
 end
 
 print("getDecimalMatrixAsList")
-if(type(getDecimalMatrixAsList) ~= "nil") then
+if(getDecimalMatrixAsList ~= nil) then
 	error("getDecimalMatrixAsList already defined!")
 end
 getDecimalMatrixAsList = putDecimalMatrixAsList

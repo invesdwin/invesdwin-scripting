@@ -1,7 +1,7 @@
 arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
 
 print("getDouble")
-if(type(getDouble) ~= "nil") then
+if(getDouble ~= nil) then
 	error("getDouble already defined!")
 end
 getDouble = putDouble
@@ -16,7 +16,7 @@ if(not (getDouble ~= getDouble)) then
 end
 
 print("getDoubleVector")
-if(type(getDoubleVector) ~= "nil") then
+if(getDoubleVector ~= nil) then
 	error("getDoubleVector already defined!")
 end
 getDoubleVector = putDoubleVector
@@ -31,7 +31,7 @@ if(not (getDoubleVector[2] ~= getDoubleVector[3])) then
 end
 
 print("getDoubleVectorAsList")
-if(type(getDoubleVectorAsList) ~= "nil") then
+if(getDoubleVectorAsList ~= nil) then
 	error("getDoubleVectorAsList already defined!")
 end
 getDoubleVectorAsList = putDoubleVectorAsList
@@ -46,7 +46,7 @@ if(not (getDoubleVectorAsList[2] ~= getDoubleVectorAsList[2])) then
 end
 
 print("getDoubleMatrix")
-if(type(getDoubleMatrix) ~= "nil") then
+if(getDoubleMatrix ~= nil) then
 	error("getDoubleMatrix already defined!")
 end
 getDoubleMatrix = putDoubleMatrix
@@ -67,7 +67,7 @@ if(not (getDoubleMatrix[3][3] ~= getDoubleMatrix[3][3])) then
 end
 
 print("getDoubleMatrixAsList")
-if(type(getDoubleMatrixAsList) ~= "nil") then
+if(getDoubleMatrixAsList ~= nil) then
 	error("getDoubleMatrixAsList already defined!")
 end
 getDoubleMatrixAsList = putDoubleMatrixAsList

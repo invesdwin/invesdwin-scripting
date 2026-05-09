@@ -1,7 +1,7 @@
 arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
 
 print("getBoolean")
-if(type(getBoolean) ~= "nil") then
+if(getBoolean ~= nil) then
 	error("getBoolean already defined!")
 end
 getBoolean = putBoolean
@@ -13,7 +13,7 @@ if(getBooleanType ~= "boolean") then
 end
 
 print("getBooleanVector")
-if(type(getBooleanVector) ~= "nil") then
+if(getBooleanVector ~= nil) then
 	error("getBooleanVector already defined!")
 end
 getBooleanVector = putBooleanVector
@@ -25,7 +25,7 @@ if(getBooleanVectorType ~= "boolean") then
 end
 
 print("getBooleanVectorAsList")
-if(type(getBooleanVectorAsList) ~= "nil") then
+if(getBooleanVectorAsList ~= nil) then
 	error("getBooleanVectorAsList already defined!")
 end
 getBooleanVectorAsList = putBooleanVectorAsList
@@ -37,7 +37,7 @@ if(getBooleanVectorAsListType ~= "boolean") then
 end
 
 print("getBooleanMatrix")
-if(type(getBooleanMatrix) ~= "nil") then
+if(getBooleanMatrix ~= nil) then
 	error("getBooleanMatrix already defined!")
 end
 getBooleanMatrix = putBooleanMatrix
@@ -49,7 +49,7 @@ if(getBooleanMatrixType ~= "boolean") then
 end
 
 print("getBooleanMatrixAsList")
-if(type(getBooleanMatrixAsList) ~= "nil") then
+if(getBooleanMatrixAsList ~= nil) then
 	error("getBooleanMatrixAsList already defined!")
 end
 getBooleanMatrixAsList = putBooleanMatrixAsList

@@ -292,7 +292,7 @@ public final class LuaScriptEngine extends AbstractScriptEngine implements Scrip
 
         @Override
         public boolean containsKey(final Object key) {
-            final LuaValue result = getSingle("type(" + key + ") ~= \"nil\"");
+            final LuaValue result = getSingle(key + " ~= nil");
             return result.toBoolean();
         }
 

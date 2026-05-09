@@ -1,7 +1,7 @@
 arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
 
 print("getCharacter")
-if(type(getCharacter) ~= "nil") then
+if(getCharacter ~= nil) then
 	error("getCharacter already defined!")
 end
 getCharacter = putCharacter
@@ -13,7 +13,7 @@ if(getCharacterType ~= "string") then
 end
 
 print("getCharacterVector")
-if(type(getCharacterVector) ~= "nil") then
+if(getCharacterVector ~= nil) then
 	error("getCharacterVector already defined!")
 end
 getCharacterVector = putCharacterVector
@@ -25,7 +25,7 @@ if(getCharacterVectorType ~= "string") then
 end
 
 print("getCharacterVectorAsList")
-if(type(getCharacterVectorAsList) ~= "nil") then
+if(getCharacterVectorAsList ~= nil) then
 	error("getCharacterVectorAsList already defined!")
 end
 getCharacterVectorAsList = putCharacterVectorAsList
@@ -37,7 +37,7 @@ if(getCharacterVectorAsListType ~= "string") then
 end
 
 print("getCharacterMatrix")
-if(type(getCharacterMatrix) ~= "nil") then
+if(getCharacterMatrix ~= nil) then
 	error("getCharacterMatrix already defined!")
 end
 getCharacterMatrix = putCharacterMatrix
@@ -49,7 +49,7 @@ if(getCharacterMatrixType ~= "string") then
 end
 
 print("getCharacterMatrixAsList")
-if(type(getCharacterMatrixAsList) ~= "nil") then
+if(getCharacterMatrixAsList ~= nil) then
 	error("getCharacterMatrixAsList already defined!")
 end
 getCharacterMatrixAsList = putCharacterMatrixAsList
