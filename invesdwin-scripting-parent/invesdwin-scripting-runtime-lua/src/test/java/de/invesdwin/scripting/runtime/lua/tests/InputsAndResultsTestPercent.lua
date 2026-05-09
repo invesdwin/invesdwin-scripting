@@ -1,49 +1,61 @@
-println("getPercent")
-if(binding.hasVariable('getPercent'))
-	throw new Exception("getPercent already defined!")
+arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
+
+print("getPercent")
+if(type(getPercent) ~= "nil") then
+	error("getPercent already defined!")
+end
 getPercent = putPercent
-getPercentType = getPercent.getClass()
-println(getPercentType)
-println(getPercent)
-if(getPercentType != Double.class)
-	throw new Exception("getPercent not Double!")
+getPercentType = type(getPercent)
+print(getPercentType)
+print(getPercent)
+if(getPercentType ~= "number") then
+	error("getPercent not Double!")
+end
 
-println("getPercentVector")
-if(binding.hasVariable('getPercentVector'))
-	throw new Exception("getPercentVector already defined!")
+print("getPercentVector")
+if(type(getPercentVector) ~= "nil") then
+	error("getPercentVector already defined!")
+end
 getPercentVector = putPercentVector
-getPercentVectorType = getPercentVector[0].getClass()
-println(getPercentVectorType)
-println(getPercentVector)
-if(getPercentVectorType != Double.class)
-	throw new Exception("getPercentVector not Double!")
+getPercentVectorType = type(getPercentVector[1])
+print(getPercentVectorType)
+print(arraysToString(getPercentVector))
+if(getPercentVectorType ~= "number") then
+	error("getPercentVector not Double!")
+end
 
-println("getPercentVectorAsList")
-if(binding.hasVariable('getPercentVectorAsList'))
-	throw new Exception("getPercentVectorAsList already defined!")
+print("getPercentVectorAsList")
+if(type(getPercentVectorAsList) ~= "nil") then
+	error("getPercentVectorAsList already defined!")
+end
 getPercentVectorAsList = putPercentVectorAsList
-getPercentVectorAsListType = getPercentVectorAsList[0].getClass()
-println(getPercentVectorAsListType)
-println(getPercentVectorAsList)
-if(getPercentVectorAsListType != Double.class)
-	throw new Exception("getPercentVectorAsList not Double!")
+getPercentVectorAsListType = type(getPercentVectorAsList[1])
+print(getPercentVectorAsListType)
+print(arraysToString(getPercentVectorAsList))
+if(getPercentVectorAsListType ~= "number") then
+	error("getPercentVectorAsList not Double!")
+end
 
-println("getPercentMatrix")
-if(binding.hasVariable('getPercentMatrix'))
-	throw new Exception("getPercentMatrix already defined!")
+print("getPercentMatrix")
+if(type(getPercentMatrix) ~= "nil") then
+	error("getPercentMatrix already defined!")
+end
 getPercentMatrix = putPercentMatrix
-getPercentMatrixType = getPercentMatrix[0][0].getClass()
-println(getPercentMatrixType)
-println(getPercentMatrix)
-if(getPercentMatrixType != Double.class)
-	throw new Exception("getPercentMatrix not Double!")
+getPercentMatrixType = type(getPercentMatrix[1][1])
+print(getPercentMatrixType)
+print(arraysToString(getPercentMatrix))
+if(getPercentMatrixType ~= "number") then
+	error("getPercentMatrix not Double!")
+end
 
-println("getPercentMatrixAsList")
-if(binding.hasVariable('getPercentMatrixAsList'))
-	throw new Exception("getPercentMatrixAsList already defined!")
+print("getPercentMatrixAsList")
+if(type(getPercentMatrixAsList) ~= "nil") then
+	error("getPercentMatrixAsList already defined!")
+end
 getPercentMatrixAsList = putPercentMatrixAsList
-getPercentMatrixAsListType = getPercentMatrixAsList[0][0].getClass()
-println(getPercentMatrixAsListType)
-println(getPercentMatrixAsList)
-if(getPercentMatrixAsListType != Double.class)
-	throw new Exception("getPercentMatrixAsList not Double!")
+getPercentMatrixAsListType = type(getPercentMatrixAsList[1][1])
+print(getPercentMatrixAsListType)
+print(arraysToString(getPercentMatrixAsList))
+if(getPercentMatrixAsListType ~= "number") then
+	error("getPercentMatrixAsList not Double!")
+end

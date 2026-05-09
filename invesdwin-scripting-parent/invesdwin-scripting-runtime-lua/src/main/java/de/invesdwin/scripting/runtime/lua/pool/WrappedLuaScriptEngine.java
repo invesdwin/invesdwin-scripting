@@ -12,18 +12,19 @@ import javax.script.CompiledScript;
 import javax.script.Invocable;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
+
+import party.iroiro.luajava.value.LuaValue;
 
 @NotThreadSafe
 public class WrappedLuaScriptEngine implements Closeable {
 
     private final LoadingCache<String, CompiledScript> scriptCache;
 
-    private final ScriptEngine engine;
+    private final LuaScriptEngine engine;
     private final Compilable compilable;
     private final Invocable invocable;
     private final Bindings binding;
@@ -31,11 +32,11 @@ public class WrappedLuaScriptEngine implements Closeable {
     private final BiFunction<String, Bindings, Object> evalBindingsF;
 
     public WrappedLuaScriptEngine() {
-        final ScriptEngineManager manager = new ScriptEngineManager();
-        this.engine = manager.getEngineByExtension("lua");
+        final LuaScriptEngineFactory manager = new LuaScriptEngineFactory();
+        this.engine = manager.getScriptEngine();
         this.binding = engine.getBindings(ScriptContext.ENGINE_SCOPE);
         if (engine instanceof Compilable) {
-            compilable = (Compilable) engine;
+            compilable = engine;
             scriptCache = Caffeine.newBuilder()
                     .maximumSize(100)
                     .expireAfterAccess(1, TimeUnit.MINUTES)
@@ -49,11 +50,11 @@ public class WrappedLuaScriptEngine implements Closeable {
             evalF = (expression) -> evalParsing(expression);
             evalBindingsF = (expression, bindings) -> evalBindingsParsing(expression, bindings);
         }
-        if (engine instanceof Invocable) {
-            invocable = (Invocable) engine;
-        } else {
-            invocable = null;
-        }
+        //        if (engine instanceof Invocable) {
+        //            invocable = (Invocable) engine;
+        //        } else {
+        invocable = null;
+        //        }
     }
 
     public ScriptEngine getEngine() {
@@ -127,7 +128,7 @@ public class WrappedLuaScriptEngine implements Closeable {
         binding.put(variable, value);
     }
 
-    public Object get(final String variable) {
+    public LuaValue[] get(final String variable) {
         return engine.get(variable);
     }
 
@@ -137,6 +138,14 @@ public class WrappedLuaScriptEngine implements Closeable {
 
     public boolean contains(final String variable) {
         return binding.containsKey(variable);
+    }
+
+    public LuaValue getSingle(final String variable) {
+        return engine.getSingle(variable);
+    }
+
+    public Object getSingleJava(final String variable) {
+        return engine.getSingleJava(variable);
     }
 
 }

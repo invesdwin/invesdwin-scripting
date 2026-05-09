@@ -1,97 +1,119 @@
 getBooleanMatrix = putBooleanMatrix
-if(getBooleanMatrix.size() != 2)
-	throw new Exception("getBooleanMatrix empty!")
+if(#getBooleanMatrix ~= 2) then
+	error("getBooleanMatrix empty!")
+end
 
 getBooleanMatrixAsList = putBooleanMatrixAsList
-if(getBooleanMatrixAsList.size() != 2)
-	throw new Exception("getBooleanMatrixAsList empty!")
+if(#getBooleanMatrixAsList ~= 2) then
+	error("getBooleanMatrixAsList empty!")
+end
 
 
 getByteMatrix = putByteMatrix
-if(getByteMatrix.size() != 2)
-	throw new Exception("getByteMatrix empty!")
+if(#getByteMatrix ~= 2) then
+	error("getByteMatrix empty!")
+end
 
 getByteMatrixAsList = putByteMatrixAsList
-if(getByteMatrixAsList.size() != 2)
-	throw new Exception("getByteMatrixAsList empty!")
+if(#getByteMatrixAsList ~= 2) then
+	error("getByteMatrixAsList empty!")
+end
 
 
 getCharacterMatrix = putCharacterMatrix
-if(getCharacterMatrix.size() != 2)
-	throw new Exception("getCharacterMatrix empty!")
+if(#getCharacterMatrix ~= 2) then
+	error("getCharacterMatrix empty!")
+end
 
 getCharacterMatrixAsList = putCharacterMatrixAsList
-if(getCharacterMatrixAsList.size() != 2)
-	throw new Exception("getCharacterMatrixAsList empty!")
+if(#getCharacterMatrixAsList ~= 2) then
+	error("getCharacterMatrixAsList empty!")
+end
 
 
 getDecimalMatrix = putDecimalMatrix
-if(getDecimalMatrix.size() != 2)
-	throw new Exception("getDecimalMatrix empty!")
+if(#getDecimalMatrix ~= 2) then
+	error("getDecimalMatrix empty!")
+end
 
 getDecimalMatrixAsList = putDecimalMatrixAsList
-if(getDecimalMatrixAsList.size() != 2)
-	throw new Exception("getDecimalMatrixAsList empty!")
+if(#getDecimalMatrixAsList ~= 2) then
+	error("getDecimalMatrixAsList empty!")
+end
 
 
 getDoubleMatrix = putDoubleMatrix
-if(getDoubleMatrix.size() != 2)
-	throw new Exception("getDoubleMatrix empty!")
+if(#getDoubleMatrix ~= 2) then
+	error("getDoubleMatrix empty!")
+end
 
 getDoubleMatrixAsList = putDoubleMatrixAsList
-if(getDoubleMatrixAsList.size() != 2)
-	throw new Exception("getDoubleMatrixAsList empty!")
+if(#getDoubleMatrixAsList ~= 2) then
+	error("getDoubleMatrixAsList empty!")
+end
 
 
 getFloatMatrix = putFloatMatrix
-if(getFloatMatrix.size() != 2)
-	throw new Exception("getFloatMatrix empty!")
+if(#getFloatMatrix ~= 2) then
+	error("getFloatMatrix empty!")
+end
 
 getFloatMatrixAsList = putFloatMatrixAsList
-if(getFloatMatrixAsList.size() != 2)
-	throw new Exception("getFloatMatrixAsList empty!")
+if(#getFloatMatrixAsList ~= 2) then
+	error("getFloatMatrixAsList empty!")
+end
 
 
 getIntegerMatrix = putIntegerMatrix
-if(getIntegerMatrix.size() != 2)
-	throw new Exception("getIntegerMatrix empty!")
+if(#getIntegerMatrix ~= 2) then
+	error("getIntegerMatrix empty!")
+end
 
 getIntegerMatrixAsList = putIntegerMatrixAsList
-if(getIntegerMatrixAsList.size() != 2)
-	throw new Exception("getIntegerMatrixAsList empty!")
+if(#getIntegerMatrixAsList ~= 2) then
+	error("getIntegerMatrixAsList empty!")
+end
 
 
 getLongMatrix = putLongMatrix
-if(getLongMatrix.size() != 2)
-	throw new Exception("getLongMatrix empty!")
+if(#getLongMatrix ~= 2) then
+	error("getLongMatrix empty!")
+end
 
 getLongMatrixAsList = putLongMatrixAsList
-if(getLongMatrixAsList.size() != 2)
-	throw new Exception("getLongMatrixAsList empty!")
+if(#getLongMatrixAsList ~= 2) then
+	error("getLongMatrixAsList empty!")
+end
 
 
 getPercentMatrix = putPercentMatrix
-if(getPercentMatrix.size() != 2)
-	throw new Exception("getPercentMatrix empty!")
+if(#getPercentMatrix ~= 2) then
+	error("getPercentMatrix empty!")
+end
 
 getPercentMatrixAsList = putPercentMatrixAsList
-if(getPercentMatrixAsList.size() != 2)
-	throw new Exception("getPercentMatrixAsList empty!")
+if(#getPercentMatrixAsList ~= 2) then
+	error("getPercentMatrixAsList empty!")
+end
 
 
 getShortMatrix = putShortMatrix
-if(getShortMatrix.size() != 2)
-	throw new Exception("getShortMatrix empty!")
+if(#getShortMatrix ~= 2) then
+	error("getShortMatrix empty!")
+end
 
 getShortMatrixAsList = putShortMatrixAsList
-if(getShortMatrixAsList.size() != 2)
-	throw new Exception("getShortMatrixAsList empty!")
+if(#getShortMatrixAsList ~= 2) then
+	error("getShortMatrixAsList empty!")
+end
 
 
 getStringMatrix = putStringMatrix
-if(getStringMatrix.size() != 2)
-	throw new Exception("getStringMatrix empty!")
+if(#getStringMatrix ~= 2) then
+	error("getStringMatrix empty!")
+end
 
 getStringMatrixAsList = putStringMatrixAsList
-if(getStringMatrixAsList.size() != 2)
-	throw new Exception("getStringMatrixAsList empty!")
+if(#getStringMatrixAsList ~= 2) then
+	error("getStringMatrixAsList empty!")
+end

@@ -1,49 +1,61 @@
-println("getByte")
-if(binding.hasVariable('getByte'))
-	throw new Exception("getByte already defined!")
+arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
+
+print("getByte")
+if(type(getByte) ~= "nil") then
+	error("getByte already defined!")
+end
 getByte = putByte
-getByteType = getByte.getClass()
-println(getByteType)
-println(getByte)
-if(getByteType != Byte.class)
-	throw new Exception("getByte not Byte!")
+getByteType = type(getByte)
+print(getByteType)
+print(getByte)
+if(getByteType ~= "number") then
+	error("getByte not Byte!")
+end
 
-println("getByteVector")
-if(binding.hasVariable('getByteVector'))
-	throw new Exception("getByteVector already defined!")
+print("getByteVector")
+if(type(getByteVector) ~= "nil") then
+	error("getByteVector already defined!")
+end
 getByteVector = putByteVector
-getByteVectorType = getByteVector[0].getClass()
-println(getByteVectorType)
-println(getByteVector)
-if(getByteVectorType != Byte.class)
-	throw new Exception("getByteVector not Byte!")
+getByteVectorType = type(getByteVector[1])
+print(getByteVectorType)
+print(arraysToString(getByteVector))
+if(getByteVectorType ~= "number") then
+	error("getByteVector not Byte!")
+end
 
-println("getByteVectorAsList")
-if(binding.hasVariable('getByteVectorAsList'))
-	throw new Exception("getByteVectorAsList already defined!")
+print("getByteVectorAsList")
+if(type(getByteVectorAsList) ~= "nil") then
+	error("getByteVectorAsList already defined!")
+end
 getByteVectorAsList = putByteVectorAsList
-getByteVectorAsListType = getByteVectorAsList[0].getClass()
-println(getByteVectorAsListType)
-println(getByteVectorAsList)
-if(getByteVectorAsListType != Byte.class)
-	throw new Exception("getByteVectorAsList not Byte!")
+getByteVectorAsListType = type(getByteVectorAsList[1])
+print(getByteVectorAsListType)
+print(arraysToString(getByteVectorAsList))
+if(getByteVectorAsListType ~= "number") then
+	error("getByteVectorAsList not Byte!")
+end
 
-println("getByteMatrix")
-if(binding.hasVariable('getByteMatrix'))
-	throw new Exception("getByteMatrix already defined!")
+print("getByteMatrix")
+if(type(getByteMatrix) ~= "nil") then
+	error("getByteMatrix already defined!")
+end
 getByteMatrix = putByteMatrix
-getByteMatrixType = getByteMatrix[0][0].getClass()
-println(getByteMatrixType)
-println(getByteMatrix)
-if(getByteMatrixType != Byte.class)
-	throw new Exception("getByteMatrix not Byte!")
+getByteMatrixType = type(getByteMatrix[1][1])
+print(getByteMatrixType)
+print(arraysToString(getByteMatrix))
+if(getByteMatrixType ~= "number") then
+	error("getByteMatrix not Byte!")
+end
 
-println("getByteMatrixAsList")
-if(binding.hasVariable('getByteMatrixAsList'))
-	throw new Exception("getByteMatrixAsList already defined!")
+print("getByteMatrixAsList")
+if(type(getByteMatrixAsList) ~= "nil") then
+	error("getByteMatrixAsList already defined!")
+end
 getByteMatrixAsList = putByteMatrixAsList
-getByteMatrixAsListType = getByteMatrixAsList[0][0].getClass()
-println(getByteMatrixAsListType)
-println(getByteMatrixAsList)
-if(getByteMatrixAsListType != Byte.class)
-	throw new Exception("getByteMatrixAsList not Byte!")
+getByteMatrixAsListType = type(getByteMatrixAsList[1][1])
+print(getByteMatrixAsListType)
+print(arraysToString(getByteMatrixAsList))
+if(getByteMatrixAsListType ~= "number") then
+	error("getByteMatrixAsList not Byte!")
+end

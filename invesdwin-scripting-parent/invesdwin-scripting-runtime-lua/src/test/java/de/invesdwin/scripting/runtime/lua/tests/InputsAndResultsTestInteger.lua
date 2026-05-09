@@ -1,49 +1,61 @@
-println("getInteger")
-if(binding.hasVariable('getInteger'))
-	throw new Exception("getInteger already defined!")
+arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
+
+print("getInteger")
+if(type(getInteger) ~= "nil") then
+	error("getInteger already defined!")
+end
 getInteger = putInteger
-getIntegerType = getInteger.getClass()
-println(getIntegerType)
-println(getInteger)
-if(getIntegerType != Integer.class)
-	throw new Exception("getInteger not Integer!")
+getIntegerType = type(getInteger)
+print(getIntegerType)
+print(getInteger)
+if(getIntegerType ~= "number") then
+	error("getInteger not Integer!")
+end
 
-println("getIntegerVector")
-if(binding.hasVariable('getIntegerVector'))
-	throw new Exception("getIntegerVector already defined!")
+print("getIntegerVector")
+if(type(getIntegerVector) ~= "nil") then
+	error("getIntegerVector already defined!")
+end
 getIntegerVector = putIntegerVector
-getIntegerVectorType = getIntegerVector[0].getClass()
-println(getIntegerVectorType)
-println(getIntegerVector)
-if(getIntegerVectorType != Integer.class)
-	throw new Exception("getIntegerVector not Integer!")
+getIntegerVectorType = type(getIntegerVector[1])
+print(getIntegerVectorType)
+print(arraysToString(getIntegerVector))
+if(getIntegerVectorType ~= "number") then
+	error("getIntegerVector not Integer!")
+end
 
-println("getIntegerVectorAsList")
-if(binding.hasVariable('getIntegerVectorAsList'))
-	throw new Exception("getIntegerVectorAsList already defined!")
+print("getIntegerVectorAsList")
+if(type(getIntegerVectorAsList) ~= "nil") then
+	error("getIntegerVectorAsList already defined!")
+end
 getIntegerVectorAsList = putIntegerVectorAsList
-getIntegerVectorAsListType = getIntegerVectorAsList[0].getClass()
-println(getIntegerVectorAsListType)
-println(getIntegerVectorAsList)
-if(getIntegerVectorAsListType != Integer.class)
-	throw new Exception("getIntegerVectorAsList not Integer!")
+getIntegerVectorAsListType = type(getIntegerVectorAsList[1])
+print(getIntegerVectorAsListType)
+print(arraysToString(getIntegerVectorAsList))
+if(getIntegerVectorAsListType ~= "number") then
+	error("getIntegerVectorAsList not Integer!")
+end
 
-println("getIntegerMatrix")
-if(binding.hasVariable('getIntegerMatrix'))
-	throw new Exception("getIntegerMatrix already defined!")
+print("getIntegerMatrix")
+if(type(getIntegerMatrix) ~= "nil") then
+	error("getIntegerMatrix already defined!")
+end
 getIntegerMatrix = putIntegerMatrix
-getIntegerMatrixType = getIntegerMatrix[0][0].getClass()
-println(getIntegerMatrixType)
-println(getIntegerMatrix)
-if(getIntegerMatrixType != Integer.class)
-	throw new Exception("getIntegerMatrix not Integer!")
+getIntegerMatrixType = type(getIntegerMatrix[1][1])
+print(getIntegerMatrixType)
+print(arraysToString(getIntegerMatrix))
+if(getIntegerMatrixType ~= "number") then
+	error("getIntegerMatrix not Integer!")
+end
 
-println("getIntegerMatrixAsList")
-if(binding.hasVariable('getIntegerMatrixAsList'))
-	throw new Exception("getIntegerMatrixAsList already defined!")
+print("getIntegerMatrixAsList")
+if(type(getIntegerMatrixAsList) ~= "nil") then
+	error("getIntegerMatrixAsList already defined!")
+end
 getIntegerMatrixAsList = putIntegerMatrixAsList
-getIntegerMatrixAsListType = getIntegerMatrixAsList[0][0].getClass()
-println(getIntegerMatrixAsListType)
-println(getIntegerMatrixAsList)
-if(getIntegerMatrixAsListType != Integer.class)
-	throw new Exception("getIntegerMatrixAsList not Integer!")
+getIntegerMatrixAsListType = type(getIntegerMatrixAsList[1][1])
+print(getIntegerMatrixAsListType)
+print(arraysToString(getIntegerMatrixAsList))
+if(getIntegerMatrixAsListType ~= "number") then
+	error("getIntegerMatrixAsList not Integer!")
+end

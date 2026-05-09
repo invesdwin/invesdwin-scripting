@@ -1,49 +1,61 @@
-println("getShort")
-if(binding.hasVariable('getShort'))
-	throw new Exception("getShort already defined!")
+arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
+
+print("getShort")
+if(type(getShort) ~= "nil") then
+	error("getShort already defined!")
+end
 getShort = putShort
-getShortType = getShort.getClass()
-println(getShortType)
-println(getShort)
-if(getShortType != Short.class)
-	throw new Exception("getShort not Short!")
+getShortType = type(getShort)
+print(getShortType)
+print(getShort)
+if(getShortType ~= "number") then
+	error("getShort not Short!")
+end
 
-println("getShortVector")
-if(binding.hasVariable('getShortVector'))
-	throw new Exception("getShortVector already defined!")
+print("getShortVector")
+if(type(getShortVector) ~= "nil") then
+	error("getShortVector already defined!")
+end
 getShortVector = putShortVector
-getShortVectorType = getShortVector[0].getClass()
-println(getShortVectorType)
-println(getShortVector)
-if(getShortVectorType != Short.class)
-	throw new Exception("getShortVector not Short!")
+getShortVectorType = type(getShortVector[1])
+print(getShortVectorType)
+print(arraysToString(getShortVector))
+if(getShortVectorType ~= "number") then
+	error("getShortVector not Short!")
+end
 
-println("getShortVectorAsList")
-if(binding.hasVariable('getShortVectorAsList'))
-	throw new Exception("getShortVectorAsList already defined!")
+print("getShortVectorAsList")
+if(type(getShortVectorAsList) ~= "nil") then
+	error("getShortVectorAsList already defined!")
+end
 getShortVectorAsList = putShortVectorAsList
-getShortVectorAsListType = getShortVectorAsList[0].getClass()
-println(getShortVectorAsListType)
-println(getShortVectorAsList)
-if(getShortVectorAsListType != Short.class)
-	throw new Exception("getShortVectorAsList not Short!")
+getShortVectorAsListType = type(getShortVectorAsList[1])
+print(getShortVectorAsListType)
+print(arraysToString(getShortVectorAsList))
+if(getShortVectorAsListType ~= "number") then
+	error("getShortVectorAsList not Short!")
+end
 
-println("getShortMatrix")
-if(binding.hasVariable('getShortMatrix'))
-	throw new Exception("getShortMatrix already defined!")
+print("getShortMatrix")
+if(type(getShortMatrix) ~= "nil") then
+	error("getShortMatrix already defined!")
+end
 getShortMatrix = putShortMatrix
-getShortMatrixType = getShortMatrix[0][0].getClass()
-println(getShortMatrixType)
-println(getShortMatrix)
-if(getShortMatrixType != Short.class)
-	throw new Exception("getShortMatrix not Short!")
+getShortMatrixType = type(getShortMatrix[1][1])
+print(getShortMatrixType)
+print(arraysToString(getShortMatrix))
+if(getShortMatrixType ~= "number") then
+	error("getShortMatrix not Short!")
+end
 
-println("getShortMatrixAsList")
-if(binding.hasVariable('getShortMatrixAsList'))
-	throw new Exception("getShortMatrixAsList already defined!")
+print("getShortMatrixAsList")
+if(type(getShortMatrixAsList) ~= "nil") then
+	error("getShortMatrixAsList already defined!")
+end
 getShortMatrixAsList = putShortMatrixAsList
-getShortMatrixAsListType = getShortMatrixAsList[0][0].getClass()
-println(getShortMatrixAsListType)
-println(getShortMatrixAsList)
-if(getShortMatrixAsListType != Short.class)
-	throw new Exception("getShortMatrixAsList not Short!")
+getShortMatrixAsListType = type(getShortMatrixAsList[1][1])
+print(getShortMatrixAsListType)
+print(arraysToString(getShortMatrixAsList))
+if(getShortMatrixAsListType ~= "number") then
+	error("getShortMatrixAsList not Short!")
+end

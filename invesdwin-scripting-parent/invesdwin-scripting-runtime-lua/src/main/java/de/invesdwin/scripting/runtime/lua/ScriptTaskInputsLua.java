@@ -3,6 +3,7 @@ package de.invesdwin.scripting.runtime.lua;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.scripting.IScriptTaskInputs;
+import de.invesdwin.util.lang.string.Strings;
 
 @NotThreadSafe
 public class ScriptTaskInputsLua implements IScriptTaskInputs {
@@ -35,17 +36,17 @@ public class ScriptTaskInputsLua implements IScriptTaskInputs {
 
     @Override
     public void putCharacter(final String variable, final char value) {
-        engine.unwrap().put(variable, value);
+        putString(variable, Strings.checkedCast(value));
     }
 
     @Override
     public void putCharacterVector(final String variable, final char[] value) {
-        engine.unwrap().put(variable, value);
+        putStringVector(variable, Strings.checkedCastVector(value));
     }
 
     @Override
     public void putCharacterMatrix(final String variable, final char[][] value) {
-        engine.unwrap().put(variable, value);
+        putStringMatrix(variable, Strings.checkedCastMatrix(value));
     }
 
     @Override

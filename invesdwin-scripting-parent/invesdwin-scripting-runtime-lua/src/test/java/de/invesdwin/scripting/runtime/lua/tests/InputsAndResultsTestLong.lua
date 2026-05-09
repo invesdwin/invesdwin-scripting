@@ -1,49 +1,61 @@
-println("getLong")
-if(binding.hasVariable('getLong'))
-	throw new Exception("getLong already defined!")
+arraysToString = java.method(java.import('de.invesdwin.util.collections.Arrays'),'toString','java.lang.Object')
+
+print("getLong")
+if(type(getLong) ~= "nil") then
+	error("getLong already defined!")
+end
 getLong = putLong
-getLongType = getLong.getClass()
-println(getLongType)
-println(getLong)
-if(getLongType != Long.class)
-	throw new Exception("getLong not Long!")
+getLongType = type(getLong)
+print(getLongType)
+print(getLong)
+if(getLongType ~= "number") then
+	error("getLong not Long!")
+end
 
-println("getLongVector")
-if(binding.hasVariable('getLongVector'))
-	throw new Exception("getLongVector already defined!")
+print("getLongVector")
+if(type(getLongVector) ~= "nil") then
+	error("getLongVector already defined!")
+end
 getLongVector = putLongVector
-getLongVectorType = getLongVector[0].getClass()
-println(getLongVectorType)
-println(getLongVector)
-if(getLongVectorType != Long.class)
-	throw new Exception("getLongVector not Long!")
+getLongVectorType = type(getLongVector[1])
+print(getLongVectorType)
+print(arraysToString(getLongVector))
+if(getLongVectorType ~= "number") then
+	error("getLongVector not Long!")
+end
 
-println("getLongVectorAsList")
-if(binding.hasVariable('getLongVectorAsList'))
-	throw new Exception("getLongVectorAsList already defined!")
+print("getLongVectorAsList")
+if(type(getLongVectorAsList) ~= "nil") then
+	error("getLongVectorAsList already defined!")
+end
 getLongVectorAsList = putLongVectorAsList
-getLongVectorAsListType = getLongVectorAsList[0].getClass()
-println(getLongVectorAsListType)
-println(getLongVectorAsList)
-if(getLongVectorAsListType != Long.class)
-	throw new Exception("getLongVectorAsList not Long!")
+getLongVectorAsListType = type(getLongVectorAsList[1])
+print(getLongVectorAsListType)
+print(arraysToString(getLongVectorAsList))
+if(getLongVectorAsListType ~= "number") then
+	error("getLongVectorAsList not Long!")
+end
 
-println("getLongMatrix")
-if(binding.hasVariable('getLongMatrix'))
-	throw new Exception("getLongMatrix already defined!")
+print("getLongMatrix")
+if(type(getLongMatrix) ~= "nil") then
+	error("getLongMatrix already defined!")
+end
 getLongMatrix = putLongMatrix
-getLongMatrixType = getLongMatrix[0][0].getClass()
-println(getLongMatrixType)
-println(getLongMatrix)
-if(getLongMatrixType != Long.class)
-	throw new Exception("getLongMatrix not Long!")
+getLongMatrixType = type(getLongMatrix[1][1])
+print(getLongMatrixType)
+print(arraysToString(getLongMatrix))
+if(getLongMatrixType ~= "number") then
+	error("getLongMatrix not Long!")
+end
 
-println("getLongMatrixAsList")
-if(binding.hasVariable('getLongMatrixAsList'))
-	throw new Exception("getLongMatrixAsList already defined!")
+print("getLongMatrixAsList")
+if(type(getLongMatrixAsList) ~= "nil") then
+	error("getLongMatrixAsList already defined!")
+end
 getLongMatrixAsList = putLongMatrixAsList
-getLongMatrixAsListType = getLongMatrixAsList[0][0].getClass()
-println(getLongMatrixAsListType)
-println(getLongMatrixAsList)
-if(getLongMatrixAsListType != Long.class)
-	throw new Exception("getLongMatrixAsList not Long!")
+getLongMatrixAsListType = type(getLongMatrixAsList[1][1])
+print(getLongMatrixAsListType)
+print(arraysToString(getLongMatrixAsList))
+if(getLongMatrixAsListType ~= "number") then
+	error("getLongMatrixAsList not Long!")
+end

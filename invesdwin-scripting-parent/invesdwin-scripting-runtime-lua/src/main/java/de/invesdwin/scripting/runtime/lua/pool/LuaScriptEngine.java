@@ -171,6 +171,28 @@ public final class LuaScriptEngine extends AbstractScriptEngine implements Scrip
         }
     }
 
+    public LuaValue getSingle(final String variable) {
+        final LuaValue[] values = get(variable);
+        if (values == null) {
+            return null;
+        }
+        if (values.length == 0) {
+            return null;
+        }
+        return values[0];
+    }
+
+    public Object getSingleJava(final String variable) {
+        final LuaValue[] values = get(variable);
+        if (values == null) {
+            return null;
+        }
+        if (values.length == 0) {
+            return null;
+        }
+        return values[0].toJavaObject();
+    }
+
     @Override
     public ScriptEngineFactory getFactory() {
         return factory;
@@ -270,7 +292,8 @@ public final class LuaScriptEngine extends AbstractScriptEngine implements Scrip
 
         @Override
         public boolean containsKey(final Object key) {
-            return get(key) != null;
+            final LuaValue result = getSingle("type(" + key + ") ~= \"nil\"");
+            return result.toBoolean();
         }
 
         @Override
