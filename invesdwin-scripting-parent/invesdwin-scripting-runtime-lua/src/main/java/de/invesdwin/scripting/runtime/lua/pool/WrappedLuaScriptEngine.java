@@ -34,7 +34,6 @@ public class WrappedLuaScriptEngine implements Closeable {
         final ScriptEngineManager manager = new ScriptEngineManager();
         this.engine = manager.getEngineByExtension("lua");
         this.binding = engine.getBindings(ScriptContext.ENGINE_SCOPE);
-        this.binding.put("binding", binding);
         if (engine instanceof Compilable) {
             compilable = (Compilable) engine;
             scriptCache = Caffeine.newBuilder()
@@ -117,7 +116,6 @@ public class WrappedLuaScriptEngine implements Closeable {
 
     public void reset() {
         binding.clear();
-        binding.put("binding", binding);
     }
 
     @Override
