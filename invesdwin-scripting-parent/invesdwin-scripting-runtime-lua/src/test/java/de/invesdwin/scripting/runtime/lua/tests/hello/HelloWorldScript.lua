@@ -1,1 +1,1 @@
-world = "Hello " + hello + "!"
+world = "Hello " .. hello .. "!"

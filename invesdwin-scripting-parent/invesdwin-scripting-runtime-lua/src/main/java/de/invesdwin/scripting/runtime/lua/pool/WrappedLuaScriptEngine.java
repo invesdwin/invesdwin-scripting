@@ -128,7 +128,7 @@ public class WrappedLuaScriptEngine implements Closeable {
     }
 
     public Object get(final String variable) {
-        return eval(variable);
+        return engine.get(variable);
     }
 
     public void remove(final String variable) {

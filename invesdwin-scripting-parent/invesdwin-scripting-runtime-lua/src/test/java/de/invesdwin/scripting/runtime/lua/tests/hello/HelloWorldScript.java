@@ -31,7 +31,7 @@ public class HelloWorldScript {
             @Override
             public void executeScript(final IScriptTaskEngine engine) {
                 //execute this script inline:
-                //                engine.eval("world = \"Hello \" + hello + \"!\"");
+                //                engine.eval("world = \"Hello \" .. hello .. \"!\"");
                 //or run it from a file:
                 engine.eval(new ClassPathResource(HelloWorldScript.class.getSimpleName() + ".lua", getClass()));
             }

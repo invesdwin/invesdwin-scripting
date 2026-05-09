@@ -18,7 +18,6 @@ public class ScriptTaskRunnerLuaTest extends ATest {
 
     @Test
     public void test() {
-        //TODO: run tests in multiple engines by setting the system property and including the test deps, similar to the groovy strict tests
         new InputsAndResultsTests(runner).test();
     }
 

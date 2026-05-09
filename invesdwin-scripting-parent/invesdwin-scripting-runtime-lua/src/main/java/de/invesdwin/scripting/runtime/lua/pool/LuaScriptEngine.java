@@ -89,7 +89,7 @@ public final class LuaScriptEngine extends AbstractScriptEngine implements Scrip
     }
 
     @Override
-    public Object eval(final String script) throws ScriptException {
+    public LuaValue[] eval(final String script) throws ScriptException {
         try {
             final Lua l = getLua();
             final LuaValue[] values = l.eval(script);
@@ -100,7 +100,7 @@ public final class LuaScriptEngine extends AbstractScriptEngine implements Scrip
     }
 
     @Override
-    public Object eval(final String script, final ScriptContext scriptContext) throws ScriptException {
+    public LuaValue[] eval(final String script, final ScriptContext scriptContext) throws ScriptException {
         try {
             final Lua l = getLua();
             putContext(l, scriptContext);
@@ -131,7 +131,7 @@ public final class LuaScriptEngine extends AbstractScriptEngine implements Scrip
     }
 
     @Override
-    public Object eval(final Reader reader, final ScriptContext scriptContext) throws ScriptException {
+    public LuaValue[] eval(final Reader reader, final ScriptContext scriptContext) throws ScriptException {
         return eval(readAll(reader), scriptContext);
     }
 
@@ -154,6 +154,21 @@ public final class LuaScriptEngine extends AbstractScriptEngine implements Scrip
     @Override
     public Bindings getBindings(final int scope) {
         return bindings;
+    }
+
+    @Override
+    public void put(final String key, final Object value) {
+        final Lua l = getLua();
+        putGlobal(l, key, value);
+    }
+
+    @Override
+    public LuaValue[] get(final String key) {
+        try {
+            return eval("return " + key);
+        } catch (final ScriptException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

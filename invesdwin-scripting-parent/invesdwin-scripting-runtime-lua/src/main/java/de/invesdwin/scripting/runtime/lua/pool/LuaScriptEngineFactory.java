@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.concurrent.Immutable;
-import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 
 import de.invesdwin.scripting.runtime.lua.LuaProperties;
@@ -139,7 +138,7 @@ public class LuaScriptEngineFactory implements ScriptEngineFactory {
     }
 
     @Override
-    public ScriptEngine getScriptEngine() {
+    public LuaScriptEngine getScriptEngine() {
         return new LuaScriptEngine(luaClass, this);
     }
 
