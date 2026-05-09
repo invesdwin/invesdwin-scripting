@@ -79,16 +79,18 @@ print(arraysToString(getStringVectorAsListWithNull))
 if(getStringVectorAsListWithNullType ~= "string") then
 	error("getStringVectorAsListWithNull not String!")
 end
-if(getStringVectorAsListWithNull[1] ~= nil) then
-	error("getStringVectorAsListWithNull[1] not null!")
+if(getStringVectorAsListWithNull[2] ~= nil) then
+	error("getStringVectorAsListWithNull[2] not null!")
 end
 callback("setStringVectorAsListWithNull", getStringVectorAsListWithNull)
-println(getStringVectorAsListWithNullType)
-println(getStringVectorAsListWithNull)
-if(getStringVectorAsListWithNullType != String.class)
-	throw new Exception("getStringVectorAsListWithNull not String!")
-if(getStringVectorAsListWithNull[1] != null)
-	throw new Exception("getStringVectorAsListWithNull[1] not null!")
+print(getStringVectorAsListWithNullType)
+print(getStringVectorAsListWithNull)
+if(getStringVectorAsListWithNullType ~= "string") then
+	error("getStringVectorAsListWithNull not String!")
+end
+if(getStringVectorAsListWithNull[2] ~= nil) then
+	error("getStringVectorAsListWithNull[2] not null!")
+end
 callback("setStringVectorAsListWithNull", getStringVectorAsListWithNull)
 
 print("getStringMatrix")
@@ -109,7 +111,7 @@ if(getStringMatrixWithNull ~= nil) then
 	error("getStringMatrixWithNull already defined!")
 end
 getStringMatrixWithNull = callback("getStringMatrixWithNull")
-getStringMatrixWithNullType = type(getStringMatrixWithNull[1][1])
+getStringMatrixWithNullType = type(getStringMatrixWithNull[1][2])
 print(getStringMatrixWithNullType)
 print(arraysToString(getStringMatrixWithNull))
 if(getStringMatrixWithNullType ~= "string") then
@@ -118,7 +120,7 @@ end
 if(getStringMatrixWithNull[1][1] ~= nil) then
 	error("getStringMatrixWithNull[1][1] not null!")
 end
-if(getStringMatrixWithNull[2][3] ~= nil) then
+if(getStringMatrixWithNull[2][2] ~= nil) then
 	error("getStringMatrixWithNull[2][2] not null!")
 end
 if(getStringMatrixWithNull[3][3] ~= nil) then
@@ -144,7 +146,7 @@ if(getStringMatrixAsListWithNull ~= nil) then
 	error("getStringMatrixAsListWithNull already defined!")
 end
 getStringMatrixAsListWithNull = callback("getStringMatrixAsListWithNull")
-getStringMatrixAsListWithNullType = type(getStringMatrixAsListWithNull[1][1])
+getStringMatrixAsListWithNullType = type(getStringMatrixAsListWithNull[1][2])
 print(getStringMatrixAsListWithNullType)
 print(arraysToString(getStringMatrixAsListWithNull))
 if(getStringMatrixAsListWithNullType ~= "string") then
