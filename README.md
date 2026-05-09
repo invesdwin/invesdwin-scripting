@@ -31,6 +31,7 @@ This repository contains the following scripting modules for JVM languages:
 - **invesdwin-scripting-runtime-(jruby|truffleruby)**: this is an integration for [JRuby](https://www.jruby.org/) and [TruffleRuby](https://www.graalvm.org/ruby/) via JSR-223.
 - **invesdwin-scripting-runtime-javascript**: this is an integration for Javascript via JSR-223. It uses [GraalJS](https://github.com/oracle/graaljs) if present on the classpath with a fallback to Nashorn (only available until Java 14).
 - **invesdwin-scripting-runtime-mvel**: this is an integration for [MVEL](https://github.com/mvel/mvel) via JSR-223.
+- **invesdwin-scripting-runtime-lua**: this is an integration for [LUA](https://www.lua.org/) via JSR-223. It uses [LuaJava](https://github.com/gudzpoz/luajava) which supports both native implementations and a JVM version.
 
 All scripting modules provide unified bidirectional communication between Java and the respective scripting language. See test cases for examples on how to implement your script integrations.
 Examples are available in the respective testcases of the modules or the separate project repos.
