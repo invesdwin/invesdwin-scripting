@@ -27,6 +27,7 @@ import de.invesdwin.util.streams.buffer.bytes.IByteBuffer;
 import de.invesdwin.util.streams.closeable.Closeables;
 import de.invesdwin.util.time.Instant;
 import de.invesdwin.util.time.date.FTimeUnit;
+import de.invesdwin.util.time.date.millis.FDateNanos;
 import de.invesdwin.util.time.duration.Duration;
 
 /**
@@ -313,7 +314,7 @@ public class ModifiedGhciBridge {
             }
         };
         try {
-            spinWait.awaitFulfill(System.nanoTime());
+            spinWait.awaitFulfill(FDateNanos.elapsedNanos());
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
@@ -347,7 +348,7 @@ public class ModifiedGhciBridge {
             }
         };
         try {
-            spinWait.awaitFulfill(System.nanoTime());
+            spinWait.awaitFulfill(FDateNanos.elapsedNanos());
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }

@@ -33,6 +33,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.context.ContextProperties;
 import de.invesdwin.util.collections.Collections;
+import de.invesdwin.util.time.date.millis.FDateNanos;
 
 /**
  * A simple library class which helps with loading dynamic libraries stored in the JAR archive. These libraries usually
@@ -138,7 +139,7 @@ public final class ModifiedNativeUtils {
 
     private static File createTempDirectory(final String prefix) throws IOException {
         final String tempDir = ContextProperties.TEMP_DIRECTORY.getAbsolutePath();
-        final File generatedDir = new File(tempDir, prefix + System.nanoTime());
+        final File generatedDir = new File(tempDir, prefix + FDateNanos.elapsedNanos());
 
         if (!generatedDir.mkdir()) {
             throw new IOException("Failed to create temp directory " + generatedDir.getName());

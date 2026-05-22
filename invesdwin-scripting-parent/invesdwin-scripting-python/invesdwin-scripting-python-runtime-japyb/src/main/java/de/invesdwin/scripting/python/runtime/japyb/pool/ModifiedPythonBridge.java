@@ -26,6 +26,7 @@ import de.invesdwin.util.streams.buffer.bytes.ByteBuffers;
 import de.invesdwin.util.streams.buffer.bytes.IByteBuffer;
 import de.invesdwin.util.streams.closeable.Closeables;
 import de.invesdwin.util.time.date.FTimeUnit;
+import de.invesdwin.util.time.date.millis.FDateNanos;
 
 /**
  * Fork of: https://github.com/org-arl/jajub/issues/2
@@ -272,7 +273,7 @@ public class ModifiedPythonBridge {
             }
         };
         try {
-            spinWait.awaitFulfill(System.nanoTime());
+            spinWait.awaitFulfill(FDateNanos.elapsedNanos());
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
@@ -306,7 +307,7 @@ public class ModifiedPythonBridge {
             }
         };
         try {
-            spinWait.awaitFulfill(System.nanoTime());
+            spinWait.awaitFulfill(FDateNanos.elapsedNanos());
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
