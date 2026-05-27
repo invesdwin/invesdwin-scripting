@@ -55,4 +55,9 @@ public final class GilLock extends ASimpleLock {
         return GIL_LOCK_NAME;
     }
 
+    @Override
+    public boolean isDisabled() {
+        return false;
+    }
+
 }
