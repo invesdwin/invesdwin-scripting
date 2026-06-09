@@ -10,6 +10,7 @@ import de.invesdwin.util.error.Throwables;
 import de.invesdwin.util.lang.Files;
 import de.invesdwin.util.lang.string.Strings;
 import de.invesdwin.util.time.date.FTimeUnit;
+import de.invesdwin.util.time.date.millis.FDateNanos;
 
 @NotThreadSafe
 public class FileScriptTaskCallbackServerHandler implements Runnable {
@@ -39,7 +40,7 @@ public class FileScriptTaskCallbackServerHandler implements Runnable {
     public void run() {
         try {
             while (true) {
-                requestSpinWait.awaitFulfill(System.nanoTime());
+                requestSpinWait.awaitFulfill(FDateNanos.elapsedNanos());
                 final String request = readRequest();
                 Files.deleteQuietly(callbackContext.getRequestFile());
                 final String response = handle(request);

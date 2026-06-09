@@ -27,6 +27,7 @@ import de.invesdwin.util.streams.buffer.bytes.ByteBuffers;
 import de.invesdwin.util.streams.buffer.bytes.IByteBuffer;
 import de.invesdwin.util.streams.closeable.Closeables;
 import de.invesdwin.util.time.date.FTimeUnit;
+import de.invesdwin.util.time.date.millis.FDateNanos;
 import de.invesdwin.util.time.duration.Duration;
 
 /**
@@ -406,7 +407,7 @@ public class ModifiedEvcxrBridge {
             }
         };
         try {
-            spinWait.awaitFulfill(System.nanoTime());
+            spinWait.awaitFulfill(FDateNanos.elapsedNanos());
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
@@ -448,9 +449,9 @@ public class ModifiedEvcxrBridge {
         };
         try {
             if (errorFound) {
-                spinWait.awaitFulfill(System.nanoTime(), CHECK_ERROR_DELAY);
+                spinWait.awaitFulfill(FDateNanos.elapsedNanos(), CHECK_ERROR_DELAY);
             } else {
-                spinWait.awaitFulfill(System.nanoTime());
+                spinWait.awaitFulfill(FDateNanos.elapsedNanos());
             }
         } catch (final Exception e) {
             throw new RuntimeException(e);

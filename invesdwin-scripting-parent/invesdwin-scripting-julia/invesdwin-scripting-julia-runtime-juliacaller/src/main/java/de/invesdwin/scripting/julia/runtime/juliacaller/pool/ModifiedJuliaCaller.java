@@ -21,6 +21,7 @@ import de.invesdwin.util.concurrent.loop.LoopInterruptedCheck;
 import de.invesdwin.util.concurrent.loop.spinwait.ASpinWait;
 import de.invesdwin.util.lang.string.Strings;
 import de.invesdwin.util.time.date.FTimeUnit;
+import de.invesdwin.util.time.date.millis.FDateNanos;
 
 /**
  * Forked from here: https://github.com/jbytecode/juliacaller/issues/1
@@ -224,7 +225,7 @@ public class ModifiedJuliaCaller {
             }
         };
         try {
-            spinWait.awaitFulfill(System.nanoTime());
+            spinWait.awaitFulfill(FDateNanos.elapsedNanos());
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
