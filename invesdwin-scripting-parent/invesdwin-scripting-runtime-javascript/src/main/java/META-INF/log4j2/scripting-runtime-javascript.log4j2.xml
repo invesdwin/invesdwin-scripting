@@ -1,0 +1,9 @@
+<Configuration>
+
+    <Loggers>
+        <Logger name="de.invesdwin.scripting.runtime.javascript.IScriptTaskRunnerJavascript" 
+                level="ERROR" 
+                additivity="true" />
+    </Loggers>
+
+</Configuration>

@@ -1,0 +1,9 @@
+<Configuration>
+
+    <Loggers>
+        <Logger name="de.invesdwin.scripting.julia.runtime.contract.IScriptTaskRunnerJulia" 
+                level="DEBUG" 
+                additivity="true" />
+    </Loggers>
+
+</Configuration>

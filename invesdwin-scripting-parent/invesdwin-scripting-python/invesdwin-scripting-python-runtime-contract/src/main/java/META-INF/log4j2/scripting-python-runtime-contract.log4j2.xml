@@ -1,0 +1,9 @@
+<Configuration>
+
+    <Loggers>
+        <Logger name="de.invesdwin.scripting.python.runtime.contract.IScriptTaskRunnerPython" 
+                level="DEBUG" 
+                additivity="true" />
+    </Loggers>
+
+</Configuration>

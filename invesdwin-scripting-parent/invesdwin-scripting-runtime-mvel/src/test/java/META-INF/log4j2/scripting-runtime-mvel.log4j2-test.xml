@@ -1,0 +1,9 @@
+<Configuration>
+
+    <Loggers>
+        <Logger name="de.invesdwin.context.mvel.IScriptTaskRunnerJshell" 
+                level="DEBUG" 
+                additivity="true" />
+    </Loggers>
+
+</Configuration>
