@@ -1,0 +1,9 @@
+<Configuration>
+
+    <Loggers>
+        <Logger name="de.invesdwin.scripting.matlab.runtime.contract.IScriptTaskRunnerMatlab" 
+                level="ERROR" 
+                additivity="true" />
+    </Loggers>
+
+</Configuration>

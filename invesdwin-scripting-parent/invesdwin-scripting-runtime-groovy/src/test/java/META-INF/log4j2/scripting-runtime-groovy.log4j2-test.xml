@@ -1,0 +1,9 @@
+<Configuration>
+
+    <Loggers>
+        <Logger name="de.invesdwin.scripting.runtime.groovy.IScriptTaskRunnerGroovy" 
+                level="DEBUG" 
+                additivity="true" />
+    </Loggers>
+
+</Configuration>

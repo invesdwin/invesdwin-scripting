@@ -1,7 +1,0 @@
-<configuration>
-
-	<logger name="de.invesdwin.scripting.ruby.runtime.IScriptTaskRunnerRuby" additivity="true" level="ERROR">
-	</logger>
-
-
-</configuration>

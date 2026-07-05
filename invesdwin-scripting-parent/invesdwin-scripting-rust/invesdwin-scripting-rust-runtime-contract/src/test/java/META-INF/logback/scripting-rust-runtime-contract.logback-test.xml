@@ -1,7 +1,0 @@
-<configuration>
-
-	<logger name="de.invesdwin.scripting.rust.runtime.contract.IScriptTaskRunnerRust" additivity="true" level="DEBUG">
-	</logger>
-
-
-</configuration>

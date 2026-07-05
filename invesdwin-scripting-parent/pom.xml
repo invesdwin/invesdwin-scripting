@@ -358,12 +358,6 @@
 				<groupId>dk.ange</groupId>
 				<artifactId>javaoctave</artifactId>
 				<version>${version.javaoctave}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>com.diffplug.matsim</groupId>
@@ -548,12 +542,6 @@
 				<groupId>org.renjin</groupId>
 				<artifactId>renjin-core</artifactId>
 				<version>${version.renjin}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.renjin</groupId>

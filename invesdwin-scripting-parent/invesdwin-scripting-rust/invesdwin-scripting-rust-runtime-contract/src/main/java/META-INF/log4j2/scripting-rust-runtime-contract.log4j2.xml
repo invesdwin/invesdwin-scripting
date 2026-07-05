@@ -1,0 +1,9 @@
+<Configuration>
+
+    <Loggers>
+        <Logger name="de.invesdwin.scripting.rust.runtime.contract.IScriptTaskRunnerRust" 
+                level="ERROR" 
+                additivity="true" />
+    </Loggers>
+
+</Configuration>
