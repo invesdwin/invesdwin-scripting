@@ -15,8 +15,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.zeroturnaround.exec.InvalidExitValueException;
 import org.zeroturnaround.exec.ProcessExecutor;
 import org.zeroturnaround.exec.StartedProcess;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jDebugOutputStream;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jWarnOutputStream;
 
 import de.invesdwin.context.ContextProperties;
 import de.invesdwin.context.log.error.Err;
@@ -25,6 +23,8 @@ import de.invesdwin.scripting.python.runtime.py4j.Py4jProperties;
 import de.invesdwin.util.lang.Files;
 import de.invesdwin.util.lang.finalizer.AFinalizer;
 import de.invesdwin.util.lang.string.UniqueNameGenerator;
+import de.invesdwin.util.log.LogLevel;
+import de.invesdwin.util.streams.log.LogLevelOutputStream;
 import de.invesdwin.util.time.date.FTimeUnit;
 import py4j.GatewayServer;
 import py4j.GatewayServer.GatewayServerBuilder;
@@ -90,8 +90,7 @@ public class Py4jInterpreter implements IPy4jInterpreter, Closeable {
             final AtomicBoolean serverStarted = new AtomicBoolean(false);
             server.addListener(new GatewayServerListener() {
                 @Override
-                public void serverStopped() {
-                }
+                public void serverStopped() {}
 
                 @Override
                 public void serverStarted() {
@@ -99,12 +98,10 @@ public class Py4jInterpreter implements IPy4jInterpreter, Closeable {
                 }
 
                 @Override
-                public void serverPreShutdown() {
-                }
+                public void serverPreShutdown() {}
 
                 @Override
-                public void serverPostShutdown() {
-                }
+                public void serverPostShutdown() {}
 
                 @Override
                 public void serverError(final Exception e) {
@@ -112,12 +109,10 @@ public class Py4jInterpreter implements IPy4jInterpreter, Closeable {
                 }
 
                 @Override
-                public void connectionStopped(final Py4JServerConnection gatewayConnection) {
-                }
+                public void connectionStopped(final Py4JServerConnection gatewayConnection) {}
 
                 @Override
-                public void connectionStarted(final Py4JServerConnection gatewayConnection) {
-                }
+                public void connectionStarted(final Py4JServerConnection gatewayConnection) {}
 
                 @Override
                 public void connectionError(final Exception e) {
@@ -147,8 +142,8 @@ public class Py4jInterpreter implements IPy4jInterpreter, Closeable {
                                 + String.valueOf(server.getListeningPort()))
                         .destroyOnExit()
                         .exitValueNormal()
-                        .redirectOutput(new Slf4jDebugOutputStream(IScriptTaskRunnerPython.LOG))
-                        .redirectError(new Slf4jWarnOutputStream(IScriptTaskRunnerPython.LOG))
+                        .redirectOutput(new LogLevelOutputStream(LogLevel.DEBUG, IScriptTaskRunnerPython.LOG))
+                        .redirectError(new LogLevelOutputStream(LogLevel.WARN, IScriptTaskRunnerPython.LOG))
                         .start();
             } catch (InvalidExitValueException | IOException e) {
                 throw new RuntimeException(e);

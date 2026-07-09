@@ -6,14 +6,13 @@ import java.util.Set;
 
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.zeroturnaround.exec.stream.slf4j.Slf4jDebugOutputStream;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jWarnOutputStream;
-
 import de.invesdwin.context.system.properties.SystemProperties;
 import de.invesdwin.scripting.python.runtime.contract.IScriptTaskRunnerPython;
 import de.invesdwin.util.collections.Collections;
 import de.invesdwin.util.collections.factory.ILockCollectionFactory;
 import de.invesdwin.util.concurrent.Executors;
+import de.invesdwin.util.log.LogLevel;
+import de.invesdwin.util.streams.log.LogLevelOutputStream;
 
 @ThreadSafe
 public final class JepProperties {
@@ -22,9 +21,9 @@ public final class JepProperties {
     public static final File JEP_LIBRARY_PATH;
 
     public static final PrintStream REDIRECTED_OUT = new PrintStream(
-            new Slf4jDebugOutputStream(IScriptTaskRunnerPython.LOG));
+            new LogLevelOutputStream(LogLevel.DEBUG, IScriptTaskRunnerPython.LOG));
     public static final PrintStream REDIRECTED_ERR = new PrintStream(
-            new Slf4jWarnOutputStream(IScriptTaskRunnerPython.LOG));
+            new LogLevelOutputStream(LogLevel.WARN, IScriptTaskRunnerPython.LOG));
 
     private static final Set<String> SHARED_MODULES = ILockCollectionFactory.getInstance(true).newLinkedSet();
 

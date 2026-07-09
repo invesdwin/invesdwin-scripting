@@ -6,13 +6,13 @@ import java.io.OutputStreamWriter;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.springframework.beans.factory.FactoryBean;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jDebugOutputStream;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jWarnOutputStream;
 
 import de.invesdwin.scripting.matlab.runtime.contract.IScriptTaskRunnerMatlab;
 import de.invesdwin.scripting.matlab.runtime.javaoctave.JavaOctaveProperties;
 import de.invesdwin.scripting.matlab.runtime.javaoctave.JavaOctaveScriptTaskEngineMatlab;
 import de.invesdwin.util.concurrent.pool.timeout.ATimeoutObjectPool;
+import de.invesdwin.util.log.LogLevel;
+import de.invesdwin.util.streams.log.LogLevelOutputStream;
 import de.invesdwin.util.time.date.FTimeUnit;
 import de.invesdwin.util.time.duration.Duration;
 import dk.ange.octave.OctaveEngine;
@@ -35,12 +35,14 @@ public final class OctaveEngineObjectPool extends ATimeoutObjectPool<OctaveEngin
     @Override
     protected OctaveEngine newObject() {
         final OctaveEngineFactory factory = new OctaveEngineFactory();
-        factory.setErrorWriter(new OutputStreamWriter(new Slf4jWarnOutputStream(IScriptTaskRunnerMatlab.LOG)));
+        factory.setErrorWriter(
+                new OutputStreamWriter(new LogLevelOutputStream(LogLevel.WARN, IScriptTaskRunnerMatlab.LOG)));
         if (JavaOctaveProperties.OCTAVE_COMMAND != null) {
             factory.setOctaveProgram(new File(JavaOctaveProperties.OCTAVE_COMMAND));
         }
         final OctaveEngine scriptEngine = factory.getScriptEngine();
-        scriptEngine.setWriter(new OutputStreamWriter(new Slf4jDebugOutputStream(IScriptTaskRunnerMatlab.LOG)));
+        scriptEngine.setWriter(
+                new OutputStreamWriter(new LogLevelOutputStream(LogLevel.DEBUG, IScriptTaskRunnerMatlab.LOG)));
         return scriptEngine;
     }
 

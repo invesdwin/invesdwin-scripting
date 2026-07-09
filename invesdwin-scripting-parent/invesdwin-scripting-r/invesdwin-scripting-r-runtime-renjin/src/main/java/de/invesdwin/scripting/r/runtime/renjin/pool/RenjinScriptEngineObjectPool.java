@@ -9,12 +9,12 @@ import org.renjin.eval.SessionBuilder;
 import org.renjin.script.RenjinScriptEngine;
 import org.renjin.script.RenjinScriptEngineFactory;
 import org.springframework.beans.factory.FactoryBean;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jDebugOutputStream;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jWarnOutputStream;
 
 import de.invesdwin.scripting.r.runtime.contract.IScriptTaskRunnerR;
 import de.invesdwin.scripting.r.runtime.renjin.pool.internal.ExtendedPackageLoader;
 import de.invesdwin.util.concurrent.pool.timeout.ATimeoutObjectPool;
+import de.invesdwin.util.log.LogLevel;
+import de.invesdwin.util.streams.log.LogLevelOutputStream;
 import de.invesdwin.util.time.date.FTimeUnit;
 import de.invesdwin.util.time.duration.Duration;
 import jakarta.inject.Named;
@@ -40,8 +40,10 @@ public final class RenjinScriptEngineObjectPool extends ATimeoutObjectPool<Renji
     protected RenjinScriptEngine newObject() {
         final RenjinScriptEngine engine = FACTORY.getScriptEngine(
                 new SessionBuilder().withDefaultPackages().setPackageLoader(ExtendedPackageLoader.INSTANCE).build());
-        engine.getContext().setWriter(new PrintWriter(new Slf4jDebugOutputStream(IScriptTaskRunnerR.LOG)));
-        engine.getContext().setErrorWriter(new PrintWriter(new Slf4jWarnOutputStream(IScriptTaskRunnerR.LOG)));
+        engine.getContext()
+                .setWriter(new PrintWriter(new LogLevelOutputStream(LogLevel.DEBUG, IScriptTaskRunnerR.LOG)));
+        engine.getContext()
+                .setErrorWriter(new PrintWriter(new LogLevelOutputStream(LogLevel.WARN, IScriptTaskRunnerR.LOG)));
         return engine;
     }
 

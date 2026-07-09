@@ -14,15 +14,14 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
-import org.zeroturnaround.exec.stream.slf4j.Slf4jDebugOutputStream;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jWarnOutputStream;
-
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 
 import de.invesdwin.scripting.graalvm.jsr223.PolyglotScriptEngine;
 import de.invesdwin.scripting.python.runtime.contract.IScriptTaskRunnerPython;
 import de.invesdwin.scripting.python.runtime.graalpy.jsr223.GraalpyScriptEngineFactory;
+import de.invesdwin.util.log.LogLevel;
+import de.invesdwin.util.streams.log.LogLevelOutputStream;
 
 @NotThreadSafe
 public class WrappedGraalpyScriptEngine implements Closeable {
@@ -37,9 +36,12 @@ public class WrappedGraalpyScriptEngine implements Closeable {
 
     public WrappedGraalpyScriptEngine() {
         this.engine = GraalpyScriptEngineFactory.INSTANCE.getScriptEngine();
-        engine.getContext().setWriter(new OutputStreamWriter(new Slf4jDebugOutputStream(IScriptTaskRunnerPython.LOG)));
         engine.getContext()
-                .setErrorWriter(new OutputStreamWriter(new Slf4jWarnOutputStream(IScriptTaskRunnerPython.LOG)));
+                .setWriter(
+                        new OutputStreamWriter(new LogLevelOutputStream(LogLevel.DEBUG, IScriptTaskRunnerPython.LOG)));
+        engine.getContext()
+                .setErrorWriter(
+                        new OutputStreamWriter(new LogLevelOutputStream(LogLevel.WARN, IScriptTaskRunnerPython.LOG)));
         this.binding = engine.getBindings(ScriptContext.ENGINE_SCOPE);
         this.binding.put("$binding", binding);
         if (engine instanceof Compilable) {

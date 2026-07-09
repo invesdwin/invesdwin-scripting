@@ -16,13 +16,13 @@ import javax.script.ScriptException;
 
 import org.python.jsr223.PyScriptEngine;
 import org.python.jsr223.PyScriptEngineFactory;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jDebugOutputStream;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jWarnOutputStream;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 
 import de.invesdwin.scripting.python.runtime.contract.IScriptTaskRunnerPython;
+import de.invesdwin.util.log.LogLevel;
+import de.invesdwin.util.streams.log.LogLevelOutputStream;
 
 @NotThreadSafe
 public class WrappedPyScriptEngine implements Closeable {
@@ -39,9 +39,12 @@ public class WrappedPyScriptEngine implements Closeable {
 
     public WrappedPyScriptEngine() {
         this.engine = (PyScriptEngine) FACTORY.getScriptEngine();
-        engine.getContext().setWriter(new OutputStreamWriter(new Slf4jDebugOutputStream(IScriptTaskRunnerPython.LOG)));
         engine.getContext()
-                .setErrorWriter(new OutputStreamWriter(new Slf4jWarnOutputStream(IScriptTaskRunnerPython.LOG)));
+                .setWriter(
+                        new OutputStreamWriter(new LogLevelOutputStream(LogLevel.DEBUG, IScriptTaskRunnerPython.LOG)));
+        engine.getContext()
+                .setErrorWriter(
+                        new OutputStreamWriter(new LogLevelOutputStream(LogLevel.WARN, IScriptTaskRunnerPython.LOG)));
         this.binding = engine.getBindings(ScriptContext.ENGINE_SCOPE);
         if (engine instanceof Compilable) {
             compilable = engine;

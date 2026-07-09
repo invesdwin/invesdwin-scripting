@@ -15,15 +15,14 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
-import org.zeroturnaround.exec.stream.slf4j.Slf4jDebugOutputStream;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jWarnOutputStream;
-
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 
 import de.invesdwin.scripting.graalvm.jsr223.PolyglotScriptEngine;
 import de.invesdwin.scripting.ruby.runtime.IScriptTaskRunnerRuby;
 import de.invesdwin.scripting.ruby.runtime.truffleruby.jsr223.TrufflerubyScriptEngineFactory;
+import de.invesdwin.util.log.LogLevel;
+import de.invesdwin.util.streams.log.LogLevelOutputStream;
 
 @NotThreadSafe
 public class WrappedTrufflerubyScriptEngine implements Closeable {
@@ -39,9 +38,11 @@ public class WrappedTrufflerubyScriptEngine implements Closeable {
 
     public WrappedTrufflerubyScriptEngine() {
         this.engine = TrufflerubyScriptEngineFactory.INSTANCE.getScriptEngine();
-        engine.getContext().setWriter(new OutputStreamWriter(new Slf4jDebugOutputStream(IScriptTaskRunnerRuby.LOG)));
         engine.getContext()
-                .setErrorWriter(new OutputStreamWriter(new Slf4jWarnOutputStream(IScriptTaskRunnerRuby.LOG)));
+                .setWriter(new OutputStreamWriter(new LogLevelOutputStream(LogLevel.DEBUG, IScriptTaskRunnerRuby.LOG)));
+        engine.getContext()
+                .setErrorWriter(
+                        new OutputStreamWriter(new LogLevelOutputStream(LogLevel.WARN, IScriptTaskRunnerRuby.LOG)));
         this.binding = engine.getBindings(ScriptContext.ENGINE_SCOPE);
         this.binding.put("$binding", binding);
         if (engine instanceof Compilable) {
