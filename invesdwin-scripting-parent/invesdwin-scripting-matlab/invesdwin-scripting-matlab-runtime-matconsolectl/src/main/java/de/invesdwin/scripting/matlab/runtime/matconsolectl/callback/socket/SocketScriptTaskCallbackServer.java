@@ -7,10 +7,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.context.integration.channel.async.AsynchronousHandlerFactorySupport;
 import de.invesdwin.context.integration.channel.async.IAsynchronousHandler;
-import de.invesdwin.context.integration.channel.async.netty.tcp.StringNettySocketAsynchronousChannel;
+import de.invesdwin.context.integration.channel.netty.async.tcp.StringNettySocketAsynchronousChannel;
+import de.invesdwin.context.integration.channel.netty.sync.tcp.NettySocketSynchronousChannel;
+import de.invesdwin.context.integration.channel.netty.sync.tcp.type.NioNettySocketChannelType;
 import de.invesdwin.context.integration.channel.sync.ISynchronousChannel;
-import de.invesdwin.context.integration.channel.sync.netty.tcp.NettySocketSynchronousChannel;
-import de.invesdwin.context.integration.channel.sync.netty.tcp.type.NioNettySocketChannelType;
 import de.invesdwin.context.integration.compression.lz4.LZ4Streams;
 import de.invesdwin.context.integration.network.NetworkUtil;
 import de.invesdwin.util.assertions.Assertions;

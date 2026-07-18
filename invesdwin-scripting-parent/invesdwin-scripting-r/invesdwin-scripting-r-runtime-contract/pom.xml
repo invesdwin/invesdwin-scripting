@@ -15,12 +15,7 @@
 		</dependency>
 		<dependency>
 			<groupId>de.invesdwin</groupId>
-			<artifactId>invesdwin-context-integration-channel</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-handler</artifactId>
+			<artifactId>invesdwin-context-integration-channel-netty</artifactId>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
