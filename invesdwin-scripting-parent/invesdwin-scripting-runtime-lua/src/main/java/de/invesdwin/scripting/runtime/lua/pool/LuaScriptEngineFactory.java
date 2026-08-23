@@ -143,7 +143,7 @@ public class LuaScriptEngineFactory implements ScriptEngineFactory {
     }
 
     private static String escape(final String s, final String prefix, final String suffix) {
-        final byte[] bytes = s.getBytes(Charsets.DEFAULT);
+        final byte[] bytes = s.getBytes(Charsets.defaultCharset());
         final StringBuilder builder = new StringBuilder(bytes.length * 4 + prefix.length() + suffix.length());
         builder.append(prefix);
         for (final byte b : bytes) {

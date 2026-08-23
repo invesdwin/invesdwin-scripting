@@ -391,7 +391,7 @@ public class ModifiedScilabBridge {
     private String readFile() throws InterruptedException {
         while (true) {
             try {
-                final String result = Files.readFileToString(responseFile, Charsets.DEFAULT);
+                final String result = Files.readFileToString(responseFile, Charsets.defaultCharset());
                 if (Strings.isBlank(result)) {
                     FTimeUnit.MILLISECONDS.sleep(1);
                     continue;

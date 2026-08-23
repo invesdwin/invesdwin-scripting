@@ -77,7 +77,7 @@ public class InputsAndResultsTestCharacter {
                         InputsAndResultsTestCharacter.class.getSimpleName() + ".py",
                         InputsAndResultsTestCharacter.class);
                 try (InputStream in = resource.getInputStream()) {
-                    String str = IOUtils.toString(in, Charsets.DEFAULT);
+                    String str = IOUtils.toString(in, Charsets.defaultCharset());
                     engine.eval("import sys");
                     if (engine.getResults().getBoolean("sys.version_info >= (3, 0)")) {
                         str = str.replace("str", "bytes").replace("unicode", "str");

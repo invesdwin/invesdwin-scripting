@@ -42,7 +42,7 @@ public interface IScriptTaskEngine extends Closeable {
 
     default void eval(final InputStream input) {
         try (InputStream in = input) {
-            final String str = IOUtils.toString(in, Charsets.DEFAULT);
+            final String str = IOUtils.toString(in, Charsets.defaultCharset());
             eval(str);
         } catch (final IOException e) {
             throw new RuntimeException(e);
