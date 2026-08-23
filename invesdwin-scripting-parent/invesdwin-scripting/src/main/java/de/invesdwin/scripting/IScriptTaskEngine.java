@@ -4,7 +4,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -13,6 +12,7 @@ import org.springframework.core.io.Resource;
 
 import de.invesdwin.util.concurrent.WrappedExecutorService;
 import de.invesdwin.util.concurrent.lock.ILock;
+import de.invesdwin.util.lang.string.Charsets;
 
 @NotThreadSafe
 public interface IScriptTaskEngine extends Closeable {
@@ -42,7 +42,7 @@ public interface IScriptTaskEngine extends Closeable {
 
     default void eval(final InputStream input) {
         try (InputStream in = input) {
-            final String str = IOUtils.toString(in, StandardCharsets.UTF_8);
+            final String str = IOUtils.toString(in, Charsets.DEFAULT);
             eval(str);
         } catch (final IOException e) {
             throw new RuntimeException(e);

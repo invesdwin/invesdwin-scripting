@@ -2,7 +2,6 @@ package de.invesdwin.scripting.python.runtime.contract;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +16,7 @@ import de.invesdwin.scripting.IScriptTaskResults;
 import de.invesdwin.util.assertions.Assertions;
 import de.invesdwin.util.collections.Arrays;
 import de.invesdwin.util.lang.Objects;
+import de.invesdwin.util.lang.string.Charsets;
 
 @NotThreadSafe
 public class InputsAndResultsTestString {
@@ -94,7 +94,7 @@ public class InputsAndResultsTestString {
                 final ClassPathResource resource = new ClassPathResource(
                         InputsAndResultsTestString.class.getSimpleName() + ".py", InputsAndResultsTestString.class);
                 try (InputStream in = resource.getInputStream()) {
-                    String str = IOUtils.toString(in, StandardCharsets.UTF_8);
+                    String str = IOUtils.toString(in, Charsets.DEFAULT);
                     engine.eval("import sys");
                     if (engine.getResults().getBoolean("sys.version_info >= (3, 0)")) {
                         str = str.replace("unicode", "str");

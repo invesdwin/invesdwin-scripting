@@ -1,6 +1,5 @@
 package de.invesdwin.scripting.runtime.lua.pool;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import javax.script.ScriptEngineFactory;
 
 import de.invesdwin.scripting.runtime.lua.LuaProperties;
 import de.invesdwin.util.collections.Collections;
+import de.invesdwin.util.lang.string.Charsets;
 import party.iroiro.luajava.Lua;
 
 /**
@@ -143,7 +143,7 @@ public class LuaScriptEngineFactory implements ScriptEngineFactory {
     }
 
     private static String escape(final String s, final String prefix, final String suffix) {
-        final byte[] bytes = s.getBytes(StandardCharsets.UTF_8);
+        final byte[] bytes = s.getBytes(Charsets.DEFAULT);
         final StringBuilder builder = new StringBuilder(bytes.length * 4 + prefix.length() + suffix.length());
         builder.append(prefix);
         for (final byte b : bytes) {

@@ -2,7 +2,6 @@ package de.invesdwin.scripting.python.runtime.contract.callback;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +19,7 @@ import de.invesdwin.scripting.python.runtime.contract.AScriptTaskPython;
 import de.invesdwin.scripting.python.runtime.contract.IScriptTaskRunnerPython;
 import de.invesdwin.util.assertions.Assertions;
 import de.invesdwin.util.collections.Arrays;
+import de.invesdwin.util.lang.string.Charsets;
 
 @NotThreadSafe
 public class ParametersAndReturnsTestLong {
@@ -47,7 +47,7 @@ public class ParametersAndReturnsTestLong {
                 final ClassPathResource resource = new ClassPathResource(
                         ParametersAndReturnsTestLong.class.getSimpleName() + ".py", ParametersAndReturnsTestLong.class);
                 try (InputStream in = resource.getInputStream()) {
-                    String str = IOUtils.toString(in, StandardCharsets.UTF_8);
+                    String str = IOUtils.toString(in, Charsets.DEFAULT);
                     engine.eval("import sys");
                     if (engine.getResults().getBoolean("sys.version_info >= (3, 0)")) {
                         str = str.replace("long", "int");
