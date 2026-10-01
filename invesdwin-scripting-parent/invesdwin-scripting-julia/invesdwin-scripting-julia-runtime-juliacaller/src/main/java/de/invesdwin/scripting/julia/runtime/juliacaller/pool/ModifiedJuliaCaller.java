@@ -20,6 +20,8 @@ import de.invesdwin.scripting.julia.runtime.contract.IScriptTaskRunnerJulia;
 import de.invesdwin.util.concurrent.loop.LoopInterruptedCheck;
 import de.invesdwin.util.concurrent.loop.spinwait.ASpinWait;
 import de.invesdwin.util.lang.string.Strings;
+import de.invesdwin.util.streams.buffer.bytes.ByteBuffers;
+import de.invesdwin.util.streams.buffer.bytes.IByteBuffer;
 import de.invesdwin.util.time.date.FTimeUnit;
 import de.invesdwin.util.time.date.millis.FDateNanos;
 
@@ -29,8 +31,11 @@ import de.invesdwin.util.time.date.millis.FDateNanos;
 @NotThreadSafe
 public class ModifiedJuliaCaller {
 
-    protected static final char NEW_LINE = '\n';
+    private static final char CARRIAGE_RETURN = '\r';
+    private static final char NEW_LINE = '\n';
     private final String pathToJulia;
+    private final IByteBuffer readLineBuffer = ByteBuffers.allocateExpandable();
+    private int readLineBufferPosition = 0;
     private final ObjectMapper objectMapper;
     private Socket socket;
     private BufferedWriter bufferedWriterForJuliaConsole, bufferedWriterForSocket;
@@ -200,7 +205,7 @@ public class ModifiedJuliaCaller {
     }
 
     private String readLine() throws IOException {
-        final StringBuilder sb = new StringBuilder();
+        readLineBufferPosition = 0;
         //WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
 
@@ -216,10 +221,13 @@ public class ModifiedJuliaCaller {
                 }
                 while (readerForSocket.available() > 0 && !Thread.interrupted()) {
                     final int b = readerForSocket.read();
+                    // CHECKSTYLE:OFF
+                    // System.out.println(b + " | " + (char) b);
+                    // CHECKSTYLE:ON
                     if (b == NEW_LINE) {
                         return true;
                     }
-                    sb.append((char) b);
+                    readLineBuffer.putByte(readLineBufferPosition++, (byte) b);
                 }
                 return false;
             }
@@ -229,10 +237,13 @@ public class ModifiedJuliaCaller {
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
-        if (sb.length() == 0) {
+        while (readLineBufferPosition > 0 && readLineBuffer.getByte(readLineBufferPosition - 1) == CARRIAGE_RETURN) {
+            readLineBufferPosition--;
+        }
+        if (readLineBufferPosition == 0) {
             return null;
         }
-        final String s = sb.toString();
+        final String s = readLineBuffer.getStringUtf8(0, readLineBufferPosition);
         return s;
     }
 

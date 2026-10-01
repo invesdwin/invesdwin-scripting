@@ -39,6 +39,7 @@ public class ModifiedGhciBridge {
     public static final String STARTUP_SCRIPT = "import Data.Aeson";
     private static final String PROMPT = "ghci> ";
     private static final byte[] PROMPT_BYTES = PROMPT.getBytes();
+    private static final char CARRIAGE_RETURN = '\r';
     private static final char NEW_LINE = '\n';
     private static final String TERMINATOR_RAW = "__##@@##__";
     private static final String TERMINATOR = "\"" + TERMINATOR_RAW + "\"";
@@ -110,7 +111,7 @@ public class ModifiedGhciBridge {
         out = ghci.getOutputStream();
         final Instant start = new Instant();
         while (true) {
-            final String s = readline();
+            final String s = readLine();
             if (s == null) {
                 if (start.isLessThan(Duration.TEN_SECONDS)) {
                     try {
@@ -171,7 +172,7 @@ public class ModifiedGhciBridge {
             out.write(NEW_LINE);
             out.flush();
             while (true) {
-                final String s = readline();
+                final String s = readLine();
                 if (s == null) {
                     //retry, we were a bit too fast as it seems
                     continue;
@@ -322,7 +323,7 @@ public class ModifiedGhciBridge {
         return ofs.intValue();
     }
 
-    private String readline() throws IOException {
+    private String readLine() throws IOException {
         readLineBufferPosition = 0;
         //WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
@@ -351,6 +352,9 @@ public class ModifiedGhciBridge {
             spinWait.awaitFulfill(FDateNanos.elapsedNanos());
         } catch (final Exception e) {
             throw new RuntimeException(e);
+        }
+        while (readLineBufferPosition > 0 && readLineBuffer.getByte(readLineBufferPosition - 1) == CARRIAGE_RETURN) {
+            readLineBufferPosition--;
         }
         if (readLineBufferPosition == 0) {
             return null;

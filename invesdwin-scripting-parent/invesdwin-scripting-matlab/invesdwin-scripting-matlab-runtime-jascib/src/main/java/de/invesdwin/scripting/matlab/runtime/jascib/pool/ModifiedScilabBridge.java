@@ -211,7 +211,7 @@ public class ModifiedScilabBridge {
         out = scilab.getOutputStream();
         boolean terminatorRequested = true;
         while (true) {
-            final String s = readline();
+            final String s = readLine();
             if (s == null) {
                 if (terminatorRequested) {
                     continue;
@@ -303,7 +303,7 @@ public class ModifiedScilabBridge {
             }
             int errorsFound = 0;
             while (true) {
-                final String s = readline();
+                final String s = readLine();
                 if (s == null) {
                     if (errorsFound > 0) {
                         // throw error
@@ -417,7 +417,7 @@ public class ModifiedScilabBridge {
 
     ////// private stuff
 
-    private String readline() throws IOException {
+    private String readLine() throws IOException {
         readLineBufferPosition = 0;
         // WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
@@ -455,7 +455,7 @@ public class ModifiedScilabBridge {
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
-        while (readLineBufferPosition > 0 && readLineBuffer.getByte(readLineBufferPosition - 1) == '\r') {
+        while (readLineBufferPosition > 0 && readLineBuffer.getByte(readLineBufferPosition - 1) == CARRIAGE_RETURN) {
             readLineBufferPosition--;
         }
         if (readLineBufferPosition == 0) {

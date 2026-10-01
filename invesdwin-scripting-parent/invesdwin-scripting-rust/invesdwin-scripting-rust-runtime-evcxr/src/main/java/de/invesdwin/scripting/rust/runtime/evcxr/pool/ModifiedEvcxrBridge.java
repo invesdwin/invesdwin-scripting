@@ -38,6 +38,7 @@ public class ModifiedEvcxrBridge {
 
     public static final String DEP_JSON = ":dep serde_json";
     private static final String PROMPT = ">> ";
+    private static final char CARRIAGE_RETURN = '\r';
     private static final char NEW_LINE = '\n';
     private static final String TERMINATOR_RAW = "__##@@##__";
     private static final String TERMINATOR = "\"" + TERMINATOR_RAW + "\"";
@@ -123,7 +124,7 @@ public class ModifiedEvcxrBridge {
         out = evcxr.getOutputStream();
         boolean versionRequested = false;
         while (true) {
-            final String s = readline(false, false);
+            final String s = readLine(false, false);
             if (s == null) {
                 if (versionRequested) {
                     versionRequested = false;
@@ -192,7 +193,7 @@ public class ModifiedEvcxrBridge {
             out.flush();
             int errorsFound = 0;
             while (true) {
-                final String s = readline(true, errorsFound > 0);
+                final String s = readLine(true, errorsFound > 0);
                 if (s == null) {
                     if (errorsFound > 0) {
                         //throw error
@@ -415,7 +416,7 @@ public class ModifiedEvcxrBridge {
         return ofs.intValue();
     }
 
-    private String readline(final boolean checkError, final boolean errorFound) throws IOException {
+    private String readLine(final boolean checkError, final boolean errorFound) throws IOException {
         readLineBufferPosition = 0;
         //WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
@@ -455,6 +456,9 @@ public class ModifiedEvcxrBridge {
             }
         } catch (final Exception e) {
             throw new RuntimeException(e);
+        }
+        while (readLineBufferPosition > 0 && readLineBuffer.getByte(readLineBufferPosition - 1) == CARRIAGE_RETURN) {
+            readLineBufferPosition--;
         }
         if (readLineBufferPosition == 0) {
             return null;

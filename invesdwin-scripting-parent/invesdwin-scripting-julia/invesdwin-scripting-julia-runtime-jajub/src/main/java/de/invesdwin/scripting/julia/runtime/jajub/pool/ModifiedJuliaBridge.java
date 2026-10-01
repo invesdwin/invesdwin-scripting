@@ -34,6 +34,7 @@ import de.invesdwin.util.time.date.millis.FDateNanos;
 @NotThreadSafe
 public class ModifiedJuliaBridge {
 
+    private static final char CARRIAGE_RETURN = '\r';
     private static final char NEW_LINE = '\n';
     private static final String TERMINATOR_RAW = "__##@@##__";
     private static final String TERMINATOR = "\"" + TERMINATOR_RAW + "\"";
@@ -113,7 +114,7 @@ public class ModifiedJuliaBridge {
         errWatcher.startWatching();
         out = julia.getOutputStream();
         while (true) {
-            final String s = readline();
+            final String s = readLine();
             if (s == null) {
                 close();
                 throw new IOException("Bad Julia process");
@@ -161,7 +162,7 @@ public class ModifiedJuliaBridge {
             out.write(NEW_LINE);
             out.flush();
             while (true) {
-                final String s = readline();
+                final String s = readLine();
                 if (s == null) {
                     //retry, we were a bit too fast as it seems
                     continue;
@@ -283,7 +284,7 @@ public class ModifiedJuliaBridge {
         return ofs.intValue();
     }
 
-    private String readline() throws IOException {
+    private String readLine() throws IOException {
         readLineBufferPosition = 0;
         //WORKAROUND: sleeping 10 ms between messages is way too slow
         final ASpinWait spinWait = new ASpinWait() {
@@ -312,6 +313,9 @@ public class ModifiedJuliaBridge {
             spinWait.awaitFulfill(FDateNanos.elapsedNanos());
         } catch (final Exception e) {
             throw new RuntimeException(e);
+        }
+        while (readLineBufferPosition > 0 && readLineBuffer.getByte(readLineBufferPosition - 1) == CARRIAGE_RETURN) {
+            readLineBufferPosition--;
         }
         if (readLineBufferPosition == 0) {
             return null;
