@@ -40,8 +40,8 @@ public class ModifiedPythonBridge {
     private static final String TERMINATOR_SUFFIX = "\nprint(" + TERMINATOR + ")";
     private static final byte[] TERMINATOR_SUFFIX_BYTES = TERMINATOR_SUFFIX.getBytes();
 
-    private static final String[] PYTHON_ARGS = { "-u", "-i", "-c", "import json;" //
-            + "print(" + TERMINATOR + ")" };
+    private static final String[] PYTHON_ARGS = { "-u", "-i", "-c", "'import json;" //
+            + "print(" + TERMINATOR + ")'" };
 
     private final ProcessBuilder pbuilder;
     private Process python = null;
